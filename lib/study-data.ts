@@ -1,14 +1,15 @@
 import { outlines } from "./outlines";
 import { chapterHighlights } from "./chapter-highlights";
 import pastQuestions from "./past-questions.json";
+import knowledgeCardsJson from "./knowledge-cards.json";
 
 export type Card = { id: string; book: string; chapter: number; front: string; back: string; source: string };
 export type Question = { id: string; year: number; book: string; chapter: number; stem: string; options: string[]; answer: number; explanation: string; source: string };
 
 export const books = [
-  { id: "principles", name: "教育学原理", short: "教原", tone: "#4976b6", chapters: ["教育及其产生与发展", "教育与社会发展", "教育与人的发展", "教育目的与培养目标", "教育制度", "课程", "教学", "德育"] },
+  { id: "principles", name: "教育学原理", short: "教原", tone: "#4976b6", chapters: ["教育及其产生与发展", "教育与社会发展", "教育与人的发展", "教育目的与培养目标", "教育制度", "课程", "教学", "德育", "教师与学生"] },
   { id: "china", name: "中国教育史", short: "中教", tone: "#bc7856", chapters: ["官学制度的建立与“六艺”教育的形成", "私人讲学的兴起与传统教育思想的奠基", "儒学独尊与读经做官教育模式的初步形成", "封建国家教育体制的完善", "理学教育思想和学校的改革与发展", "理学教育思想的批判与反思", "近代教育的起步", "近代教育体系的建立", "近代教育体制的变革", "南京国民政府时期的教育", "新民主主义教育的发展", "现代教育家的教育理论与实践"] },
-  { id: "foreign", name: "外国教育史", short: "外教", tone: "#719184", chapters: ["东方文明古国的教育", "古希腊教育", "古罗马教育", "西欧中世纪教育", "文艺复兴与宗教改革时期的教育", "英国的近现代教育制度", "法国的近现代教育制度", "德国的近现代教育制度", "俄国（苏联）的近现代教育制度", "美国的近现代教育制度", "日本的近现代教育制度", "近现代主要的教育家", "近现代超级重要的教育家", "近现代教育思潮"] },
+  { id: "foreign", name: "外国教育史", short: "外教", tone: "#719184", chapters: ["东方文明古国的教育", "古希腊教育", "古罗马教育", "西欧中世纪教育", "文艺复兴与宗教改革时期的教育", "英国的近现代教育制度", "法国的近现代教育制度", "德国的近现代教育制度", "俄国（苏联）的近现代教育制度", "美国的近现代教育制度", "日本的近现代教育制度", "近现代主要的教育家", "近现代超级重量级教育家", "近现代教育思潮"] },
   { id: "psychology", name: "教育心理学", short: "教心", tone: "#9478ad", chapters: ["心理发展与教育", "学习及其理论解释", "学习动机", "知识的建构", "技能的形成", "学习策略及其教学", "问题解决能力与创造性的培养", "社会规范学习、态度与品德发展"] },
 ] as const;
 
@@ -29,6 +30,12 @@ export const cards: Card[] = [
   { id: "y3", book: "psychology", chapter: 3, front: "成败归因理论中，运气属于哪种归因？", back: "外部、不稳定、不可控。", source: "2024 年 333 真题及解析 PDF 第8页" },
   { id: "y4", book: "psychology", chapter: 6, front: "“由薄到厚”不断补充材料，属于哪种学习策略？", back: "精细加工策略：补充信息并建立联系，加深理解和记忆。", source: "2026 年 333 真题及解析 PDF 第8页" },
 ];
+
+// 逐章逐节的知识点闪卡：依据四本《27KC 333 应试解析》(2027版) 的完整 OCR 文本编写，
+// 生成与校验脚本见工作区 flashcards-src/（每张卡保留书中 PDF 页码出处）。
+for (const knowledge of knowledgeCardsJson as unknown as Card[]) {
+  cards.push(knowledge);
+}
 
 for (const book of books) {
   outlines[book.id]?.forEach((sections, index) => {
