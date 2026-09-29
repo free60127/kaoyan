@@ -7,7 +7,8 @@ import { askDeepSeek } from "@/lib/deepseek-browser";
 type View = "overview" | "chapters" | "cards" | "quiz" | "feynman" | "planner";
 type Review = { due: string; interval: number; ease: number; reps: number };
 const subjects = [{ id: "english", name: "英语二", mark: "EN" }, { id: "politics", name: "政治", mark: "PO" }, { id: "333", name: "333 教育综合", mark: "33" }, { id: "825", name: "825 英语专业基础", mark: "82" }];
-const today = () => new Date().toISOString().slice(0, 10);
+const localDate = (date: Date) => new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const today = () => localDate(new Date());
 const nav: { id: View; label: string; Icon: typeof BookOpen }[] = [{ id: "overview", label: "今日概览", Icon: Target }, { id: "chapters", label: "章节学习", Icon: BookOpen }, { id: "cards", label: "Anki 闪卡", Icon: Layers3 }, { id: "quiz", label: "真题练习", Icon: CircleHelp }, { id: "feynman", label: "费曼复述", Icon: Mic }, { id: "planner", label: "AI 学习计划", Icon: Sparkles }];
 
 export default function Home() {
@@ -35,7 +36,7 @@ export default function Home() {
     const old = reviews[card.id] || { due: today(), interval: 0, ease: 2.5, reps: 0 };
     const days = kind === "again" ? 0 : kind === "hard" ? Math.max(1, Math.round(old.interval * 1.2)) : kind === "good" ? Math.max(1, old.reps ? Math.round(old.interval * old.ease) : 1) : Math.max(3, Math.round(Math.max(old.interval, 1) * old.ease * 1.3));
     const date = new Date(); date.setDate(date.getDate() + days);
-    setReviews({ ...reviews, [card.id]: { due: date.toISOString().slice(0, 10), interval: days, ease: Math.max(1.3, old.ease + (kind === "again" ? -0.2 : kind === "easy" ? 0.12 : 0)), reps: kind === "again" ? 0 : old.reps + 1 } });
+    setReviews({ ...reviews, [card.id]: { due: localDate(date), interval: days, ease: Math.max(1.3, old.ease + (kind === "again" ? -0.2 : kind === "easy" ? 0.12 : 0)), reps: kind === "again" ? 0 : old.reps + 1 } });
     setFlipped(false); setCardIndex((cardIndex + 1) % visibleCards.length);
   }
   async function ask(mode: "plan" | "feedback") {
