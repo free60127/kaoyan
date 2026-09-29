@@ -16,4 +16,3 @@ npm run dev
 `npm run build` 生成静态文件到 `dist/`。推送 `main` 后，GitHub Actions 自动发布到 [GitHub Pages](https://free60127.github.io/kaoyan/)。
 
 四本应试解析 PDF、完整 OCR 缓存和扫描页没有放入公开仓库。AI 生成的题目明确标记为模拟题，真题练习保留年份与来源信息。
-
