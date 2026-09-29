@@ -14,6 +14,7 @@ import ast
 import collections
 import html
 import json
+import os
 import re
 import sqlite3
 import sys
@@ -69,6 +70,22 @@ def unique_match(directory: Path, pattern: str, what: str) -> Path:
     if len(matches) != 1:
         raise ValueError(f"期望在 {directory} 找到一个{what}（{pattern}），实际 {len(matches)} 个")
     return matches[0]
+
+
+def environment_path(name: str) -> Path | None:
+    value = os.environ.get(name)
+    return Path(value).expanduser() if value else None
+
+
+def configured_directory(path: Path | None, repo: Path, dirname: str) -> Path:
+    """Resolve a supplied input directory or find its conventional sibling."""
+    if path is not None:
+        return path.expanduser().resolve()
+    for parent in (repo, *repo.parents):
+        candidate = parent / dirname
+        if candidate.is_dir():
+            return candidate.resolve()
+    return (repo / dirname).resolve()
 
 
 def normalized(value: str) -> str:
@@ -241,13 +258,14 @@ def audit_apkg(path: Path, outlines: dict[str, list[list[str]]]) -> dict[str, An
 
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     repo = args.repo.resolve()
-    source_root = args.source_root.resolve()
-    ocr_dir = args.ocr_dir.resolve()
-    pdf_dir = args.pdf_dir.resolve()
+    source_root = configured_directory(args.source_root, repo, "flashcards-src")
+    ocr_dir = configured_directory(args.ocr_dir, repo, "ocr-333-cache")
+    pdf_dir = configured_directory(args.pdf_dir, repo, "27KC《333应试解析》(1)")
+    apkg_path = args.apkg.expanduser().resolve()
     cards_path = repo / "lib" / "knowledge-cards.json"
     manifest_path = source_root / "manifest.json"
     outlines_path = repo / "lib" / "outlines.ts"
-    for path in (cards_path, manifest_path, outlines_path, args.apkg):
+    for path in (cards_path, manifest_path, outlines_path, apkg_path):
         if not path.is_file():
             raise ValueError(f"输入文件不存在：{path}")
 
@@ -397,7 +415,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
             }
         )
 
-    apkg = audit_apkg(args.apkg.resolve(), outlines)
+    apkg = audit_apkg(apkg_path, outlines)
     page_span_reviews = []
     for review in PAGE_SPAN_REVIEWS:
         card = cards_by_id.get(review["id"])
@@ -513,20 +531,38 @@ def print_summary(result: dict[str, Any]) -> None:
 def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--source-root", type=Path, default=Path(r"D:\kao yan\flashcards-src"))
-    parser.add_argument("--ocr-dir", type=Path, default=Path(r"D:\kao yan\ocr-333-cache"))
-    parser.add_argument("--pdf-dir", type=Path, default=Path(r"D:\kao yan\27KC《333应试解析》(1)"))
+    parser.add_argument(
+        "--source-root",
+        type=Path,
+        default=environment_path("AUDIT_333_SOURCE_ROOT"),
+        help="源 manifest 目录；默认从仓库目录及其上级查找 flashcards-src，或设置 AUDIT_333_SOURCE_ROOT",
+    )
+    parser.add_argument(
+        "--ocr-dir",
+        type=Path,
+        default=environment_path("AUDIT_333_OCR_DIR"),
+        help="OCR JSONL 缓存目录；默认从仓库目录及其上级查找 ocr-333-cache，或设置 AUDIT_333_OCR_DIR",
+    )
+    parser.add_argument(
+        "--pdf-dir",
+        type=Path,
+        default=environment_path("AUDIT_333_PDF_DIR"),
+        help="PDF 输入目录；默认从仓库目录及其上级查找 27KC《333应试解析》(1)，或设置 AUDIT_333_PDF_DIR",
+    )
     parser.add_argument(
         "--apkg",
         type=Path,
-        default=Path(
-            r"C:\Users\Lenovo\Documents\xwechat_files\wxid_1azmphedbzir22_796c\temp\RWTemp\2026-09\9e20f478899dc29eb19741386f9343c8\教育学-20260929151219.apk.1g"
-        ),
+        default=environment_path("AUDIT_333_APKG"),
+        help="Anki package 路径；也可设置 AUDIT_333_APKG",
     )
     parser.add_argument("--details", action="store_true", help="在43章摘要后列出每章各卡片节标签及OCR同名命中")
     args = parser.parse_args()
+    if args.apkg is None:
+        parser.error("请通过 --apkg 或 AUDIT_333_APKG 指定 Anki package 路径")
     try:
         result = build_audit(args)
         print_summary(result)
