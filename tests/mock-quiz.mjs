@@ -154,7 +154,7 @@ test("malformed question counts, fields, answers, book metadata and JSON reject 
     (rows) => rows.map((q) => ({ ...q, options: ["A", "B", "C", " "] })),
     ...[-1, 4, 1.5, "1"].map((answer) => (rows) => rows.map((q) => ({ ...q, answer }))),
     (rows) => rows.map((q) => ({ ...q, explanation: " " })),
-    (rows) => rows.map((q) => ({ ...q, bookId: "psychology" })), (rows) => rows.map((q) => ({ ...q, chapterNo: "1" })),
+    (rows) => rows.map((q) => ({ ...q, bookId: "psychology" })), (rows) => rows.map((q) => ({ ...q, chapterNo: "第1章" })),
     (rows) => rows.map((q) => ({ ...q, knowledgePointIds: [] })), (rows) => rows.map((q) => ({ ...q, knowledgePointIds: ["outside-scope-card"] })),
     () => reply("```json\n{\"questions\": []}\n```"), () => reply("{\"questions\": ["),
     () => reply("null"), () => reply("[]"), () => reply("{}"),
@@ -173,7 +173,7 @@ test("malformed question counts, fields, answers, book metadata and JSON reject 
 
 test("duplicates within batches and across batches normalize whitespace", async () => {
   for (const count of [2, 4]) {
-    mockResponder((rows, call) => rows.map((q, i) => ({ ...q, stem: count === 2 ? (i ? "  duplicate\n stem  " : "duplicate stem") : (call === 2 ? "Mock question 1" : q.stem) })));
+    mockResponder((rows, call) => rows.map((q, i) => ({ ...q, stem: count === 2 ? (i ? "  duplicate\n stem  " : "duplicate stem") : (call >= 2 ? "Mock question 1" : q.stem) })));
     const progress = [];
     await assert.rejects(api.generateMockQuiz(key, cfg({ "single-choice": count }), context333, { onProgress: (done) => progress.push(done) }), /重复/);
     assert.deepEqual(progress, count === 2 ? [0] : [0, 3]);
