@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { applyRating, buildStudyQueue, createEmptyProgress, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, type CardIdentity, type Rating, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
 export const studyReviewKey = (subject: "333" | "825") => `yantu-srs-v1-${subject}`;
@@ -41,10 +42,17 @@ export function pauseStudyScope(session: StudyReviewSession, paused: StudyScope)
   return { progress: { ...session.progress, scopes: remove(session.progress.scopes) }, newScopes: remove(session.newScopes) };
 }
 
-export function buildReviewSession(catalog: readonly CardIdentity[], session: StudyReviewSession, now: StudyTime) {
-  const ongoing = buildStudyQueue(catalog, session.progress, now);
-  const selected = buildStudyQueue(catalog, session.progress, now, session.newScopes);
+export function buildReviewSession(catalog: readonly CardIdentity[], session: StudyReviewSession, now: StudyTime, scope?: StudyScope) {
+  const locationCatalog = scope ? catalog.filter(card => cardMatchesStudyScope(card, scope)) : catalog;
+  const ongoing = buildStudyQueue(locationCatalog, session.progress, now);
+  const selected = buildStudyQueue(locationCatalog, session.progress, now, session.newScopes);
   return { ...ongoing, items: [...ongoing.items.filter(item => item.kind !== "new"), ...selected.items.filter(item => item.kind === "new")], counts: { ...ongoing.counts, newAvailable: selected.counts.newAvailable, newToday: selected.counts.newToday } };
+}
+
+/** Validate against the same scope queue at rating time; admission remains shared across all locations. */
+export function rateStudyReviewCard(session: StudyReviewSession, catalog: readonly CardIdentity[], cardId: string, grade: Rating, now: StudyTime, scope?: StudyScope): StudyReviewSession | null {
+  if (!buildReviewSession(catalog, session, now, scope).items.some(item => item.cardId === cardId)) return null;
+  return { ...session, progress: applyRating(session.progress, cardId, grade, now) };
 }
 
 export function useStudyReview(subject: "333" | "825", catalog: readonly CardIdentity[], enabled: boolean) {
@@ -86,16 +94,18 @@ export function useStudyReview(subject: "333" | "825", catalog: readonly CardIde
   const queue = useMemo(() => buildReviewSession(catalog, current, now), [catalog, current, now]);
   return {
     ready: session !== null, progress: current.progress, newScopes: current.newScopes, queue, now, storageError, lastRating,
+    queueForScope(scope: StudyScope) { return buildReviewSession(catalog, current, now, scope); },
     selectScopes(scopes: StudyScope[]) { if (sessionRef.current) commit(selectNewStudyScopes(sessionRef.current, scopes, catalog)); },
     pauseScope(scope: StudyScope) { if (sessionRef.current) commit(pauseStudyScope(sessionRef.current, scope)); },
     setDailyNewLimit(value: number) {
       if (sessionRef.current && Number.isInteger(value) && value >= 0 && value <= 200) commit({ ...sessionRef.current, progress: { ...sessionRef.current.progress, dailyNewLimit: value } });
     },
-    rateCard(cardId: string, grade: Rating) {
+    rateCard(cardId: string, grade: Rating, scope?: StudyScope) {
       const previous = sessionRef.current, instant = Date.now();
-      if (!previous || !buildReviewSession(catalog, previous, instant).items.some(item => item.cardId === cardId)) return;
-      const next = applyRating(previous.progress, cardId, grade, instant);
-      commit({ ...previous, progress: next }); setLastRating({ cardId, dueAt: next.cards[cardId].dueAt });
+      if (!previous) return;
+      const next = rateStudyReviewCard(previous, catalog, cardId, grade, instant, scope);
+      if (!next) return;
+      commit(next); setLastRating({ cardId, dueAt: next.progress.cards[cardId].dueAt });
     },
     preview(cardId: string, grade: Rating) { return previewSchedule(current.progress.cards[cardId], grade, now); },
   };
