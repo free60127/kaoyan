@@ -16,6 +16,8 @@ type Chapter = { title: string; sections: string[] };
 type Book = { id: string; name: string; short: string; tone: string; chapters: Chapter[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
 const subjects = [{ id: "english", name: "英语二", mark: "EN" }, { id: "politics", name: "政治", mark: "PO" }, { id: "333", name: "333 教育综合", mark: "33" }, { id: "825", name: "825 英语专业基础", mark: "82" }];
+// 刷新后回到上次学习的科目与位置；book 先按静态表校验，避免数据未载入时落到无效值。
+const subjectBookIds: Record<string, string[]> = { "333": books333.map((book) => book.id), "825": ["linguistics", "literature"], politics: ["mayuan", "maozhongte", "xinsixiang", "shigang", "sixiu"] };
 const nav: { id: View; label: string; Icon: typeof BookOpen }[] = [{ id: "overview", label: "今日概览", Icon: Target }, { id: "chapters", label: "章节学习", Icon: BookOpen }, { id: "cards", label: "Anki 闪卡", Icon: Layers3 }, { id: "quiz", label: "真题练习", Icon: CircleHelp }, { id: "mock", label: "AI 模拟卷", Icon: Sparkles }, { id: "feynman", label: "费曼复述", Icon: Mic }, { id: "planner", label: "AI 学习计划", Icon: Sparkles }];
 const books333Model: Book[] = books333.map((book) => ({ id: book.id, name: book.name, short: book.short, tone: book.tone, chapters: book.chapters.map((title, index) => ({ title, sections: outlines[book.id]?.[index] || [] })) }));
 const sectionLabel = (front: string) => { const match = /^〔(.+?)〕/.exec(front); return match ? match[1] : ""; };
@@ -69,9 +71,18 @@ export default function Home() {
 
   useEffect(() => {
     setDoneBySubject({ "333": readStorage("yantu-done"), "825": readStorage("yantu-done-825"), politics: readStorage("yantu-done-politics") });
+    try {
+      const saved = readStorage<{ subject?: string; book?: string; chapter?: number }>("yantu-last-place");
+      if (saved && subjects.some((item) => item.id === saved.subject)) {
+        setSubject(saved.subject as string);
+        if (saved.book && subjectBookIds[saved.subject as string]?.includes(saved.book)) setBook(saved.book);
+        if (Number.isInteger(saved.chapter) && (saved.chapter as number) >= 1) setChapter(Math.min(saved.chapter as number, 60));
+      }
+    } catch { /* 损坏的记录直接忽略，回到默认科目 */ }
     try { setKey(sessionStorage.getItem("yantu-key") || ""); } catch { setKey(""); }
     setProgressReady(true);
   }, []);
+  useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-last-place", JSON.stringify({ subject, book, chapter })); } catch { /* 无法写入时静默，不影响学习 */ } } }, [subject, book, chapter, progressReady]);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done", JSON.stringify(doneBySubject["333"])); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject["333"], progressReady]);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done-825", JSON.stringify(doneBySubject["825"])); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject["825"], progressReady]);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done-politics", JSON.stringify(doneBySubject.politics)); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject.politics, progressReady]);
@@ -146,7 +157,7 @@ export default function Home() {
 
   return <div className="shell">
     <aside className={"sidebar " + (menuOpen ? "open" : "")}>
-      <div className="brand"><span className="brand-logo"><Layers3 size={21}/></span><div><b>研途</b><small>学科英语备考台</small></div><button className="mobile-close" onClick={() => setMenuOpen(false)}><X size={20}/></button></div>
+      <div className="brand"><span className="brand-logo"><Layers3 size={21}/></span><div><b>研途</b><small>考研全科备考台</small></div><button className="mobile-close" onClick={() => setMenuOpen(false)}><X size={20}/></button></div>
       <div className="side-caption">考试科目</div><nav className="side-nav">{subjects.map((item) => <button key={item.id} className={subject === item.id ? "selected" : ""} onClick={() => switchSubject(item.id)}><span className="subject-mark">{item.mark}</span>{item.name}{(item.id === "333" || item.id === "825" || item.id === "politics") && <small>已接入</small>}</button>)}</nav>
       <div className="side-line"/><div className="side-caption">学习工具</div><nav className="side-nav tools">{nav.filter(({ id }) => subject !== "politics" || (id !== "quiz" && id !== "mock")).map(({ id, label, Icon }) => <button key={id} className={view === id ? "selected" : ""} onClick={() => { setView(id); setMenuOpen(false); }}><Icon size={18}/>{label}</button>)}</nav>
       <div className="side-bottom"><div className="target-date"><CalendarDays size={18}/><span><b>2027 年 12 月</b><small>目标初试</small></span></div><button className="key-link" onClick={() => setKeyOpen(true)}><KeyRound size={17}/> DeepSeek 密钥 <small>{key ? "已配置" : "未配置"}</small></button></div>
