@@ -12,10 +12,11 @@ async function realModule(path) {
 const { scopedStudyReviewView, studyBrowseIndex } = await realModule("../lib/study-review-view.ts");
 const { restoreStudyReview, selectNewStudyScopes, buildReviewSession, rateStudyReviewCard } = await realModule("../lib/use-study-review.ts");
 const { createEmptyProgress } = await realModule("../lib/study-scheduler.ts");
-const { cards: raw333 } = await realModule("../lib/study-data.ts");
+const { cards: raw333, loadKnowledgeCards } = await realModule("../lib/study-data.ts");
 const { load825StudyData } = await realModule("../lib/825/study-data.ts");
+const knowledge333 = await loadKnowledgeCards();
 const catalogs = {
-  "333": raw333.map(card => ({ ...card, section: /^〔(.+?)〕/.exec(card.front)?.[1] })),
+  "333": [...raw333, ...knowledge333].map(card => ({ ...card, section: /^〔(.+?)〕/.exec(card.front)?.[1] })),
   "825": (await load825StudyData()).cards,
 };
 const now = new Date(2026, 8, 30, 12);

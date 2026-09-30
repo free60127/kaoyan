@@ -40,15 +40,10 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 }
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
-function intervalLabel(minutes: number) {
-  if (minutes < 60) return `${Math.round(minutes)} 分钟后`;
-  if (minutes < 1440) return `${Number((minutes / 60).toFixed(1))} 小时后`;
-  return `${Number((minutes / 1440).toFixed(1))} 天后`;
-}
 
-export function StudyReviewCards({ review, cards, books, bookId, chapter, section, picker }: { review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode }) {
+export function StudyReviewCards({ review, cards, books, bookId, chapter, section, picker, onRated, jumpCardId }: { review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; jumpCardId?: string }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
-  const currentScope: StudyScope = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
+  const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
   const [browsePosition, setBrowsePosition] = useState({ scopeKey: locationKey, index: 0 });
   const [revealedCard, setRevealedCard] = useState<string | null>(null);
@@ -57,11 +52,46 @@ export function StudyReviewCards({ review, cards, books, bookId, chapter, sectio
   const scopedQueue = scopedStudyReviewView(review.queueForScope(currentScope), cards, review.progress, currentScope, review.now);
   const queue = mode === "all" ? review.queue : scopedQueue;
   const head = queue.items[0];
+  const wasNew = head?.kind === "new";
   const card = mode === "browse" ? browseCards[browseIndex] : cards.find(card => card.id === head?.cardId);
   const visibleCardKey = JSON.stringify([mode, locationKey, card?.id]);
   const flipped = revealedCard === visibleCardKey;
   useEffect(() => { setBrowsePosition({ scopeKey: locationKey, index: 0 }); setRevealedCard(null); }, [locationKey]);
   useEffect(() => setRevealedCard(null), [visibleCardKey]);
+  // 搜索/错题本跳转: 定位到目标卡的浏览位置
+  useEffect(() => {
+    if (!jumpCardId) return;
+    const index = browseCards.findIndex(item => item.id === jumpCardId);
+    if (index >= 0) { setMode("browse"); setBrowsePosition({ scopeKey: locationKey, index }); setRevealedCard(null); }
+  }, [jumpCardId]);
+  function rate(grade: Rating) {
+    if (!card || !flipped || mode === "browse") return;
+    review.rateCard(card.id, grade, mode === "scope" ? currentScope : undefined);
+    onRated?.(card, grade, wasNew);
+    setRevealedCard(null);
+  }
+  // 键盘: 空格/回车翻面, 1-4 评分, 浏览模式 ←/→
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)) return;
+      if (document.querySelector(".key-modal, .backup-shade")) return;
+      if (event.key === " " || event.key === "Enter") {
+        event.preventDefault();
+        setRevealedCard(flipped ? null : visibleCardKey);
+        return;
+      }
+      if (["1", "2", "3", "4"].includes(event.key)) {
+        event.preventDefault();
+        rate(ratings[Number(event.key) - 1].grade);
+        return;
+      }
+      if (mode === "browse" && event.key === "ArrowRight") { event.preventDefault(); setBrowsePosition(previous => ({ scopeKey: locationKey, index: previous.scopeKey === locationKey ? Math.min(previous.index + 1, browseCards.length - 1) : 1 })); return; }
+      if (mode === "browse" && event.key === "ArrowLeft") { event.preventDefault(); setBrowsePosition(previous => ({ scopeKey: locationKey, index: previous.scopeKey === locationKey ? Math.max(previous.index - 1, 0) : 0 })); return; }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
   const lastCard = cards.find(card => card.id === review.lastRating?.cardId);
   const showLastRating = mode !== "browse" && lastCard && (mode === "all" || cardMatchesStudyScope(lastCard, currentScope));
   return <>
@@ -74,9 +104,9 @@ export function StudyReviewCards({ review, cards, books, bookId, chapter, sectio
     {!review.ready ? <div className="panel empty">正在读取学习记录…</div> : card ? <div className="flash-area">
       <div className="flash-top"><span>{books.find(book => book.id === card.book)?.name} · 第 {card.chapter} 章{card.section ? " · " + card.section : ""}</span><span>{mode !== "browse" && head ? `${head.kind === "new" ? "新卡" : head.kind === "learning" ? "短间隔回顾" : "到期复习"} · ${mode === "all" ? "全部队列" : "当前范围"}剩余 ${queue.items.length} 张` : `${browseIndex + 1} / ${browseCards.length}`}</span></div>
       <button className="flash-card" onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? card.back : card.front}</strong><span>{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>
-      <div className="rate-actions study-rate-actions">{!flipped ? <button className="primary" onClick={() => setRevealedCard(visibleCardKey)}>显示答案</button> : mode !== "browse" ? ratings.map(({ grade, label }) => {
+      <div className="rate-actions study-rate-actions">{!flipped ? <button className="primary" onClick={() => setRevealedCard(visibleCardKey)}>显示答案 <small className="kbd-hint">空格</small></button> : mode !== "browse" ? ratings.map(({ grade, label }, index) => {
         const preview = review.preview(card.id, grade);
-        return <button key={grade} onClick={() => { review.rateCard(card.id, grade, mode === "scope" ? currentScope : undefined); setRevealedCard(null); }}>{label}<small>{intervalLabel(preview.delayMinutes)}</small><span>{formatStudyDue(preview.dueAt)}</span></button>;
+        return <button key={grade} onClick={() => rate(grade)}>{label}<small className="kbd-hint">{index + 1}</small><span>{formatStudyDue(preview.dueAt)}</span></button>;
       }) : <button className="secondary" onClick={() => setRevealedCard(null)}>返回问题</button>}</div>
       {mode === "browse" && <div className="study-browse-nav"><button className="secondary" disabled={browseIndex === 0} onClick={() => setBrowsePosition(previous => ({ scopeKey: locationKey, index: previous.scopeKey === locationKey ? Math.max(previous.index - 1, 0) : 0 }))}>上一张</button><button className="secondary" disabled={browseIndex >= browseCards.length - 1} onClick={() => setBrowsePosition(previous => ({ scopeKey: locationKey, index: previous.scopeKey === locationKey ? Math.min(previous.index + 1, browseCards.length - 1) : 1 }))}>下一张</button></div>}
     </div> : <div className="panel empty study-queue-empty">{mode === "browse" ? "当前章 / 小节暂无闪卡，请切换浏览位置。" : <>

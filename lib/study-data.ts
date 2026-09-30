@@ -1,7 +1,6 @@
 import { outlines } from "./outlines";
 import { chapterHighlights } from "./chapter-highlights";
 import pastQuestions from "./past-questions.json";
-import knowledgeCardsJson from "./knowledge-cards.json";
 
 export type Card = { id: string; book: string; chapter: number; front: string; back: string; source: string };
 export type Question = { id: string; year: number; book: string; chapter: number; stem: string; options: string[]; answer: number; explanation: string; source: string };
@@ -13,9 +12,8 @@ export const books = [
   { id: "psychology", name: "教育心理学", short: "教心", tone: "#9478ad", chapters: ["心理发展与教育", "学习及其理论解释", "学习动机", "知识的建构", "技能的形成", "学习策略及其教学", "问题解决能力与创造性的培养", "社会规范学习、态度与品德发展"] },
 ] as const;
 
-// 章级框架卡先行（目录框架 + 知识框架），随后是逐章逐节的知识点闪卡。
-// 依据四本《27KC 333 应试解析》(2027版) 的完整 OCR 文本编写，
-// 生成与校验脚本见工作区 flashcards-src/（每张卡保留书中 PDF 页码出处）。
+// 章级框架卡（目录框架 + 知识框架）静态保留；逐章知识点闪卡体积大（1.5MB），
+// 由 loadKnowledgeCards() 懒加载，Vite 会拆成独立 chunk，不进首屏。
 export const cards: Card[] = [];
 
 for (const book of books) {
@@ -45,8 +43,10 @@ for (const book of books) {
   });
 }
 
-for (const knowledge of knowledgeCardsJson as unknown as Card[]) {
-  cards.push(knowledge);
+/** 懒加载 1682 张逐章知识点闪卡（独立 chunk, 不进首屏）。 */
+export async function loadKnowledgeCards(): Promise<Card[]> {
+  const module = await import("./knowledge-cards.json");
+  return module.default as unknown as Card[];
 }
 
 export const questions: Question[] = [

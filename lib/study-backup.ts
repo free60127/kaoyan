@@ -201,8 +201,8 @@ function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCata
 /** Called on demand. The 825/politics JSON catalogs remain lazy imports. */
 export async function loadBackupCatalogs(): Promise<BackupCatalogs> {
   const [data333, outlines, module825, modulePolitics] = await Promise.all([import("./study-data"), import("./outlines"), import("./825/study-data"), import("./politics/study-data")]);
-  const [data825, dataPolitics] = await Promise.all([module825.load825StudyData(), modulePolitics.loadPoliticsStudyData()]);
-  const cards333 = data333.cards.map(card => ({ ...card, ...(/^〔(.+?)〕/.exec(card.front)?.[1] ? { section: /^〔(.+?)〕/.exec(card.front)![1] } : {}) }));
+  const [data825, dataPolitics, knowledge333] = await Promise.all([module825.load825StudyData(), modulePolitics.loadPoliticsStudyData(), data333.loadKnowledgeCards()]);
+  const cards333 = [...data333.cards, ...knowledge333].map(card => ({ ...card, ...(/^〔(.+?)〕/.exec(card.front)?.[1] ? { section: /^〔(.+?)〕/.exec(card.front)![1] } : {}) }));
   const books333 = data333.books.map(book => ({ id: book.id, name: book.name, chapters: book.chapters.map((title, index) => ({ title, sections: outlines.outlines[book.id]?.[index] || [] })) }));
   const booksPolitics = dataPolitics.books.map(book => ({ id: book.id, name: book.name, chapters: book.chapters.map(title => ({ title, sections: [] as string[] })) }));
   for (const [books, cards] of [[books333, cards333], [booksPolitics, dataPolitics.cards]] as [MockPracticeBook[], BackupCard[]][]) {

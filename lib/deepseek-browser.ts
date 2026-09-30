@@ -1,4 +1,4 @@
-import { cards, type Question } from "./study-data";
+import { cards, loadKnowledgeCards, type Card as Card333, type Question } from "./study-data";
 import { load825StudyData, type Card825 } from "./825/study-data";
 import { loadPoliticsStudyData } from "./politics/study-data";
 import { requestDeepSeek } from "./mock-quiz";
@@ -58,7 +58,9 @@ export async function askDeepSeek(key: string, mode: Mode, prompt: string, ctx: 
     const relevantCards = data.cards.filter((item) => item.book === ctx.bookId && item.chapter === ctx.chapterNo);
     notes = chooseCards(relevantCards, mode, ctx.section);
   } else {
-    const relevantCards = cards.filter((item) => item.book === ctx.bookId && item.chapter === ctx.chapterNo && !item.id.startsWith("outline-"));
+    const knowledge = await loadKnowledgeCards() as unknown as Card333[];
+    const catalog333 = [...cards, ...knowledge];
+    const relevantCards = catalog333.filter((item) => item.book === ctx.bookId && item.chapter === ctx.chapterNo && !item.id.startsWith("outline-"));
     notes = chooseCards(relevantCards.map((item) => ({ ...item, section: item.front.match(/^〔([^〕]+)〕/)?.[1] })), mode, ctx.section);
     if (mode === "quiz" && !notes.length) throw new Error("当前章节和小节没有可供命题的笔记知识点。");
   }

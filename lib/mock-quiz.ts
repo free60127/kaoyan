@@ -1,4 +1,4 @@
-import { books, cards, questions } from "./study-data";
+import { books, cards, loadKnowledgeCards, questions } from "./study-data";
 import { load825StudyData } from "./825/study-data";
 import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "./mock-paper-templates";
 
@@ -190,7 +190,8 @@ async function getReferences(ctx: MockQuizContext) {
   if (!Array.isArray(ranges) || !ranges.length) throw new Error("请选择至少一个书目或章节范围。");
   const is825 = ctx.subject === "825";
   const data = is825 ? await load825StudyData() : null;
-  const availableCards = data ? data.cards : cards;
+  const knowledge333 = is825 ? [] : await loadKnowledgeCards();
+  const availableCards = data ? data.cards : [...cards, ...knowledge333];
   const bookData = data ? data.books : books;
   const result: { unit: MockQuizUnit; notes: { id: string; front: string; back: string }[]; style: { type: string; stem: string }[] }[] = [];
   const unitKeys = new Set<string>();

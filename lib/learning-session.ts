@@ -1,5 +1,5 @@
 export type StudySubject = "333" | "825" | "politics" | "english";
-export type StudyView = "overview" | "chapters" | "cards" | "quiz" | "mock" | "feynman" | "planner";
+export type StudyView = "overview" | "chapters" | "cards" | "quiz" | "practice" | "mock" | "feynman" | "planner" | "mistakes" | "stats" | "search";
 export type LearningLocation = {
   book: string; chapter: number; section: string; view: StudyView;
   pastMode: "practice" | "index"; pastYear: number; pastIndex: number;
@@ -12,7 +12,7 @@ export type BookIds = Partial<Record<StudySubject, string[]>>;
 export const learningSessionKey = "yantu-learning-session-v1";
 export const defaultPlannerPrompt = "请结合当前科目的书目和进度，为我安排今天可执行的学习计划，包含主动回忆、练习和复盘。";
 const subjects: StudySubject[] = ["333", "825", "politics", "english"];
-const views: StudyView[] = ["overview", "chapters", "cards", "quiz", "mock", "feynman", "planner"];
+const views: StudyView[] = ["overview", "chapters", "cards", "quiz", "practice", "mock", "feynman", "planner", "mistakes", "stats", "search"];
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const text = (value: unknown): value is string => typeof value === "string" && value.length <= 200_000;
 const integer = (value: unknown, min: number, max: number) => typeof value === "number" && Number.isSafeInteger(value) && value >= min && value <= max;
