@@ -9,7 +9,7 @@ async function realModule(path) {
   const result = await build({ entryPoints: [fileURLToPath(new URL(path, import.meta.url))], bundle: true, write: false, format: "esm", platform: "node", target: "node20" });
   return import(`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].text).toString("base64")}`);
 }
-const { restoreStudyReview, serializeStudyReview, selectNewStudyScopes, pauseStudyScope, buildReviewSession, studyReviewKey } = await realModule("../lib/use-study-review.ts");
+const { restoreStudyReview, serializeStudyReview, selectNewStudyScopes, pauseStudyScope, buildReviewSession, rateStudyReviewCard, studyReviewKey } = await realModule("../lib/use-study-review.ts");
 const { applyRating } = await realModule("../lib/study-scheduler.ts");
 const now = new Date(2026, 8, 30, 12);
 const later = minutes => new Date(now.getTime() + minutes * 60_000);
@@ -97,4 +97,48 @@ test("whole chapter selection supersedes overlapping section ranges without dupl
   session = selectNewStudyScopes(session, [], catalog);
   assert.equal(session.progress.scopes.length, 1);
   assert.equal(buildReviewSession(catalog, session, now).counts.newToday, 0);
+});
+
+test("each selected book can start scoped new cards while all modes share one 20-card admission limit", () => {
+  const many = ["a", "b"].flatMap(book => Array.from({ length: 25 }, (_, index) => ({ id: `${book}${index}`, book, chapter: 1 })));
+  let session = selectNewStudyScopes(restoreStudyReview(null, many, now), [scope("a", 1), scope("b", 1)], many);
+  assert.equal(buildReviewSession(many, session, now).items.length, 20);
+  assert.ok(buildReviewSession(many, session, now).items.every(item => item.cardId.startsWith("a")));
+  assert.equal(buildReviewSession(many, session, now, scope("b", 1)).items.length, 20);
+  session = rateStudyReviewCard(session, many, "b0", "good", now, scope("b", 1));
+  assert.ok(session);
+  assert.deepEqual(session.progress.daily.admitted, ["b0"]);
+  assert.equal(buildReviewSession(many, session, now, scope("a", 1)).items.length, 19);
+  assert.equal(buildReviewSession(many, session, now, scope("b", 1)).items.length, 19);
+  assert.equal(buildReviewSession(many, session, now).remainingNewLimit, 19);
+  for (let index = 0; index < 19; index += 1) {
+    session = rateStudyReviewCard(session, many, `a${index}`, "good", now, scope("a", 1));
+    assert.ok(session);
+  }
+  for (const location of [undefined, scope("a", 1), scope("b", 1)]) {
+    assert.equal(buildReviewSession(many, session, now, location).remainingNewLimit, 0);
+    assert.equal(buildReviewSession(many, session, now, location).items.length, 0);
+  }
+  assert.equal(rateStudyReviewCard(session, many, "b1", "good", now, scope("b", 1)), null);
+  assert.equal(Object.keys(session.progress.cards).length, 20);
+  assert.deepEqual(restoreStudyReview(serializeStudyReview(session), many, now), session);
+});
+
+test("scoped rating validates current eligibility without enrolling unselected cards or advancing future cards", () => {
+  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one")], catalog);
+  const original = JSON.stringify(session);
+  assert.equal(rateStudyReviewCard(session, catalog, "b1", "good", now, scope("b", 1)), null);
+  assert.equal(rateStudyReviewCard(session, catalog, "a2", "good", now, scope("a", 1)), null);
+  assert.equal(rateStudyReviewCard(session, catalog, "a1", "good", now, scope("b", 1)), null);
+  assert.equal(JSON.stringify(session), original);
+  session = rateStudyReviewCard(session, catalog, "a1", "hard", now, scope("a", 1, "one"));
+  assert.ok(session);
+  assert.equal(rateStudyReviewCard(session, catalog, "a1", "good", later(4), scope("a", 1)), null);
+  session = selectNewStudyScopes(session, [scope("b", 1)], catalog);
+  const dueQueue = buildReviewSession(catalog, session, later(5), scope("a", 1));
+  assert.deepEqual(dueQueue.items.map(item => [item.cardId, item.kind]), [["a1", "learning"]]);
+  const rated = rateStudyReviewCard(session, catalog, "a1", "good", later(5), scope("a", 1));
+  assert.ok(rated);
+  assert.equal(rated.progress.cards.a1.firstStudiedAt, session.progress.cards.a1.firstStudiedAt);
+  assert.deepEqual(rated.progress.daily.admitted, ["a1"]);
 });
