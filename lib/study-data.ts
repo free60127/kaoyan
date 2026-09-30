@@ -13,29 +13,10 @@ export const books = [
   { id: "psychology", name: "教育心理学", short: "教心", tone: "#9478ad", chapters: ["心理发展与教育", "学习及其理论解释", "学习动机", "知识的建构", "技能的形成", "学习策略及其教学", "问题解决能力与创造性的培养", "社会规范学习、态度与品德发展"] },
 ] as const;
 
-export const cards: Card[] = [
-  { id: "p1", book: "principles", chapter: 1, front: "谢弗勒把教育语言陈述分为哪三类？", back: "教育定义、教育口号、教育隐喻。教育定义又可分为描述性、规定性、纲领性定义。", source: "《应试解析·教育学原理》对应章节（2027版）" },
-  { id: "p2", book: "principles", chapter: 1, front: "教育口号有什么特点？", back: "在特定社会情境下提出，表达教育目的或理念；语言简练、明晰、通俗，具有宣传和鼓励作用。", source: "《应试解析·教育学原理》对应章节（2027版）" },
-  { id: "p3", book: "principles", chapter: 1, front: "狭义教育主要指什么？", back: "主要指学校教育：依据社会要求和学生身心发展规律，有目的、有计划、有组织地培养人的活动。", source: "《应试解析·教育学原理》对应章节（2027版）" },
-  { id: "p4", book: "principles", chapter: 3, front: "人的身心发展差异性对教育有什么要求？", back: "从学生实际出发，了解个体差异，因材施教。", source: "2024 年 333 真题及解析 PDF 第2页" },
-  { id: "p5", book: "principles", chapter: 6, front: "“鱼稻共生”课程由教师、学生、家长和乡政府协商开发，体现哪种课程开发模式？", back: "实践模式；重视具体情境中的参与、协商与实践。", source: "2026 年 333 真题及解析 PDF 第3页" },
-  { id: "c1", book: "china", chapter: 1, front: "西周“六艺”是哪六项？", back: "礼、乐、射、御、书、数。", source: "《应试解析·中国教育史》对应章节（2027版）" },
-  { id: "c2", book: "china", chapter: 1, front: "“六艺”中的“大艺”和“小艺”如何区分？", back: "礼乐是中心，主要安排在大学；书数为文化基础知识技能，作为“小艺”主要安排在小学。", source: "《应试解析·中国教育史》对应章节（2027版）" },
-  { id: "c3", book: "china", chapter: 2, front: "稷下学宫的基本特点是什么？", back: "学术自由：容纳百家、派别平等、来去自由、相互争鸣；兼具讲学、著述、育才和咨政议政功能。", source: "《应试解析·中国教育史》对应章节（2027版）" },
-  { id: "f1", book: "foreign", chapter: 1, front: "苏美尔学校为什么被称为“泥板书舍”？", back: "泥板制成的“书”是主要教学和书写工具，因此得名。", source: "《应试解析·外国教育史》对应章节（2027版）" },
-  { id: "f2", book: "foreign", chapter: 1, front: "古代埃及常见的学校类型有哪些？", back: "宫廷学校、僧侣学校、职官学校和文士学校。", source: "《应试解析·外国教育史》对应章节（2027版）" },
-  { id: "f3", book: "foreign", chapter: 1, front: "古代印度佛教教育的重要场所是什么？", back: "寺院；寺院学校既是教育机构，也是学术研究场所。", source: "《应试解析·外国教育史》对应章节（2027版）" },
-  { id: "y1", book: "psychology", chapter: 1, front: "皮亚杰和维果茨基的理论主要归入本书哪一节？", back: "第一章第二节“认知发展理论与教育”。复述时比较认知发展的内部建构与社会文化支持。", source: "《应试解析·教育心理学》对应章节（2027版）" },
-  { id: "y2", book: "psychology", chapter: 2, front: "行为主义学习理论在本书中有哪些代表人物？", back: "巴甫洛夫、华生、桑代克、斯金纳、班杜拉。可按经典条件作用、操作性条件作用、观察学习来整理。", source: "《应试解析·教育心理学》对应章节（2027版）" },
-  { id: "y3", book: "psychology", chapter: 3, front: "成败归因理论中，运气属于哪种归因？", back: "外部、不稳定、不可控。", source: "2024 年 333 真题及解析 PDF 第8页" },
-  { id: "y4", book: "psychology", chapter: 6, front: "“由薄到厚”不断补充材料，属于哪种学习策略？", back: "精细加工策略：补充信息并建立联系，加深理解和记忆。", source: "2026 年 333 真题及解析 PDF 第8页" },
-];
-
-// 逐章逐节的知识点闪卡：依据四本《27KC 333 应试解析》(2027版) 的完整 OCR 文本编写，
+// 章级框架卡先行（目录框架 + 知识框架），随后是逐章逐节的知识点闪卡。
+// 依据四本《27KC 333 应试解析》(2027版) 的完整 OCR 文本编写，
 // 生成与校验脚本见工作区 flashcards-src/（每张卡保留书中 PDF 页码出处）。
-for (const knowledge of knowledgeCardsJson as unknown as Card[]) {
-  cards.push(knowledge);
-}
+export const cards: Card[] = [];
 
 for (const book of books) {
   outlines[book.id]?.forEach((sections, index) => {
@@ -62,6 +43,10 @@ for (const book of books) {
       source: `《27KC 333 应试解析·${book.name}》2027版 PDF 第${entry.page}页 · 知识框架 OCR 后人工核对`,
     });
   });
+}
+
+for (const knowledge of knowledgeCardsJson as unknown as Card[]) {
+  cards.push(knowledge);
 }
 
 export const questions: Question[] = [
