@@ -80,7 +80,9 @@ test("all thirteen keys round trip realistic three-subject records, future dates
     assert.equal(result.summary[subject].studiedCards, 1);
     assert.equal(result.summary[subject].completedChapters, 1);
   }
-  assert.deepEqual(result.summary["825"], { studiedCards: 1, completedChapters: 1, mockQuestions: 2, drafts: 2 });
+  assert.equal(result.summary["825"].mistakes, 0);
+  assert.equal(result.summary["333"].quizAnswers, 4); // fullStorage 的 stats 样本
+  assert.deepEqual(result.summary["english"], { studiedCards: 0, completedChapters: 0, mockQuestions: 0, drafts: 1, mistakes: 0, quizAnswers: 0 });
   assert.equal(result.summary.english.drafts, 1);
 });
 test("document includes original problems, chapter labels, dates, every option and complete answers", () => {

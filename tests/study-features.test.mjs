@@ -37,7 +37,7 @@ test("practice-quiz: 题干来自卡正面、正确项可定位、干扰项互�
 });
 
 test("mistakes: 累计错误次数、移除与按科目清空", async () => {
-  const { parseMistakes, recordMistake, removeMistakes, clearMistakes, mistakesStorageKey, selectRequizList } = await realModule("../lib/mistakes.ts");
+  const { parseMistakes, recordMistake, removeMistakes, removeMistakesByRef, clearMistakes, mistakesStorageKey, selectRequizList } = await realModule("../lib/mistakes.ts");
   // 以 localStorage mock 模块级读写
   const store = new Map();
   globalThis.localStorage = {
@@ -72,6 +72,12 @@ test("mistakes: 累计错误次数、移除与按科目清空", async () => {
   assert.equal(selectRequizList(list2, "politics").length, 0);
   const many = Array.from({ length: 30 }, (_, i) => ({ id: `333:card:c${i}`, subject: "333", kind: "card", refId: `c${i}`, label: `卡${i}`, wrongCount: 1, lastAt: now.toISOString() }));
   assert.equal(selectRequizList(many, "333").length, 20);
+  // 按 refId 批量移出(重练答对场景): 只删该科目的匹配 ref, 跨科目同名 ref 不误删
+  recordMistake("333", "practice", "shared", "333的卡", now);
+  recordMistake("politics", "practice", "shared", "政治的同名卡", now);
+  const afterRef = removeMistakesByRef("333", ["shared"]);
+  assert.ok(!afterRef.some(item => item.subject === "333" && item.refId === "shared"));
+  assert.ok(afterRef.some(item => item.subject === "politics" && item.refId === "shared"));
   delete globalThis.localStorage;
 });
 

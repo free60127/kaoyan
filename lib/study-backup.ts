@@ -32,7 +32,7 @@ export type BackupQuestion = { id: string; book: string; stem: string; source: s
 export type BackupCatalog = { books: MockPracticeBook[]; cards: BackupCard[]; questions?: BackupQuestion[] };
 export type BackupCatalogs = Record<BackupSubject, BackupCatalog>;
 export type BackupStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
-export type BackupSummary = Record<StudySubject, { studiedCards: number; completedChapters: number; mockQuestions: number; drafts: number }>;
+export type BackupSummary = Record<StudySubject, { studiedCards: number; completedChapters: number; mockQuestions: number; drafts: number; mistakes: number; quizAnswers: number }>;
 export type BackupDocumentBlock = { type: "heading" | "paragraph"; text: string };
 export type BackupDocument = { title: string; blocks: BackupDocumentBlock[] };
 
@@ -303,11 +303,18 @@ export function collectStudyBackup(storage: Pick<Storage, "getItem">, catalogs: 
 
 export function summarizeStudyBackup(input: StudyBackup, catalogs: BackupCatalogs): BackupSummary {
   const backup = validateStudyBackup(input, catalogs);
-  const result = Object.fromEntries(allSubjects.map(subject => [subject, { studiedCards: 0, completedChapters: 0, mockQuestions: 0, drafts: 0 }])) as BackupSummary;
+  const result = Object.fromEntries(allSubjects.map(subject => [subject, { studiedCards: 0, completedChapters: 0, mockQuestions: 0, drafts: 0, mistakes: 0, quizAnswers: 0 }])) as BackupSummary;
   for (const subject of subjects) {
     result[subject].studiedCards = Object.keys(backup.records[srsKey(subject)]?.cards || {}).length;
     result[subject].completedChapters = Object.values(backup.records[doneKey(subject)] || {}).filter(Boolean).length;
     if (subject !== "politics") result[subject].mockQuestions = backup.records[mockKey(subject)]?.session?.result.questions.length || 0;
+  }
+  const mistakeList = backup.records["yantu-mistakes-v1"];
+  if (mistakeList) for (const entry of mistakeList) {
+    if (allSubjects.includes(entry.subject as StudySubject)) result[entry.subject as StudySubject].mistakes++;
+  }
+  for (const subject of subjects) {
+    result[subject].quizAnswers = Object.values(backup.records[`yantu-stats-v1-${subject}` as BackupStorageKey] || {}).reduce((sum, day) => sum + (day?.quiz || 0), 0);
   }
   const saved = backup.records[learningSessionKey];
   if (saved) {

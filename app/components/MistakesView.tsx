@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { RefreshCw, Trash2 } from "lucide-react";
-import { clearMistakes, readMistakes, removeMistakes, selectRequizList, type Mistake } from "@/lib/mistakes";
+import { clearMistakes, readMistakes, removeMistakes, removeMistakesByRef, selectRequizList, type Mistake } from "@/lib/mistakes";
 import { PracticeView } from "./PracticeView";
 import type { StatStore } from "@/lib/stats";
 
@@ -33,7 +33,7 @@ export function MistakesView({ subject, onReviewCard, cards, storage }: { subjec
   const requizCards = cards[requizSubject] || [];
 
   function handleRequizDone(masteredIds: string[]) {
-    if (masteredIds.length) setItems(removeMistakes(masteredIds));
+    if (masteredIds.length) setItems(removeMistakesByRef(requizSubject, masteredIds));
   }
 
   if (requiz && requizList.length) {

@@ -45,10 +45,18 @@ export function removeMistake(id: string): Mistake[] {
   return removeMistakes([id]);
 }
 
-/** Remove several mistakes at once (e.g. after a re-quiz round masters them). */
+/** Remove several mistakes at once by entry id. */
 export function removeMistakes(ids: readonly string[]): Mistake[] {
   const drop = new Set(ids);
   const updated = readMistakes().filter(item => !drop.has(item.id));
+  try { localStorage.setItem(mistakesStorageKey, JSON.stringify(updated)); } catch { /* ignore */ }
+  return updated;
+}
+
+/** Remove every entry of a subject whose refId matches (re-quiz mastered cards). */
+export function removeMistakesByRef(subject: string, refIds: readonly string[]): Mistake[] {
+  const drop = new Set(refIds);
+  const updated = readMistakes().filter(item => !(item.subject === subject && drop.has(item.refId)));
   try { localStorage.setItem(mistakesStorageKey, JSON.stringify(updated)); } catch { /* ignore */ }
   return updated;
 }

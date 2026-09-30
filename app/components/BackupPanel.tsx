@@ -22,9 +22,9 @@ export function backupPdfFilename(createdAt: string): string {
   return `研途学习备份-${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}.pdf`;
 }
 function Summary({ summary }: { summary: BackupSummary }) {
-  return <div className="backup-summary"><table><caption>包含的学习记录</caption><thead><tr><th>科目</th><th>已学卡</th><th>完成章</th><th>模拟题</th><th>草稿 / 要求</th></tr></thead><tbody>{Object.entries(subjects).map(([id, name]) => {
+  return <div className="backup-summary"><table><caption>包含的学习记录</caption><thead><tr><th>科目</th><th>已学卡</th><th>完成章</th><th>模拟题</th><th>错题</th><th>练习答</th><th>草稿 / 要求</th></tr></thead><tbody>{Object.entries(subjects).map(([id, name]) => {
     const row = summary[id as keyof BackupSummary];
-    return <tr key={id}><th scope="row">{name}</th><td>{row.studiedCards}</td><td>{row.completedChapters}</td><td>{row.mockQuestions}</td><td>{row.drafts}</td></tr>;
+    return <tr key={id}><th scope="row">{name}</th><td>{row.studiedCards}</td><td>{row.completedChapters}</td><td>{row.mockQuestions}</td><td>{row.mistakes}</td><td>{row.quizAnswers}</td><td>{row.drafts}</td></tr>;
   })}</tbody></table></div>;
 }
 
@@ -91,7 +91,7 @@ export default function BackupPanel({ blockedReason, onBusyChange }: { blockedRe
   const disabled = busy || !catalogs || Boolean(blockedReason);
   return <>
     <p className="backup-intro">学习记录会自动保存到当前浏览器。导出 PDF 可阅读学习记录、完整模拟卷与作答，也可在其他浏览器导入恢复。需要自己保存并传递文件。</p>
-    <p className="mock-help">备份保留复习范围、每日新卡配额、未来到期时间、章节标记、学习位置与草稿；不包含 DeepSeek 密钥。</p>
+    <p className="mock-help">备份保留复习范围、每日新卡配额、未来到期时间、章节标记、学习位置、费曼草稿、错题本与每日学习统计；不包含 DeepSeek 密钥。</p>
     {blockedReason && <p className="error" role="alert">{blockedReason}</p>}
     {!catalogs && !error && <p role="status">正在加载学习目录…</p>}
     <div className="backup-actions"><button className="primary" disabled={disabled} onClick={exportPdf}>导出 PDF 备份</button><button className="secondary" disabled={disabled} onClick={() => inputRef.current?.click()}>选择 PDF 导入</button><input ref={inputRef} type="file" accept="application/pdf,.pdf" aria-label="选择本站 PDF 备份" hidden disabled={disabled} onChange={selectPdf}/></div>
