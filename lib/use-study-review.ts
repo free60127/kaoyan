@@ -3,8 +3,9 @@ import { applyRating, buildStudyQueue, createEmptyProgress, normalizeStoredProgr
 import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
-export const studyReviewKey = (subject: "333" | "825") => `yantu-srs-v1-${subject}`;
-const legacyKey = (subject: "333" | "825") => subject === "825" ? "yantu-reviews-825" : "yantu-reviews";
+export type StudySubject = "333" | "825" | "politics";
+export const studyReviewKey = (subject: StudySubject) => `yantu-srs-v1-${subject}`;
+const legacyKey = (subject: StudySubject) => subject === "825" ? "yantu-reviews-825" : subject === "politics" ? "yantu-reviews-politics" : "yantu-reviews";
 
 function parse(value: unknown): unknown {
   if (typeof value !== "string") return value;
@@ -55,7 +56,7 @@ export function rateStudyReviewCard(session: StudyReviewSession, catalog: readon
   return { ...session, progress: applyRating(session.progress, cardId, grade, now) };
 }
 
-export function useStudyReview(subject: "333" | "825", catalog: readonly CardIdentity[], enabled: boolean) {
+export function useStudyReview(subject: StudySubject, catalog: readonly CardIdentity[], enabled: boolean) {
   const [session, setSession] = useState<StudyReviewSession | null>(null);
   const sessionRef = useRef<StudyReviewSession | null>(null);
   const [now, setNow] = useState(() => Date.now());
