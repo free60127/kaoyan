@@ -7,10 +7,13 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test:mock-quiz": "node --test tests/mock-quiz*.mjs"
+    "test:mock-quiz": "node --test tests/mock-quiz*.mjs",
+    "test:backup-pdf": "node --test tests/backup-pdf.test.mjs"
   },
   "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
     "lucide-react": "^0.468.0",
+    "pdf-lib": "^1.17.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
