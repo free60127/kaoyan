@@ -6,6 +6,7 @@ type Context = { subject?: string; book?: string; bookId?: string; chapterNo?: n
 export type GeneratedOpenQuestion = { type: string; stem: string; referenceAnswer: string; rationale: string };
 type Result = { text?: string; question?: Question; openQuestion?: GeneratedOpenQuestion };
 const FACT_LIMIT = 3800;
+export const cleanApiKey = (value: string) => value.replace(/[\s\u200b-\u200f\uFEFF"'“”‘’]+/g, "");
 const trimText = (value: string, max: number) => value.length > max ? value.slice(0, max) + "…" : value;
 
 function chooseCards(rows: { front: string; back: string; section?: string }[], mode: Mode, section?: string) {
@@ -25,7 +26,9 @@ function chooseCards(rows: { front: string; back: string; section?: string }[], 
 }
 
 export async function askDeepSeek(key: string, mode: Mode, prompt: string, ctx: Context): Promise<Result> {
-  if (!key.trim() || !prompt.trim()) throw new Error("请填写 API Key 和学习内容。");
+  // 去掉复制时可能混入的空白、零宽字符和引号，避免 Key 被无谓判为无效。
+  const cleanKey = cleanApiKey(key);
+  if (!cleanKey || !prompt.trim()) throw new Error("请填写 API Key 和学习内容。");
   if (prompt.length > 8000) throw new Error("输入内容过长，请缩短后重试。");
   const is825 = ctx.subject === "825";
   let notes: { front: string; back: string }[] = [];
@@ -63,12 +66,17 @@ export async function askDeepSeek(key: string, mode: Mode, prompt: string, ctx: 
   try {
     response = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + key.trim() },
-      body: JSON.stringify({ model: "deepseek-flash", messages: [{ role: "system", content: system }, { role: "user", content: context + facts + questionStyle + "\n\n用户输入：" + prompt }], stream: false, max_tokens: 1200, ...(mode === "quiz" ? { response_format: { type: "json_object" } } : {}) }),
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + cleanKey },
+      body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: context + facts + questionStyle + "\n\n用户输入：" + prompt }], stream: false, max_tokens: 1200, ...(mode === "quiz" ? { response_format: { type: "json_object" } } : {}) }),
       signal: AbortSignal.timeout(30000),
     });
   } catch { throw new Error("连接 DeepSeek 超时或网络不可用。"); }
-  if (!response.ok) throw new Error(response.status === 401 ? "API Key 无效，请检查后重试。" : "DeepSeek 请求失败（" + response.status + "），请稍后重试。");
+  if (!response.ok) {
+    let detail = "";
+    try { const body = await response.json() as { error?: { message?: string }; message?: string }; detail = body?.error?.message || body?.message || ""; } catch { /* 保留空 detail */ }
+    if (response.status === 401) throw new Error("DeepSeek 拒绝了这个 Key（401" + (detail ? "：" + detail : "") + "）。请到 platform.deepseek.com 重新完整复制以 sk- 开头的 Key，注意不要混入多余字符。");
+    throw new Error("DeepSeek 请求失败（" + response.status + (detail ? "：" + detail : "") + "），请稍后重试。");
+  }
   const data = await response.json() as { choices?: { message?: { content?: string } }[] };
   const text = data.choices?.[0]?.message?.content;
   if (!text) throw new Error("DeepSeek 未返回内容，请重试。");
