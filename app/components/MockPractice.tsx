@@ -3,9 +3,11 @@ import { generateMockQuiz, MOCK_QUIZ_TYPES, MOCK_QUIZ_TYPE_LABELS, type MockQuiz
 import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "@/lib/mock-paper-templates";
 import { countsToStrings, initialMockCounts, initialMockPracticeState, mockPracticeReducer, mockPracticeScore, mockRangesFromSelection, snapshotMockSettings, type MockPracticeBook, type MockResponse, type MockSnapshot } from "@/lib/mock-practice-state";
 import { readMockPractice, writeMockPractice, type MockSettings } from "@/lib/mock-practice-storage";
+import { CopyAnswerButton } from "./CopyAnswerButton";
+import { selectedAnswer } from "@/lib/copy-answer";
 
-type Props = { subject: "333" | "825"; books: MockPracticeBook[]; active: boolean; apiKey: string; onNeedKey: () => void; current: { bookId: string; chapter: number; section: string } };
-export function MockPractice({ subject, books, active, apiKey, onNeedKey, current }: Props) {
+type Props = { subject: "333" | "825"; books: MockPracticeBook[]; active: boolean; apiKey: string; onNeedKey: () => void; onOpenBackup: () => void; onStatusChange: (subject: "333" | "825", status: { pending: boolean; error: boolean }) => void; current: { bookId: string; chapter: number; section: string } };
+export function MockPractice({ subject, books, active, apiKey, onNeedKey, onOpenBackup, onStatusChange, current }: Props) {
   const [counts, setCounts] = useState(() => initialMockCounts(subject));
   const [selection, setSelection] = useState<Record<string, number[]>>(() => ({ [books[0]?.id || ""]: [1] }));
   const [sectionScope, setSectionScope] = useState<{ bookId: string; chapter: number; name: string }>();
@@ -31,6 +33,7 @@ export function MockPractice({ subject, books, active, apiKey, onNeedKey, curren
   const score = session ? mockPracticeScore(session) : null;
   const snapshotTemplate = session?.snapshot.templateId ? getApplicableMockPaperTemplate(session.snapshot.templateId, subject, session.snapshot.ranges.map((range) => range.bookId)) : undefined;
   const question = session?.result.questions[session.cursor];
+  useEffect(() => { onStatusChange(subject, { pending: state.pending, error: storageStatus.error }); }, [subject, state.pending, storageStatus.error, onStatusChange]);
 
   useEffect(() => {
     const defaults: MockSettings = { counts: initialMockCounts(subject), selection: books[0] ? { [books[0].id]: [1] } : {} };
@@ -137,7 +140,7 @@ export function MockPractice({ subject, books, active, apiKey, onNeedKey, curren
       {state.error && <p className="error" role="alert">{state.error}</p>}
     </section>
     {session && <section className="panel mock-session"><fieldset className="mock-session-controls" disabled={state.pending}>
-      <div className="mock-session-head"><div><span className="eyebrow">已生成 · {subject} AI 模拟卷</span><h2>{session.result.questions.length} 题{snapshotTemplate ? ` · 构成参考 ${snapshotTemplate.totalPoints} 分` : " · 自定义构成"}</h2></div><button className="text-button" disabled={state.pending} onClick={() => setConfirmClear(true)}>清除本卷与作答</button></div>
+      <div className="mock-session-head"><div><span className="eyebrow">已生成 · {subject} AI 模拟卷</span><h2>{session.result.questions.length} 题{snapshotTemplate ? ` · 构成参考 ${snapshotTemplate.totalPoints} 分` : " · 自定义构成"}</h2></div><button className="secondary" disabled={state.pending || storageStatus.error} onClick={onOpenBackup}>备份与导出</button><button className="text-button" disabled={state.pending} onClick={() => setConfirmClear(true)}>清除本卷与作答</button></div>
       {confirmClear && <div className="mock-source" role="alert"><b>确认清除这套 {session.result.questions.length} 题模拟卷与全部作答？</b><p>清除后无法恢复。本科目的命题设置会保留。</p><button className="secondary" onClick={() => { dispatch({ type: "clear" }); setConfirmClear(false); setReplacement(undefined); }}>确认清除本卷与作答</button><button className="secondary" onClick={() => setConfirmClear(false)}>保留本卷</button></div>}
       <p className="mock-help">生成时间：{session.snapshot.createdAt}</p><p className="mock-selection"><b>本卷范围：</b>{session.snapshot.scopeLabel}</p><p className="mock-help">本卷题型：{MOCK_QUIZ_TYPES.filter((type) => session.snapshot.config[type]).map((type) => `${MOCK_QUIZ_TYPE_LABELS[type]} ${session.snapshot.config[type]} 题`).join(" · ")}</p>
       {snapshotTemplate && <TemplateSource template={snapshotTemplate}/>}
@@ -153,8 +156,19 @@ function TemplateSource({ template }: { template: ReturnType<typeof getApplicabl
   return <div className="mock-source"><b>{template.template.title}</b><p>构成来源：{template.template.sourceFile} · 第 {template.template.sourcePages.join("、")} 页</p><p>{template.template.recall ? "回忆版资料，非官方发布；仅参考题型、题数与分值。" : "本地资料整理，非官方发布；仅参考题型、题数与分值。"}所选书目适用 {template.totalQuestions} 题 / {template.totalPoints} 分，生成题目均为 AI 模拟题。</p></div>;
 }
 function MockQuestion({ subject, question, number, response, onResponse, preview = false }: { subject: string; question: MockQuizQuestion; number: number; response: MockResponse; onResponse: (response: MockResponse) => void; preview?: boolean }) {
+  const answerRef = useRef<HTMLTextAreaElement | null>(null);
+  const ownAnswer = question.type === "single-choice" ? selectedAnswer(question.options, response.choice) : response.text || "";
   return <article className="mock-question"><div className="question-meta"><span>{question.groupLabel || MOCK_QUIZ_TYPE_LABELS[question.type]}</span>{question.points !== undefined && <span>本题 {question.points} 分</span>}<span>{question.bookName} · 第 {question.chapterNo} 章{question.section ? " · " + question.section : ""}</span></div><h2>{number}. {question.stem}</h2>
-    {question.type === "single-choice" ? <><div className="options">{question.options.map((option, index) => preview ? <p className="mock-preview-option" key={index}>{"ABCD"[index]}. {option}</p> : <button key={index} disabled={response.choice !== undefined} className={response.choice === undefined ? "" : index === question.answer ? "correct" : response.choice === index ? "wrong" : ""} onClick={() => onResponse({ choice: index })}><span>{"ABCD"[index]}</span>{option}</button>)}</div>{preview ? <button className="secondary reveal-button" onClick={() => onResponse({ revealed: !response.revealed })}>{response.revealed ? "收起 AI 参考答案" : "显示 AI 参考答案"}</button> : null}{(preview ? response.revealed : response.choice !== undefined) && <div className="explanation"><b>AI 参考答案：{"ABCD"[question.answer]}{!preview ? response.choice === question.answer ? " · 与你的选择一致" : " · 与你的选择不同" : ""}</b><p>{question.explanation}</p></div>}</> : <>{!preview && <><label className="answer-label" htmlFor={`mock-answer-${subject}-${question.id}`}>我的作答（最多 20,000 字符）</label><textarea className="past-answer" id={`mock-answer-${subject}-${question.id}`} maxLength={20000} value={response.text || ""} onChange={(event) => onResponse({ text: event.target.value })} placeholder="写下答案；开放题不自动判分。"/></>}<button className="secondary reveal-button" onClick={() => onResponse({ revealed: !response.revealed })}>{response.revealed ? "收起 AI 参考答案" : "查看 AI 参考答案"}</button>{response.revealed && <div className="explanation"><b>AI 参考答案 · 非官方标准答案</b><p>{question.referenceAnswer}</p><small>{question.rationale}</small></div>}</>}
+    {question.type === "single-choice" ? <>
+      <div className="options">{question.options.map((option, index) => preview ? <p className="mock-preview-option" key={index}>{"ABCD"[index]}. {option}</p> : <button key={index} disabled={response.choice !== undefined} className={response.choice === undefined ? "" : index === question.answer ? "correct" : response.choice === index ? "wrong" : ""} onClick={() => onResponse({ choice: index })}><span>{"ABCD"[index]}</span>{option}</button>)}</div>
+      <div className="mock-own-answer"><b>我的选择</b><p>{ownAnswer || "尚未选择"}</p><CopyAnswerButton text={ownAnswer}/></div>
+      {preview ? <button className="secondary reveal-button" onClick={() => onResponse({ revealed: !response.revealed })}>{response.revealed ? "收起 AI 参考答案" : "显示 AI 参考答案"}</button> : null}
+      {(preview ? response.revealed : response.choice !== undefined) && <div className="explanation"><b>AI 参考答案：{"ABCD"[question.answer]}{!preview ? response.choice === question.answer ? " · 与你的选择一致" : " · 与你的选择不同" : ""}</b><p>{question.explanation}</p></div>}
+    </> : <>
+      {preview ? <div className="mock-own-answer"><b>我的作答</b><p>{ownAnswer || "尚未作答"}</p></div> : <><label className="answer-label" htmlFor={`mock-answer-${subject}-${question.id}`}>我的作答（最多 20,000 字符）</label><textarea ref={answerRef} className="past-answer" id={`mock-answer-${subject}-${question.id}`} maxLength={20000} value={response.text || ""} onChange={(event) => onResponse({ text: event.target.value })} placeholder="写下答案；开放题不自动判分。"/></>}
+      <CopyAnswerButton text={ownAnswer} answerRef={preview ? undefined : answerRef}/>
+      <button className="secondary reveal-button" onClick={() => onResponse({ revealed: !response.revealed })}>{response.revealed ? "收起 AI 参考答案" : "查看 AI 参考答案"}</button>{response.revealed && <div className="explanation"><b>AI 参考答案 · 非官方标准答案</b><p>{question.referenceAnswer}</p><small>{question.rationale}</small></div>}
+    </>}
     <p className="mock-help">{question.source}</p>
   </article>;
 }
