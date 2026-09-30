@@ -1,5 +1,8 @@
 import { cards, questions, type Question } from "./study-data";
 import { load825StudyData, type Card825 } from "./825/study-data";
+import { requestDeepSeek } from "./mock-quiz";
+export { generateMockQuiz, validateMockQuizConfig, MAX_MOCK_QUIZ_QUESTIONS, MOCK_QUIZ_TYPES, MOCK_QUIZ_TYPE_LABELS } from "./mock-quiz";
+export type { MockQuizType, MockQuizConfig, MockQuizContext, MockQuizRange, MockQuizOptions, MockQuizQuestion, MockQuizResult, MockQuizUnit } from "./mock-quiz";
 
 type Mode = "plan" | "feedback" | "quiz";
 type Context = { subject?: string; book?: string; bookId?: string; chapterNo?: number; chapter?: string; section?: string; done?: number; due?: number; date?: string; exam?: string };
@@ -62,24 +65,7 @@ export async function askDeepSeek(key: string, mode: Mode, prompt: string, ctx: 
   const context = "日期：" + (ctx.date || "") + "；目标：" + (ctx.exam || "") + "；科目：" + (ctx.subject || "") + "；当前书目：" + currentBook + "；当前章节：" + (ctx.chapter || "") + "；小节：" + (ctx.section || "") + "；已学章节：" + (ctx.done || 0) + "；待复习卡片：" + (ctx.due || 0) + "。";
   const facts = notes.length ? "\n相关笔记摘录（限量，可能不完整）：" + JSON.stringify(notes) : "";
   const questionStyle = mode === "quiz" && is825 && pastStyle.length ? "\n同书历年题型样例，仅用于了解题型，不构成新题出处或章节归属：" + JSON.stringify(pastStyle) : "";
-  let response: Response;
-  try {
-    response = await fetch("https://api.deepseek.com/chat/completions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + cleanKey },
-      body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: context + facts + questionStyle + "\n\n用户输入：" + prompt }], stream: false, max_tokens: 1200, ...(mode === "quiz" ? { response_format: { type: "json_object" } } : {}) }),
-      signal: AbortSignal.timeout(30000),
-    });
-  } catch { throw new Error("连接 DeepSeek 超时或网络不可用。"); }
-  if (!response.ok) {
-    let detail = "";
-    try { const body = await response.json() as { error?: { message?: string }; message?: string }; detail = body?.error?.message || body?.message || ""; } catch { /* 保留空 detail */ }
-    if (response.status === 401) throw new Error("DeepSeek 拒绝了这个 Key（401" + (detail ? "：" + detail : "") + "）。请到 platform.deepseek.com 重新完整复制以 sk- 开头的 Key，注意不要混入多余字符。");
-    throw new Error("DeepSeek 请求失败（" + response.status + (detail ? "：" + detail : "") + "），请稍后重试。");
-  }
-  const data = await response.json() as { choices?: { message?: { content?: string } }[] };
-  const text = data.choices?.[0]?.message?.content;
-  if (!text) throw new Error("DeepSeek 未返回内容，请重试。");
+  const text = await requestDeepSeek(cleanKey, { model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: context + facts + questionStyle + "\n\n用户输入：" + prompt }], stream: false, max_tokens: 1200, ...(mode === "quiz" ? { response_format: { type: "json_object" } } : {}) });
   if (mode !== "quiz") return { text };
 
   let value: unknown;
