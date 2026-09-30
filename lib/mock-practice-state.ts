@@ -8,6 +8,7 @@ export type MockResponse = { choice?: number; text?: string; revealed?: boolean 
 export type MockSession = { result: MockQuizResult; snapshot: MockSnapshot; cursor: number; mode: "practice" | "paper"; responses: Record<string, MockResponse> };
 export type MockPracticeState = { session: MockSession | null; pending: boolean; progress: { done: number; total: number }; error: string };
 export type MockPracticeAction =
+  | { type: "restore"; session: MockSession | null }
   | { type: "start"; total: number }
   | { type: "progress"; done: number; total: number }
   | { type: "success"; result: MockQuizResult; snapshot: MockSnapshot }
@@ -21,6 +22,7 @@ export function initialMockPracticeState(): MockPracticeState {
   return { session: null, pending: false, progress: { done: 0, total: 0 }, error: "" };
 }
 export function mockPracticeReducer(state: MockPracticeState, action: MockPracticeAction): MockPracticeState {
+  if (action.type === "restore") return { ...initialMockPracticeState(), session: action.session };
   if (action.type === "start") return { ...state, pending: true, error: "", progress: { done: 0, total: action.total } };
   if (action.type === "progress") return state.pending ? { ...state, progress: { done: action.done, total: action.total } } : state;
   if (action.type === "stop") return { ...state, pending: false, error: action.error || "" };
@@ -28,14 +30,18 @@ export function mockPracticeReducer(state: MockPracticeState, action: MockPracti
   if (action.type === "success") return { ...state, pending: false, error: "", session: { result: action.result, snapshot: action.snapshot, cursor: 0, mode: "practice", responses: {} } };
   if (!state.session) return state;
   const session = state.session;
-  if (action.type === "cursor") return { ...state, session: { ...session, cursor: Math.max(0, Math.min(session.result.questions.length - 1, action.cursor)) } };
-  if (action.type === "mode") return { ...state, session: { ...session, mode: action.mode } };
+  if (action.type === "cursor") return Number.isInteger(action.cursor) ? { ...state, session: { ...session, cursor: Math.max(0, Math.min(session.result.questions.length - 1, action.cursor)) } } : state;
+  if (action.type === "mode") return action.mode === "practice" || action.mode === "paper" ? { ...state, session: { ...session, mode: action.mode } } : state;
   const question = session.result.questions.find((row) => row.id === action.id);
   if (!question) return state;
   const previous = session.responses[action.id] || {};
+  if (action.response.revealed !== undefined && typeof action.response.revealed !== "boolean") return state;
+  if (action.response.text !== undefined && (question.type === "single-choice" || typeof action.response.text !== "string" || action.response.text.length > 20000)) return state;
+  if (action.response.choice !== undefined && question.type !== "single-choice") return state;
   // A choice is submitted once; revisiting it never increases the score.
   if (question.type === "single-choice" && action.response.choice !== undefined && (previous.choice !== undefined || !Number.isInteger(action.response.choice) || action.response.choice < 0 || action.response.choice > 3)) return state;
-  return { ...state, session: { ...session, responses: { ...session.responses, [action.id]: { ...previous, ...action.response } } } };
+  const response = { ...previous, ...(action.response.choice !== undefined ? { choice: action.response.choice } : {}), ...(action.response.text !== undefined ? { text: action.response.text } : {}), ...(action.response.revealed !== undefined ? { revealed: action.response.revealed } : {}) };
+  return { ...state, session: { ...session, responses: { ...session.responses, [action.id]: response } } };
 }
 export function mockPracticeScore(session: MockSession) {
   let right = 0, answered = 0, written = 0, choiceTotal = 0, openTotal = 0;
@@ -67,6 +73,8 @@ export function mockRangesFromSelection(books: MockPracticeBook[], selection: Re
 }
 export function snapshotMockSettings(subject: "333" | "825", counts: MockCounts, ranges: MockQuizRange[], scopeLabel: string, templateId?: MockPaperTemplateId): MockSnapshot {
   if (!ranges.length) throw new Error("请选择至少一个书目或章节范围。");
+  if (subject !== "333" && subject !== "825") throw new Error("请选择科目。");
+  if (ranges.some((range) => !range || typeof range.bookId !== "string" || !range.bookId.trim() || !Array.isArray(range.chapters) || !range.chapters.length || range.chapters.some((chapter) => !Number.isInteger(chapter) || chapter < 1) || (range.section !== undefined && (typeof range.section !== "string" || !range.section.trim())))) throw new Error("命题范围格式有误，请重新选择书目、章节与小节。");
   const config = parseMockCounts(counts);
   if (templateId) {
     const template = getApplicableMockPaperTemplate(templateId, subject, ranges.map((range) => range.bookId));
