@@ -1,0 +1,378 @@
+import { learningSessionKey, restoreLearningSession, type BookIds, type LearningLocation, type LearningSession, type StudySubject } from "./learning-session";
+import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
+import type { MockPracticeBook } from "./mock-practice-state";
+
+export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
+export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"] as const;
+export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
+export type BackupSubject = "333" | "825" | "politics";
+export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
+export type BackupRecordMap = {
+  "yantu-learning-session-v1": LearningSession;
+  "yantu-srs-v1-333": BackupProgress;
+  "yantu-srs-v1-825": BackupProgress;
+  "yantu-srs-v1-politics": BackupProgress;
+  "yantu-done": Record<string, boolean>;
+  "yantu-done-825": Record<string, boolean>;
+  "yantu-done-politics": Record<string, boolean>;
+  "kaoyan.mock-practice.v1.333": MockSavedRecord;
+  "kaoyan.mock-practice.v1.825": MockSavedRecord;
+};
+/** Omitted keys are absent snapshots, and are left untouched on import. */
+export type StudyBackup = { format: "yantu-study-backup"; version: 1; createdAt: string; records: Partial<BackupRecordMap> };
+export type BackupCard = CardIdentity & { front: string; back: string; source: string };
+export type BackupQuestion = { id: string; book: string; stem: string; source: string; referenceAnswer?: string | null; analysis?: string | null; answerSource?: string | null };
+export type BackupCatalog = { books: MockPracticeBook[]; cards: BackupCard[]; questions?: BackupQuestion[] };
+export type BackupCatalogs = Record<BackupSubject, BackupCatalog>;
+export type BackupStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+export type BackupSummary = Record<StudySubject, { studiedCards: number; completedChapters: number; mockQuestions: number; drafts: number }>;
+export type BackupDocumentBlock = { type: "heading" | "paragraph"; text: string };
+export type BackupDocument = { title: string; blocks: BackupDocumentBlock[] };
+
+const subjects: BackupSubject[] = ["333", "825", "politics"];
+const allSubjects: StudySubject[] = [...subjects, "english"];
+const srsKey = (subject: BackupSubject) => `yantu-srs-v1-${subject}` as "yantu-srs-v1-333" | "yantu-srs-v1-825" | "yantu-srs-v1-politics";
+const doneKey = (subject: BackupSubject) => (subject === "333" ? "yantu-done" : `yantu-done-${subject}`) as "yantu-done" | "yantu-done-825" | "yantu-done-politics";
+const mockKey = (subject: "333" | "825") => `kaoyan.mock-practice.v1.${subject}` as "kaoyan.mock-practice.v1.333" | "kaoyan.mock-practice.v1.825";
+const has = (value: object, key: string) => Object.prototype.hasOwnProperty.call(value, key);
+const fail = (path: string, reason = "格式无效"): never => { throw new Error(`学习备份 ${path}：${reason}。`); };
+function object(value: unknown, path: string): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return fail(path);
+  return value as Record<string, unknown>;
+}
+function text(value: unknown, path: string, max = 200_000): string {
+  if (typeof value !== "string" || value.length > max) return fail(path);
+  return value;
+}
+function integer(value: unknown, min: number, max: number, path: string): number {
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < min || value > max) return fail(path);
+  return value;
+}
+function dateOnly(value: unknown, path: string): string {
+  const date = text(value, path, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(`${date}T00:00:00Z`)) || new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) return fail(path);
+  return date;
+}
+function timestamp(value: unknown, path: string): string {
+  const stamp = text(value, path, 100);
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(stamp) || !Number.isFinite(Date.parse(stamp))) return fail(path);
+  dateOnly(stamp.slice(0, 10), path);
+  const [h, m, s] = stamp.slice(11, 19).split(":").map(Number);
+  if (h > 23 || m > 59 || s > 59) return fail(path);
+  return new Date(stamp).toISOString();
+}
+function boundedList(value: unknown, max: number, path: string): unknown[] {
+  if (!Array.isArray(value) || value.length > max) return fail(path);
+  return value;
+}
+/** Checks the original payload, including fields that will later be discarded. */
+function safePayload(value: unknown): void {
+  const seen = new Set<object>();
+  let nodes = 0;
+  const visit = (entry: unknown, depth: number) => {
+    if (depth > 30 || ++nodes > 250_000) fail("数据", "层级或条目数量超限");
+    if (!entry || typeof entry !== "object") {
+      if (typeof entry === "number" && !Number.isFinite(entry)) fail("数据");
+      if (["function", "symbol", "bigint", "undefined"].includes(typeof entry)) fail("数据");
+      return;
+    }
+    if (seen.has(entry)) fail("数据", "包含循环或共享对象引用");
+    seen.add(entry);
+    if (!Array.isArray(entry) && Object.getPrototypeOf(entry) !== Object.prototype && Object.getPrototypeOf(entry) !== null) fail("数据", "对象原型无效");
+    for (const key of Object.keys(entry)) {
+      if (["__proto__", "prototype", "constructor"].includes(key)) fail("数据", "包含禁止的原型键");
+      visit((entry as Record<string, unknown>)[key], depth + 1);
+    }
+    seen.delete(entry);
+  };
+  visit(value, 0);
+  let raw: string;
+  try { raw = JSON.stringify(value); } catch { return fail("数据"); }
+  if (!raw || new TextEncoder().encode(raw).length > MAX_BACKUP_BYTES) fail("数据", "超过 8 MiB 大小上限");
+}
+function parsePayload(raw: string, path: string): unknown {
+  if (new TextEncoder().encode(raw).length > MAX_BACKUP_BYTES) return fail(path, "超过 8 MiB 大小上限");
+  let value: unknown;
+  try { value = JSON.parse(raw); } catch { return fail(path, "JSON 损坏"); }
+  safePayload(value);
+  return value;
+}
+function bookIds(catalogs: BackupCatalogs): BookIds {
+  return Object.fromEntries(subjects.map(subject => [subject, catalogs[subject].books.map(book => book.id)]));
+}
+function bookFor(catalogs: BackupCatalogs, subject: BackupSubject, id: unknown, path: string): MockPracticeBook {
+  return catalogs[subject].books.find(book => book.id === id) ?? fail(path, "未知书目");
+}
+function chapterFor(book: MockPracticeBook, value: unknown, path: string): number {
+  return integer(value, 1, book.chapters.length, path);
+}
+function location(value: unknown, subject: StudySubject, catalogs: BackupCatalogs, path: string): LearningLocation {
+  const row = object(value, path), book = text(row.book, path, 200);
+  const chapter = subject === "english" ? integer(row.chapter, 1, 10_000, path) : chapterFor(bookFor(catalogs, subject, book, path), row.chapter, path);
+  const section = text(row.section, path);
+  if (subject === "english" ? book !== "" || section !== "" : section !== "" && !bookFor(catalogs, subject, book, path).chapters[chapter - 1].sections.includes(section)) fail(path, "未知小节");
+  if (!["overview", "chapters", "cards", "quiz", "mock", "feynman", "planner"].includes(String(row.view)) || (subject === "politics" && ["quiz", "mock"].includes(String(row.view)))) fail(path);
+  if (row.pastMode !== "index" && row.pastMode !== "practice") fail(path);
+  integer(row.pastYear, 1900, 2200, path); integer(row.pastIndex, 0, 100_000, path);
+  return { book, chapter, section, view: row.view as LearningLocation["view"], pastMode: row.pastMode as LearningLocation["pastMode"], pastYear: row.pastYear as number, pastIndex: row.pastIndex as number };
+}
+function session(value: unknown, catalogs: BackupCatalogs): LearningSession {
+  const row = object(value, "学习位置");
+  if (row.version !== 1 || !allSubjects.includes(row.subject as StudySubject)) fail("学习位置", "版本或科目无效");
+  const locations = object(row.locations, "学习位置"), planner = object(row.plannerPrompts, "学习计划");
+  if (Object.keys(locations).some(key => !allSubjects.includes(key as StudySubject)) || Object.keys(planner).some(key => !allSubjects.includes(key as StudySubject))) fail("学习位置", "未知科目");
+  const cleanLocations = Object.fromEntries(allSubjects.map(subject => [subject, location(locations[subject], subject, catalogs, subject)]));
+  const drafts = (value: unknown, kind: "feynman" | "past") => Object.fromEntries(Object.entries(object(value, "草稿")).map(([key, value]) => {
+    let parts: unknown;
+    try { parts = JSON.parse(key); } catch { return fail("草稿", "索引无效"); }
+    if (!Array.isArray(parts) || !subjects.includes(parts[0]) || typeof parts[1] !== "string") return fail("草稿", "科目或书目无效");
+    const book = bookFor(catalogs, parts[0], parts[1], "草稿");
+    if (kind === "feynman") {
+      if (parts.length !== 4) fail("草稿");
+      const chapter = chapterFor(book, parts[2], "草稿"), section = text(parts[3], "草稿");
+      if (section && !book.chapters[chapter - 1].sections.includes(section)) fail("草稿", "未知小节");
+    } else if (parts.length !== 3 || parts[0] !== "825" || !catalogs["825"].questions?.some(question => question.id === parts[2] && question.book === book.id)) fail("真题作答", "未知题目");
+    return [key, text(value, "草稿")];
+  }));
+  const clean = { version: 1, subject: row.subject, locations: cleanLocations, feynmanDrafts: drafts(row.feynmanDrafts, "feynman"), pastAnswers: drafts(row.pastAnswers, "past"), plannerPrompts: Object.fromEntries(Object.entries(planner).map(([key, value]) => [key, text(value, "学习计划")])) };
+  // Strict guards above ensure the existing restorer cannot silently lose an entry.
+  return restoreLearningSession(JSON.stringify(clean), bookIds(catalogs));
+}
+function scopes(value: unknown, catalog: BackupCatalog, path: string): StudyScope[] {
+  const list = boundedList(value, 10_000, path);
+  const clean = list.map(entry => {
+    const row = object(entry, path), book = catalog.books.find(book => book.id === row.bookId) ?? fail(path, "未知书目");
+    const chapters = boundedList(row.chapters, book.chapters.length, path).map(value => chapterFor(book, value, path));
+    if (!chapters.length || new Set(chapters).size !== chapters.length) fail(path);
+    const section = row.section === undefined ? undefined : text(row.section, path, 500);
+    if (section !== undefined && (!section.trim() || chapters.some(chapter => !book.chapters[chapter - 1].sections.includes(section)))) fail(path, "未知小节");
+    if (chapters.some(chapter => !catalog.cards.some(card => card.book === book.id && card.chapter === chapter && (section === undefined || card.section === section)))) fail(path, "范围没有对应卡片");
+    return { bookId: book.id, chapters, ...(section === undefined ? {} : { section }) };
+  });
+  if (new Set(clean.map(entry => JSON.stringify({ ...entry, chapters: [...entry.chapters].sort((a, b) => a - b) }))).size !== clean.length) fail(path, "重复范围");
+  const normalized = normalizeStudyScopes(clean, catalog.cards);
+  if (normalized.length !== clean.length) fail(path);
+  return normalized;
+}
+function progress(value: unknown, catalog: BackupCatalog, allowMissingNewScopes = false): BackupProgress {
+  const row = object(value, "复习记录");
+  if (row.version !== 1) fail("复习记录", "版本不兼容");
+  const cards = object(row.cards, "复习卡片");
+  if (Object.keys(cards).length > 20_000) fail("复习卡片", "数量超限");
+  for (const [id, entry] of Object.entries(cards)) {
+    if (!id || id.length > 200) fail("复习卡片", "卡片标识无效");
+    const review = object(entry, "复习卡片");
+    for (const field of ["dueAt", "firstStudiedAt", "lastReviewedAt"]) timestamp(review[field], `复习卡片 ${field}`);
+    if (typeof review.intervalDays !== "number" || !Number.isFinite(review.intervalDays) || review.intervalDays < 0 || review.intervalDays > 36_500 || typeof review.ease !== "number" || !Number.isFinite(review.ease) || review.ease < 1.3 || review.ease > 10) fail("复习卡片");
+    integer(review.reps, 0, Number.MAX_SAFE_INTEGER, "复习次数"); integer(review.lapses, 0, Number.MAX_SAFE_INTEGER, "遗忘次数");
+    if (!["learning", "review", "relearning"].includes(String(review.stage))) fail("复习阶段");
+  }
+  const cleanScopes = scopes(row.scopes, catalog, "复习范围");
+  const newScopes = scopes(row.newScopes === undefined && allowMissingNewScopes ? [] : row.newScopes, catalog, "新学范围");
+  integer(row.dailyNewLimit, 0, 200, "每日新卡上限");
+  const daily = object(row.daily, "每日记录"), date = dateOnly(daily.date, "每日记录日期");
+  const admitted = boundedList(daily.admitted, 20_000, "每日记录").map(value => {
+    const id = text(value, "每日记录", 200);
+    if (!has(cards, id)) fail("每日记录", "未学习卡片");
+    return id;
+  });
+  if (new Set(admitted).size !== admitted.length) fail("每日记录", "重复卡片");
+  const normalized = normalizeStoredProgress({ ...row, cards, scopes: cleanScopes }, catalog.cards, `${date}T12:00:00`);
+  return { ...normalized, scopes: cleanScopes, daily: { date, admitted }, newScopes };
+}
+function completion(value: unknown, catalog: BackupCatalog): Record<string, boolean> {
+  const valid = new Set(catalog.books.flatMap(book => book.chapters.map((_, index) => `${book.id}-${index + 1}`)));
+  return Object.fromEntries(Object.entries(object(value, "章节标记")).map(([key, value]) => {
+    if (!valid.has(key) || typeof value !== "boolean") return fail("章节标记", "未知章节或值无效");
+    return [key, value];
+  }));
+}
+function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCatalogs, collecting = false): BackupRecordMap[BackupStorageKey] {
+  if (key === learningSessionKey) return session(value, catalogs);
+  const subject = key.endsWith("825") ? "825" : key.endsWith("politics") ? "politics" : "333";
+  if (key.startsWith("yantu-srs")) return progress(value, catalogs[subject], collecting);
+  if (key.startsWith("yantu-done")) return completion(value, catalogs[subject]);
+  const raw = JSON.stringify(value);
+  if (raw.length > MAX_MOCK_RECORD_CHARS) fail("模拟卷", "超过模拟卷保存上限");
+  return validateMockSavedRecord(value, subject as "333" | "825", catalogs[subject].books);
+}
+
+/** Called on demand. The 825/politics JSON catalogs remain lazy imports. */
+export async function loadBackupCatalogs(): Promise<BackupCatalogs> {
+  const [data333, outlines, module825, modulePolitics] = await Promise.all([import("./study-data"), import("./outlines"), import("./825/study-data"), import("./politics/study-data")]);
+  const [data825, dataPolitics] = await Promise.all([module825.load825StudyData(), modulePolitics.loadPoliticsStudyData()]);
+  const cards333 = data333.cards.map(card => ({ ...card, ...(/^〔(.+?)〕/.exec(card.front)?.[1] ? { section: /^〔(.+?)〕/.exec(card.front)![1] } : {}) }));
+  const books333 = data333.books.map(book => ({ id: book.id, name: book.name, chapters: book.chapters.map((title, index) => ({ title, sections: outlines.outlines[book.id]?.[index] || [] })) }));
+  const booksPolitics = dataPolitics.books.map(book => ({ id: book.id, name: book.name, chapters: book.chapters.map(title => ({ title, sections: [] as string[] })) }));
+  for (const [books, cards] of [[books333, cards333], [booksPolitics, dataPolitics.cards]] as [MockPracticeBook[], BackupCard[]][]) {
+    for (const book of books) book.chapters.forEach((chapter, index) => {
+      const labels = [...new Set(cards.filter(card => card.book === book.id && card.chapter === index + 1 && card.section).map(card => card.section!))];
+      if (labels.length) chapter.sections = labels;
+    });
+  }
+  return { "333": { books: books333, cards: cards333 }, "825": data825, politics: { books: booksPolitics, cards: dataPolitics.cards } };
+}
+
+export function validateStudyBackup(input: unknown, catalogs: BackupCatalogs): StudyBackup {
+  const value = typeof input === "string" ? parsePayload(input, "文件") : input;
+  safePayload(value);
+  const row = object(value, "文件");
+  if (Object.keys(row).length !== 4 || Object.keys(row).some(key => !["format", "version", "createdAt", "records"].includes(key)) || row.format !== "yantu-study-backup" || row.version !== 1) fail("文件", "格式或版本不兼容");
+  const createdAt = timestamp(row.createdAt, "导出时间"), records = object(row.records, "记录");
+  if (Object.keys(records).some(key => !BACKUP_STORAGE_KEYS.includes(key as BackupStorageKey))) fail("记录", "包含未允许的存储键");
+  const clean = Object.fromEntries(Object.entries(records).map(([key, value]) => [key, cleanRecord(key as BackupStorageKey, value, catalogs)])) as Partial<BackupRecordMap>;
+  const backup: StudyBackup = { format: "yantu-study-backup", version: 1, createdAt, records: clean };
+  safePayload(backup);
+  return backup;
+}
+
+export function collectStudyBackup(storage: Pick<Storage, "getItem">, catalogs: BackupCatalogs, now: StudyTime): StudyBackup {
+  const createdAt = new Date(now instanceof Date ? now.getTime() : now).toISOString();
+  const records: Partial<BackupRecordMap> = {};
+  for (const key of BACKUP_STORAGE_KEYS) {
+    let raw: string | null;
+    try { raw = storage.getItem(key); } catch { return fail("本地记录", "读取失败"); }
+    if (raw !== null) {
+      Object.assign(records, { [key]: cleanRecord(key, parsePayload(raw, key), catalogs, true) });
+      continue;
+    }
+    if (key === learningSessionKey) {
+      const legacyRaw = storage.getItem("yantu-last-place");
+      if (legacyRaw !== null) {
+        const legacy = object(parsePayload(legacyRaw, "旧版位置"), "旧版位置");
+        if (!allSubjects.includes(legacy.subject as StudySubject)) fail("旧版位置", "科目无效");
+        const restored = restoreLearningSession(null, bookIds(catalogs), legacyRaw);
+        const current = restored.locations[restored.subject];
+        for (const field of ["book", "chapter", "section", "view", "pastMode", "pastYear", "pastIndex"] as const) if (has(legacy, field) && legacy[field] !== current[field]) fail("旧版位置", "字段无效");
+        records[key] = session(restored, catalogs);
+      }
+    } else if (key.startsWith("yantu-srs")) {
+      const subject = key.slice("yantu-srs-v1-".length) as BackupSubject;
+      const legacyRaw = storage.getItem(subject === "333" ? "yantu-reviews" : `yantu-reviews-${subject}`);
+      if (legacyRaw !== null) {
+        const legacy = object(parsePayload(legacyRaw, "旧版复习"), "旧版复习"), catalog = catalogs[subject];
+        if (Object.keys(legacy).length > 20_000) fail("旧版复习", "数量超限");
+        for (const [id, value] of Object.entries(legacy)) {
+          if (!id || id.length > 200) fail("旧版复习", "卡片标识无效");
+          const review = object(value, "旧版复习");
+          if (!["due", "interval", "reps"].some(field => has(review, field))) fail("旧版复习");
+          if (has(review, "due")) dateOnly(review.due, "旧版到期日");
+          if (has(review, "interval") && (typeof review.interval !== "number" || !Number.isFinite(review.interval) || review.interval < 0 || review.interval > 36_500)) fail("旧版间隔");
+          if (has(review, "ease") && (typeof review.ease !== "number" || !Number.isFinite(review.ease) || review.ease < 1.3 || review.ease > 10)) fail("旧版难度");
+          if (has(review, "reps")) integer(review.reps, 0, Number.MAX_SAFE_INTEGER, "旧版复习次数");
+        }
+        Object.assign(records, { [key]: { ...normalizeStoredProgress(null, catalog.cards, now, legacy), newScopes: [] } });
+      }
+    }
+  }
+  return validateStudyBackup({ format: "yantu-study-backup", version: 1, createdAt, records }, catalogs);
+}
+
+export function summarizeStudyBackup(input: StudyBackup, catalogs: BackupCatalogs): BackupSummary {
+  const backup = validateStudyBackup(input, catalogs);
+  const result = Object.fromEntries(allSubjects.map(subject => [subject, { studiedCards: 0, completedChapters: 0, mockQuestions: 0, drafts: 0 }])) as BackupSummary;
+  for (const subject of subjects) {
+    result[subject].studiedCards = Object.keys(backup.records[srsKey(subject)]?.cards || {}).length;
+    result[subject].completedChapters = Object.values(backup.records[doneKey(subject)] || {}).filter(Boolean).length;
+    if (subject !== "politics") result[subject].mockQuestions = backup.records[mockKey(subject)]?.session?.result.questions.length || 0;
+  }
+  const saved = backup.records[learningSessionKey];
+  if (saved) {
+    for (const key of Object.keys(saved.feynmanDrafts)) result[JSON.parse(key)[0] as StudySubject].drafts++;
+    result["825"].drafts += Object.keys(saved.pastAnswers).length;
+    for (const key of Object.keys(saved.plannerPrompts)) result[key as StudySubject].drafts++;
+  }
+  return result;
+}
+
+/** Validates everything and snapshots every affected key before the first write. */
+export function applyStudyBackup(storage: BackupStorage, input: unknown, catalogs: BackupCatalogs): { keys: BackupStorageKey[]; summary: BackupSummary } {
+  const backup = validateStudyBackup(input, catalogs), keys = BACKUP_STORAGE_KEYS.filter(key => has(backup.records, key));
+  const previous = new Map(keys.map(key => [key, storage.getItem(key)]));
+  const attempted: BackupStorageKey[] = [];
+  try {
+    for (const key of keys) {
+      attempted.push(key);
+      storage.setItem(key, JSON.stringify(backup.records[key]));
+    }
+  } catch {
+    const failed: BackupStorageKey[] = [];
+    for (const key of [...attempted].reverse()) {
+      try {
+        const raw = previous.get(key)!;
+        if (raw === null) storage.removeItem(key); else storage.setItem(key, raw);
+      } catch { failed.push(key); }
+    }
+    if (failed.length) fail("导入", `写入失败且回滚失败；请保留备份文件，受影响存储键：${failed.join("、")}`);
+    fail("导入", "写入失败，已恢复原有记录");
+  }
+  return { keys, summary: summarizeStudyBackup(backup, catalogs) };
+}
+
+/** Text only: the PDF layer owns pagination, fonts and backup embedding. */
+export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs): BackupDocument {
+  const backup = validateStudyBackup(input, catalogs), blocks: BackupDocumentBlock[] = [];
+  const add = (text: string, type: BackupDocumentBlock["type"] = "paragraph") => blocks.push({ type, text });
+  const describe = (subject: BackupSubject, bookId: string, chapters: number[], section?: string) => {
+    const book = bookFor(catalogs, subject, bookId, "文档");
+    return `《${book.name}》${chapters.map(chapter => `第 ${chapter} 章 ${book.chapters[chapter - 1].title}`).join("、")}${section ? ` / ${section}` : ""}`;
+  };
+  add(`导出时间：${backup.createdAt}`);
+  for (const subject of subjects) {
+    add(subject === "politics" ? "政治" : `${subject} 学习记录`, "heading");
+    const progress = backup.records[srsKey(subject)];
+    if (progress) {
+      add(`每日新卡上限：${progress.dailyNewLimit}；配额日期：${progress.daily.date}；当天已接纳：${progress.daily.admitted.length} 张`);
+      for (const [label, ranges] of [["复习范围", progress.scopes], ["新学范围", progress.newScopes]] as const) for (const range of ranges) add(`${label}：${describe(subject, range.bookId, range.chapters, range.section)}`);
+      for (const [id, review] of Object.entries(progress.cards)) {
+        const card = catalogs[subject].cards.find(card => card.id === id);
+        add(`${card ? `${describe(subject, card.book, [card.chapter], card.section)}\n问题：${card.front}\n参考内容：${card.back}` : `卡片 ${id}（当前题库已移除，保留历史记录）`}\n下次复习：${review.dueAt}；阶段：${review.stage}；复习次数：${review.reps}；遗忘次数：${review.lapses}\n间隔天数：${review.intervalDays}；难度系数：${review.ease}\n首次学习：${review.firstStudiedAt}；上次复习：${review.lastReviewedAt}${card ? `\n来源：${card.source}` : ""}`);
+      }
+    }
+    for (const [key, done] of Object.entries(backup.records[doneKey(subject)] || {})) {
+      const book = catalogs[subject].books.find(book => key.startsWith(`${book.id}-`))!;
+      add(`${done ? "已完成" : "未完成"}：${describe(subject, book.id, [Number(key.slice(book.id.length + 1))])}`);
+    }
+  }
+  const saved = backup.records[learningSessionKey];
+  if (saved) {
+    add("学习位置与草稿", "heading"); add(`当前科目：${saved.subject}`);
+    for (const subject of allSubjects) {
+      const loc = saved.locations[subject];
+      add(`${subject} 位置：${subject === "english" ? "英语二" : describe(subject, loc.book, [loc.chapter], loc.section)}；页面：${loc.view}；真题模式：${loc.pastMode}；年份：${loc.pastYear}；索引：${loc.pastIndex}`);
+    }
+    for (const [key, value] of Object.entries(saved.feynmanDrafts)) {
+      const [subject, book, chapter, section] = JSON.parse(key) as [BackupSubject, string, number, string];
+      add(`费曼复述：${describe(subject, book, [chapter], section)}\n${value}`);
+    }
+    for (const [key, value] of Object.entries(saved.pastAnswers)) {
+      const [, book, id] = JSON.parse(key) as [string, string, string];
+      const question = catalogs["825"].questions!.find(question => question.id === id && question.book === book)!;
+      add(`825 真题作答\n题目：${question.stem}\n我的作答：${value}\n参考答案：${question.referenceAnswer || "资料未提供"}\n解析：${question.analysis || "资料未提供"}\n来源：${question.source}${question.answerSource ? `\n答案来源：${question.answerSource}` : ""}`);
+    }
+    for (const [subject, value] of Object.entries(saved.plannerPrompts)) add(`${subject} 学习计划提示草稿\n${value}`);
+  }
+  for (const subject of ["333", "825"] as const) {
+    const record = backup.records[mockKey(subject)];
+    if (!record) continue;
+    add(`${subject} AI 模拟卷`, "heading"); add("以下题目为 AI 生成的模拟练习，非历年真题；参考答案仅供练习。");
+    for (const [book, chapters] of Object.entries(record.settings.selection)) if (chapters.length) add(`设置范围：${describe(subject, book, chapters, record.settings.sectionScope?.bookId === book ? record.settings.sectionScope.name : undefined)}`);
+    add(`题型数量草稿：${JSON.stringify(record.settings.counts)}`);
+    const session = record.session;
+    if (!session) { add("当前没有已生成的模拟卷。"); continue; }
+    add(`生成时间：${session.snapshot.createdAt}；范围：${session.snapshot.scopeLabel}；模式：${session.mode}；当前题目：${session.cursor + 1}`);
+    for (const range of session.snapshot.ranges) add(`生成范围：${describe(subject, range.bookId, range.chapters || [], range.section)}`);
+    add(`覆盖说明：${session.result.coverage.note}；完整覆盖：${session.result.coverage.complete ? "是" : "否"}`);
+    session.result.questions.forEach((question, index) => {
+      const response = session.responses[question.id];
+      add(`${index + 1}. ${question.stem}\n${describe(subject, question.bookId, [question.chapterNo], question.section)}${question.points !== undefined ? `；分值：${question.points}` : ""}${question.groupLabel ? `；组别：${question.groupLabel}` : ""}`);
+      if (question.type === "single-choice") {
+        question.options.forEach((option, i) => add(`${"ABCD"[i]}. ${option}`));
+        add(`我的作答：${response?.choice === undefined ? "未作答" : "ABCD"[response.choice]}\n参考答案：${"ABCD"[question.answer]}\n解析：${question.explanation}`);
+      } else add(`我的作答：${response?.text || "未作答"}\n参考答案：${question.referenceAnswer}\n解析：${question.rationale}`);
+      add(`已查看参考答案：${response?.revealed ? "是" : "否"}\n来源：${question.source}\n知识点：${question.knowledgePointIds.join("、")}`);
+    });
+  }
+  return { title: "研途学习记录与模拟卷备份", blocks };
+}
