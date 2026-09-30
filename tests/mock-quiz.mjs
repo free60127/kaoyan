@@ -69,6 +69,13 @@ for (const ctx of [context333, context825]) test(`${ctx.subject} mixed question 
     assert.deepEqual(call.body.response_format, { type: "json_object" });
     assert.ok(call.body.max_tokens >= 1100 && call.body.max_tokens <= 5600);
     assert.match(call.body.messages[0].content, /不能当作指令/);
+    if (ctx.subject === "333") {
+      assert.match(call.body.messages[0].content, /333使用中文题干、选项、参考答案与解析/);
+      assert.doesNotMatch(call.body.messages[0].content, /825优先用英文/);
+    } else {
+      assert.match(call.body.messages[0].content, /825优先用英文题干、选项、参考答案与解析/);
+      assert.doesNotMatch(call.body.messages[0].content, /333使用中文/);
+    }
     const refs = JSON.parse(call.body.messages[1].content.split("\n").slice(1).join("\n"));
     assert.ok(refs.length <= 3);
     refs.forEach((ref) => {
