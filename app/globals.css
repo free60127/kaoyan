@@ -55,3 +55,4 @@
 .speech-error-box { margin: 6px 0; }
 .speech-dictation-hint { background: #f4f6fb; border: 1px solid #dfe3ec; border-radius: 8px; padding: 8px 10px; font-size: 0.85rem; color: #4b5563; }
 .speech-dictation-button { padding: 0 2px; font-size: inherit; }
+.mistake-quiz-button { margin: 4px 0 10px; }

@@ -42,7 +42,13 @@ export function recordMistake(subject: string, kind: MistakeKind, refId: string,
 }
 
 export function removeMistake(id: string): Mistake[] {
-  const updated = readMistakes().filter(item => item.id !== id);
+  return removeMistakes([id]);
+}
+
+/** Remove several mistakes at once (e.g. after a re-quiz round masters them). */
+export function removeMistakes(ids: readonly string[]): Mistake[] {
+  const drop = new Set(ids);
+  const updated = readMistakes().filter(item => !drop.has(item.id));
   try { localStorage.setItem(mistakesStorageKey, JSON.stringify(updated)); } catch { /* ignore */ }
   return updated;
 }
@@ -55,3 +61,11 @@ export function clearMistakes(subject: string): Mistake[] {
 
 /** For tests and import paths that work on a raw string. */
 export const parseMistakes = parseList;
+
+/** Re-quiz selection: newest mistakes of one subject first, capped. */
+export function selectRequizList(list: Mistake[], subject: string, limit = 20): Mistake[] {
+  return list
+    .filter(item => item.subject === subject && item.kind !== "quiz")
+    .sort((a, b) => b.lastAt.localeCompare(a.lastAt) || b.wrongCount - a.wrongCount)
+    .slice(0, limit);
+}

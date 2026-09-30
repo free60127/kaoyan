@@ -37,7 +37,7 @@ test("practice-quiz: 题干来自卡正面、正确项可定位、干扰项互�
 });
 
 test("mistakes: 累计错误次数、移除与按科目清空", async () => {
-  const { parseMistakes, recordMistake, removeMistake, clearMistakes, mistakesStorageKey } = await realModule("../lib/mistakes.ts");
+  const { parseMistakes, recordMistake, removeMistakes, clearMistakes, mistakesStorageKey, selectRequizList } = await realModule("../lib/mistakes.ts");
   // 以 localStorage mock 模块级读写
   const store = new Map();
   globalThis.localStorage = {
@@ -51,12 +51,27 @@ test("mistakes: 累计错误次数、移除与按科目清空", async () => {
   assert.equal(list.length, 2);
   const repeated = list.find((item) => item.refId === "principles-k1-001");
   assert.equal(repeated.wrongCount, 2);
-  list = removeMistake(repeated.id);
+  list = removeMistakes([repeated.id]);
   assert.equal(list.length, 1);
   list = clearMistakes("politics");
   assert.equal(list.length, 0);
   // 损坏数据安全解析
   assert.equal(parseMistakes("{broken").length, 0);
+  // 重练选择: 仅闪卡/自测类, 按最近优先排序, 上限截断
+  const now = new Date("2026-10-01T12:00:00");
+  recordMistake("333", "card", "k1", "卡1", now);
+  recordMistake("333", "quiz", "q1", "真题", now);
+  recordMistake("333", "practice", "k2", "卡2", now);
+  recordMistake("825", "card", "l1", "语言卡", now);
+  const list2 = parseMistakes(store.get(mistakesStorageKey));
+  const requiz = selectRequizList(list2, "333");
+  assert.equal(requiz.length, 2);
+  assert.ok(requiz.every(item => item.kind !== "quiz"));
+  assert.ok(requiz.some(item => item.refId === "k1") && requiz.some(item => item.refId === "k2"));
+  assert.equal(selectRequizList(list2, "825").length, 1);
+  assert.equal(selectRequizList(list2, "politics").length, 0);
+  const many = Array.from({ length: 30 }, (_, i) => ({ id: `333:card:c${i}`, subject: "333", kind: "card", refId: `c${i}`, label: `卡${i}`, wrongCount: 1, lastAt: now.toISOString() }));
+  assert.equal(selectRequizList(many, "333").length, 20);
   delete globalThis.localStorage;
 });
 
