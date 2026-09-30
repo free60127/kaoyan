@@ -67,6 +67,8 @@ export default function Home() {
   const [pastMode, setPastMode] = useState<"practice" | "index">("practice"), [pastYear, setPastYear] = useState(2026), [pastIndex, setPastIndex] = useState(0), [pastAnswer, setPastAnswer] = useState(""), [pastRevealed, setPastRevealed] = useState(false);
   const answerRef = useRef<HTMLTextAreaElement | null>(null);
   const requestId = useRef(0);
+  // React 批处理下连续快速切换科目时，闭包里的 subject 是旧值；用 ref 保证“最后一次点击生效”。
+  const subjectRef = useRef(subject);
   const locations = useRef<Record<string, { book: string; chapter: number; section: string; quizIndex: number; choice: number | null; score: { right: number; total: number }; pastIndex: number; pastAnswer: string; pastRevealed: boolean; pastMode: "practice" | "index"; pastYear: number }>>({});
 
   useEffect(() => {
@@ -83,6 +85,12 @@ export default function Home() {
     setProgressReady(true);
   }, []);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-last-place", JSON.stringify({ subject, book, chapter })); } catch { /* 无法写入时静默，不影响学习 */ } } }, [subject, book, chapter, progressReady]);
+  useEffect(() => {
+    if (!keyOpen && !menuOpen) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") { setKeyOpen(false); setMenuOpen(false); } };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [keyOpen, menuOpen]);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done", JSON.stringify(doneBySubject["333"])); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject["333"], progressReady]);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done-825", JSON.stringify(doneBySubject["825"])); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject["825"], progressReady]);
   useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done-politics", JSON.stringify(doneBySubject.politics)); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject.politics, progressReady]);
@@ -105,6 +113,8 @@ export default function Home() {
     : subject === "politics" ? politicsModels.books
     : subject === "333" ? books333Model : [];
   const activeBook = books.find((item) => item.id === book) || books[0], chapterInfo = activeBook?.chapters[chapter - 1], chapterName = chapterInfo?.title || "";
+  // 过期记录（如数据更新后书变薄）会让章号超出书目实际章数；回到第 1 章避免空白章节。
+  useEffect(() => { if (activeBook && chapter > activeBook.chapters.length) setChapter(1); }, [activeBook, chapter]);
   const allCards: Card[] = subject === "825" ? (data825?.cards || []) : subject === "politics" ? politicsModels.cards : subject === "333" ? cards333Model : [];
   const chapterCards = allCards.filter((item) => item.book === book && item.chapter === chapter);
   const cardsInScope = section ? chapterCards.filter((item) => item.section === section) : chapterCards;
@@ -132,10 +142,11 @@ export default function Home() {
     setBook(nextBook); setChapter(nextChapter); setSection(""); setView(nextView); setQuizIndex(0); setChoice(null); setPastIndex(0); setPastAnswer(""); setPastRevealed(false); setAnswer(""); setFeedback(""); setReply("");
   }
   function switchSubject(next: string) {
-    if (next === subject) { setMenuOpen(false); return; }
+    if (next === subjectRef.current) { setMenuOpen(false); return; }
     locations.current[subject] = { book, chapter, section, quizIndex, choice, score, pastIndex, pastAnswer, pastRevealed, pastMode, pastYear };
     const saved = locations.current[next];
     requestId.current += 1; setLoading(false);
+    subjectRef.current = next;
     setSubject(next); setBook(saved?.book || (next === "825" ? "linguistics" : next === "politics" ? "mayuan" : "principles")); setChapter(saved?.chapter || 1); setSection(saved?.section || ""); setView("overview"); setMenuOpen(false); setQuizIndex(saved?.quizIndex || 0); setChoice(saved?.choice ?? null); setPastIndex(saved?.pastIndex || 0); setPastAnswer(saved?.pastAnswer || ""); setPastRevealed(saved?.pastRevealed || false); setPastMode(saved?.pastMode || "practice"); setPastYear(saved?.pastYear || 2026); setScore(saved?.score || { right: 0, total: 0 }); setAnswer(""); setFeedback(""); setReply("");
   }
   function chooseSection(nextSection: string) { requestId.current += 1; setLoading(false); setSection(nextSection); setAnswer(""); setFeedback(""); setReply(""); }
