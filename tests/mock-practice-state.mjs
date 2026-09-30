@@ -105,3 +105,24 @@ test("subject sessions remain isolated through switching, hidden cancellation an
   assert.equal(sessions["825"].session.cursor, 1);
   assert.equal(sessions["333"].session.responses.open, undefined);
 });
+test("rapid repeated choice events cannot change the first answer or increase the score", () => {
+  let state = loaded();
+  for (const choice of [1, 0, 1, 3, 2, 1]) state = reduce(state, { type: "response", id: "mc", response: { choice } });
+  assert.equal(state.session.responses.mc.choice, 1);
+  assert.deepEqual(score(state.session), { right: 1, answered: 1, written: 0, choiceTotal: 1, openTotal: 1 });
+});
+test("malformed reducer response and navigation values leave valid state intact", () => {
+  const state = loaded();
+  for (const action of [
+    { type: "cursor", cursor: NaN }, { type: "cursor", cursor: 1.5 }, { type: "mode", mode: "other" },
+    { type: "response", id: "mc", response: { text: "wrong response kind" } },
+    { type: "response", id: "mc", response: { choice: NaN } },
+    { type: "response", id: "open", response: { choice: 1 } },
+    { type: "response", id: "open", response: { text: 3 } },
+    { type: "response", id: "open", response: { text: "x".repeat(20001) } },
+    { type: "response", id: "open", response: { revealed: "true" } },
+  ]) assert.strictEqual(reduce(state, action), state);
+});
+test("setting snapshots reject empty and malformed ranges before request transport", () => {
+  for (const ranges of [[], [{ bookId: "", chapters: [1] }], [{ bookId: "linguistics", chapters: [] }], [{ bookId: "linguistics", chapters: [0] }], [{ bookId: "linguistics", chapters: [1.5] }], [{ bookId: "linguistics", chapters: [1], section: "" }]]) assert.throws(() => snapshotMockSettings("825", initialMockCounts("825"), ranges, "invalid"));
+});
