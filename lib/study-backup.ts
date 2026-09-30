@@ -4,10 +4,12 @@ import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } 
 import type { MockPracticeBook } from "./mock-practice-state";
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
-export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"] as const;
+export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"] as const;
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
+export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; lastAt: string };
+export type BackupDayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number };
 export type BackupRecordMap = {
   "yantu-learning-session-v1": LearningSession;
   "yantu-srs-v1-333": BackupProgress;
@@ -16,6 +18,10 @@ export type BackupRecordMap = {
   "yantu-done": Record<string, boolean>;
   "yantu-done-825": Record<string, boolean>;
   "yantu-done-politics": Record<string, boolean>;
+  "yantu-mistakes-v1": BackupMistake[];
+  "yantu-stats-v1-333": Record<string, BackupDayStat>;
+  "yantu-stats-v1-825": Record<string, BackupDayStat>;
+  "yantu-stats-v1-politics": Record<string, BackupDayStat>;
   "kaoyan.mock-practice.v1.333": MockSavedRecord;
   "kaoyan.mock-practice.v1.825": MockSavedRecord;
 };
@@ -188,8 +194,34 @@ function completion(value: unknown, catalog: BackupCatalog): Record<string, bool
     return [key, value];
   }));
 }
+function mistakes(value: unknown): BackupMistake[] {
+  return boundedList(value, 20_000, "错题本").map(entry => {
+    const row = object(entry, "错题条目");
+    const subject = text(row.subject, "错题条目", 20);
+    const kind = String(row.kind);
+    if (!["card", "quiz", "practice"].includes(kind)) fail("错题条目", "类型无效");
+    const wrongCount = integer(row.wrongCount, 1, 1_000_000, "错题次数");
+    const id = text(row.id, "错题条目", 200), refId = text(row.refId, "错题条目", 200);
+    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, lastAt: timestamp(row.lastAt, "错题时间") };
+  });
+}
+function dayStats(value: unknown): Record<string, BackupDayStat> {
+  return Object.fromEntries(Object.entries(object(value, "学习统计")).filter(([date]) => /^\d{4}-\d{2}-\d{2}$/.test(date)).map(([date, entry]) => {
+    const row = object(entry, `学习统计 ${date}`);
+    return [dateOnly(date, "统计日期"), {
+      date: dateOnly(row.date, "统计日期"),
+      ratings: integer(row.ratings, 0, 100_000, "评分次数"),
+      again: integer(row.again, 0, 100_000, "重来次数"),
+      newCards: integer(row.newCards, 0, 100_000, "新学张数"),
+      quiz: integer(row.quiz, 0, 100_000, "练习题数"),
+      quizCorrect: integer(row.quizCorrect, 0, 100_000, "练习答对"),
+    }];
+  }));
+}
 function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCatalogs, collecting = false): BackupRecordMap[BackupStorageKey] {
   if (key === learningSessionKey) return session(value, catalogs);
+  if (key === "yantu-mistakes-v1") return mistakes(value);
+  if (key.startsWith("yantu-stats-v1-")) return dayStats(value);
   const subject = key.endsWith("825") ? "825" : key.endsWith("politics") ? "politics" : "333";
   if (key.startsWith("yantu-srs")) return progress(value, catalogs[subject], collecting);
   if (key.startsWith("yantu-done")) return completion(value, catalogs[subject]);

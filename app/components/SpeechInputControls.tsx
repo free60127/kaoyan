@@ -41,7 +41,10 @@ export function SpeechInputControls({ language, onLanguageChange, setAnswer, ans
     </div>
     <p className="speech-status" role="status" aria-live="polite">{speechStatusText[state.status]}</p>
     <div className="speech-interim" aria-live="polite" aria-atomic="true">{state.interim && <><strong>临时识别（尚未写入复述）</strong><span>{state.interim}</span></>}</div>
-    {state.error && <p className="error" role="alert">{state.error.message}</p>}
+    {state.error && <div className="speech-error-box" role="alert">
+      <p className="error">{state.error.message}</p>
+      {(state.error.code === "network" || state.error.code === "service-not-allowed" || state.error.code === "no-result-timeout") && <p className="speech-dictation-hint" role="status">浏览器内置的语音识别服务（Chrome/Edge 走 Google 服务）在国内网络常常不可用。<button type="button" className="text-button speech-dictation-button" onClick={() => { controller.current?.stop(); setDictationHint(true); answerRef.current?.focus(); }}>改用系统听写</button>（Windows 按 <kbd>Windows + H</kbd> 即可语音输入），或直接打字。系统听写不走网页服务，通常可用。</p>}
+    </div>}
     {dictationHint && <p className="speech-dictation-hint" role="status">已定位到“我的复述”。请在 Windows 上按 <kbd>Windows + H</kbd>，再对着麦克风说话，听写文字会写入输入框。若系统听写不可用，可以直接打字。</p>}
     <small>网页识别依赖浏览器的语音识别服务和麦克风权限，可能需要网络连接。DeepSeek 只用于文字评分；你可以随时打字或修改已确认文字。</small>
   </div>;

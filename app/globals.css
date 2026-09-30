@@ -52,3 +52,6 @@
 .mode-group { display: flex; gap: 4px; }
 .practice-hint { color: #8a8f9e; display: block; margin: 2px 0 4px; }
 .kbd-hint { font-size: 0.68rem; color: #9aa0ae; border: 1px solid #d8dce6; border-radius: 4px; padding: 0 4px; margin-left: 4px; }
+.speech-error-box { margin: 6px 0; }
+.speech-dictation-hint { background: #f4f6fb; border: 1px solid #dfe3ec; border-radius: 8px; padding: 8px 10px; font-size: 0.85rem; color: #4b5563; }
+.speech-dictation-button { padding: 0 2px; font-size: inherit; }

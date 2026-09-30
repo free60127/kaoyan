@@ -10,6 +10,10 @@ const recordLabels: Record<BackupStorageKey, string> = {
   "yantu-done": "333 章节完成标记", "yantu-done-825": "825 章节完成标记", "yantu-done-politics": "政治章节完成标记",
   "kaoyan.mock-practice.v1.333": "333 命题设置、完整模拟卷与作答",
   "kaoyan.mock-practice.v1.825": "825 命题设置、完整模拟卷与作答",
+  "yantu-mistakes-v1": "三科错题本（评分重来、答错的真题与自测题）",
+  "yantu-stats-v1-333": "333 每日学习统计（评分、练习、连续天数）",
+  "yantu-stats-v1-825": "825 每日学习统计",
+  "yantu-stats-v1-politics": "政治每日学习统计",
 };
 const subjects = { "333": "333 教育综合", "825": "825 英语专业基础", politics: "政治", english: "英语二" };
 const sizeLabel = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;
