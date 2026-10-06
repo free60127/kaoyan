@@ -1,0 +1,1154 @@
+[
+ {
+  "id": "pq-2010-001",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2010年",
+  "front": "〔真题·2010年 简答〕Classify the word-formation process in each item: xerox, interpol, flu, OPEC, Nobel, televise, better (verb), Orlon, watt, edit.",
+  "back": "依次为 coinage, blending, clipping, acronym formation, eponymy, back-formation, conversion, coinage, eponymy, back-formation。\n——\n📌 解析：考Chapter 4构词法（笔记Chapter4 pp.6-8）。需区分coinage（不基于既有语素的造词，多为商标词）、eponymy（源自专有名词）、acronym/abbreviation（首字母缩合，前者可拼读成词）、clipping（截短）、blending（混合）、back-formation（去真实或假想后缀逆构）、conversion（转类）。常见失分点：televise、edit 是逆构而非转类；Orlon、xerox 属商标造词；OPEC 可拼读故为 acronym。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2010年真题（简答）"
+ },
+ {
+  "id": "pq-2010-002",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2010年",
+  "front": "〔真题·2010年 简答〕Paraphrase each ambiguous sentence in two ways: “They finally decided on the boat”; “Can you see the man with a pair of binoculars?”; “The design is full of big squares and circles”; “Tom hates his boss and so do I”; “Flying planes can be dangerous.”",
+  "back": "Possible readings: the decision was made aboard the boat / concerned the boat; the man has the binoculars / the observer uses them; both squares and circles are big / only the squares are big; I hate Tom's boss / I hate my own boss; planes that fly are dangerous / piloting planes is dangerous.\n——\n📌 解析：考Chapter 5结构歧义（笔记Chapter5 p.10）与Chapter 3重音/语调消歧（pp.14-15）。逐句给出两种 paraphrase 即可，最好点明歧义来源：介词短语挂靠（VP状语 vs NP修饰）、并列结构辖域（big 修饰范围）、\"so do I\"的指代对象、动名词主语 Flying planes 的两种解读。失分点：只给一种释义，或只说\"有歧义\"而不改写。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2010年真题（简答）"
+ },
+ {
+  "id": "pq-2010-003",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2010年",
+  "front": "〔真题·2010年 简答〕Draw two phrase-structure parses for “Tom found a journal on Wall Street.”",
+  "back": "The PP on Wall Street can attach to the VP (Tom found it while there) or to the NP (a journal associated with/on Wall Street).\n——\n📌 解析：考Chapter 5短语结构规则与树形图（笔记Chapter5 pp.13-14）。关键：PP \"on Wall Street\" 既可挂靠 VP（作地点状语：在华尔街找到了它）也可挂靠 NP（作名词修饰：一份关于/来自华尔街的期刊），两棵树需画出不同挂靠层级并标明 NP/VP/PP 等范畴标签。失分点：两棵树结构雷同或漏标节点。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2010年真题（简答）"
+ },
+ {
+  "id": "pq-2010-004",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2010年",
+  "front": "〔真题·2010年 简答〕For each set, identify the least typical category member: (a) apple, pear, grape, pomegranate, banana; (b) pot, oven, knife, ladle, napkin; (c) salmon, trout, carp, whale, sardine; (d) saucer, toothpick, bowl, spoon, plate; (e) sledge, truck, ship, plane, car; (f) gun, knife, sword, tank, hand grenade, pistol; (g) emu, parrot, sparrow, peacock, swallow, dove; (h) stool, chair, couch, bed, fan, sofa; (i) thumbpin, pen, pencil, staple, ruler, rubber; (j) carrot, cabbage, spinach, cucumber, sweet corn, tomato.",
+  "back": "依次为 pomegranate, napkin, whale, toothpick, sledge, knife, emu, fan, thumbpin, sweet corn。\n——\n📌 解析：考Chapter 6原型范畴理论（笔记Chapter6 pp.9-10）：范畴成员地位不平等，与原型共享特征越少越边缘。判断标准是\"与该组其他成员共享特征最少\"：pomegranate（非日常水果）、napkin（非炊具/厨具）、whale（哺乳动物非鱼）、toothpick（非餐具）、sledge（非日常交通工具）、knife（非火器/军事武器）、emu（不会飞的鸟）、fan（非家具）、thumbpin（非书写工具）、sweet corn（可作粮食的\"蔬菜\"）。失分点：凭个人感觉而非特征共享度作答。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2010年真题（简答）"
+ },
+ {
+  "id": "pq-2011-001",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 简答〕Complete ten prompts: (1) a word's stable central meaning is its ___ meaning; (2) giving excess information flouts Grice's ___ maxim; (3) opposite terms where one entails the other's negation are ___; (4) the speech-production branch is ___ phonetics; (5) discourse organization is the ___ function; (6) meaning-distinguishing sound properties are ___ features; (7) sounds sharing features form a ___; (8) atomic-feature analysis of meaning is ___; (9) a stand-alone morpheme is ___; (10) L1 influence in “because … so” is ___.",
+  "back": "(1) referential; (2) quantity; (3) complementary antonyms; (4) articulatory; (5) textual metafunction; (6) distinctive; (7) natural class; (8) componential analysis; (9) free morpheme; (10) interference。\n——\n📌 解析：跨章术语填空：指称意义（Ch6 p.3）、数量准则（Ch7 p.24，信息过量即违反量的第二条）、互补反义词（Ch6 pp.5-6）、发音语音学（Ch2 p.2）、语篇（textual）元功能（Ch1 p.7）、区别性特征（Ch3 p.11）、自然类（Ch2 p.7）、成分分析法（Ch6 p.8）、自由词素（Ch4 p.4）、负迁移/干扰（Ch11 p.29）。失分点：把\"提供过量信息\"误答 quality；(3) 误答 gradable antonyms。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（简答）"
+ },
+ {
+  "id": "pq-2011-002",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 简答〕Define immediate constituent analysis and coarticulation. Use “green grapes and pears” to show two possible constituent groupings; name anticipatory and carryover coarticulation.",
+  "back": "直接成分分析反复划分短语成分，以显示层级及歧义；“green grapes and pears”可括为 [green grapes] and [pears] 或 green [grapes and pears]。协同发音是相邻语音相互影响；预期型先于受影响音，延续型则影响后续音。\n——\n📌 解析：考Chapter 5直接成分分析（笔记Chapter5 p.12：自上而下逐层切分，能揭示句子的线性与层级、解释结构歧义）与Chapter 2语音学的协同发音（与Ch3 p.11同化规则方向相通）。要点：anticipatory（先行为）影响后出现的音，carryover/perseverative 影响其后的音，对应逆同化/顺同化的方向。失分点：只下定义不做两种切分；两类协同发音方向写反。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（简答）"
+ },
+ {
+  "id": "pq-2011-003",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 简答〕Classify the word-formation processes illustrated by head used as a verb (headed), length → lengthen, influenza → flu, United Nations → UN, and editor → edit.",
+  "back": "(1) head used as a verb (headed): conversion; (2) length -> lengthen: derivation (the derivational suffix -en is added); (3) influenza -> flu: clipping; (4) United Nations -> UN: abbreviation (the initial letters of the phrase are put together; UN is read letter by letter); (5) editor -> edit: back-formation (a supposed suffix -or is dropped and a new verb is created).\n——\n📌 解析：考Chapter 4构词法（笔记Chapter4 pp.6-7）。head 作动词是 conversion；-en 加于形容词构成动词是 derivation（构成了新词位，不是屈折）；flu 截短自 influenza；UN 为首字母缩写；edit 由 editor 去 -or 为 back-formation。失分点：把 lengthen 答成 inflection；abbreviation 与 acronym（能否拼读为词）混同。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（简答）"
+ },
+ {
+  "id": "pq-2011-004",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 简答〕Classify the synonym differences: torch/flashlight; gentleman/guy; salt/sodium chloride; die/kick the bucket; able/be capable.",
+  "back": "Dialect; style/formality; register/domain; style/formality; collocation, respectively.\n——\n📌 解析：考Chapter 6同义词的五类差异（笔记Chapter6 p.5）：方言（torch/flashlight 英美不同）、语体正式度（gentleman/guy；die/kick the bucket）、语域/使用领域（salt/sodium chloride 餐桌vs实验室）、感情色彩、搭配（able to / capable of）。失分点：register（按使用领域）与 style/formality（按正式程度）混淆；漏答 collocation。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（简答）"
+ },
+ {
+  "id": "pq-2011-005",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 简答〕In “I think you may find it here tomorrow,” identify and classify the deictic expressions.",
+  "back": "I, you and it are person deixis; here is place deixis; tomorrow is time deixis.\n——\n📌 解析：考Chapter 7指示语分类（笔记Chapter7 pp.18-19）：人称、地点、时间、篇章、社会五类。句中 I、you、it 为人称指示，here 为地点指示，tomorrow 为时间指示。失分点：漏掉 it（它也是人称指示）；把 tomorrow 误判为篇章指示；不点明指示语须依赖语境确定所指。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（简答）"
+ },
+ {
+  "id": "pq-2011-007",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 简答〕Give two readings for each sentence: “Mr. Smith finally made the decision on the boat”; “They said Susan would go yesterday.”",
+  "back": "on the boat 可指决定发生在船上或决定内容关于船；yesterday 可修饰 said（他们昨天说 Susan 将去）或 go（他们说 Susan 昨天去）。\n——\n📌 解析：考Chapter 5结构歧义（笔记Chapter5 p.10）：介词短语与时间状语的辖域歧义。on the boat 可为地点状语（决定是在船上做出的）或与决定内容相关（决定是关于船的）；yesterday 可修饰主句动词 said（昨天说的）或从句动词 go（昨天去）。失分点：只给一种读法，或读法之间无结构差异。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（简答）"
+ },
+ {
+  "id": "pq-2011-008",
+  "book": "linguistics",
+  "chapter": 10,
+  "section": "真题·2011年",
+  "front": "〔真题·2011年 论述〕Comment on “If Aristotle were Chinese, his logic would be different” using the Sapir–Whorf hypothesis.",
+  "back": "This statement invites us to consider how language, culture and thought interact, which is precisely the concern of the Sapir-Whorf hypothesis. The hypothesis holds that the language we speak influences, and possibly determines, the way we perceive and conceptualize the world. It is interpreted in two versions. The determinism (strong) version claims that language determines our thinking, so that different languages may lead to unique ways of understanding the world; the relativism (weak) version holds that the similarity between languages is only relative: the greater their structural differentiation, the more diverse will be the conceptualization of the world, for culture affects the way we think through language, especially in our classification of the experienced world.\n\nIf Aristotle had been Chinese, the strong version would predict that he would have inherited a different conceptual apparatus encoded in Chinese and hence a different logic; Aristotle's logic would then be a product of the Greek language rather than of universal reason. The weak version offers a more defensible reading: Chinese categories, metaphors and culturally loaded expressions might have led a Chinese Aristotle to different habitual conceptualizations, for example more holistic and context-based styles of argument than the formal-analytic logic of Greek philosophy, yet it does not follow that he could not think in the Greek manner.\n\nMost evidence supports only the weak version. Speakers of different languages can translate, borrow concepts and understand one another, which the strong version cannot explain. A balanced comment is therefore that language is a guide to, not a prison of, thought: if Aristotle were Chinese, his logic would very likely have been expressed differently and its habitual emphases might have differed, but the human logical capacity itself is not determined by the particular language one speaks. Language, culture and thought mutually influence one another rather than standing in one-way determination.\n——\n📌 解析：考Chapter 10 Sapir-Whorf假说（笔记Chapter10 p.21）。答题套路：先述假说及两个版本（决定论/强式：语言决定思维；相对论/弱式：语言影响习惯性思维，结构差异越大概念化差异越大），再用其评论该命题：亚里士多德的逻辑或受希腊语影响，若为汉人其习惯性概念化可能不同，但语言并不完全决定思维（跨语言可译、可相互理解反驳强式）。失分点：只背定义不结合评论；一边倒支持强式。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2011年真题（论述）"
+ },
+ {
+  "id": "pq-2012-001",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2012年",
+  "front": "〔真题·2012年 简答〕Judge these nine statements T/F: (1) words are the smallest meaningful sound-and-meaning units; (2) an intradisciplinary account covers sound, form and reference; (3) manner of articulation concerns whether airflow is blocked or obstructed; (4) phonetics studies sound systems while phonology studies production; (5) Chomsky gives innate ability a central role and experience a lesser one; (6) representational meaning is based on reference; (7) tense is deictic; (8) unlimited novel sentences illustrate arbitrariness; (9) \"boy\" alone is an immediate constituent of \"The boy kicked the ball.\"",
+  "back": "依次为 F, F, T, F, T, F, T, F, F。要点：词不是最小有意义单位（应为语素）；语言分析第三项为意义而非指称；第4项颠倒了语音学与音系学；表征意义看 sense；新句体现创造性；直接成分是 the boy。\n——\n📌 解析：九道判断跨Ch1/2/3/5/6/7：(1) 最小音义结合单位是语素非词（Ch4 p.2）；(2) 语言系统三方面为 sound/structure/meaning（Ch1 p.10）非 reference；(3) 发音方式确指气流完全受阻或部分阻碍（Ch2 p.4）；(4) 语音学研究发音、音系学研究声音系统，题干颠倒（Ch3 p.9）；(5) Chomsky 强调先天语言能力（Ch5 p.12）；(6) 表征意义基于 sense 非 reference（Ch6 p.3）；(7) 时态是指示性的（时间指示）；(8) 无限新句体现创造性非任意性（Ch1 pp.3-4）；(9) 第一层直接成分是 The boy / kicked the ball（Ch5 p.12）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2012年真题（简答）"
+ },
+ {
+  "id": "pq-2012-003",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2012年",
+  "front": "〔真题·2012年 名词解释〕Define overgeneralization and gradable antonyms; give one example of each.",
+  "back": "过度概括是把目标语规则用到不适用情形，如 *He can sings。等级反义词位于连续尺度两端，肯定一方不必然推出另一方的否定，如 not rich 不一定等于 poor。\n——\n📌 解析：考Chapter 11过度概括（笔记Chapter11 p.25、p.29：语内错误来源之一，把目的语规则用到不适用情形）与Chapter 6等级反义词（p.5：两极之间有连续统，肯定一方不蕴涵否定另一方，可用程度副词修饰、有比较级）。失分点：过度概括例句写成拼写错误而非语法规则误用；把等级反义词与互补反义词（肯定一方即蕴涵否定另一方）混淆。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2012年真题（名词解释）"
+ },
+ {
+  "id": "pq-2012-004",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2012年",
+  "front": "〔真题·2012年 简答〕In “None of my brother's friends care for the impractical suggestion,” identify each bound morpheme, its function and whether it is inflectional or derivational.",
+  "back": "'s and plural -s are inflectional; im-, -al and -tion are derivational. Inflection marks grammatical features; derivation forms a new lexeme or changes meaning/category.\n——\n📌 解析：考Chapter 4屈折词素与派生词素之辨（笔记Chapter4 pp.4-5）。's（属格）与 -s（复数）为屈折，只表语法范畴、不造新词；im-、-al、-tion 为派生，可改变词类/意义、构成新词位。失分点：把 's 当作派生；说不出关键区别——派生创造词位（lexeme），屈折只构成词位的形式（forms of lexemes）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2012年真题（简答）"
+ },
+ {
+  "id": "pq-2012-005",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2012年",
+  "front": "〔真题·2012年 简答〕Draw two parses for “I can see an old man with a telescope.”",
+  "back": "The PP with a telescope can modify the VP (I use it to see) or the NP (the old man has one).\n——\n📌 解析：考Chapter 5树形图与介词短语挂靠歧义（笔记Chapter5 pp.13-14），与2010年 \"Tom found a journal on Wall Street\" 同型。with a telescope 可挂 VP（工具状语：我用望远镜看）或挂 NP（后置定语：老人带着望远镜）。失分点：树图不标范畴标签；只给文字解释不画树。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2012年真题（简答）"
+ },
+ {
+  "id": "pq-2012-006",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2012年",
+  "front": "〔真题·2012年 简答〕Revise VP → (Aux) V PP so it can generate “Her dog always sleeps under it” and “These pigs can sometimes stay in the house.”",
+  "back": "Add an optional adverb slot between Aux and V: VP -> (Aux) (Adv) V PP. Then \"Her dog always sleeps under it\" is generated by choosing Aux = (present tense), Adv = always, V = sleeps, PP = under it; and \"These pigs can sometimes stay in the house\" by choosing Aux = can, Adv = sometimes, V = stay, PP = in the house. Because the adverb is bracketed as optional, the revised rule still generates all the original (Aux) V PP strings, so nothing that the old rule generated is lost.\n——\n📌 解析：考Chapter 5短语结构规则（笔记Chapter5 p.13）：括号内成分为可选成分。句子中 always/sometimes 出现在 Aux 与 V 之间，故增加可选副词槽得 VP -> (Aux) (Adv) V PP。失分点：把 Adv 写成必选成分导致旧句子无法生成；忘记说明括号成分的可选性保证规则向后兼容。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2012年真题（简答）"
+ },
+ {
+  "id": "pq-2012-008",
+  "book": "linguistics",
+  "chapter": 9,
+  "section": "真题·2012年",
+  "front": "〔真题·2012年 论述〕Distinguish register from regional and social dialects. Explain how a teacher's view of language can shape foreign-language teaching.",
+  "back": "语域按使用情境区分（variety according to use）；地域/社会方言按使用者区分。语域可从 field、mode、tenor 描述。语言观会影响课程、材料和目标：形式取向突出结构，功能取向兼顾交际功能，交际取向重视交际能力。\n\n展开（英文作答参考）：Register is a \"variety according to use\", while regional dialects and sociolects are \"varieties according to user\". One's dialect shows who you are and where you are from, while the register shows what you are doing and with whom. Register is analyzed on three dimensions: field (the purpose or subject matter - why and about what we communicate), mode (the means - how we communicate, e.g. face-to-face talk vs a letter) and tenor (the relationship between participants - with whom, e.g. close friends vs the boss). A speaker keeps one dialect but shifts registers constantly, e.g. salt at the dinner table vs sodium chloride in the laboratory.\n\nAs for the second question, as S. Pit Corder says, the way we teach language is influenced, even determined, by what we believe language to be. At the preparatory level, specialists' views of language guide syllabus design and material development; at the classroom level, a teacher's understanding of the nature of language influences what and how he teaches. A formal/structural view of language highlights sentence patterns and grammatical accuracy; a functional view (e.g. Halliday) specifies content not only in grammatical elements but also in the functional items students need to communicate successfully; a communicative view takes the development of learners' communicative competence - grammatical, sociolinguistic, discourse and strategic - as the objective, favoring meaningful, interactive activities. The teacher's view of language thus shapes the curriculum, the materials, the methodology and even the tests.\n——\n📌 解析：考Chapter 9语域与方言（笔记Chapter9 pp.11-12：variety according to use vs according to user；语域三维 field/mode/tenor）及Chapter 12语言观与教学的关系（p.33，Corder引文：教什么怎么教受语言观影响）。essay 类需分点展开并举例。失分点：语域与方言只答概念不举 example；第二问不落到大纲、教材、课堂方法等具体层面。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2012年真题（论述）"
+ },
+ {
+  "id": "pq-2013-001",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 简答〕Complete these nine term prompts: (1) an opposition where the positive of one term entails the negative of the other; (2) phonetics of speech perception; (3) Halliday metafunction that organizes discourse; (4) L1-driven use of \"because ... so\" in English; (5) study of contemporary language; (6) transfer of properties from the source domain of a metaphor to its target; (7) a preceding sound making a following sound similar; (8) a face-saving lead-in before a likely dispreferred reply; (9) sentences used to perform an act.",
+  "back": "依次为 complementary antonymy, auditory phonetics, textual metafunction, interference, synchronic study, mapping, progressive assimilation, pre-sequence, performative sentence。\n——\n📌 解析：跨章术语填空：互补反义（Ch6 pp.5-6）、听觉语音学（Ch2 p.2）、语篇元功能（Ch1 p.7）、母语干扰（Ch11 p.29）、共时研究（Ch1 p.11）、映射 mapping（Ch6 p.13）、顺同化 progressive assimilation（Ch3 pp.11-12：前音影响后音）、前序列 pre-sequence（Ch7 pp.29-30）、施为句 performative（Ch7 p.21）。失分点：(7) 顺/逆同化方向颠倒（逆同化是后音影响前音，如鼻化规则）；(8) pre-sequence 答成 adjacency pair。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（简答）"
+ },
+ {
+  "id": "pq-2013-003",
+  "book": "linguistics",
+  "chapter": 11,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 名词解释〕Define and exemplify inflection, interlanguage and cataphoric reference.",
+  "back": "Inflection changes grammatical form without making a new lexeme; interlanguage is the evolving learner system between L1 and target language; cataphora points forward, as “When I saw her, Mary looked ill.”\n——\n📌 解析：考Chapter 4屈折（笔记Chapter4 p.5：只表语法范畴、不造新词位）、Chapter 11中介语（p.29：介于L1与L2之间的近似语言系统、连续体）与Chapter 7后指 cataphora（p.20：所指在后，与 anaphora 方向相反，例句如 When I saw her, Mary looked ill）。失分点：cataphora 例句把先行词放前（写成 anaphora）；interlanguage 只答\"学习者语言\"不点\"介于L1与L2的动态系统\"。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（名词解释）"
+ },
+ {
+  "id": "pq-2013-004",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 简答〕A market notice reads “凉皮搬到书的对面.” Explain what “凉皮” and “书” refer to in context.",
+  "back": "广义上分别指凉皮这种食物和书；告示中则转指售卖凉皮的店和书店，表示凉皮店搬到了书店对面。\n——\n📌 解析：考Chapter 6概念转喻（笔记Chapter6 p.15：同一域内以一实体代另一相关实体，如整体与部分、处所与机构）。\"凉皮\"\"书\"在字面层分别指食物与书籍，在告示语境中转指凉皮店与书店（REPRESENTING/INSTITUTION via 相关实体）。失分点：只答字面指称而未指出语境触发的转喻机制。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（简答）"
+ },
+ {
+  "id": "pq-2013-005",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 简答〕At lunch, after students share food, a student says “我强烈要求老师吃我豆腐,” and classmates laugh. Explain the joke semantically.",
+  "back": "“豆腐”有食物的指称义，也有轻微性骚扰的联想义；该语境触发双关和笑声。\n——\n📌 解析：考Chapter 6联想意义中的反映意义（笔记Chapter6 p.4：通过同一表达式的另一意义产生的联想）与Ch6 p.6双关/谐音的语用价值。\"吃豆腐\"字面指称食物义，同时激活\"占便宜/轻薄\"的联想义，语境使学生的话产生双关而引发笑声。失分点：只答\"一语双关\"而不点明是哪种意义类型触发联想。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（简答）"
+ },
+ {
+  "id": "pq-2013-006",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 简答〕Compare thematic meaning: “Professor Yang wrote An Introduction to Linguistics” / “An Introduction to Linguistics was written by Professor Yang.”",
+  "back": "命题事件相同但起点不同：主动句以 Professor Yang 为 Theme，被动句以书名为 Theme；它们分别适合作为“杨教授做了什么”与“这本书发生了什么”的回答。\n——\n📌 解析：考Chapter 5主位结构（笔记Chapter5 pp.20-22：theme 为信息起点，其余为 rheme）。两句命题义相同（同义句关系，Ch6 p.11 synonymy），但主位不同：主动句以 Professor Yang 为起点，回答\"杨教授做了什么\"；被动句以书名为起点，回答\"这本书怎么了/发生了什么\"。失分点：只说意义相同，不谈主位与信息结构（已知信息）差异。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（简答）"
+ },
+ {
+  "id": "pq-2013-011",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 名词解释〕Explain: symbol, morality play, theme, negative capability, revenge tragedy, Imagism, slave narrative and Chicano literature.",
+  "back": "(1) Symbol: a person, object, image or action that signifies more than its literal meaning and conveys a further abstract idea or emotion; unlike a passing metaphor it is sustained through the work (e.g. the green light in The Great Gatsby, the scarlet A in The Scarlet Letter). (2) Morality play: a medieval dramatic genre in which abstract virtues, vices and forces are personified to dramatize the moral conflict for the human soul; the best-known example is Everyman. (3) Theme: the central or controlling idea a work explores; it is implied through plot, character and imagery rather than directly stated, and must be distinguished from the mere subject. (4) Negative capability: Keats's term for the poet's capacity to accept uncertainties, mysteries and doubts 'without any irritable reaching after fact and reason' — an ideal of open-mindedness, of 'letting the mind be a thoroughfare for all thoughts' (高分笔记2, p31). (5) Revenge tragedy: an Elizabethan-Jacobean dramatic genre in which the plot is driven by the hero's quest to avenge a murder or grave wrong, typically involving feigned madness, a play-within-the-play and the avenger's own death; Kyd initiated the type and Shakespeare's Hamlet is its supreme example. (6) Imagism: an early-20th-century poetic movement led by Ezra Pound, characterized by the use of precise imagery, clear and economical language and free rhythm; Pound's 'In a Station of the Metro' is the classic example (高分笔记5, p32-33). (7) Slave narrative: autobiographical accounts written by formerly enslaved people (e.g. Frederick Douglass) recounting the horrors of bondage, the quest for literacy and escape, and indicting the institution of slavery; a formative genre of African-American literature. (8) Chicano literature: the literature of Mexican-Americans, exploring bicultural and bilingual experience, ethnic identity, discrimination and the struggle for social justice in the United States.\n——\n📌 解析：八个术语横跨戏剧（morality play、revenge tragedy）、诗学（symbol、theme、negative capability、Imagism）与美国族裔文学（slave narrative、Chicano literature），须逐条编号作答，每个术语按'定义+特征+代表作家作品'三步写。关键归属：negative capability 必须归于济慈（笔记2 p31），Imagism 必须归于庞德（笔记5 p32）。常见失分点：把 morality play 与 miracle play 混淆、把 slave narrative 写成一般奴隶制历史叙述而漏掉'自传体'这一文体特征。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（名词解释）"
+ },
+ {
+  "id": "pq-2014-001",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Complete nine linguistic-term clues: Saussure's counterpart to signifier; sound/meaning as two subsystems; Halliday's message-linking function; Esperanto's intended role; naturally used community language; family-based language classification; typological branch alongside phonology and morphology; classification of sociolinguistics/psycholinguistics; two modern-linguistics approaches besides focus on speech.",
+  "back": "依次为 signified, duality, textual function, lingua franca, natural language, genetic classification, syntax, interdisciplinary divisions, descriptive and synchronic。\n——\n📌 解析：跨章填空均出自Chapter 1（笔记Chapter1 pp.4-11）：signified（Saussure：signifier声音形象/signified概念）、duality（声音与意义两个子系统）、textual function、lingua franca（p.7）、natural language、genetic classification（pp.7-8）、syntax（语言系统三方面之一，p.10）、inter-disciplinary divisions（p.10-11）、描写式与共时式（现代语言学特征，p.11）。失分点：signified 误答 referent（Saussure 的对应项是 concept）；duality 误答 displacement。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-002",
+  "book": "linguistics",
+  "chapter": 2,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Write the IPA symbol matching each description: voiced labiodental fricative; lateral liquid; voiceless alveolar fricative; voiced bilabial stop; voiced palatal affricate; palatal glide; voiceless interdental fricative; voiceless palatal affricate; voiceless velar stop; voiceless glottal fricative.",
+  "back": "/v/, /l/, /s/, /b/, /dʒ/, /j/, /θ/, /tʃ/, /k/, /h/。\n——\n📌 解析：考Chapter 2辅音描写三维度（笔记Chapter2 pp.4-6）：发音部位+发音方式+清浊。要点：唇齿擦音/v/、边音（lateral liquid）/l/、齿龈清擦音/s/、双唇浊塞音/b/、腭龈浊塞擦音/dʒ/、腭滑音/j/、齿间清擦音/θ/、清塞擦音/tʃ/、软腭清塞音/k/、声门清擦音/h/。失分点：/v/与/w/、/θ/与/ð/清浊混淆；塞擦音写成塞音。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-003",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Name the word-formation process and give your own example for: refrigerator → fridge; Watt (name) → watt; United Nations → U.N.; former shampoo brand → generic shampoo; motor + hotel → motel.",
+  "back": "(1) refrigerator -> fridge: clipping (a polysyllabic word is shortened by deleting syllables); (2) Watt -> watt: eponymy (the word originates from a proper name); (3) United Nations -> U.N.: abbreviation (initial letters are used and read letter by letter, not as a word); (4) a former shampoo brand name used for shampoo in general: coinage - an invented trade name has become an ordinary common noun (genericization); (5) motor + hotel -> motel: blending (parts of two free words are fused into one).\n——\n📌 解析：考Chapter 4构词法（笔记Chapter4 pp.6-8）：fridge 截短、watt 专有名词来源（eponymy）、U.N. 首字母缩写（不可拼读故为 abbreviation 非 acronym）、品牌名转普名答 coinage/类化、motel 混合。第二问要求自举例词，需与所答构词法类型匹配。失分点：fridge 误答 back-formation；U.N. 误答 acronym。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-004",
+  "book": "linguistics",
+  "chapter": 3,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 名词解释〕Define phonology, allophones, suprasegmental features and TG grammar. Distinguish morpheme/allomorph and theme/rheme.",
+  "back": "Phonology studies language-specific sound systems; allophones are context-dependent realizations of one phoneme; suprasegmentals include stress, intonation and tone; TG grammar models grammatical sentences using finite phrase-structure and transformational rules. A morpheme is a minimal meaningful unit; allomorphs are variants of one morpheme. Theme is the message's starting point; rheme is the remainder.\n——\n📌 解析：五个定义跨Ch3/4/5：音系学研究特定语言的声音系统与规律（笔记Chapter3 p.9）；音位变体 allophone 是音位在特定语境中的实现（pp.9-10，互补分布）；超音段特征包括重音、语调、声调（p.13）；TG语法用有限规则生成且只生成合语法句、含深层/表层结构与转换规则（Chapter5 pp.12-13）；词素为最小有意义的单位、词素变体为同一词素的变体（Chapter4 pp.2-3）；主位为信息起点、述位为其余部分（Chapter5 p.20）。失分点：allomorph 与 allophone、morpheme 的对应关系张冠李戴；漏 theme 未必等于语法主语。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（名词解释）"
+ },
+ {
+  "id": "pq-2014-005",
+  "book": "linguistics",
+  "chapter": 3,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Using the data car [kʰaː], scar [sk=aː], “this car” [ðɪs kʰaː], discard [dɪsk=aːd], explain raised h and = and state the aspiration rule.",
+  "back": "In these narrow transcriptions the raised h (as in [k_h]) is the diacritic marking aspiration, and the raised equals sign (as in [k=]) marks an unaspirated sound. The data show that /k/ is aspirated ([k_h]) word-initially in car and in \"this car\" where k begins a stressed syllable, but unaspirated ([k=]) in the /s/-clusters of scar and discard. The aspiration rule therefore states: voiceless stops (/p, t, k/) are aspirated when they occur initially in a stressed syllable (pin, team, cool, car), but they are unaspirated when they follow /s/ in the same syllable (spin, scar, discard). Aspiration is thus a non-distinctive, predictable feature in English, and [k_h] and [k=] are allophones of the single phoneme /k/ in complementary distribution.\n——\n📌 解析：考Chapter 3窄式转写附加符号（笔记Chapter2-3：diacritic 定义见 Ch2 p.3）与送气规则（Ch3 p.12）。上标 h 标送气、上标 = 标不送气；规则：清塞音出现于重读音节首时送气（car），/s/ 后不送气（scar, discard）；[kʰ]与[k=]为 /k/ 的互补分布音位变体。失分点：只写规则不指出两变体的音位学地位（非区别性、可预测）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-006",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕List the allomorphs and distribution of English negative prefix in-; give two examples for each form.",
+  "back": "im- before bilabials (impossible, immoral); ir- before /r/ (irregular, irresistible); il- before /l/ (illegal, illogical); in- elsewhere.\n——\n📌 解析：考Chapter 4词素变体 allomorph（笔记Chapter4 p.3）：否定前缀 in- 因后续语音环境呈 im-（双唇音前）、ir-（/r/前）、il-（/l/前）、in-（其他），例：impossible/immoral、irregular/irresistible、illegal/illogical、informal/intangible。此为形态音系学（屈折/派生形态受语音条件制约）的典型例证。失分点：例词不符合语音条件；漏掉\"in- elsewhere\"这一默认形式。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-007",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Describe active-to-passive transformation. Compare “John turned off the machine” and “The machine was turned off by John” in event meaning and Theme; draw a parse for the passive clause.",
+  "back": "Reorder object NP to subject; use be plus past participle agreeing in tense/number; place by before the agent. Event meaning is equivalent but Theme shifts from John to the machine. Parse should show the machine as subject and by-phrase in the predicate.\n——\n📌 解析：考Chapter 5被动语态转换规则（笔记Chapter5 p.15：三步——交换两个NP位置、动词替换为 be+过去分词且 be 与主语一致并保持时态、在施事NP前插入 by）与主位结构（pp.20-22）。两句事件义等值（同义句），但主位由 John 移至 the machine，信息起点不同。画树图需显示被动句主语为 the machine、谓语含 be+V-en+by短语。失分点：漏 be 的时态/数一致；误说被动句改变了事件意义。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-008",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Give two plausible readings and responses to “What are your children doing in my garden?”",
+  "back": "可作好奇询问（如“他们在挖洞”），也可作愤怒责问（道歉并带孩子离开）；语调和情境影响语用意图。\n——\n📌 解析：考Chapter 7言语行为与语用推理（笔记Chapter7 pp.21-23）：同一句式可有直接（真诚询问信息）与间接（间接指责/质问）两种语用意图，语调与情境决定解读；相应回应分别为说明情况或道歉并采取补救。失分点：只答一种读法；不联系 indirect speech act（疑问句实施指责）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2014-009",
+  "book": "linguistics",
+  "chapter": 11,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 名词解释〕Briefly define coherence, regional dialect, acculturation, learning strategy and syllabus.",
+  "back": "Coherence is conceptual connectedness of a text; regional dialect is a geographic variety; acculturation is adjustment to a new culture; learning strategies are techniques used to learn/solve problems; syllabus specifies teaching content/principles.\n——\n📌 解析：五个定义跨Ch8/9/11/12：连贯为语篇概念与关系层面的相互可及（笔记Chapter8 pp.2-3，注意与 cohesion 的手段/目的之别）；地域方言为按地理区域划分的变体（Ch9 p.11）；文化适应 acculturation 为对新文化的调适（Ch10 p.19、Ch11 p.31 Schumann 模式）；学习策略为学习者解决具体问题所用的方法技巧（元认知/认知/社会情感三类，Ch11 p.28）；大纲为权威规定教学内容与原则的文件（Ch12 p.34）。失分点：coherence 与 cohesion 混淆；syllabus 与 curriculum 混淆。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（名词解释）"
+ },
+ {
+  "id": "pq-2014-011",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕Explain why fast and quick are not interchangeable in every context. Comment on “That which we call a rose by any other name would smell as sweet.”",
+  "back": "Fast/quick differ in collocation: fast often emphasizes speed (fast runner), quick a short duration (quick chat). The rose statement illustrates arbitrariness: a name is not naturally determined by its referent.\n——\n📌 解析：前半考Chapter 6搭配意义 collocative meaning（笔记Chapter6 pp.4-5：近义词因惯常搭配对象不同而意义有别，如 able to/capable of），fast 偏速度与持续（fast runner, fast food），quick 偏历时短、反应快（quick glance, quick meal）。后半考Chapter 1任意性（pp.4-5）：名称与事物之间无自然必然联系，符号靠约定俗成，故\"玫瑰换个名字照样香\"。失分点：把 fast/quick 之差答成感情色彩；名言只谈修辞不点 arbitrariness。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2015-001",
+  "book": "linguistics",
+  "chapter": 9,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 名词解释〕Define ethnography of communication, communicative competence, syllabus and meaning; distinguish syntagmatic from paradigmatic relations.",
+  "back": "Ethnography studies communicative events in social context (Hymes's SPEAKING factors). Communicative competence joins language knowledge with appropriate use. A syllabus specifies course content and principles. Meaning includes referential and associative aspects. Syntagmatic items co-occur in structures; paradigmatic items can occupy the same slot.\n——\n📌 解析：五个定义跨Ch10/9/12/6/5：交际民族志（Hymes 的 SPEAKING 框架：Setting/Scene、Participants、Ends、Act sequence、Key、Instrumentalities、Norms、Genre，笔记Chapter10 pp.21-22）；交际能力（Ch9 p.15：默会知识+使用能力，四参数）；大纲（Ch12 p.34）；意义含指称义与联想义（Ch6 pp.3-4）；横组合（chain，结构中共现）与纵聚合（choice，同槽位可替换）（Ch6 p.4/Ch5 p.16）。失分点：SPEAKING 八要素记不全；syntagmatic/paradigmatic 方向颠倒。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（名词解释）"
+ },
+ {
+  "id": "pq-2015-002",
+  "book": "linguistics",
+  "chapter": 8,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 简答〕(1) Compare “Mike broke the teapot” with “The teapot was broken by Mike” in information structure. (2) Name/explain grammatical cohesion with examples. (3) For “A: Have you seen Peter today? B: Well, if I didn't deny seeing him I wouldn't be telling a lie,” identify the flouted maxim and infer B's meaning.",
+  "back": "(1) The two clauses describe the same event, but their information structure differs. The constituent that stands for the starting point of the message is the theme; all the rest is the rheme. In \"Mike broke the teapot\" the theme is Mike, the person known to both speaker and hearer, and the clause answers \"What did Mike do?\"; in \"The teapot was broken by Mike\" the theme is the teapot, and the clause answers \"What happened to the teapot?\".\n(2) Grammatical cohesion is achieved in three ways. Reference: items refer to something else for their interpretation, looking backward (anaphoric) or forward (cataphoric); personal reference by pronouns (\"John is my brother. He came here yesterday.\"), demonstrative reference (this/that) and comparative reference (as...as). Substitution: one linguistic item replaces another - nominal substitutes (one, ones, some, same), verbal substitutes (do, does) and clausal substitutes (so, not). Ellipsis, \"something left unsaid\": nominal (\"Would you like to hear another verse? I know three more.\"), verbal (\"John brought some apples and Amy some pears.\") and clausal ellipsis (\"How many hours did you do lessons? Ten hours.\").\n(3) B's reply is deliberately obscure and roundabout instead of the simple \"Yes, I have\". This flouts the maxim of manner (avoid obscurity of expression). Assuming cooperation, A infers a conversational implicature: if B answers in such a twisted way, it must be because the direct answer would cost face or invite trouble; the implication is that B has in fact seen Peter today.\n——\n📌 解析：三小问跨Ch5/8/7：(1) 主位结构（笔记Chapter5 pp.20-22）；(2) 语法衔接三手段 reference/substitution/ellipsis，各配分类与例句（Chapter8 pp.3-4）；(3) 合作原则与会话含义（Ch7 pp.24-25）：B 以迂回隐晦的双重否定作答，违反方式准则（避免晦涩），由此推出\"B 今天见过 Peter\"。失分点：(2) 只答 reference 漏另两类；(3) 误判数量准则——关键在表达晦涩而非信息量。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（简答）"
+ },
+ {
+  "id": "pq-2015-003",
+  "book": "linguistics",
+  "chapter": 3,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 简答〕(1) In the transcriptions, pear and “this pear” show [pʰ], while spare and despair show [p⁼]; explain these diacritics and infer the aspiration rule. (2) Compare “a redcoat”/“a red coat” and “a bluebird”/“a blue bird.” (3) Describe particle movement using “John turned off the machine” and “John turned the machine off”; say whether event meaning changes. (4) Explain: Diner: “Waiter, what's this fly doing in my soup?” Waiter: “Madam, I believe that's the backstroke.”",
+  "back": "(1) The raised h is the diacritic for aspiration: [p_h] in pear and \"this pear\" is aspirated, while [p=] in spare and despair is unaspirated. The aspiration rule: voiceless stops are aspirated when they occur initially in a stressed syllable, but unaspirated after /s/ in the same syllable (spin, spare, despair); [p_h] and [p=] are allophones of /p/ in complementary distribution.\n(2) In \"a redcoat\" and \"a bluebird\" an indefinite article is followed by a compound noun: primary stress falls on the first element and the meaning is lexicalized (a redcoat = a British soldier; a bluebird = a kind of bird). In \"a red coat\" and \"a blue bird\" the article is followed by a modifier plus a noun: stress falls on the noun and the meaning is literal (a coat that is red; a bird that is blue). Compounds show that the meaning of a compound is not always the sum of its parts.\n(3) \"Turn\" and \"off\" form one discontinuous constituent of the verb phrase, and \"off\" is a verbal particle. By the particle movement transformation, when a verbal particle is followed by a noun phrase, the particle can be reordered to the right of the noun phrase: John turned off the machine -> John turned the machine off. The operation involves reordering only; the core event meaning is unchanged (with a pronoun object only John turned it off is possible).\n(4) The diner's question is not really a request for information but an indirect complaint, meaning roughly \"Why is there a fly in my soup?\". The waiter deliberately takes the literal reading and answers it as if the fly were really performing an action (\"doing the backstroke\"), giving an irrelevant/literal response instead of an apology. This flouts the maxim of quantity (and relevance), and the flout generates the implicature that produces the joke.\n——\n📌 解析：四小问综合跨Ch3/4/5/7：(1) 附加符号与送气规则（笔记Chapter2 p.3、Ch3 p.12）；(2) 复合词\"左重音、右词性\"、词义可能词汇化非成分之和（Ch4 p.6，redcoat=英国士兵）；(3) 小品词位移转换、核心事件义不变（Ch5 p.15）；(4) 间接言语行为+违反量/关系准则产生会话含义（Ch7 pp.23-25）：侍者按字面理解间接抱怨制造幽默。失分点：复合词重音位置记反；笑话只答\"幽默\"不分析机制。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（简答）"
+ },
+ {
+  "id": "pq-2015-005",
+  "book": "linguistics",
+  "chapter": 11,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 论述〕Define the Critical Period Hypothesis and comment on evidence/limitations concerning age and second-language learning.",
+  "back": "The Critical Period Hypothesis (CPH) claims that there is a period, with the optimal age within roughly the first ten years of life, when language acquisition takes place naturally and effectively. In second language research it rests on two assumptions: (1) the neurological basis of language in children is different from that in adults; (2) children outperform adults in all aspects of second language acquisition.\n\nEvidence and limitations. The truth value of the first assumption remains an open issue, because the exact neurological difference and its consequences for learning are hard to verify. The second assumption has been challenged by later studies: adults often learn certain aspects of language (morphology, syntax, vocabulary) faster at the initial stage, and late learners can still reach very high proficiency. What later research does support is a child advantage in pronunciation: early starters are far more likely to acquire native-like accent. At the same time adults are advantageous in cognitive capabilities, such as analytic ability, metalinguistic awareness and learning strategies. Moreover, age does not change the route of acquisition: children and adults pass through broadly similar developmental stages, differing mainly in rate and ultimate attainment.\n\nComment. In its strong form (\"children are better at everything\") the hypothesis is untenable for L2 learning; a weak interpretation is defensible - there may be sensitive periods for particular aspects of language, notably phonology, and each age has its own advantages. For teaching, this means age alone does not decide success: instruction should exploit adults' cognitive strengths while providing rich early exposure to pronunciation, and motivation, aptitude and learning strategies remain decisive at any age.\n——\n📌 解析：考Chapter 11关键期假说（笔记Chapter11 pp.27-28）。essay 需定义+证据+局限+评论：两假设中\"儿童神经基础不同\"真值仍有争议，\"儿童全面优于成人\"已被后续研究挑战；支持性结论是儿童发音占优、成人认知占优，且年龄不改变习得路线。失分点：只背定义不作评价；断言儿童在各方面都优于成人；不提教学法启示。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（论述）"
+ },
+ {
+  "id": "pq-2015-006",
+  "book": "linguistics",
+  "chapter": 9,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 简答〕Describe the non-standard English constructions in “We can't got none” and “He just lazy.”",
+  "back": "In \"We can't got none\" two non-standard features appear. First, multiple negation: negation is marked both by \"can't\" and by \"none\" (\"We can't get any\"), where Standard English allows only one negative marker in the clause. Second, non-standard verb morphology: \"got\" is used after the modal instead of the bare form \"get\". The whole sentence corresponds to Standard English \"We can't get any\". In \"He just lazy\" the copula is deleted: Standard English requires \"He is just lazy\". This zero copula is a systematic feature of several non-standard varieties, especially where the missing form would be a contracted 's. Both sentences show that non-standard varieties are rule-governed rather than merely \"wrong\": their grammar differs from the standard variety in regular, describable ways.\n——\n📌 解析：考Chapter 9语言变体（笔记Chapter9 pp.11-12：非标准变体有自己的系统规则）并可与Ch11错误分析衔接。要点：多重否定（can't...none）、动词形态误用（can't got）、系词省略/零系词（He just lazy，缩略 's 位置最易脱落），对应标准英语 We can't get any / He is just lazy。失分点：只笼统说\"不合语法\"而不指出具体机制与标准形式。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（简答）"
+ },
+ {
+  "id": "pq-2015-008",
+  "book": "literature",
+  "chapter": 13,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 名词解释〕Explain the Beat Generation, Jazz Age, interior monologue, confessional poetry and international theme.",
+  "back": "(1) Beat Generation: a group of post-WWII American writers (Jack Kerouac, Allen Ginsberg) who rejected mainstream middle-class conformity and materialism, celebrating road travel, jazz, drifters and spiritual quest; Ginsberg's Howl is widely regarded as the central poem of the Beat movement and Kerouac's On the Road its classic novel, in which 'the road itself is the goal' (高分笔记6, p1, p3-5). (2) Jazz Age: the name for the America of the 1920s, an era of jazz music, post-war prosperity, consumerism and loosened morals; Fitzgerald was famous for his depiction of the Jazz Age, and The Great Gatsby is its classic text (高分笔记5, p13). (3) Interior monologue: a stream-of-consciousness narrative technique that presents the flow of a character's inner thoughts, impressions, feelings and free associations directly, without conventional dialogue or authorial intervention; practiced by Joyce, Woolf and Faulkner (高分笔记3, p15; 高分笔记5, p25). (4) Confessional poetry: a mid-20th-century American school of poetry (Robert Lowell, Sylvia Plath, Anne Sexton) that makes the poet's private life — guilt, mental illness, family trauma, marriage — the explicit subject of intense first-person verse. (5) International theme: the term for Henry James's characteristic subject: the encounter and contrast between American innocence, energy and idealism and European sophistication, tradition and corruption, dramatized through characters who cross national and cultural boundaries.\n——\n📌 解析：五个术语均为美国文学名词解释高频词：Beat 与 Jazz Age 是'时期/群体'概念，要分别绑定 Kerouac-Ginsberg 与 Fitzgerald；interior monologue 是小说叙事技巧。关键区分：interior monologue（内心独白，小说意识流手法）不同于 dramatic monologue（戏剧独白，勃朗宁、丁尼生的诗歌文体）——两者互串是本年度最常见的丢分点。international theme 须落到亨利·詹姆斯'欧美对比'这一核心，不能泛答'跨国题材'。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（名词解释）"
+ },
+ {
+  "id": "pq-2015-009",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 简答〕Answer five literature prompts: summarize The Great Gatsby; describe Faulkner's characteristic techniques; analyze Willy Loman through the American Dream; explain Poe's unity of effect; discuss Transcendentalism's definition, features and writers.",
+  "back": "(1) The Great Gatsby: Narrator Nick Carraway tells of Jay Gatsby, a mysterious millionaire who reinvented himself from poor James Gatz to win back Daisy Buchanan, whom he loved five years earlier. Through lavish parties he reconnects with Daisy, but she cannot renounce the security of her class represented by Tom. Driving Gatsby's car, Daisy kills Tom's mistress Myrtle; Gatsby takes the blame and is shot by Myrtle's husband Wilson, while Tom and Daisy retreat into their money and almost no one attends Gatsby's funeral. The novel exposes the corruption and emptiness of the American Dream — 'So we beat on, boats against the current, borne back ceaselessly into the past' (高分笔记5, p10, p14). (2) Faulkner's characteristic techniques: stream of consciousness, which allows readers to enter the characters' minds and feel themselves participants rather than observers (Benjy's section of The Sound and the Fury); multiple point of view, letting different narrators react differently to the same events so that truth is difficult to reach; mythic construction of Yoknapatawpha County (Jefferson modeled on Oxford, Mississippi) as a microcosm of the South; themes of the decline of the Southern aristocracy after the Civil War (高分笔记5, p22-25). (3) Willy Loman: an aging traveling salesman who has built his life on the American Dream of easy success and of being 'well liked'; unable to accept his ordinary life and his failure, he commits suicide so that his family can collect the insurance money. Miller described the play as 'the tragedy of a man who gave his life, or sold it, in pursuit of the American Dream': the dream turns a human being into a product and destroys both Willy and his sons (高分笔记6, p25, p27). (4) Poe's unity of effect: Poe's theory (set out in 'The Philosophy of Composition') that a short tale or poem should be planned so that every element — plot, character, setting, tone, and a length readable at one sitting — converges on a single preconceived emotional effect, such as melancholy in 'The Raven' or escalating terror in 'The Fall of the House of Usher'; the ideal poem is short enough to preserve this total effect. (5) Transcendentalism: a New England philosophical and literary movement of the 1830s-50s within American Romanticism. Features: emphasis on spirit, or the Oversoul, as the most important thing in the universe, with nature as its symbol; belief in intuition over logic and the senses; self-reliance, the divinity of man and optimism about human perfectibility. Leading figures: Ralph Waldo Emerson (Nature, 'the Bible of New England Transcendentalism', and 'The American Scholar') and Henry David Thoreau (Walden) (高分笔记4, p14, p17).\n——\n📌 解析：一题五问必须逐问编号分别作答，不可合并成段。五问分别锁定菲茨杰拉德、福克纳、阿瑟·米勒、爱伦·坡和超验主义五个考点：Gatsby 概要以'美国梦的幻灭'收束；福克纳答意识流+多视角两大技法；Willy Loman 必须扣 American Dream 而非泛泛的人物性格分析。常见失分点：把 Poe 的 unity of effect 误写成'单一主题'——它是'一切手段服务于单一预想情感效果'的创作论；Transcendentalism 漏答 Oversoul 或代表作家。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（简答）"
+ },
+ {
+  "id": "pq-2016-007",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2016年",
+  "front": "〔真题·2016年 名词解释〕Explain Imagism, the American Dream, the Lost Generation, Black Humor and Theatre of the Absurd.",
+  "back": "(1) Imagism: an early-20th-century literary movement led by Ezra Pound, characterized by the use of precise imagery and clear, economical language, breaking with Victorian rhetoric; Pound, 'the father of modern American poetry', was its leading figure, and his two-line 'In a Station of the Metro' is the famous example (高分笔记5, p32-33). (2) The American Dream: the national creed that everyone, through hard work and initiative, can achieve material success and upward advancement regardless of origin. American literature both celebrates and indicts it: Gatsby's romantic pursuit and Willy Loman's destruction dramatize its betrayal, turning the dream into a critical mirror of American society. (3) The Lost Generation: the post-WWI generation of American writers (Hemingway, Fitzgerald, etc.) who were disillusioned by the war and became expatriates. Their writings center on the war and its aftermath, are often autobiographical, and treat decadence and the death of the American Dream; Hemingway's The Sun Also Rises (1926) is the emblematic work (高分笔记5, p12-13, p15). (4) Black Humor: a literary device and postwar school in novels and plays that discusses taboo, gruesome or painful subjects while adding an element of comedy — 'a humor out of despair and laughter out of tears' — satirizing hypocrisy, racial prejudice and the dehumanization of the individual; Joseph Heller's Catch-22 (1961) is the representative work (高分笔记6, p5, p8). (5) Theatre of the Absurd: a dramatic genre originating in the mid-20th century among European and American dramatists of the 1950s and early 1960s, resting on the existentialist sense that, with transcendental roots lost, man is abandoned and all his actions become senseless, absurd and useless; it expresses this through non-realistic forms — illogical plots, repetitive dialogue and meaningless waiting — as in Beckett's Waiting for Godot and Edward Albee's plays (高分笔记3, p2; 高分笔记6, p27-28).\n——\n📌 解析：五个术语均为美国文学高频名词解释（2016 年原题，笔记中 Realism、Modernism、Contemporary 各章均有对应真题记录）。答题模板：'时期+定义+手法特征+代表作家作品'。关键区分：Lost Generation 是'人'的群体概念，Black Humor 与 Theatre of the Absurd 是'手法/流派'概念且同属战后；Absurd 须点出非理性、无意义与'等待'母题并落到 Godot 与 Albee。常见失分点：Imagism 漏掉庞德；Black Humor 只答'黑色'不答'绝望中的幽默'这一定义核心。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2016年真题（名词解释）"
+ },
+ {
+  "id": "pq-2018-002",
+  "book": "linguistics",
+  "chapter": 3,
+  "section": "真题·2018年",
+  "front": "〔真题·2018年 名词解释〕Define diphthong, minimal pair, code-switching and design features of human language.",
+  "back": "A diphthong glides between vowel qualities within a syllable. A minimal pair differs by one sound in the same environment and changes meaning. Code-switching alternates languages/varieties. Design features are properties such as duality, displacement and productivity.\n——\n📌 解析：四个定义跨Ch2/3/9/1：双元音（发音中音质滑动，笔记Chapter2 p.6）；最小对立体（同一位置仅一个音不同且意义不同，Ch3 p.10，对子须满足两条件）；语码转换（Ch9 p.14：双语社区中依情境/话题在语言间切换；与 code-mixing 句内混用相区分）；设计特征（Ch1 pp.3-6：creativity、duality、arbitrariness、displacement 等，区分人与动物交际系统）。失分点：minimal pair 漏\"同一环境/改变意义\"任一条件；design features 只举其一。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2018年真题（名词解释）"
+ },
+ {
+  "id": "pq-2018-003",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2018年",
+  "front": "〔真题·2018年 简答〕Explain conversational implicature with an example; compare traditional grammar and modern linguistics.",
+  "back": "Conversational implicature is contextual meaning inferred beyond literal content, often when a maxim is flouted. Traditional grammar is historically prescriptive and relies on parsing; modern linguistics is descriptive and empirical, treating language as a systematic object and including spoken data.\n——\n📌 解析：两问跨Ch7与Ch1/5：会话含义（笔记Chapter7 pp.24-25：假定遵守合作原则，说话人违反/漠视准则时听话人推出的隐含、非规约意义，宜配违反质量或数量准则的例句）；传统语法（Ch5 pp.11-12：源于拉丁希腊、规定式、重解析、缺理论框架）与现代语言学（Ch1 p.11：重口语、共时、描写解释、理论取向）之别。失分点：implicature 定义漏\"依赖合作原则与语境推理\"；传统语法只答\"规定式\"一点。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2018年真题（简答）"
+ },
+ {
+  "id": "pq-2018-007",
+  "book": "literature",
+  "chapter": 7,
+  "section": "真题·2018年",
+  "front": "〔真题·2018年 名词解释〕Define dramatic monologue and describe the Metaphysical Poets.",
+  "back": "(1) Dramatic monologue: a lyric poem in which a single fictional speaker addresses a silent audience at a dramatic moment or crisis. In listening to this one-sided talk — in which the speaker argues his case and unconsciously reveals his own character, motives and state of mind — the reader forms his or her own opinions and judgments about the speaker. It was the dominant poetic medium of Robert Browning ('My Last Duchess', in which the Duke's polished speech exposes his arrogance, possessiveness and cruelty) and was also mastered by Tennyson ('Ulysses') (高分笔记2, p67, p87-88). (2) The Metaphysical Poets: a loose group of 17th-century British lyric poets writing under the influence of John Donne, including George Herbert and Andrew Marvell. Samuel Johnson described them as a school of highly intellectual poetry marked by bold and ingenious conceits, incongruous imagery, complexity of thought, frequent paradox and deliberate harshness of expression. Their works tend to psychological analysis of the emotions of love and religion, draw images from actual life, and are characterized by simple diction, mysticism in content and fantasticality in form; the extended metaphor known as the 'metaphysical conceit' (e.g. Donne's comparison of parted lovers to a drawing compass) is their signature device (高分笔记1, p55-56).\n——\n📌 解析：两个术语分属维多利亚诗歌与 17 世纪玄学派，均为历年原题（2018 年名词解释 Dramatic Monologue 见笔记3 p2）。dramatic monologue 的三个要件——单一声部、沉默的听众、说话者无意识的自我暴露——必须写全，并与 soliloquy（舞台上人物独处自语）区分。玄学派的关键词是 conceit（奇喻）、paradox、wit，最好举多恩'圆规'喻为证，并引约翰逊的经典描述。常见失分点：把 dramatic monologue 等同于戏剧台词，或只列玄学派诗人名单而漏掉诗学特征。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2018年真题（名词解释）"
+ },
+ {
+  "id": "pq-2019-002",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2019年",
+  "front": "〔真题·2019年 名词解释〕Define inflectional morphemes, gradable antonyms and negative transfer.",
+  "back": "Inflectional morphemes mark grammatical categories without creating a new lexeme. Gradable antonyms are scale endpoints with intermediate values. Negative transfer is L1 influence that causes difficulty/non-target forms in L2.\n——\n📌 解析：三个定义跨Ch4/6/11：屈折词素只标语法范畴（格、数、时体、级）不造新词（笔记Chapter4 p.5，英语仅七个）；等级反义词位于连续统两端、肯定一方不蕴涵否定另一方、可受程度副词修饰（Ch6 p.5）；负迁移即母语对二语的消极影响（干扰，如 although...but 连用，Ch11 p.29）。失分点：屈折与派生混淆；负迁移写成\"迁移\"而不点 negative/干扰义。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2019年真题（名词解释）"
+ },
+ {
+  "id": "pq-2019-005",
+  "book": "linguistics",
+  "chapter": 10,
+  "section": "真题·2019年",
+  "front": "〔真题·2019年 简答〕List the categories of deixis. Explain Sapir–Whorf, distinguishing linguistic relativity and determinism; give your own examples.",
+  "back": "Deixis includes person, place, time, discourse and social deixis. Relativity says language categories influence habitual thought; determinism makes the stronger claim that language determines thought. Examples should illustrate influence without claiming other thoughts are impossible.\n——\n📌 解析：两问跨Ch7与Ch10：指示语五类（人称/地点/时间/篇章/社会，笔记Chapter7 pp.18-19，各配例）；Sapir-Whorf（Ch10 p.21）：相对论（弱式）指语言影响习惯性思维与范畴化，决定论（强式）指语言决定思维；举自拟例子须体现\"影响但不决定\"。失分点：强式弱式表述颠倒；例子只举\"不可译词\"而不说明概念化差异。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2019年真题（简答）"
+ },
+ {
+  "id": "pq-2019-007",
+  "book": "literature",
+  "chapter": 2,
+  "section": "真题·2019年",
+  "front": "〔真题·2019年 名词解释〕Explain chivalric romance and the Shakespearean sonnet.",
+  "back": "(1) Chivalric romance: the popular medieval literary form — a long composition, sometimes in verse, sometimes in prose — used to sing the adventures, quests and courtly love of knights and other heroic deeds. Drawing on the Matter of Britain (the Arthurian legend: Sir Gawain, Launcelot, Merlin, the Holy Grail), it typically combines French and Saxon elements and dramatizes tests of faith, courage, purity and moral weakness; Sir Gawain and the Green Knight is the culmination of the Arthurian romances (高分笔记1, p16-17). It flourished in the Medieval English period (1066-1485) alongside the ballad, its popular counterpart (2019 年名词解释原题, 高分笔记1, p10). (2) The Shakespearean sonnet: the sonnet form Shakespeare used — a 14-line poem, usually in iambic pentameter, consisting of three quatrains rhyming abab cdcd efef and ending with a rhyming couplet gg. The theme is put forward and developed in the three quatrains, and the couplet ends the poem with a surprise conclusion or a shift of ideas. Shakespeare's sequence of 154 sonnets — divided into groups addressed to a young man and to the 'dark lady' — treats love, the destructive power of time and the immortality of verse (Sonnet 18: 'So long as men can breathe or eyes can see, / So long lives this, and this gives life to thee') (高分笔记1, p32; 2019 年名词解释原题, 高分笔记1, p25).\n——\n📌 解析：两个术语同为 2019 年原题（笔记1 p10、p25 有真题记录）。chivalric romance 的要点是'骑士冒险+宫廷爱情+亚瑟王题材'，并与 ballad 形成对照（romance 写骑士贵族，ballad 叙平民故事，笔记1 p17 补充拓展）；Shakespearean sonnet 必须写准韵式 abab cdcd efef gg 及'三节推进+对句突转'的结构，并区别于彼特拉克体 abba abba。常见失分点：韵脚误写成 abba；romance 只答'传奇'而漏掉 knightly adventure 与 courtly ideal 两个核心词。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2019年真题（名词解释）"
+ },
+ {
+  "id": "pq-2020-002",
+  "book": "linguistics",
+  "chapter": 11,
+  "section": "真题·2020年",
+  "front": "〔真题·2020年 简答〕Describe the three steps of error analysis and explain why linguistics prioritizes spoken language.",
+  "back": "Error analysis identifies, classifies/describes, then explains learner errors (e.g. interlingual or intralingual causes). Speech is primary evidence for language use/acquisition; writing is a later conventional representation.\n——\n📌 解析：考Chapter 11错误分析三步骤（笔记Chapter11 pp.28-29：识别——与母语者对应句比较并区分 error 与 mistake；描写——按省略/添加/误选/错序或语法范畴归类；解释——追溯来源，分语际（迁移/干扰）与语内（过度概括、简化、cross-association））与Chapter 1口语优先四理由（pp.9-10：历史在先、用途更广、结构更复杂、习得更早）。失分点：步骤顺序错；只答三步不举例。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2020年真题（简答）"
+ },
+ {
+  "id": "pq-2020-003",
+  "book": "linguistics",
+  "chapter": 11,
+  "section": "真题·2020年",
+  "front": "〔真题·2020年 简答〕Discuss learner-related factors that influence second-language learning.",
+  "back": "Learner-related (internal) factors that influence second language learning include: (1) Motivation, the single most striking factor - instrumental vs integrative motivation, integratively motivated learners being more likely to succeed; later views add cognitive/resultative motivation, since achievement in turn sustains motivation. (2) Language aptitude, the special ability for learning a second language, a conglomerate of abilities: phonemic coding ability, grammatical sensitivity, inductive language-learning ability and rote-learning ability (Carroll and Sapon), with working memory central in newer models. (3) Age: children are better learners in pronunciation while adults are advantageous in cognitive capabilities; age does not change the route of acquisition. (4) Learning strategies: metacognitive strategies (e.g. selective attention), cognitive strategies (e.g. inferencing) and social/affective strategies (e.g. asking for clarification); successful learners use more and more varied strategies. Together with social factors such as language policy and social demand, these individual differences largely explain variation in L2 outcomes.\n——\n📌 解析：考Chapter 11学习者因素（笔记Chapter11 pp.26-28）：动机（工具型/融入型；认知/结果动机——是成就支撑动机）、语言学能（Carroll & Sapon 四能力；工作记忆）、年龄（儿童发音占优、成人认知占优）、学习策略（元认知/认知/社会情感，成功学习者策略更多更活）。失分点：只答 motivation 一点；把社会因素（政策、社会需求等外因）混入学习者因素。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2020年真题（简答）"
+ },
+ {
+  "id": "pq-2020-007",
+  "book": "literature",
+  "chapter": 3,
+  "section": "真题·2020年",
+  "front": "〔真题·2020年 名词解释〕Define soliloquy and place Moll Flanders in English novel history.",
+  "back": "(1) Soliloquy: the act of talking to oneself, whether silently or aloud; in drama it denotes the convention by which a character, alone on the stage, utters his or her thoughts aloud. Playwrights use it as a convenient device to convey information about a character's motives and state of mind, for purposes of exposition, and to guide the judgments and responses of the audience. Marlowe's Dr. Faustus opens with a long expository soliloquy and concludes with another expressing Faustus' frantic attempts to escape damnation; the best-known of all dramatic soliloquies is Hamlet's 'To be, or not to be' (高分笔记1, p34; 2020 年名词解释原题, 高分笔记1, p25). (2) Moll Flanders in English novel history: Moll Flanders (1722) is Daniel Defoe's more mature piece after Robinson Crusoe, written in an autobiographical form called memoirs and narrated as the adventures of its female protagonist. Its historical significance is threefold: Defoe — the first writer to study lower-class people and regarded as the founder of the 18th-century English realistic novel — introduces for the first time a lowly woman as the subject of literature; the novel anticipates later works that take women as the center of attention in order to expose how the social system victimizes them; and it stands with Robinson Crusoe and Richardson's Pamela at the rise of the English novel in the 18th century, a fiction of ordinary life, morality and domestic manners (高分笔记2, p16, p27, p49; 2020 年名词解释原题, 高分笔记2, p3).\n——\n📌 解析：一个戏剧术语加一个小说史定位题（均为 2020 年原题，笔记1 p25、笔记2 p3 有记录）。soliloquy 三个要点：独处舞台、出声自语、揭示心理并引导观众判断——注意与 dramatic monologue（诗歌中向沉默听众讲话）区分。Moll Flanders 不必复述情节，重点在其小说史意义：自传体、第一个以底层女性为主人公、笛福作为 18 世纪英国现实主义小说奠基人的地位。常见失分点：把 Moll Flanders 误记为菲尔丁或理查逊的作品。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2020年真题（名词解释）"
+ },
+ {
+  "id": "pq-2021-002",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2021年",
+  "front": "〔真题·2021年 名词解释〕Define sense, immediate constituent analysis, conversational implicature and deixis.",
+  "back": "Sense concerns meaning relations in the language system, distinct from external reference. Immediate constituent analysis recursively divides structures. Conversational implicature is inferred contextual meaning. Deixis uses context-dependent expressions for participant, place, time, discourse or social reference.\n——\n📌 解析：四个定义跨Ch6/5/7：sense 指语言系统内的意义关系、与指称（外部世界对应）相对（笔记Chapter6 pp.2-3：dragon 有 sense 无 referent）；直接成分分析（Ch5 p.12：自上而下逐层切分）；会话含义（Ch7 pp.24-25）；指示语（Ch7 pp.18-19：依赖语境的指点语，五类）。失分点：sense 答成\"词典义\"而不提与 reference 的对照；implicature 与 entailment/presupposition 混淆。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2021年真题（名词解释）"
+ },
+ {
+  "id": "pq-2021-003",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2021年",
+  "front": "〔真题·2021年 简答〕Explain how hedges work and why sentence meaning is not simply the sum of isolated word meanings.",
+  "back": "Hedges soften force/commitment and manage uncertainty or politeness. Sentence interpretation combines lexical and compositional meaning with context, speaker intention and pragmatic inference.\n——\n📌 解析：两问跨Ch7/4：模糊语（笔记Chapter7 pp.27-28：approximators 含 adaptors/rounders，shields 含 plausibility/attribution；语用功能一是表明违反准则、二是礼貌缓和 like \"I wonder if you could...\"）；句子意义非词义简单相加（Ch4 p.8 词的符号功能：语言只提供概念构建的提示，理解需组合词义、语境、说话人意图与语用推理）。失分点：hedges 不分类；第二问只答\"组合关系\"而不提语境与推理。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2021年真题（简答）"
+ },
+ {
+  "id": "pq-2021-007",
+  "book": "literature",
+  "chapter": 8,
+  "section": "真题·2021年",
+  "front": "〔真题·2021年 名词解释〕Define stream of consciousness and sentimentalism.",
+  "back": "(1) Stream of consciousness: a narrative mode that assumes a person's most significant existence lies in the mental and emotional world rather than the outside world; influenced by Freud's theory of the unconscious, it holds that mental life is not linear and logical but fragmentary and associative, and that the writer's task is to reveal this psychological reality in words. Woolf defines it as following the lines of a character's thoughts as they occur — describing unspoken thoughts without resorting to conventional dialogue. Masters: James Joyce (Ulysses), Virginia Woolf (Mrs Dalloway) and William Faulkner (The Sound and the Fury) (高分笔记3, p4, p13, p15; 高分笔记5, p25; 2021 年名词解释原题, 高分笔记3, p2). (2) Sentimentalism: an 18th-century English literary trend that arose as a reaction against neoclassical rationality and cold reason, indulging in emotion, sympathy and tears for the poor, the suffering and the wronged in order to awaken the reader's moral feeling; its reliance on subjective points of view made it a forerunner of the modern psychological novel. Representatives: Tobias Smollett, Laurence Sterne (Tristram Shandy; A Sentimental Journey — himself a forerunner of stream of consciousness) and Goldsmith (The Vicar of Wakefield) (高分笔记2, p9-10; 2021 年名词解释原题, 高分笔记2, p3).\n——\n📌 解析：一古一今两个术语（均为 2021 年原题，笔记2 p3、笔记3 p2 有记录）。意识流要答出三个'假设'：心理世界高于外部世界、思维非线性而具片段性与联想性、作家的任务是呈现心理现实，再落到 Joyce-Woolf-Faulkner 三位代表；感伤主义须放在 18 世纪对新古典主义'理性崇拜'的反拨语境中作答。常见失分点：把 sentimentalism 与 Romanticism 混为一谈——前者是 18 世纪中后期的过渡潮流、浪漫主义的前奏；意识流漏掉'非逻辑、片段联想'这一核心特征。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2021年真题（名词解释）"
+ },
+ {
+  "id": "pq-2022-002",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2022年",
+  "front": "〔真题·2022年 名词解释〕Define bound morphemes and complementary antonyms.",
+  "back": "A bound morpheme cannot stand alone and attaches to another morpheme. Complementary antonyms are mutually exclusive opposites in the relevant sense (e.g. alive/dead).\n——\n📌 解析：考Chapter 4黏着词素（笔记Chapter4 p.4：不能独立使用、须附着于自由词素，如 de-、-ly 及屈折词缀；注意有的黏着词素与自由词素同形异义）与Chapter 6互补反义词（pp.5-6：肯定一方即蕴涵否定另一方，无比较级、不受程度副词修饰、不用于 how 问句，如 alive/dead）。失分点：与等级反义词（rich/poor）混淆；黏着词素只举例缀不给定义。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2022年真题（名词解释）"
+ },
+ {
+  "id": "pq-2022-007",
+  "book": "literature",
+  "chapter": 2,
+  "section": "真题·2022年",
+  "front": "〔真题·2022年 名词解释〕Define ballad and critical realism.",
+  "back": "(1) Ballad: a narrative poem or song that tells a story in short stanzas. A ballad usually opens abruptly and gets to the point immediately, because its audience already knows the characters and plot; it concentrates on a single dramatic episode, narrates the story through dialogue and action, and is marked by theatricality; its theme is usually tragic. Subjects range from warfare, bloodshed and superstition to domesticity and exile; the 'border ballads' of the Anglo-Scottish frontier and the Robin Hood ballads celebrating the outlaw's fight against oppressors are the most famous (高分笔记1, p16-17). (2) Critical realism: the dominant mode of the Victorian novel (and of 19th-century European fiction generally), which gives a truthful depiction of people's lives while launching bitter and strong criticism of capitalist society — its money-worship and Utilitarianism, hypocrisy, poverty and injustice — so as to awaken the public consciousness to social problems and to promote reform. Victorian critical realists set their plots against a broad social background with strong cause-effect sequences and a pronounced moral purpose; Charles Dickens is its greatest representative, exposing in novel after novel the poverty, hypocrisy and corruptness around him, and the tradition runs through Thackeray, the Brontës, George Eliot to Hardy's Tess of the d'Urbervilles (高分笔记2, p63-65, p68-69).\n——\n📌 解析：ballad 是中世纪通俗叙事文类（2019 年同卷曾考 chivalric romance，两者恰成'雅俗对照'），答'突变式开头+单一事件+对话与动作+悲剧性'即可；critical realism 是维多利亚文学的核心概念，必须扣住笔记关键词 'Critical realism, Expose and Attack'——真实描写与揭露批判缺一不可。常见失分点：只答'现实主义'而丢掉 critical（批判性、唤醒公众意识）这一层；ballad 漏掉与 romance 的对比。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2022年真题（名词解释）"
+ },
+ {
+  "id": "pq-2023-002",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2023年",
+  "front": "〔真题·2023年 名词解释〕Define entailment and lingua franca.",
+  "back": "A entails B when truth of A necessarily guarantees B. A lingua franca is a shared language used among speakers with different native languages.\n——\n📌 解析：考Chapter 6蕴涵（笔记Chapter6 p.11：X 为真则 Y 必然为真，如 spinster entails woman）与Chapter 1通用语（p.7：不同母语者之间用来打破交际屏障的自然语言，如英语）。失分点：entailment 与 presupposition 混淆（预设是话语成立的背景条件）；lingua franca 误答成\"人造语言\"（那是 Esperanto 类 artificial language）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2023年真题（名词解释）"
+ },
+ {
+  "id": "pq-2023-003",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2023年",
+  "front": "〔真题·2023年 简答〕Compare animal communication with human language using design features. Name corpus evidence useful to language teaching.",
+  "back": "Human language has properties such as productivity, displacement and duality; animal systems usually have more restricted signals. Corpus evidence can show frequency, collocation, grammar, register and authentic usage.\n——\n📌 解析：考Chapter 1设计特征用于人兽交际对比（笔记Chapter1 pp.3-6：创造力与双重分节为人类语言独有，其余特征动物系统至多低程度具备个别项，无一具备全部）；语料库对教学的证据可答频率信息、搭配、语法与语域分布、真实用法等。失分点：只罗列设计特征而不与动物系统逐项对比；语料库部分空泛不具体。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2023年真题（简答）"
+ },
+ {
+  "id": "pq-2023-006",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2023年",
+  "front": "〔真题·2023年 简答〕Explain Halliday's ideational, interpersonal and textual metafunctions.",
+  "back": "Ideational function construes experience; interpersonal function enacts social relations/speaker roles; textual function organizes messages into coherent discourse.\n——\n📌 解析：考Halliday三大元功能（笔记Chapter1 pp.6-7、Chapter5 p.16）：概念功能以语言为符号密码表征经验世界（由及物性系统实现）；人际功能维系社区成员关系、表达致谢道歉等交际角色（由语气与情态实现）；语篇功能组织信息成连贯语篇、与上下文及语境衔接（由主位结构与衔接实现）。失分点：三个功能与各自体现方式（transitivity/mood & modality/theme & rheme）配对错误。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2023年真题（简答）"
+ },
+ {
+  "id": "pq-2024-001",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 名词解释〕Define language acquisition, syntactic categories, referential meaning and conceptual metaphor theory.",
+  "back": "Language acquisition: the natural process of children's language development, i.e. picking up the mother tongue subconsciously in social communication; by extension, second language acquisition is the process by which a language other than the mother tongue is learnt in a natural setting or in a classroom.\nSyntactic categories: a syntactic category is a class of words or phrases that can substitute for one another without loss of grammaticality, e.g. NP, VP, PP, Det, Adj, Aux; in \"A naughty boy broke the window\", \"a naughty boy\", \"he\", \"John\" all belong to the category NP.\nReferential meaning: the central and most stable part of word meaning - the relation by which a word picks out or identifies an entity in the world (e.g. dog denotes a kind of domestic animal), as opposed to the less stable, more culture-specific associative meanings (connotative, social, affective, reflected, collocative).\nConceptual metaphor theory: the cognitive-semantic view that metaphor is not a rhetorical decoration but a cognitive device essential to thought. We understand an abstract, less-structured target domain in terms of a concrete, familiar source domain through systematic correspondences called mapping, e.g. LIFE IS A JOURNEY (birth = beginning of journey, death = reaching destination). Metaphors are systematic, create similarities between domains, and unite reasoning and imagination.\n——\n📌 解析：四个定义跨Ch11/5/6：语言习得（笔记Chapter11 pp.25-26：儿童在社交中自然习得母语的过程，SLA 则含课堂与自然环境）；句法范畴（Chapter5 p.11/p.13：可相互替换而不失语法性的表达类，如 NP/VP）；指称意义（Chapter6 p.3：词指称世界实体的中心稳定意义，区别于联想意义）；概念隐喻理论（Chapter6 pp.13-14：隐喻为认知装置，源域-目标域-映射三件套，如 LIFE IS A JOURNEY）。失分点：conceptual metaphor 只答修辞格不提认知机制与映射。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（名词解释）"
+ },
+ {
+  "id": "pq-2024-002",
+  "book": "linguistics",
+  "chapter": 10,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 简答〕Answer three prompts: how culture influences language; how communicative competence differs from linguistic competence; and how intake differs from input.",
+  "back": "(1) How culture influences language: language is influenced and even shaped by culture; it is culturally loaded and culturally dependent, and culture exerts a strong influence particularly on the semantic structure of language and on its actual use in social communication (connotations and associations of culturally loaded words vary across cultures). Language is not only a system of symbols but also a socio-cultural activity, which accounts for the design feature of cultural transmission; without a cultural environment, language acquisition would be out of the question.\n(2) Communicative competence vs linguistic competence: linguistic competence, in Chomsky's sense, is the tacit knowledge of the language system itself (its grammar). Communicative competence, proposed by Hymes and others, covers both the tacit knowledge of language and the ability to use it appropriately: the speaker can judge whether something is formally possible, feasible, appropriate and actually done. It thus adds rules of use - when to speak, to whom, in what manner - and underlies communicative syllabuses, which develop grammatical, sociolinguistic, discourse and strategic competence.\n(3) Intake vs input: input is the target-language data the learner is exposed to, while intake is what is actually assimilated. Gass distinguishes the two and treats intake as a process which mediates between target language input and the learner's internalized set of rules: not all input is noticed, not all noticed input is comprehended, and not all comprehended input becomes intake. Output can in turn become new input through interaction.\n——\n📌 解析：三问跨Ch10/9/11：文化对语言的影响（笔记Chapter10 pp.19-20：语言受文化塑造、负载文化，尤其影响语义结构与实际使用）；交际能力与语言能力（Ch9 p.15：Chomsky 的语言能力是语法默会知识，Hymes 增加使用得体性，四参数：形式可能、可行、得体、实际完成）；输入与吸入（Ch11 p.30 Gass：intake 是介于目的语输入与内化规则之间的中介过程，未被注意/未被理解的部分不成为 intake）。失分点：只背交际能力定义不提四参数；intake 只答\"输入的一部分\"。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（简答）"
+ },
+ {
+  "id": "pq-2024-003",
+  "book": "linguistics",
+  "chapter": 3,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 名词解释〕Define derivation, language and linguistics, semantics and pragmatics, compounding, minimal pair, phoneme, free variation and assimilation rule.",
+  "back": "Derivation: the word-formation process of adding a derivational affix to an existing base to construct a new word (happy -> unhappy, good -> goodness); it may change the grammatical category, the meaning, or both, and the words formed are called derivatives.\nLanguage and linguistics: language is a system of arbitrary vocal symbols used for human communication; linguistics is the scientific study of language - linguistic phenomena are observed, hypotheses are formulated and tested, and linguistics studies language both as a system of sound, structure and meaning and in relation to society and mind.\nSemantics and pragmatics: semantics is the study of meaning, the analysis of conventional meanings of words and sentences out of context (\"what does X mean?\"); pragmatics is the analysis of meaning in context, dealing with the relationships between linguistic forms and their users (speaker meaning, contextual meaning, inference of invisible meaning).\nCompounding: the combination of two or more free morphemes into one word (bookshelf, greenhouse). The rightmost morpheme determines the word class, the leftmost takes primary stress, and the meaning is not always the sum of the components (a greenbottle is a kind of fly).\nMinimal pair: two words that differ by only one sound in the same position and differ in meaning (zip/sip, pin/bin), showing that the two sounds are in contrastive distribution and are separate phonemes.\nPhoneme: the smallest phonological unit in a language that can distinguish meaning; an abstract unit of the speaker's mental representation, written between slashes, and realized in context by allophones (/m/ and /b/ in mat/bat).\nFree variation: sounds that appear in the same phonetic position and can substitute for each other without any change of meaning; they are often dialectal variants (e.g. economics with /i:/ or /e/).\nAssimilation rule: a phonological rule by which a sound becomes more like a neighboring sound. Progressive assimilation: the preceding sound influences the following one (the devoicing rule, e.g. play, snow); regressive assimilation: the following sound affects the preceding one (the nasalization rule, e.g. bean, bomb).\n——\n📌 解析：八个定义的大集合，逐个\"定义+要点/例子\"：派生（笔记Chapter4 p.6）、复合（p.6：左重音右词性、词义非简单相加）、语言与语言学（Chapter1 pp.3、9：任意性声音符号系统；观察-假设-验证的科学）、语义学与语用学（Chapter6 p.2、Chapter7 p.18：脱离语境的规约义 vs 语境中的使用义）、最小对立体（Ch3 p.10）、音位（pp.9-10：能区别意义的最小音系单位、抽象心理表征）、自由变体（p.11：同位置可替换不改义）、同化规则（pp.11-12：顺同化/逆同化）。失分点：音位漏\"抽象单位/由音位变体实现\"；自由变体漏\"替换不改变意义\"。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（名词解释）"
+ },
+ {
+  "id": "pq-2024-004",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 简答〕Answer ten short questions: distinguish greenhouse/green house; explain creativity; define taboo/euphemism and their relation; name Halliday's language functions; name metaphor components; describe English stress/intonation functions; relate phonetics/phonology; contrast anaphoric/cataphoric reference with examples; assess componential analysis; distinguish homonyms/polysemes.",
+  "back": "(1) Greenhouse vs green house: \"a greenhouse\" = an indefinite article + a compound noun; primary stress falls on green, and it means a glass building used for growing plants. \"A green house\" = an indefinite article + a modifier + a noun; stress falls on house, and it means a house whose color is green. Stress distinguishes both the structure and the meaning.\n(2) Creativity/productivity: a design feature of human language - language provides opportunities for sending messages that have never been sent before and for understanding novel messages. The grammatical rules and words of a language are finite, but the sentences are infinite; even a child can put sounds and words into novel combinations. This feature is not found in animal communication systems.\n(3) Taboo and euphemism: taboo is a prohibition on the use of, mention of, or association with particular words, objects, actions or persons (in English mostly body parts, bodily functions, distressing things and death). Euphemism is the avoidance of words which may be offensive or disturbing, substituting milder expressions (pass away for die). Relationship: taboos and euphemisms are two sides of the same coin - taboos are usually expressed through euphemisms; both are dependent on context and culture-specific, and euphemisms are in flux (crisis - depression - recession).\n(4) Halliday's language functions: the three metafunctions - the ideational function (language as a symbolic code representing the world and our experience), the interpersonal function (language as a medium to get along in a community, to thank, apologize, argue, comfort) and the textual function (organizing messages into coherent texts that fit their co-text and context).\n(5) Components of metaphor: the source domain (concrete and familiar), the target domain (usually abstract or less well structured), and mapping - the transference of properties from the source domain to the target domain by virtue of correspondences between the two (LIFE IS A JOURNEY).\n(6) Functions of English stress and intonation: first, to highlight the information focus (the nucleus is stressed, the vowel lengthened, followed by a slight pause); second, to eliminate ambiguity - stress distinguishes compound from phrase (greenhouse vs green house) and intonation distinguishes sentence meanings and attitudes (falling for assertion and wh-questions, rising for yes/no questions).\n(7) Phonetics and phonology: both study speech sounds but from different perspectives. Phonetics studies how speech sounds are produced, what phonetic features they have and how to transcribe them; phonology studies sound systems and patterns - which sounds distinguish meaning, how sounds vary in context, and which sequences are possible. Phonetics assumes invariant segments; phonology studies variation.\n(8) Anaphoric vs cataphoric reference: anaphoric reference points backward to a preceding antecedent - \"A boy and a girl are planting a tree. She is holding it and he is shoveling earth around it.\" Cataphoric reference points forward to a following expression - \"When I saw her, Mary looked ill.\"\n(9) Componential analysis: analyzing word sense by decomposing it into atomic semantic features (man: +HUMAN +ADULT +MALE). Merits: it made a breakthrough in the formal representation of meaning, revealed imprecise terminology, and handles hyponymy (father contains all the features of man). Limitation: it cannot be applied to the whole lexicon, only to words within the same semantic field.\n(10) Homonyms vs polysemes: homonyms have the same form but different, unrelated meanings (bank: financial institution / side of a river); a polyseme is one word with several related senses (drink). Criteria for telling them apart: native speakers' intuition; etymology (same origin - polysemy; different origins - homonymy); dictionary treatment (polysemous senses under one heading, homonyms under different headings).\n——\n📌 解析：回忆型十小问，须逐条对应作答，跨Ch1/3/4/5/6/7/8。高频要点：greenhouse 复合词左重音、玻璃暖房 vs 绿房子（笔记Chapter3 p.15）；创造性（Ch1 pp.3-4）；禁忌语与委婉语一体两面、依赖语境与文化（Ch9 pp.14-15）；Halliday 三元功能（Ch1 p.7）；隐喻成分 source/target/mapping（Ch6 p.13）；重音语调两功能：突出信息焦点+消歧（Ch3 pp.14-15）；语音学与音系学视角之别（Ch3 p.9）；前指/后指方向与例句（Ch7 p.20）；成分分析优点与局限（Ch6 pp.8-9）；同形同音词与多义词三分判据：直觉、词源、词典（Ch6 p.7）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（简答）"
+ },
+ {
+  "id": "pq-2024-005",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 论述〕Discuss features of modern linguistics; Searle's intentionality in pragmatics with examples; and Grice's implicature theory compared with Austin's speech-act work.",
+  "back": "Modern linguistics has four features. First, priority is given to spoken language, because speech is historically prior to writing, serves a much wider range of communicative purposes, is structurally more complex, and is acquired earlier. Second, its focus is synchronic rather than diachronic: linguists are more interested in contemporary language than in the evolution of languages. Third, it is descriptive and explanatory rather than prescriptive: it states objectively how a language is spoken and explains why, instead of laying down rules. Fourth, it is theoretically rather than pedagogically oriented, striving to construct theories that account for language in general rather than reference books for teaching.\n\nSearle develops Austin's speech act theory through the notion of intentionality. In pragmatics, meaning is intentional meaning: in uttering a sentence the speaker's mind is directed at the world through intentions, and what is communicated is the speaker's intended meaning or illocutionary force. The same sentence \"It's cold in here\" can be a statement, a request to close the window, or a complaint, depending on the speaker's intention and the context. Searle systematizes this insight: utterance acts succeed under felicity conditions, illocutionary acts fall into five classes (assertives, directives, commissives, expressives, declarations), and in indirect speech acts one illocutionary act (e.g. a request) is performed by way of another (e.g. a question, \"Why don't you go with us?\"), which the hearer recovers by inference.\n\nGrice attacks meaning from the inferential side. His Cooperative Principle, with the maxims of quantity, quality, relevance and manner, assumes that conversational participants cooperate; when a speaker flouts a maxim, the hearer computes a conversational implicature - implicit meaning beyond what is said. Compared with Austin, Grice's theory is inferential rather than act-based: Austin asks what people DO in saying something (locutionary, illocutionary, perlocutionary acts), while Grice asks how MORE is communicated than is said. The two are complementary: speech act theory describes the acts performed by utterances, and implicature theory explains how their indirect force is worked out; together they show that meaning in use is intention-based, context-dependent and inferential.\n——\n📌 解析：essay 三段：现代语言学四特征（笔记Chapter1 p.11：重口语、共时、描写解释、理论取向）；Searle 的意向性（Chapter7 pp.18、21-23：语用学研究意向的说话人意义；适切条件、五分类、间接言语行为；宜配 It's cold in here 一句多义例）；Grice 与 Austin 比较（pp.21-25：Austin 行为论——言内/言外/言后；Grice 推理论——合作原则与含义；二者互补而非对立）。失分点：三部分只各自罗列不做比较；Searle 部分不举例、意向性空泛。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（论述）"
+ },
+ {
+  "id": "pq-2024-006",
+  "book": "literature",
+  "chapter": 3,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 简答〕British literature: define allegory, Neoclassicism and Metaphysical Poets; comment on Shakespeare's contribution; describe the historical/cultural background of the English Renaissance; discuss the rise of the English novel and Dickens as a critical realist.",
+  "back": "(1) Allegory: a narrative in which characters, settings and events carry a second, systematic level of abstract — moral, religious or political — meaning. Spenser's The Faerie Queene is a long allegorical poem planned in 12 books (six finished): a complex moral, religious and political allegory exalting Queen Elizabeth I and the English nation, readable both as a romantic narrative of the Red Crosse Knight's chivalric adventures and as a spiritual allegory of the Christian's struggle for salvation (高分笔记1, p36; 2016 年名词解释原题, 高分笔记1, p25).\n(2) Neoclassicism: the 18th-century English literary trend developed under the intellectual influence of the European Enlightenment. It modelled itself on Greek and Latin authors and tried to control literary creation by fixed laws and rules; reason was stressed, so writings were didactic and satirical, elegance, correctness, appropriateness and restraint were preferred, and the closed (heroic) couplet was regarded as the only possible verse form for serious work; its artistic ideals were order, logic and restrained emotions. Pope (An Essay on Criticism, its manifesto work) and Samuel Johnson are the leading representatives (高分笔记2, p8-9).\n(3) Metaphysical Poets: a loose group of 17th-century British lyric poets under the influence of John Donne (Herbert, Marvell), described by Samuel Johnson as writing highly intellectual poetry marked by bold and ingenious conceits, incongruous imagery, complexity of thought, paradox and deliberate harshness of expression; their themes are love, death and religion, their diction simple, with mysticism in content and fantasticality in form (高分笔记1, p55-56).\n(4) Shakespeare's contribution: he stands at the summit of the English Renaissance. His achievements: (a) one of the founders of realism in world literature — his histories register the decay of feudal nobility, his comedies paint life and love freed from feudal fetters, his great tragedies (Hamlet, Othello, King Lear, Macbeth) depict the life-and-death struggle of humanists against the dark forces; (b) he adapted plots freely from Greek legends, Roman history, Italian stories and English chronicles, fusing classical form with English content; (c) his plays voice the desires and aspirations of the English people, are permeated with patriotism, optimism and humanist praise of love, nature and human dignity, and expose social inequality and religious persecution; (d) he was skilled in every poetic form — song, sonnet, couplet and dramatic blank verse; (e) he was a great master of the English language, adding many words and phrases to everyday English (高分笔记1, p38-41).\n(5) Historical/cultural background of the English Renaissance: economically, the Enclosure Movement and the flourishing clothing industry created the capitalist and laboring classes and stimulated commercial expansion abroad; politically, the war with Spain proclaimed the triumph of the rising bourgeoisie over declining feudalism, England established her first colonies, and the Elizabethan Age brought peace, prosperity and the Queen's own literary interest; culturally, the introduction of printing accelerated the spread of books and knowledge; intellectually, the society in transition from feudalism to capitalism produced the Renaissance and Humanism, which exalted human dignity, potential and present life rather than the afterlife (高分笔记1, p29-31).\n(6) The rise of the English novel and Dickens as a critical realist: the 18th century saw the rise of the novel in Defoe (Robinson Crusoe, Moll Flanders — the founder of the English realistic novel and the first writer to study lower-class people) and Richardson (Pamela), with Fielding, 'the father of the English novel' (Tom Jones, Joseph Andrews), perfecting its comic-epic form; these fictions focused on morality and domestic manners, and Austen later brought the novel to maturity. In the Victorian age the novel flourished — thanks to a new reading public, dropping book prices, professional authorship and the need for entertainment and satire — and its dominant mode became critical realism: plots against a broad social background, strong cause-effect sequence, and a marked moral purpose exposing money-worship, poverty and injustice. Dickens is its supreme practitioner: he maps the whole 19th-century urban world (especially London), builds complicated constructions with minor or parallel plots, is a great humorist and satirist, and makes the novel 'the instrument of morality and justice', exposing all the poverty, hypocrisy and corruptness he saw around him (Oliver Twist, David Copperfield, A Tale of Two Cities) (高分笔记2, p16, p27, p49, p63-65, p68-69).\n——\n📌 解析：2024 年英方大题是组合题，须按六个小问逐条编号作答，不可合并。三个术语按'定义+特征+代表'模板；莎士比亚贡献按五点展开（现实主义奠基、题材改编、人文主义声音、诗艺与素体诗、语言大师）；文艺复兴背景按经济-政治-文化-思想四条线，圈地运动与人文主义不能漏；小说兴起→批判现实主义→狄更斯要一线贯通。常见失分点：只写术语定义而漏掉'评论莎士比亚贡献/背景/小说兴起'这三个论述小问；各小问之间不作区分、平均用力。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（简答）"
+ },
+ {
+  "id": "pq-2024-007",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2024年",
+  "front": "〔真题·2024年 简答〕American literature: define Puritanism, American Naturalism and Black Humor; comment on Edgar Allan Poe; discuss stream of consciousness in Faulkner, American poetry of the Romantic period and twentieth-century American drama.",
+  "back": "(1) Puritanism: the beliefs and practices of the English Protestants who sought to purify the Church of England and, escaping religious persecution, emigrated in the early 17th century to New England (Massachusetts Bay Colony, 1629) to build an ideal Christian commonwealth. Its literature is marked by religious devotion (salvation, piety, the God-man relation), moral and didactic content, self-examination in spiritual autobiographies recording conversion and the struggle with sin, and a plain, unornamented style; it shaped the American cultural identity of individualism and self-reliance, and its heritage of sin, guilt and redemption later pervades Hawthorne and Melville (高分笔记4, p2-4; 2020、2024 年名词解释原题, 高分笔记4, p2).\n(2) American Naturalism: a movement of the late 19th to early 20th century, an advanced stage or extreme form of realism inspired by natural science, especially Darwinism. It holds that man's life is determined by heredity and environment; naturalists reflect reality in an extremely objective way, without moral judgement, and are more ironic. Representatives: Stephen Crane (The Red Badge of Courage), Jack London (The Call of the Wild), Theodore Dreiser (Sister Carrie) (高分笔记5, p1, p3-4; 2019、2023、2024 年名词解释原题).\n(3) Black Humor: a literary device used in novels and plays to discuss taboo subjects while adding an element of comedy — a humorous way of treating serious, gruesome or painful things, 'a humor out of despair and laughter out of tears', satirizing hypocrisy, racial prejudice and the dehumanization of the individual by modern science; Joseph Heller's Catch-22 (1961) is the representative work (高分笔记6, p5, p8).\n(4) Comment on Edgar Allan Poe: Poe was at once poet, short-story writer and critic. As a writer he explores the dark and mysterious side of the human psyche ('The Fall of the House of Usher') and the abyss of grief and loss: 'The Raven' turns the mourning for dead Lenore into a hypnotic poem of repetition in which the bird's 'Nevermore' defeats every hope of reunion, dramatizing the victory of the irrational over reason. As a critic he formulated the theory of the unity of effect — a short tale or poem, readable at one sitting, must be composed so that every element converges on a single preconceived emotional effect — laying the foundation of the modern short story and of American art-for-art's-sake aesthetics (高分笔记4, p11, p31-33; 2024 年简述原题, 高分笔记4, p10).\n(5) Stream of consciousness in Faulkner: Faulkner, Nobel laureate of 1949, shares with Joyce and Woolf the primary narrative technique of stream of consciousness — a mode of narrative that follows the lines of a character's thoughts as they occur, letting readers enter the mind and become participants rather than observers, as in Benjy's time-less, fragmentary section of The Sound and the Fury. He combines it with the multiple point of view: different narrators (Benjy, Quentin, Jason and an omniscient voice) react differently to the same events, reflecting the psychological complexity of the characters and making the truth difficult to see; the technique serves his great theme of the decline of the Southern aristocracy (高分笔记5, p22-25).\n(6) American poetry of the Romantic period: Walt Whitman — Leaves of Grass, a collection of more than 300 poems in free verse, in which grass, 'the most common thing with greatest vitality', images the rising American nation and his ideals of democracy, freedom and equality; he celebrates the individual, the common people and the body and soul of man. Emily Dickinson — her poems grow out of personal experience, treating religious doubt, love, and above all death and immortality, dense with image in every word (a forerunner of Imagism), as in 'I heard a Fly buzz — when I died'. Edgar Allan Poe — 'The Raven', a poem of beauty, death and musical repetition. These poets gave American literature its first independent, distinctly national voice (高分笔记4, p6, p10-11, p33, p41; 2024 年简述原题, 高分笔记4, p10).\n(7) Twentieth-century American drama: Eugene O'Neill, the founder of American modern drama, brought serious tragedy to the American stage; his autobiographical Long Day's Journey into Night depicts one day of the Tyrone family — father, morphine-addicted mother and two sons — in a tragedy of fate and family. Arthur Miller wrote social and psychological drama: Death of a Salesman (1949), 'the tragedy of a man who gave his life, or sold it, in pursuit of the American Dream', makes the common salesman Willy Loman a tragic figure and critiques the dream that turns human beings into products. Edward Albee, leader of the American Theatre of the Absurd in the 1960s, dramatizes the meaninglessness of life and the difficulty of communication in The Zoo Story and Who's Afraid of Virginia Woolf? (高分笔记5, p39-40; 高分笔记6, p25-29).\n——\n📌 解析：2024 年美方大题同样是组合题，七个小问覆盖殖民地时期、自然主义、战后文学、浪漫主义与现代戏剧，须逐问编号作答。Poe 评述要写出'诗人+短篇小说家+理论家（unity of effect）'三重身份；浪漫主义诗歌以 Whitman（自由体、民主）与 Dickinson（意象、死亡与永恒）为双主线；戏剧题按 O'Neill（现代悲剧）→ Miller（社会悲剧、美国梦）→ Albee（荒诞派）的脉络推进。常见失分点：Puritanism 只答宗教定义不落到文学特征与影响；戏剧小问漏掉 O'Neill 或 Albee。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2024年真题（简答）"
+ },
+ {
+  "id": "pq-2025-001",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 名词解释〕解释形式语言学（School of formalism）的基本立场及研究取向。",
+  "back": "形式语言学把语言视为相对自主的系统，从语言形式出发描述其规则，并解释这些规则如何生成合语法表达。\n——\n📌 解析：考Chapter 1语言学流派（笔记Chapter1 p.11）：形式语言学假定语言是自主系统，出发点是观察语言形式，描述并解释规则如何生成合语法表达；与功能语言学（语言因其功能而是其所是，观察意义如何由词汇语法实现）互补而非对立。失分点：把\"自主\"写成\"只研究书面语\"；与结构主义语法混为一谈。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（名词解释）"
+ },
+ {
+  "id": "pq-2025-002",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 名词解释〕解释语言的创造性这一设计特征。",
+  "back": "有限的词汇和规则使说话者能不断组合出新句子，也能理解此前未听过的表达；这种生产和理解新表达的能力体现语言创造性。\n——\n📌 解析：考Chapter 1设计特征之创造性（笔记Chapter1 pp.3-4）：语言提供发送从未有过的信息并理解新信息的机会；规则与词汇有限而句子无限；儿童亦能新组合；动物（如鹦鹉模仿）不具备。失分点：与移位性（displacement，跨越时空指称）混淆；只答\"能造新句子\"不点\"理解新话语\"一面。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（名词解释）"
+ },
+ {
+  "id": "pq-2025-003",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 名词解释〕解释原型范畴理论中的 prototype。",
+  "back": "原型是范畴中最典型、居于中心的代表；成员与原型共享特征越多，通常越被视为该范畴的中心成员。\n——\n📌 解析：考Chapter 6原型理论（笔记Chapter6 pp.9-10）：概念以理想范例（原型）为中心，范畴成员依与原型的相似度（共享特征数）获得成员资格与中心度；与经典理论（充分必要条件、成员平等、边界清晰）相对，存在家族相似性。失分点：只答\"最典型的例子\"而不提相似度决定成员资格；忽略边缘成员的存在。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（名词解释）"
+ },
+ {
+  "id": "pq-2025-004",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 名词解释〕说明言语行为三分法及各层面的区别。",
+  "back": "言内行为是说出有意义的语言表达，言外行为是借表达实施的交际意图，言后行为是表达造成的实际效果。\n——\n📌 解析：考Chapter 7言语行为三分法（笔记Chapter7 pp.21-22）：言内行为=说出有意义的表达；言外行为=通过表达实施交际意图（最重要）；言后行为=对听话人产生的实际效果。宜配\"老师说我粉笔用完了\"例。失分点：三者只下定义不举例；把言后行为答成\"听话人的动作\"而不点\"效果\"。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（名词解释）"
+ },
+ {
+  "id": "pq-2025-005",
+  "book": "linguistics",
+  "chapter": 11,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 名词解释〕说明错误分析的步骤及常见错误来源。",
+  "back": "错误分析依次识别、描写和解释学习者错误；来源可包括母语迁移造成的语际影响，以及过度概括、简化等语内因素，并需区别系统性错误与偶发失误。\n——\n📌 解析：考Chapter 11错误分析（笔记Chapter11 pp.28-29）：识别（与母语者对应表达比较，区分 error 系统性错误与 mistake 偶发失误）——描写（省略/添加/误选/错序四类或按语法范畴归类）——解释（语际错误：迁移/干扰；语内错误：过度概括、简化、cross-association）。失分点：漏 error/mistake 之分；解释阶段只答母语迁移而漏语内因素。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（名词解释）"
+ },
+ {
+  "id": "pq-2025-006",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕概述合作原则的四项准则。",
+  "back": "数量准则要求信息适量；质量准则要求言之有据且尽量真实；关系准则要求切题；方式准则要求表达清楚、简洁并有条理。\n——\n📌 解析：考Chapter 7合作原则（笔记Chapter7 p.24）：量准则——信息足量且不过量（两条）；质准则——不说假话、不说无据之言；关系准则——有关联；方式准则——避免晦涩、避免歧义、简洁、有序。失分点：量准则只答一条；方式准则四小点记不全；只列准则名不释义。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-007",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕举例说明四种英语构词方式。",
+  "back": "解析列举派生、复合、转类和截短，可用否定/名词派生词、两个自由词素组合、名词转动词，以及 refrigerator 截为 fridge 作例。\n——\n📌 解析：考Chapter 4构词法（笔记Chapter4 pp.6-7），任答四种并配例：派生（unhappy）、复合（bookshelf）、转类（butter n.->v.）、截短（fridge<-refrigerator）；亦可答混合（smog）、逆构（edit<-editor）、首字母缩略（NATO/U.N.）、专有名词来源（sandwich）、造词（kodak）。失分点：例词与构词法名称错配（如把 fridge 当逆构）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-008",
+  "book": "linguistics",
+  "chapter": 8,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕In “A: Have you seen Jane recently? B: She is very busy,” identify the cohesive expression and classify it.",
+  "back": "She is personal reference and anaphorically refers to Jane.\n——\n📌 解析：考Chapter 8语法衔接之指称（笔记Chapter8 p.3：personal/demonstrative/comparative reference，回指与后指）并联系Chapter 7前指（p.20）。She 是人称指称（personal reference），回指（anaphoric）前句的 Jane。失分点：只答\"指代\"而不分类（人称+回指）；把 she 误判为后指。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-009",
+  "book": "linguistics",
+  "chapter": 8,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕In “Do you give me a few nails? I need some,” identify the cohesive relation in some.",
+  "back": "Some stands for the omitted noun nails: nominal ellipsis.\n——\n📌 解析：考Chapter 8语法衔接（笔记Chapter8 p.4）：some 属名词替代词（one/ones/some/same）一类，此处回指并补足被省略的名词 nails，解析归为名词性省略（nominal ellipsis）。答名词性替代（nominal substitution）亦可，但须说明 some 在名词短语位置的衔接功能。失分点：只答\"省略\"不注明类别（名词性）；与动词性/小句性省略混淆。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-011",
+  "book": "linguistics",
+  "chapter": 12,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 论述〕Discuss practical applications of linguistics and insights about language/learning that inform teaching decisions; give an example.",
+  "back": "语言描写为大纲、教材提供内容和术语；语言与习得研究帮助教师决定教什么、怎么教。例如功能语言学促使课程兼顾语法形式与交际功能。\n\n展开（英文作答参考）：Linguistics contributes to foreign language teaching in two ways. (1) Applications: the products of linguistic description provide the input to syllabus design and material construction - without linguistic descriptions it is hard to define the content of a language course, and the metalanguage makes it possible to talk about what is to be taught. Descriptions of sounds, words, sentences, meaning and discourse therefore determine what appears in a structural or communicative syllabus and in textbooks. (2) Implications: the insights gained by linguists into the nature of language and the process of language learning help decision-makers and teachers decide what to teach and how to teach. At the preparatory level specialists draw on linguistics, psychology and pedagogy to design syllabuses; at the operation level the teacher's view of language shapes his teaching: a formal view highlights structures, a functional view adds functional items needed for communication, and a communicative view aims at developing learners' communicative competence. Example: informed by functional linguistics, a course may organize units around functions such as apologizing, thanking and requesting while still teaching the underlying grammar; informed by SLA research on input, intake and interaction, teachers add pair work and information-gap tasks so that output becomes new input. Linguistics is also indispensable to language testing and to the professional development of language teachers - it sharpens their awareness of the nature of language, the complexity of language learning, and the identification and diagnosis of learner errors.\n——\n📌 解析：考Chapter 12语言学与外语教学（笔记Chapter12 p.33）：applications——语言描写成果为大纲设计与教材编写提供输入、元语言使\"谈教什么\"成为可能；implications——语言观与习得研究帮助决策者与教师决定教什么、怎么教（准备层面与操作层面）。essay 需展开并举例（如功能语言学使大纲兼顾语法形式与交际功能项）。失分点：只答\"语言学对教学有用\"而不落到大纲/教材/教师语言观三个层面。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（论述）"
+ },
+ {
+  "id": "pq-2025-012",
+  "book": "literature",
+  "chapter": 2,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕概述 Geoffrey Chaucer 对英国文学的贡献。",
+  "back": "Geoffrey Chaucer (c. 1343-1400), whom Dryden calls 'the father of English literature', made four-fold contributions. (1) Language and verse form: writing in Middle English (the London dialect) instead of French or Latin, he helped establish English as the literary language of the country; he introduced from France the heroic couplet — rhymed iambic pentameter lines in pairs — and various rhymed stanzas, replacing the Old English alliterative verse (高分笔记1, p14, p16). (2) Narrative realism: his masterpiece The Canterbury Tales gives a comprehensive realistic picture of 14th-century feudal society; the pilgrims, drawn from almost every class (royalty and peasants excepted), combine typical qualities with individual dispositions, and the work covers all the major medieval genres — courtly romance, beast tale, folk tale, sermon and adventure story (高分笔记1, p14). (3) Humanism: taking the standpoint of the rising bourgeoisie, Chaucer affirms men and opposes the church dogma of asceticism, praising human energy, intellect and love of life, with gentle satire and mild irony — he is the forerunner of English Humanism (高分笔记1, p14). (4) Legacy: he pioneered English narrative poetry and set the model for the great English verse tradition that runs through Spenser, Shakespeare and beyond.\n——\n📌 解析：乔叟是中古英语时期的核心考点（笔记1 p3 复习指导明确提示其'文学贡献'为简答常考）。答题按四步走：语言贡献（英语文学语言化+英雄双韵体）→《坎特伯雷故事集》的现实主义群像与文类集大成→人文主义先驱→'英国文学之父'地位。常见失分点：漏掉 heroic couplet；把乔叟归入文艺复兴作家（他是中世纪向文艺复兴过渡的人物，笔记将其置于 Medieval Period）。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-013",
+  "book": "literature",
+  "chapter": 7,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕评述英国文学中的唯美主义。",
+  "back": "Aestheticism was an intellectual and art movement of the latter part of the 19th century (the fin-de-siecle Victorian age) which insisted that aesthetic values, rather than social-political or moral themes, should dominate literature, fine art and music. It arose in opposition to the dominance of scientific thinking and to the indifference or hostility of middle-class society towards any art that was not useful or did not teach moral values. Its creed is summed up as 'art for art's sake': a work of art is the supreme value among human products precisely because it is self-sufficient, having no use or moral aim outside its own being — the end of a work of art is simply to exist in its formal perfection, to be beautiful and to be contemplated as an end in itself; art should be judged by beauty, not by morality or reason. In England the movement's theorist was Walter Pater and its chief representative Oscar Wilde — The Picture of Dorian Gray dramatizes the worship of beauty and sensory experience, and Wilde's preface and comedies ('There is only one thing in the world worse than being talked about, and that is not being talked about') turned aesthetic doctrine into social legend. Evaluation: Aestheticism liberated art from Victorian utilitarianism and moralism and paved the way for modern aesthetics and Symbolism, but its cult of beauty and indulgence in excess also exposed the danger of art cut off from life (高分笔记2, p68; 2015 年名词解释 'art for art's sake' 原题, 高分笔记2, p61).\n——\n📌 解析：唯美主义=维多利亚晚期流派，'评述'题须两面兼顾：先答定义（为艺术而艺术、艺术自足、反对功利与道德说教）与王尔德《道连·格雷的画像》，再作评价（解放了艺术观念，但形式至上导致与生活脱节）。常见失分点：只答'为艺术而艺术'一句而不展开'艺术自足性'的内涵；与自然主义（左拉，同属 19 世纪后期但立场相反）混淆；漏掉王尔德这一代表人物。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-014",
+  "book": "literature",
+  "chapter": 6,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕简述英国第一代浪漫主义诗人。",
+  "back": "English Romanticism is usually dated from 1798, when Wordsworth and Coleridge published the Lyrical Ballads — the collection whose preface defines poetry as 'the spontaneous overflow of powerful feelings' and is regarded as the manifesto of the movement (高分笔记2, p28, p31, p35). The first-generation poets are the elder, 'escapist' romanticists — Wordsworth, Coleridge and Southey, known as the Lake Poets because they lived in the Lake District: frightened by the coming of industrialism and the nightmare towns, they turned to nature for protection and reflected the nostalgia of old rural England. William Wordsworth: the leading figure, who worshipped nature as the revelation of truth and drew poetry from ordinary rustic life and plain language ('I Wandered Lonely as a Cloud'; 'The Solitary Reaper'), defining poetry as emotion recollected and overflow. Samuel Taylor Coleridge: the poet of imagination and the supernatural, whose The Rime of the Ancient Mariner and Kubla Khan treat mysterious, exotic subjects with dreamlike imagery, supplying Romanticism's theory of imagination. General features these poets established: expressiveness in place of the neoclassical mirror, creative imagination, love of the strange and supernatural, and the worship of nature (高分笔记2, p34-35).\n——\n📌 解析：第一代浪漫主义诗人=湖畔派三诗人（Wordsworth、Coleridge、Southey），起点必须落在 1798 年《抒情歌谣集》与'强烈情感的自然流露'。关键区分：第一代是 'escapist romanticists'，因恐惧工业化而退向自然寻求庇护；第二代（Byron、Shelley、Keats）是 'active romanticists'，积极表达变革理想——这条两代对照线是评分要点（笔记2 p35 原文）。常见失分点：把 Blake、Burns（前浪漫主义）或 Scott 混入第一代；漏掉《抒情歌谣集》这一标志性合著。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-015",
+  "book": "literature",
+  "chapter": 9,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕说明清教主义对美国文学的影响。",
+  "back": "Puritanism denotes the doctrines and practices of the English Protestants who sought to purify the Church of England and, escaping religious persecution, emigrated to New England in the early 17th century (Massachusetts Bay Colony from 1629) to reestablish an ideal place and restore the lost paradise. Its influence on American literature runs through form, theme and spirit. (1) Religious devotion: early American literature centers on salvation, personal piety and the relationship between God and humanity — sermons, religious tracts and devotional poems (高分笔记4, p2). (2) Moral and didactic content: Puritan writing teaches moral lessons, meant to instruct, warn and guide readers in a righteous life (高分笔记4, p3). (3) Self-examination: the spiritual autobiography recording one's conversion and struggle with sin becomes a native form, carried from Puritan diaries down to Franklin's Autobiography (高分笔记4, p3-4). (4) Plain style: plain, direct, unornamented language became a lasting feature of the American literary manner (高分笔记4, p3). (5) Cultural identity: Puritanism instilled individualism and self-reliance, values integral to the American ethos, and its sense of mission underlies American idealism (高分笔记4, p4). (6) Later literary heritage: its doctrines of original sin, guilt and redemption permeate the American Renaissance — Hawthorne's The Scarlet Letter and 'Young Goodman Brown' expose sin beneath the surface of Puritan goodness and criticize Puritan hypocrisy, while Melville probes good and evil in Moby-Dick (高分笔记4, p11, p18, p21-22; 2020、2024 年名词解释, 2025 年 15 分简答原题, 高分笔记4, p2).\n——\n📌 解析：这是 2025 年 15 分大题（笔记4 p2 真题表：Give a comment on the significance of Puritanism in American literature）。答题结构：一句定义+文学特征四点（宗教主题、道德说教、自省、平实文风）+文化精神影响（个人主义、自立）+后世作家例证（Hawthorne、Melville、Franklin）。常见失分点：只答清教定义不落到'文学影响'；漏掉 plain style 与自省传统；举例时只报名字不点出《红字》的罪与救赎主题。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2025-016",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2025年",
+  "front": "〔真题·2025年 简答〕概述美国南方文学的历史背景、常见主题及代表作家。",
+  "back": "Southern literature grows out of the distinctive history of the American South: plantation slavery, defeat in the Civil War of the 1860s, Reconstruction, and the postwar decline of the old aristocratic families — a legacy of defeat, guilt, lost pride and decay that haunts the region's writing. (1) Historical background: the South's economy and social order rested on slavery and the plantation system; the Civil War abolished slavery and ruined the old wealth, yet the old families clung to outdated codes of chivalry and honor long after their material basis was gone (高分笔记5, p22, p24). (2) Common themes: the burden of a historical past and memory; the decline and collapse of aristocratic families and of the ideal of the Southern lady and gentleman; race and class conflict; the clash between traditional agrarian values and modern industrialization; sin, guilt and the struggle for endurance. (3) The Southern Renaissance: the cultural and literary movement that rejuvenated Southern literature in the 1920s and 1930s, facing the region's contradictions with realistic seriousness (高分笔记5, p8, p21). (4) Representative writers: William Faulkner is the most important figure — awarded the 1949 Nobel Prize, he set 19 novels and numerous stories in his fictional Yoknapatawpha County (Jefferson, modeled on his hometown Oxford, Mississippi): The Sound and the Fury chronicles the physical, mental and moral decline of the Compsons; 'A Rose for Emily' renders the pride and decay of a Southern gentlewoman. Eudora Welty ('Death of a Traveling Salesman') is another representative of the region (高分笔记5, p9, p21-27; 2025 年 15 分简答原题, 高分笔记5, p9).\n——\n📌 解析：南方文学是 2025 年 15 分大题（笔记5 p9 真题表：Elaborate on the Southern Literature in the US），题干三问对应'背景—主题—代表作家'三段式作答。背景扣奴隶制、内战战败与旧南方贵族衰落；主题扣历史包袱、家族没落、种族与阶级冲突；作家以 Faulkner 为核心（约克纳帕塔法世系、《喧哗与骚动》《献给爱米丽的玫瑰》），可补 Welty。常见失分点：把南方文学答成泛泛的地域文学，漏掉 Southern Renaissance（南方文艺复兴）与内战历史创伤这两个关键词。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2025年真题（简答）"
+ },
+ {
+  "id": "pq-2026-001",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 名词解释〕解释语言符号的任意性。",
+  "back": "声音形式与其所指意义之间通常没有自然必然的联系；不同语言可用不同形式指称相近概念。\n——\n📌 解析：考Chapter 1设计特征之任意性（笔记Chapter1 pp.4-5）：声音形式与意义之间多半无自然必然联系（Saussure：signifier/signified），不同语言用不同形式指同一概念；任意且约定俗成，拟声词跨语言仍不同音，不构成反例。失分点：把任意性答成\"可随意更改\"（忽视约定俗成一面）；漏 signifier/signified 框架。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（名词解释）"
+ },
+ {
+  "id": "pq-2026-002",
+  "book": "linguistics",
+  "chapter": 2,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 名词解释〕解释英语语音中的 liquid（流音）。",
+  "back": "发音时气流可从舌侧通过或在舌尖与齿龈附近形成通道；英语常见流音为 /l/ 和 /r/。\n——\n📌 解析：考Chapter 2 liquids 定义（笔记Chapter2 p.6）：发音时气流从舌两侧通过（/l/，lateral）或从舌尖与齿龈之间通过（/r/，retroflex），同属 approximants。失分点：与 glide（阻碍极轻微）、nasal（气流走鼻腔）混淆；只举例不定义。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（名词解释）"
+ },
+ {
+  "id": "pq-2026-003",
+  "book": "linguistics",
+  "chapter": 3,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 名词解释〕解释语调及其交际作用。",
+  "back": "语调是话语中音高的变化，可区分意义或表达态度；解析提及英语常见降调、升调和降升调。\n——\n📌 解析：考Chapter 3语调（笔记Chapter3 pp.14-15）：语调是话语中音高的变化，用以区分语句意义并表达态度；英语为语调语言，三种基本调型为降调、升调、降升调（陈述/wh问句降，yes/no问句升）；与重音配合可突出信息焦点并消歧。失分点：与 tone（声调，区别词义，如汉语四声）混淆；只定义不谈交际作用。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（名词解释）"
+ },
+ {
+  "id": "pq-2026-004",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 名词解释〕解释 conversion（转类）构词。",
+  "back": "转类是在词形不变时把已有词用于另一词类，例如 butter 由名词用作动词。\n——\n📌 解析：考Chapter 4转类 conversion（笔记Chapter4 p.7）：把已有的词不经词形变化用于另一词类（butter n.->butter v.；have a look；empty adj.->v.），多见于单词素词，部分复合词亦可转类。失分点：与派生混淆（转类不加词缀）；只举名动互转不提形动、介动等。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（名词解释）"
+ },
+ {
+  "id": "pq-2026-005",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 名词解释〕解释语言的篇章功能（textual function）。",
+  "back": "篇章功能使语言单位组织成连贯信息，并使话语与前后文及更广语境衔接。\n——\n📌 解析：考Chapter 1语篇功能（笔记Chapter1 p.7）：把信息按逻辑组织、使前后信息及更广语境相互衔接，从而构成连贯语篇；在系统功能语法中由主位结构与衔接手段实现（Chapter5 p.20、Chapter8 p.3）。失分点：与人际功能（建立与维系交际双方关系）混淆；不提\"与上下文及语境衔接\"这一定义要点。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（名词解释）"
+ },
+ {
+  "id": "pq-2026-006",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕列举并说明同义词的主要分类。",
+  "back": "解析按方言、语体正式度、使用领域、感情色彩及搭配差异区分同义词，并为各类提供词例。\n——\n📌 解析：考Chapter 6同义词分类（笔记Chapter6 p.5）逐类配例：方言同义词（lift/elevator, torch/flashlight）、语体正式度（pass away/die/kick the bucket）、语域（salt/sodium chloride）、感情色彩（statesman/politician）、搭配（able to/capable of）。失分点：只列类型不举例；语域（按使用领域）与语体（按正式程度）不分。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-007",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕概述指示语的主要类型。",
+  "back": "指示语依语境确定所指，主要分为人称、地点、时间、篇章和社会指示。\n——\n📌 解析：考Chapter 7指示语（笔记Chapter7 pp.18-19）：指示即\"用语言指点\"、依语境确定所指，分人称（I/you）、地点（here/there 的近远指）、时间（now/then）、篇章（the next chapter）、社会（敬语 tu/vous、您）五类；可补一句指示中心（deictic center，以说话人为准）。失分点：漏篇章与社会指示；不点\"依语境确定所指\"的总述。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-008",
+  "book": "linguistics",
+  "chapter": 9,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕概述语言变体的主要类型。",
+  "back": "解析区分标准变体、地域方言、社会方言和语域；语域可从语场、语式、语旨等维度分析。\n——\n📌 解析：考Chapter 9语言变体（笔记Chapter9 pp.11-12）：标准变体（政府、媒体、学校使用）、地域方言（地理区域，dialect vs accent）、社会方言（阶层/性别，如 Labov 卷舌音研究）、语域（按使用分，field/mode/tenor 三维）；可延伸 pidgin/creole、语码转换。失分点：variety according to user（方言）与 according to use（语域）混淆；只列名称不说明区分维度。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-009",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕比较结构主义语法与传统语法，并说明结构主义语法的局限。",
+  "back": "解析以自上而下的成分分析、层级结构和形式类说明结构主义与传统语法的不同；其局限包括教学语法应用成果有限、理论解释未获突破，且直接成分分析不能处理部分语言材料。\n——\n📌 解析：考Chapter 5结构主义语法（笔记Chapter5 pp.11-12）：与传统语法相对——自上而下（top-down）的直接成分分析、兼顾线性与层级、以形式类（form class，同槽位可互换）代替按意义定的词类。局限三点：实务上没能写成 comparable 的教学语法；理论上对语言本质无突破；方法论上 IC 分析无法处理部分新语言材料（如 They can fish 类）。失分点：只答优点不答局限；局限与\"传统语法的缺陷\"张冠李戴。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-010",
+  "book": "literature",
+  "chapter": 6,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕简要介绍 Jane Austen。",
+  "back": "Jane Austen (1775-1817) is an English novelist who stands between the 18th and early 19th centuries: neither a Classicist nor a Romantic, she is best thought of as a pioneering figure in the development of the novel, providing the bridge between the two traditions and preparing the way for 19th-century realism (高分笔记2, p49). (1) Works: six novels — Sense and Sensibility, Pride and Prejudice (generally considered her most successful and popular work), Mansfield Park, Emma, Persuasion and Northanger Abbey (高分笔记2, p49). (2) Themes: courtship and marriage among the country gentry, and through them money, manners, morality and the situation of women, whose fate in her world depends almost entirely on marriage and property; her irony gently exposes snobbery, vanity and self-deception (e.g. Mr. Collins, Lady Catherine in Pride and Prejudice). (3) Art: delicate irony and satire; precise observation of 'the universal pattern of human behavior' within the small world of '3 or 4 families in a country village'; measured prose and controlled free indirect discourse presenting characters' inner deliberations — a technical step toward the modern psychological novel. (4) Significance: her sensitivity to universal patterns of human behavior brought the English novel to its maturity and won her an important place in the history of English literature (高分笔记2, p48-49).\n——\n📌 解析：奥斯丁答题四步：作品（六部小说，以《傲慢与偏见》为核心）→主题（婚姻、金钱与女性处境）→手法（讽刺、自由间接引语、日常生活的精细描写）→小说史地位（兼具古典与浪漫之间、把英国小说推向成熟、下启现实主义）。常见失分点：因与浪漫主义诗人同时代而把她归入 Romanticism（笔记2 p49 明确说她 'neither a Classicist nor a Romantic'，是过渡与桥梁人物）；只复述《傲慢与偏见》情节而不谈艺术手法。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-011",
+  "book": "literature",
+  "chapter": 7,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕评述维多利亚时期的英国小说。",
+  "back": "The Victorian novel flourished against a sharply contradictory background. (1) Historical background: the Victorian Age (1837-1901) witnessed drastic economic expansion — Britain, the leading industrialized country, won the fame of 'the workshop of the world' — but industrialization made the struggle between capital and labour the central conflict after 1830; the ruling class preached 'Victorian virtues' (domesticity, self-reliance, self-help, probity) while the keyword of Victorian literature is anxiety (高分笔记2, p63). (2) Reasons for the flourishing of the novel: a new reading public, the dropping price of books, writing as a profession, the need for recreation and entertainment, the need for satire of individuals or institutions, and the feminist movement; serialization and periodical publication shaped the form (高分笔记2, p64). (3) Common features of Victorian novels: plots unfolded against a broader social background than before, reflecting the complexity of human relations in capitalist society; a much stronger cause-effect sequence; taint of the Puritan spirit of the age (strict sexual code, women as 'angels in the house'); and a marked moral purpose — writers wrote to edify readers and bring about reforms (高分笔记2, p64-65). (4) Critical realism: the dominant mode — a truthful depiction of people's lives combined with bitter and strong criticism of money-worship, Utilitarianism, and the widespread misery, poverty and injustice of capitalist society, awakening the public consciousness to its social problems (高分笔记2, p63-64). (5) Representatives: Charles Dickens, the greatest critical realist, who maps the whole 19th-century urban world and makes the novel the instrument of morality and justice (Oliver Twist, David Copperfield, A Tale of Two Cities); W. M. Thackeray (Vanity Fair); the Brontë sisters; George Eliot; and Thomas Hardy, who carried the tradition to its end with Tess of the d'Urbervilles (高分笔记2, p61, p67, p68-69).\n——\n📌 解析：评述题按'背景—小说繁盛原因—共同特征—批判现实主义—代表作家'五段展开；其中'维多利亚小说共同特征'四点（社会背景更广阔、因果情节更强、清教气息、道德目的）是笔记原文考点（笔记2 p64-65），必须逐点写出。常见失分点：只罗列作家名单而不分析特征；漏掉'繁盛原因'（新读者群、书价下降、职业写作、连载）这一采分点；把维多利亚小说与 18 世纪小说的兴起混为一谈。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-012",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕简评 Henry David Thoreau。",
+  "back": "Henry David Thoreau (1817-1862), American essayist, poet and practical philosopher, was a leading New England Transcendentalist renowned for having lived — not merely preached — its doctrines. (1) Life and thought: a man full of dreams and ideals, he wrote about nature and the philosophy of life; he spoke out on peace, living simply and the abolition of slavery, and was a vigorous advocate of civil liberties and individual conscience against unjust social institutions (高分笔记4, p17-18). (2) Walden (1854): his masterwork, a collection of 18 essays recording the two years (1845-47) he lived in a cabin he built himself by Walden Pond near Concord, Massachusetts. A believer in the Transcendentalist idea of self-reliance, he builds his own house and grows his own food in his bean-field, preferring solitude and believing in the power of work, individuality and living according to one's ideals; the book is principally a record of his thoughts and observations and is celebrated as a foundational work of American nature writing (高分笔记4, p17-18). (3) Critique of civilization: he hated human injustice and the slavery system, criticized modern civilization for having dehumanized man, attacked society's pretensions and excesses, and urged men to simplify their lives and escape societal institutions in order to elevate their lives (高分笔记4, p18). (4) Significance: together with Emerson's Nature — 'the Bible of New England Transcendentalism' — Walden turned Transcendentalist theory into a way of life; Thoreau's example of non-conformity and civil disobedience has since inspired environmental thought and movements of peaceful resistance (高分笔记4, p14, p17-18).\n——\n📌 解析：Thoreau 是 2026 年 15 分真题（笔记4 p10 真题表：Gave a briefly comment on Henry David Thoreau）。答题扣三条线：超验主义实践者（与爱默生《论自然》对读：《瓦尔登湖》是理论的'生活化'）→《瓦尔登湖》关键词（self-reliance、solitude、simplicity、nature）→社会批判面（废奴、公民不服从、对物质文明的反思）。常见失分点：只讲'湖边隐居'的故事而不上升到哲学与社会批判；漏掉 self-reliance 这一超验主义核心词。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-013",
+  "book": "literature",
+  "chapter": 13,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕介绍犹太裔美国文学的主要主题和代表作家。",
+  "back": "Jewish American literature refers to the rich and diverse body of writing produced by Jewish authors in the United States, primarily throughout the 20th and 21st centuries; it is deeply tied to the mass migration of Jews to America (chiefly from Eastern Europe) around the turn of the 20th century, and encompasses drama, fiction and poetry (高分笔记6, p29-30). (1) Major themes: identity and assimilation — balancing assimilation into America with the preservation of Jewish cultural and religious tradition; intergenerational conflict between immigrant parents and their American-born children; Jewish identity in the American context; the memory of persecution and of historical events such as the Holocaust; the immigrant's economic and social upward struggle, treated with humor and irony (高分笔记6, p30). (2) Representative writers: Saul Bellow, Nobel Prize-winning author known for his intellectual and philosophical novels (e.g. Herzog, Henderson the Rain King); Bernard Malamud, whose fiction (e.g. The Assistant) blends Jewish suffering with redemptive compassion; Philip Roth (e.g. Portnoy's Complaint), who probes Jewish family, self-invention and the anxieties of assimilation. Earlier figures such as Abraham Cahan opened the immigrant tradition (高分笔记6, p30). (3) Significance: from the immigrant margins, Jewish American writers moved to the very center of postwar American fiction, giving universal artistic expression to the predicament of the modern outsider and of minority identity in America.\n——\n📌 解析：犹太裔美国文学在笔记6 有专节（p29-30 考点九），是 2026 年新考点的直接来源。答题三段：移民史背景（东欧犹太移民大潮）→主题（同化与身份平衡、代际冲突、大屠杀记忆、双重文化处境）→代表作家（Bellow 诺奖、Malamud、Roth，逐人一句定位）。常见失分点：与 Harlem Renaissance 等其他族裔文学混淆；只报作家名单而写不出'同化 vs 文化保存'这一主题核心。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2026-014",
+  "book": "literature",
+  "chapter": 6,
+  "section": "真题·2026年",
+  "front": "〔真题·2026年 简答〕评述第二代英国浪漫主义诗人。",
+  "back": "The second generation of English Romantic poets — Byron, Shelley and Keats — are the younger, 'active' romanticists: unlike the Lake Poets, who turned to nature for protection, they expressed the aspirations of those oppressed by capitalism and held out the ideal of a future society free from oppression and exploitation (高分笔记2, p35). (1) George Gordon Byron: creator of the 'Byronic hero' — the proud, passionate, rebellious outcast of Childe Harold's Pilgrimage and the oriental tales — and the great satirist of European society in Don Juan; his restless revolt against tyranny culminated in his death in the Greek War of Independence, making him the very image of the romantic rebel. (2) Percy Bysshe Shelley: the revolutionary idealist whose poetry prophesies change and rebirth — 'Ode to the West Wind' ('If Winter comes, can Spring be far behind?', 2022 年转述原题, 高分笔记2, p31) makes the west wind the destroyer and preserver that scatters the seeds of a new world; Prometheus Unbound celebrates the overthrow of tyranny; his 'A Defence of Poetry' claims poets as 'the unacknowledged legislators of the world'. (3) John Keats: the poet of sensory beauty and of art's power to defeat time. His great odes — 'Ode to a Nightingale' and 'Ode on a Grecian Urn' ('Beauty is truth, truth beauty') — set mortal anguish against immortal art; he also formulated the doctrine of negative capability, the ideal of open-mindedness, of 'letting the mind be a thoroughfare for all thoughts' (2023 年评论原题, 高分笔记2, p31; 高分笔记2, p48). Though all three died young, their poetry carried English Romanticism to its climax, and Coleridge-to-Scott dating marks the movement's end at Scott's death in 1832 (高分笔记2, p35).\n——\n📌 解析：第二代浪漫主义诗人=Byron、Shelley、Keats（active romanticists，笔记2 p35）。三人各有一个标签作答：拜伦——Byronic hero 与讽刺（Don Juan）；雪莱——政治理想与变革预言（《西风颂》）；济慈——感官美与艺术的永恒（希腊古瓮颂）+ negative capability。关键区分：第一代 escapist 退向自然，第二代 active 面向现实与革命。常见失分点：三代人归属混淆；negative capability 照字面直译而不作解释；漏掉《抒情歌谣集》之外的 1798-1832 年代框架。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2026年真题（简答）"
+ },
+ {
+  "id": "pq-2014-016",
+  "book": "linguistics",
+  "chapter": 5,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 简答〕V. (15 points) Read the following short biography of Ernest Hemingway and analyse its thematic structure: divide the clauses of the passage into Theme–Rheme units (T1–T9, 15 clauses in the original), and explain how an inappropriate theme choice destroys textual cohesion. (The passage begins \"It was in 1899 that Ernest Miller Hemingway was born in Oak Park, a highly respectable suburban city of Chicago…\" and ends \"…1921 (T8) was the year he married. As a roving correspondent (T9) he came to Europe that year, and several large conferences were covered by him.\")",
+  "back": "Define Theme as the constituent that stands for the starting-point of the message and Rheme as all the rest. The model answer marks the 15 clauses with themes T1–T9: e.g. the anticipatory \"It\" of \"It was in 1899 that…\" (T1), the person chain \"Hemingway / He / …\" (T7), the time theme \"1921\" (T8) and the adverbial theme \"As a roving correspondent\" (T9). The analysis states: the choice of the theme not only directly affects the structure of the sentence but also the text, and will determine how the story progresses. The appropriate theme choice contributes to text cohesion and makes readers read smoothly and pellucidly, while an inappropriate theme choice cannot become a textual cohesive device, nor will it make the text meaningful. Themes chosen from the same semantic chain (person → person → time → role) build a clear thematic progression; themes that jump between unrelated chains break the linking of given and new information and destroy cohesion.\n——\n📌 解析：先界定系统功能语法中主位/述位与主位推进，再逐句标出主位（T1–T9），指出人称链、时间链主位如何承接已知信息、推动语篇展开；最后评价不当主位（如与上句无关的突兀主位）如何破坏衔接。作答需结合原文画表逐句分析。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（简答）"
+ },
+ {
+  "id": "pq-2015-011",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 简答〕III. (10 points) Explain the following dialogue between a diner and a waiter and tell why it is funny: Customer: \"What's this fly doing in my soup?\" Waiter: \"I believe that's the backstroke.\"",
+  "back": "The dialogue happens between the customer and the waiter. By saying \"What's this fly doing in my soup?\" the customer is actually complaining that the soup in the restaurant is not clean; his intended meaning is that he wants the waiter to bring him a new one. However, the waiter takes only the literal meaning of the question and answers that the fly is doing the backstroke. It seems that the waiter violates the maxim of quantity of Grice's Cooperative Principle: his reply does not give the required informative response to the complaint. One possibility is that the waiter did not infer the implicature at all; the other is that the waiter knew the intended meaning and deliberately played a joke to reconcile the embarrassment. The clash between the customer's implied complaint and the waiter's deliberately literal \"answer\" produces the humour.\n——\n📌 解析：先还原语境义（投诉、要求换汤），再对比字面义（仰泳），最后用格莱斯会话含义理论定位幽默来源：服务员违反（或佯装违反）数量准则，使问句的动作义被滑稽地坐实。答题按“语境义—字面义—准则违反—幽默效果”四步走。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（简答）"
+ },
+ {
+  "id": "pq-2017-010",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2017年",
+  "front": "〔真题·2017年 综合〕2017 专硕卷（英语教学专业基础·语言学，2016年12月25日下午考试）整卷综合条目：I. Choose the best answer (10 points)；II. Identify the differences between a greenhouse and a green house, and the difference between a sleeping car and a sleeping baby (10 points)；III. 栏目归类题——指出 Column I（pupils、laziest、talking、children's）、Column II（understandable、Londoner、ex-wife、anti-matter）、Column III（vet、gym、fridge、bus）各属何种形态过程，并说明 Column II 中 a/b 与 c/d 的形态差异；IV. Define the term \"adjacency pairs\" and analyze the following two conversations, finding out the difference between them if there is any (12 points)。",
+  "back": "I. 答案：A B C C A / C A B D A（如 [s] [f] [p] [h] 为 voiceless 等）。II. 1) 重音：a greenhouse 重音在 green（复合词），a green house 重音在 house（名词短语）；意义：greenhouse 指玻璃暖房（种植需保温植物的建筑），green house 指绿色的房子。2) a sleeping car 重音在 sleeping（复合词，指可供睡眠的车厢），a sleeping baby 重音在 baby（名词短语，指正在睡觉的婴儿）。III. Column I 为 inflection（屈折），Column II 为 derivation（派生），Column III 为 clipping（截短）；Column II 中 a、b 以后缀构成，c、d 以前缀构成。IV. Adjacency pairs——sequences of two utterances produced by different speakers as the result of turn-taking，两话轮构成 first part 与 second part，特定第一部分要求特定第二部分（如 offer 要求 acceptance 或 rejection）。会话一：非优先第二部分（dispreferred second part）\"I have a paper due tomorrow.\" 以更多时间与更多语言为标记，B 用 token acceptance（\"Oh—I'd love to, but you see\"）先示感激再推脱；会话二：非优先应答因威胁面子通常被回避，A 意识到拒绝有损面子，故先用 pre-invitation（\"What are you going to do this Friday evening?\"）试探。两会话说明说话人采用了不同的保全面子策略。\n——\n📌 解析：辨析复合词与短语从重音、结构、意义三方面作答；栏目归类先认词尾再定过程；adjacency pairs 先给定义与“优先结构”概念，再逐会话指出标记手段（延长、模糊语、prefabricated 推脱语、前序列）并落到面子策略。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2017年真题（综合）"
+ },
+ {
+  "id": "pq-2017-011",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2017年",
+  "front": "〔真题·2017年 综合〕2017 学硕卷（英语专业基础·语言学）整卷综合条目：I. Decide whether each statement is true or false (10%)；II. Fill in each blank with a proper word or words (10%)；III. Explain and exemplify the following terms (20%：interlanguage、inflection、full homonyms、displacement)；IV. Short answer questions (40%：reference 与 sense 之辨并举例；“吃豆腐”的联想义；等级反义与互补反义两图示解读；写出 flap 音系规则；由数据归纳 NP 短语结构规则；画树形图消解 They can fish 的歧义；人类语言是否完全任意)；V. Interpretation and discussion (20%：解读语言定义——系统、语音符号、任意性、交际目的；从真值角度区分 entailment 与 presupposition)。",
+  "back": "I. T/F：1.T 2.T 3.F（删去 outside the linguistic context）4.F（gate 不是黏着的）5.T 6.F（不是 voiced，被去浊音化了）7.T 8.T 9.T 10.F（不是 sense，是 reference）。II. 填空：1. performative 2. deep structure 3. Contrastive 4. tautology 5. analytic 6. diphthong 7. cataphoric reference 8. Euphemism 9. approbation 10. descriptive。III. 术语：1) interlanguage——学习者建构的、介于 L1 与 L2 之间的近似语言系统，是所有学习者都沿之推进的连续体。2) inflection——标示词的语法功能的黏着语素，如 -'s、-(e)s、-ing、-ed、-er、-est。3) full homonyms——读音与拼写相同而意义不同的词，如 bear（忍受）/bear（动物）；可用于汉语双关、字谜。4) displacement——人类语言的设计特征之一，可指称真实或想象、过去现在未来的事物，不受时空限制；动物只能交流此时此地。IV. 1) reference 是词与世界实体的关系（London 指英国首都；dog 指一类家养动物）；sense 是心理表现，与说话人/听话人心中的联想有关（dog 还令人想到忠诚）；desk、dog 既有指称又有意义，dragon、but 只有意义无所指。2) tofu 的指称义是“一种食物”，汉语联想义却是“性骚扰”，故女孩请 Y 吃豆腐引来哄笑。3) 等级反义词两极之间存在连续统，not hot ≠ cold（可能 warm、mild、cool），图中 a、b 之间有空隙；互补反义词肯定一方即否定另一方，alive/dead 无第三态，图中 a、b 互补无隙。4) flap 规则：[+alveolar, +stop] → [+flap] / [+stressed, +vowel] ___ [-stressed, +vowel]（water、butter、writer、rider）。5) NP → (Det) (Adj) N（由给定数据归纳）。6) 两棵树形图：[They can [fish]]（can 为情态动词，fish 为动词原形）与 [They [can fish]]（can 为名词“罐头”，fish 为动词）——原卷图形见书64页。7) 任意性是设计特征：house/maison/dom/casa/本 同指一物；拟声词在各语言中仍不同（tick-tock vs 滴答；buzz vs 嗡嗡），故人类语言总体是任意的、约定俗成的，多数动物交际则是图像性的。V. 1) 该定义点明语言的构成（声音、意义、结构三位一体的系统）与目的（交际）：语言以口说为主（spoken 早于书面且更成熟），音义联系大多任意（house/maison/dom/casa），人们用语言传递信息与思想。2) entailment：X 真则 Y 真；X 假则 Y 可真可假（X: The meeting was chaired by a spinster → Y: The meeting was chaired by a woman）。presupposition：X 真则 Y 真；X 假 Y 仍然为真（X: Sam has returned the book ⇐ Y: Sam borrowed a book）。\n——\n📌 解析：客观题按“答案+一句理由”整理记忆；术语四连按“定义+特征+例子”；简答七题分别落在意义理论、联想义、反义图示、音系规则、规则归纳、树形图消歧与任意性，每题先亮结论再举例；讨论题 entailment/presupposition 必须用真假值表格式呈现。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2017年真题（综合）"
+ },
+ {
+  "id": "pq-2013-014",
+  "book": "literature",
+  "chapter": 7,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 综合〕2013 英国文学卷综合条目：I. Choose one of the four alternatives (5 points，10题：乔叟称号、quatrain、《天路历程》体现的清教主义、弥尔顿《论出版自由》、浪漫主义时期散文家辨析、哈代维塞克斯小说、Prince Otto、Kipling 作品、Heathcliff 等)；II. Define the terms (15 points：symbol、morality play、theme、negative capability、revenge tragedy)；III. Answer the questions briefly (10 points：Wordsworth 的诗为何多取材乡村生活；Naturalism 简述)；V. Reading Comprehension (10 points：培根《论学习》选段——出自何作、作者是谁、释义末句 \"So every defect of the mind may have a special receipt.\"；莎士比亚第18首十四行诗——作者、主题、eternal lines 所指)；VI. 问答：Tess of the D'Urbervilles 的可能主题；Ralph Fox《The Novel and the People》的重要观点。",
+  "back": "I. 答案：1.D（乔叟获封\"候补骑士\"仅是荣誉称号，非正式骑士）2.B（quatrain 四行诗节）3.D（班扬是清教徒，《天路历程》是宗教寓言）4.A（《论出版自由》为弥尔顿散文）5.D（司各特是小说家非散文家，排除法）6.A 7.无正确答案（各选项皆哈代维塞克斯小说）8.B（Prince Otto 作者史蒂文森，该作非儿童文学）9.B（A为Joyce、C为Stein、D为Norris的作品）10.D（Heathcliff 为《呼啸山庄》主人公）。II. symbol——文学中代指他物之物，如代码或暗示，指向更大的观念或情感，可反复出现、可作多重解读；morality play——中世纪戏剧类型，人物拟人化善恶观念，展现善恶之争及其后果，教人向善抉择；theme——作者想在故事中表达的主旨或教训，可从人物、情节、环境推断；negative capability——济慈用语：真正的诗人必备的无私感受力，能把自己的心理身份消融于所描写对象之中（如莎士比亚所为）；revenge tragedy——主人公复仇的悲剧类型，通常以主人公与仇敌同归于尽收场，代表作为莎士比亚《哈姆雷特》。III. 1) 华兹华斯是自然的崇拜者，热爱自然并相信自然与人的情感思想深度相连，乡村比城市更接近自然；乡村生活比都市更纯真质朴，自然给他平静的力量与智慧；乡村人更接近自然与本真，故其诗总礼赞乡村及亲近自然的生活。2) Naturalism：19世纪末至20世纪初盛行于美国，是现实主义的更高阶段或极端形式；随工业化城市化而生，受达尔文学说启发，认为人的命运由遗传与环境决定；自然主义者不带道德评判地更忠实反映现实，极度客观地描写生活与社会；笔调更讽刺、悲观，写人在冷酷世界中的无助、渺小与绝望抗争；代表：克莱恩《红色英勇勋章》、德莱塞《嘉莉妹妹》。V. 选段一出自 Of Studies，作者 Francis Bacon；末句意为：正如不同的锻炼治不同的身体毛病，不同的学问可治不同的心智缺陷——专注力差可学数学，不善辨析差异可读哲学，每种心智缺陷都有对症的\"处方\"。选段二作者 William Shakespeare；主题：以夏日之美的短暂反衬青春爱之美与诗歌赋予永恒的力量；\"eternal lines\" 指能把爱人之美永久保存的诗行。VI. 1) 苔丝的可能主题：一个纯洁女人在资本主义侵蚀农村的时代的悲剧命运；英国资产阶级工业对乡村的侵蚀；维多利亚时代虚伪道德对自然人性的绞杀；哈代对苔丝式人物的深切同情。2) Ralph Fox（信奉马克思主义的英国文学评论家）《小说与人民》要点：文学应反映社会现实、倡导社会现实主义、批判抽象的现代主义笔法、强调形式与内容的平衡、拒绝宣传式写作而主张艺术价值。\n——\n📌 解析：选择题靠文学史常识+排除法；术语按\"定义+特征+例子\"；Wordsworth 题采分点在\"自然\"，需点明自然与乡村、与人本真的联系；阅读题先答作者作品再按问题释义；苔丝主题与 Fox 观点按点罗列。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（综合）"
+ },
+ {
+  "id": "pq-2014-017",
+  "book": "literature",
+  "chapter": 5,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 综合〕2014 英国文学卷综合条目：I. Choose one of the four alternatives (5 points，10题：英伦三岛最早住民、《农夫皮尔斯》作者、中世纪民谣英雄、《仙后》12骑士、弥尔顿与革命、The Spectator 作者、拜伦出身、Hazlitt《时代精神》、审美与道德探索之作等)；II. Define the terms (15 points：Stock character、English Renaissance、Omniscient narrator、Transferred epithet、Alexander Pope)；III. Answer the questions briefly (10 points：笛福《鲁滨逊漂流记》的主要主题；评狄更斯的文学成就)；IV. Reading Comprehension (20 points：Passage 1 莎士比亚《一报还一报》Isabella 独白——字面与深层含义、Isabella 所论、她对人的态度；Passage 2 弥尔顿《失乐园》序诗——作者、man's first disobedience 所指、one greater Man 所指、还原语序、诗的目的)。",
+  "back": "I. 答案：1.A（凯尔特人）2.B（威廉·朗兰）3.A（罗宾汉，居于舍伍德森林）4.B（《仙后》写12位骑士对应12种品质）5.B（弥尔顿支持革命与共和但非揭竿而起的革命者）6.A（Addison）7.D（拜伦生于贵族家庭）8.A（黑兹利特《时代精神》）9.A 10.B。II. Stock character——类型化/定型角色，读者一看即知其品性，用于使故事简单易懂地展开；English Renaissance——古典学问（希腊拉丁文学艺术）的再生与复兴，在英国表现为古典形式与英国内容的融合；14世纪始于意大利、渐及欧洲再传英国，标志现代的开端；本质是人文主义；主题含人的爱与伟大、资产阶级的兴起、对民族的赞颂；巨匠有马洛、莎士比亚、培根等；Omniscient narrator——全知叙述者，第三人称如上帝般看见并知晓一切；Transferred epithet（移就）——修饰语从本应修饰的对象转移到相邻对象上（如 sleepless night，失眠的实为人）；Alexander Pope——18世纪新古典主义大家：以翻译《伊利亚特》《奥德赛》闻名（济慈《初读查普曼译荷马有感》曾提及），英雄双韵体由乔叟引入、经德莱顿改进而由其娴熟运用；主张得体（decorum），认为每种文类都应有固定法则；代表作《论批评》《夺发记》《人论》。III. 1) 《鲁滨逊漂流记》主题：生存（荒岛求生证明人的耐力与逆境中自恃的能力）；陪伴（孤独的心理冲击及与星期五的友谊凸显社会联结）；殖民主义（鲁滨逊与星期五的关系体现殖民态度）；资本主义（鲁滨逊的经历反映重视贸易、财产与财富积累的新兴资本主义心态）。2) 狄更斯成就在于社会批判、人物刻画、讽刺与幽默：作品揭露批判维多利亚时代贫富差距与社会不公；创造了文学中最可辨识最受喜爱的人物群像；以轻快诙谐的笔触写重大事件而不失深刻批判。IV. Passage 1（《一报还一报》）：1) 可从字面与深层两层含义作答——\"人，骄傲的人，得了一点小小的权威，就演起种种把戏来让天使流泪\"；2) Isabella 论反对滥用权力：她把当权者比作朱庇特，若人人有权都像朱庇特随意用雷霆，天下将大乱；掌权者也会犯错，应怀怜悯与体谅；3) Isabella 对人的态度是批判与失望：骄傲无知、滥用权力、玩弄令天使哭泣的把戏，稍有权柄便如暴怒的猿猴，为权所腐、忘却仁慈正义。Passage 2（《失乐园》序诗）：1) John Milton；2) \"man's first disobedience\" 指亚当夏娃偷食禁果；3) \"one greater Man\" 指耶稣基督；4) 还原正常语序：Sing, Heavenly Muse, that on the secret top / Of Oreb, or of Sinai, didst inspire / That shepherd, who first taught the chosen seed, …（主语 Sing 的祈使结构恢复正常句序）；5) 目的：呼告天堂缪斯相助，作一首敢于\"飞越阿奥尼亚山、追求散文韵文从未企及之事\"的雄浑之歌（为神义辩、诏示永恒天意）。\n——\n📌 解析：选择题以文学史定位+排除法；五个术语各有记忆抓手（定型角色/文艺复兴/全知叙述/移就/蒲柏）；《鲁滨逊漂流记》主题按\"生存—陪伴—殖民—资本主义\"四点总答；失乐园序诗问必须会还原倒装语序并默写关键诗行。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（综合）"
+ },
+ {
+  "id": "pq-2014-018",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2014年",
+  "front": "〔真题·2014年 综合〕2014 美国文学卷综合条目：I. Fill in the blanks (5 points：美国乡土主义伴随而起的思潮；爱伦坡预言20世纪文学对自我的关注、T.S. Eliot 的\"虚无\"等主题所在时期；多斯帕索斯；Newsreel 等独特手法所属作品；符合题干的时间表述)；II. 判断5题；III. Explain the following terms (15 points：tall tale、metafiction、Chicano literature)；IV. Answer the questions (15 points：列举福克纳五部主要作品 (5 points)；舍伍德·安德森对美国文学的主要贡献 (10 points))；V. Read the excerpt (10 points：惠特曼《哦船长，我的船长》——诗题与作者；Captain、the ship、fearful trip、the prize 各指什么；韵式；主题)；Translation (30 points)。",
+  "back": "填空答案：American Realism；condition；realistic；Newsreel（多斯帕索斯《曼哈顿中转站》/《美国》三部曲手法，与 Biographies、Camera Eye 并列）；the present。判断：1.F 2.T 3.T 4.T 5.T。术语：tall tale——极度夸张甚至完全虚构的故事，为娱乐或炫耀而讲，不必当真；metafiction——关于小说的小说：自我指涉、反思文学成规与作者角色，打破真实与虚构的界限，邀请读者批判性思考叙事的本质；Chicano literature——1960年代以来墨西哥裔美国社区的文学，反映身份、疏离、社会正义与在美国社会争取承认的抗争，作家常融入墨西哥文化元素。IV. 1) 福克纳五部主要作品：The Sound and the Fury；《A Rose for Emily》；Absalom, Absalom!；《As I Lay Dying》；Light in August。2) 舍伍德·安德森的贡献：美国现代文学（尤其短篇）的先驱之一，《俄亥俄州瓦恩斯堡》（Winesburg, Ohio）为美国文学引入新主题与新技巧；较早采用意识流手法深入人物内心；影响后来的海明威与福克纳，为美国小说的现代主义与心理现实主义开辟道路。V. 诗题 Oh Captain! My Captain!，作者 Walt Whitman；隐喻所指：Captain 指林肯总统（将林肯比作统领国家之船的船长）；the ship 指美国（在历史海洋中航行的帆船）；the fearful trip 指美国内战（生动再现美国经历的艰难险阻）；the prize 指内战胜利后国家统一之成果；韵式 AABBCDED；主题：对林肯领导才能及其为国牺牲的深切悲恸、丧失与崇敬。翻译：英译汉（中国农村贫困与医疗保障——3000万贫困人口、农民自付90%医疗费、收入仅城市三分之一、SARS 爆发暴露脆弱性）；汉译英（清洁空气——学校开污染课程、企业装除烟设备、科学家研制更清洁的汽车与火车引擎、可融于水的新纸张与可融于阳光的新玻璃瓶）；要点：数字与百分比转换、被动处理、将来时排比句式。\n——\n📌 解析：填空以流派/手法对应；福克纳五作品一题一作品名即可各得1分；安德森贡献按\"短篇先驱+《瓦恩斯堡》+意识流+影响后人\"四点；船长诗四个意象所指务必一一对应，韵式写 AABBCDED。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2014年真题（综合）"
+ },
+ {
+  "id": "pq-2017-012",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2017年",
+  "front": "〔真题·2017年 综合〕2017 美国文学卷综合条目：I. 选择 (答案 ACBBCACDCC)；II. Define the following terms (American Realism、Pecola Breedlove、New England Transcendentalism、Expressionism)；III. Answer the questions briefly (爱默生论自然；奥尼尔作为戏剧实验家——四点；《紫色》与 Celie)；IV. Illustrate your points of view (清教主义对美国文学的影响——已并入 825-2025-015；惠特曼的民主思想如何支配其诗歌创作)。",
+  "back": "I. 选择：A C B B C / A C D C C。II. 术语：American Realism——19世纪后半叶作为对浪漫主义与感伤主义之\"谎言\"的反动而兴起的文学运动；关注经验的世界、平凡的事物、熟悉与低微的人；1865-1914被称为\"现实主义时代\"；特征：1) 得自观察的细节逼真（verisimilitude）；2) 依赖对情节、环境与人物的再现；3) 对人性与经验提供客观而非理想化的视角；吐温、豪威尔斯、亨利·詹姆斯为三领袖。Pecola Breedlove——托妮·莫里森《最蓝的眼睛》主人公：被视为\"丑陋\"的黑人小女孩，由此生出自卑情结，渴望得到她等同于\"白\"的蓝眼睛；小说结尾她疯了——这是她逃离\"因家庭处境与当时审美社会标准而不美丽也不快乐\"之世界的唯一出路；揭示了美国种族主义的残酷后果。New England Transcendentalism——浪漫主义时期新英格兰的哲学运动（1835-1845年间达顶峰）：强调自然中的神性、个人直觉与崇高情感高于理性；三要点：超灵（Oversoul/Spirit）是宇宙中最重要者；个人是神圣的、社会中最重要的元素；自然是\"上帝之灵\"的象征。Expressionism——20世纪初发端于德国的艺术运动：一批画家力求避免再现外部现实，转而投射对世界的高度个人化图景。III. 1) 爱默生论自然：自然是精神/上帝的象征，在人与上帝（个人与超灵）之间居间调停；他把自然视为人所受的最纯净、最圣洁、最有益健康的道德影响，充满上帝的充盈临在，对人心有健康复原之力；他相信自然的神秘\"统一性\"。2) 奥尼尔的戏剧实验四点：1) 不知疲倦的戏剧艺术实验家，把戏剧从旧传统中解放出来、深植于生活，把现实主义乃至自然主义引入美国剧场；2) 自由借鉴欧洲戏剧的优秀传统——希腊悲剧、易卜生的现实主义、表现主义——并熔铸为自己的有机艺术；3) 大量借用现代技巧尤其是意识流；4) 不倦的实验丰富了美国戏剧、影响后世剧作家，被誉为\"美国的莎士比亚\"。3) 《紫色》以 Celie 的生活为主线、奈蒂的非洲历险为辅线：主题是非裔美国女性在社会与家庭压迫背景下的成长；从女性主义视角看，它讲述性别主义种族主义世界中受压迫女性之间的团结故事，标志非裔美国人意识成长的新阶段；书名意味深长——紫色象征尊严、爱、人类情谊、完整地幸存，也代表苦难与疼痛，是上帝的造物、共同的人性，重要而不可忽视；它提出的问题促使黑人更好地认识自己、为自己的生活负责。IV. 惠特曼的民主思想支配其诗歌创作：在他的名诗中，开放、自由、尤其是个人主义（相信个人的权利与自由至高无上）支配着诗写；他把勤劳的农民与劳动者带入美国文学，抨击奴隶制与种族歧视；在《草叶集》中礼赞自然、民主、劳动与创造，讴歌人的尊严与平等及人类最光明的未来；他认为诗歌在缔造新国家的过程中作用重大——能使美国人庆祝自己摆脱旧世界与殖民统治，帮助他们理解新地位、在新可能的世界中界定自身；《草叶集》因其对美国民主理想的独特诗意体现而被视为丰碑之作；他是平民诗人、民主的先知与歌者。（清教主义论述见 825-2025-015。）\n——\n📌 解析：四个术语注意 Pecola 是小说人物（背术语不要只背流派）；奥尼尔四点按\"实验家—融传统—现代技巧—影响\"记忆；《紫色》落在女性团结与书名象征；惠特曼题把民主思想落到《草叶集》的具体表现。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2017年真题（综合）"
+ },
+ {
+  "id": "pq-2017-013",
+  "book": "literature",
+  "chapter": 5,
+  "section": "真题·2017年",
+  "front": "〔真题·2017年 综合〕2017 英国文学卷综合条目：I. Name the author of each of the following literary works (10部作品)；II. 判断正误 (答案 TFTTFTTFFT)；III. Define the literary terms (Neoclassicism、Metaphysical Poetry、Byronic Hero)；IV. Answer the following questions briefly (Humanism；培根《随笔》)。",
+  "back": "I. 作者（须写全名）：1. Geoffrey Chaucer 2. William Shakespeare 3. Henry Fielding 4. John Milton 5. Daniel Defoe 6. William Blake 7. William Wordsworth 8. Charles Dickens 9. Charlotte Bronte 10. Oscar Wilde。II. 判断：T F T T F T T F F T。III. 术语：Neoclassicism——以希腊拉丁作家为范式、试图以取自古典作品的固定法则与规则控制文学创作；新古典主义者包括18世纪的艾迪生、斯梯尔与蒲柏；原则：每文类有固定法则、强调理性、教化目的与文雅风度；戏剧标准：用押韵对句代替素体诗、时间地点行动三一律、结构规整、写类型而非个体；诗歌依古典分类为 lyric、epic、didactic、satiric、dramatic 各遵其则；散文应精确、直接、灵活。Metaphysical Poetry——17世纪在多恩影响下的玄学派（含 George Herbert、Andrew Marvell）：以对爱与宗教情感的心理分析为特征，善用不寻常的明喻隐喻、机智（wit）、想象性图景、隐晦表达与悖论游戏；意象取自现实生活；扩展隐喻即\"玄学奇喻\"（metaphysical conceits）；主题多为爱、死与宗教；措辞平易；用奇喻与无视传统格律常致晦涩、诗句粗粝、意象牵强；总体内容尚神秘主义、形式尚奇诡。Byronic Hero——拜伦式英雄：以拜伦其人其作为典范的理想化而有缺陷的人物；出身高贵的骄傲神秘叛逆者，凭激情与才能的巨大优越感，独自肩负纠正腐化社会一切不义的重担；以不可征服的精力单枪匹马对抗政府、宗教或道德原则中的任何暴政；为浪漫主义运动诸多作家与19世纪哥特小说作者所演绎，如《呼啸山庄》的希刺克厉夫、《简·爱》的罗切斯特。IV. 1) Humanism 是文艺复兴的理想：一种把人类事务置于关切中心的文学与哲学思想体系，强调个人的尊严与潜能及现世生活的价值；人文主义写作反映希腊罗马古典文学的再生；古典形式与英国内容的融合造就了新的伊丽莎白时代戏剧（如《帖木儿》《浮士德博士》）；文艺复兴英雄怀有宏大抱负（帖木儿、浮士德），弥尔顿笔下的撒旦与亚当是人性化人物；十四行诗第18首显人之美与爱的永恒，《哈姆雷特》名言发出资产阶级声音。2) 培根以《随笔》（Essays）最负盛名：论荣誉、友谊、爱与财富等题材；文笔简练雅致、多学问典故与隐喻，跻身英语文学最佳之列（师法蒙田这一现代随笔开创者）；作为务实审慎之人，他为伊丽莎白晚期与詹姆士时代的有志青年写作，教其如何高效处事、在公共生活中出人头地；《随笔》以简洁、紧凑、有力著称，谋篇井然，以圣经典故、隐喻与节奏增色；《论学习》（Of Studies）为58篇中最著名者，分析读书的主要用途、不同人读书的不同方法及读书对人性情的影响。\n——\n📌 解析：作家填空务必写全名；三个术语中 Byronic Hero 要能举希刺克厉夫与罗切斯特为例；Humanism 按定义+表现（戏剧、英雄、莎翁名句）作答；培根《随笔》记\"简练紧凑有力+Of Studies\"。”“",
+  "source": "东师学科英语专业课二历年真题.pdf · 2017年真题（综合）"
+ },
+ {
+  "id": "pq-2020-012",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2020年",
+  "front": "〔真题·2020年 综合〕2020 美国文学卷综合条目：VI. Explain the following terms (American Puritanism——已并入 825-2025-015，不另立；Moby-Dick)；VII. Answer the questions briefly (《老人与海》Santiago \"败而不败\"；《推销员之死》Willy Loman 的悲剧)；VIII. Comment on the 19th century American Transcendentalism（评论19世纪美国超验主义）；IX. Paraphrase the following sentences (3句)；X. Comment on the following passage (《红字》监狱门外景象与玫瑰丛象征)。",
+  "back": "VI. Moby-Dick——被尊为\"伟大的美国小说\"、美国第一部散文体史诗，作者 Herman Melville；《白鲸》不仅是捕鲸故事或海上冒险，更是一次追寻宇宙真理与知识的心灵象征之旅，是对人深层现实与心理的精神探索；在亚哈船长被扭曲的崇高与\"裴廓德号\"航程的美与恐怖中，梅尔维尔戏剧化了他对所处世界悲观的看法。（American Puritanism 见 825-2025-015。）VII. 1) 圣地亚哥：古巴老渔夫与一条大马林鱼进行了一场注定失败的搏斗；在悲剧意义上，它把生活表现为与不可征服的自然之力抗争、只有部分胜利可能的斗争；尽管如此，作品充满对抗争与人类自身的崇高敬意；世界虽乱，他总在绝望地打着一场败仗，却在以荣誉、勇气、耐受力等一套信条主宰抗争的过程中成为胜者——虽然人生是一场败仗，但他能以这样的方式主导它，使失败化为尊严：他可以被肉体毁灭，但精神上永不被击败；在孤独中行为得当、不失尊严，因此圣地亚哥始终是英雄。2) Willy Loman：其悲剧是美国梦不可企及的鲜明写照；他自信是能成事的人，而美国对金钱成功的执念毁掉了他和像他一样的人；Willy 已被视为悲剧英雄；客观上看，世界对像他这样的普通人过于严酷——要么屈从社会不可能的要求，要么拒绝它们；他以自杀作牺牲，凸显美国梦破碎的承诺与追梦的惨痛代价。VIII. 超验主义：19世纪中叶新英格兰爱默生等人的宗教哲学学说，强调个人灵感与直觉、超灵与自然的重要性；伴随观念还有\"自然使人高尚\"\"个人是神圣的因而自立自助\"；该词源自拉丁语，意为\"升起、超越界限\"；超验主义促成了独特的美国文化，把美国文学提升到精神高度。IX. 改述3句：1) \"It is not on my list if there is anything on the globe that she is uninterested in.\"（世上就算有她不感兴趣的事物，那也不在我的清单上。）2) 河流/流逝句——\"In a contemplative hour, who doesn't see a river and be reminded of how everything is in flux?\"（沉思时刻，谁见河流不想到万物皆流？）3) \"Had Buck read the newspaper articles, he would have understood that disaster was developing for all tidewater dogs, from Puget Sound to San Diego—not just for himself, but for every muscular, long-haired dog.\"（倘若巴克读过那些新闻，他就会明白：从普吉特湾到圣地亚哥，所有海滨狗——不单它一个，而是每一条健壮的长毛狗——都在劫难逃。）X. 段落评论：选文出自 Nathaniel Hawthorne 的《红字》，描绘监狱门外的环境：在马萨诸塞波士顿，一群清教徒聚观对私生婴儿的母亲海丝特·白兰的惩罚；\"木牢\"\"橡门铁件\"与监狱本身反映清教徒极端的律法主义；海丝特被村民拒斥；玫瑰丛是象征——被视为大自然向进出监狱者奉献美的方式，给身陷其中者一丝希望的微光；它与周围一切形成鲜明对照；正如后文绣得精美的猩红字母 A，一方面邀请人在随后的悲剧故事中寻得\"一点甜美的道德之花\"，另一方面暗示\"自然的深厚之心\"（或即上帝）对迷途的海丝特母女会比她的清教邻居更仁慈；《红字》的主题是羞辱与社会性污名化——海丝特的当众受辱与丁梅斯代尔的私密羞耻与怕被揭发的恐惧。\n——\n📌 解析：Moby-Dick 术语记住\"伟大美国小说+第一部散文史诗+心灵象征之旅\"；Santiago 落在\"被毁灭而不被打败\"；Willy 悲剧扣\"美国梦的不可企及\"；超验主义答定义+要点+文化意义；玫瑰丛题按\"律法主义（牢门铁件）vs 自然之美与希望（玫瑰）\"的对照分析。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2020年真题（综合）"
+ },
+ {
+  "id": "pq-2021-011",
+  "book": "literature",
+  "chapter": 5,
+  "section": "真题·2021年",
+  "front": "〔真题·2021年 综合〕2021 英国文学卷（除已入库术语 Stream of Consciousness 与 Sentimentalism 外）综合条目：二、简答 (每小题5分，共15分：Briefly comment on the genre Epic with an example——以 Beowulf 为例；Briefly elaborate on the character of Pamela)；三、简述 (10分：比较 Blake《天真之歌》与《经验之歌》中两首 The Chimney Sweeper)；四、改述 (Paraphrase，每小题5分，共15分，3句)；五、作品阐释 (25分：Christina Rossetti《Song》——死亡、记忆与遗忘)。",
+  "back": "二、1) Epic（史诗）：最初是一种口头叙事形式，主题与风格皆宏伟；处理民族或普遍意义的传奇或历史事件，也写单个人的功业，由此赋予作品统一性；例证 Beowulf——全诗3182行，是英语中第一部伟大叙事诗，也是最早最著名的英国民族史诗，写贝奥武甫的传说（可另选 The Faerie Queene、Paradise Lost）。2) Pamela（理查逊同名小说主人公）：先简述情节——侍女帕梅拉坚持以贞洁与美德抵御主人的纠缠，最终赢得尊重与爱；再析人物：纯洁、天真、勇敢、富有同情心与善良；结论：Pamela 是纯真与美德的化身。三、两首《扫烟囱的孩子》比较：《天真之歌》与《经验之歌》皆为布莱克所作，两首同名诗展示从天真到经验的过渡及其对儿童的影响；《天真之歌》一首借被卖去扫烟囱的小男孩之眼观看世界，经由儿童的想象呈现一个明亮喜乐的天国，表达诗人即便面对悲伤痛苦仍对生活的欣悦；《经验之歌》同名诗呈现更严酷的现实——氛围不再明媚而是悲哀阴郁，小扫烟囱者唱着\"哀歌\"而父母却进教堂赞美上帝，布莱克对教会与神职人员的憎恶由此显露；《天真》一首含蓄地批判这一社会现象，《经验》一首则更直接有力地表达对剥削与伪善的不满；总之两诗共同展示从天真到经验的转变。四、改述3句（原句未全存，答案示例）：1) \"Capturing the raw essence and the vivid charm is beyond the skill of poets, as it is for painters.\"（捕捉原生本质与生动神韵，是诗人——正如画家——力所不及之事。）2) 培根《论学习》句——\"They mainly offer enjoyment in solitude and retreat, provide decoration in conversation, and demonstrate competence in the handling of affairs.\"（读书之用有三：怡情于幽居独处、添彩于高谈阔论、长才于处世行事。）3) \"We find ourselves on an obscure field overwhelmed by the chaotic cries of fight and retreat, and here at night, the ignorant troops collide.\"（我们发现自己身处一片晦暗的战场，溃逃与接战的嘈杂喊声不绝于耳；夜里，不明就里的军队自相冲撞。）五、作品阐释：这首诗题名 \"Song\"，作者克里斯蒂娜·罗塞蒂（维多利亚时期女诗人，非重点作家，辨识难度大）。诗人预想死亡对她意味着什么，并自问爱人是否会把她忘记：第一节她希望爱人不要过分悲伤，死后不要刻意种植玫瑰或柏树，只愿青草带露沐雨自然地长在坟头；他可以选择记得她或忘掉她。第二节写她将住进死亡之国、再感受不到此世自然之美；读者会注意到全诗对死亡只有淡淡的哀愁。风格上，诗人采用直接而深情的叙述，让读者深切体会其死亡意识；主题上，诗歌探索死亡、记忆与遗忘以及人与自然的关系，借对死亡的书写思考生与死的意义。总结：语言简净、主题深邃、情感细腻，体现罗塞蒂作为女诗人独特的美学视角与生命哲思——读者既能感受她对死亡的平和态度，也能体会她对爱与被爱、记得与遗忘的深思。\n——\n📌 解析：史诗题按\"文体定义+例证\"作答，Beowulf 记\"3182行+第一部英语伟大叙事诗\"；两首《扫烟囱的孩子》用\"天真/经验\"对照表作答；改述即同义替换+句式简化；作品阐释按解析模板：作者作品—内容概述—风格主题分析—总结升华。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2021年真题（综合）"
+ },
+ {
+  "id": "pq-2016-010",
+  "book": "linguistics",
+  "chapter": 4,
+  "section": "真题·2016年",
+  "front": "〔真题·2016年 综合〕2016 专硕卷（英语教学专业基础·语言学，2015年12月27日下午考试）整卷综合条目，含五部分：I. Fill in each blank with an appropriate term (10%)；II. Write out the phonetic symbol that corresponds to the articulatory description (10%，10个发音描述)；III. Label the process of word formation illustrated by the example and provide another example of your own (10%：green & house → greenhouse；Sandwich (proper noun) → sandwich；babysitter → (to) babysit；Brazil, Russia, India, China and South Africa → BRICS；smoke & fog → smog)；IV. Define the following terms briefly (12%：Allophones、Phonetics、Suprasegmental features、TG grammar)；V. Distinguish the following pairs of terms (8%：free morpheme vs bound morpheme；theme vs rheme)。",
+  "back": "I. 填空答案：1. arbitrary 2. creativity 3. ideational 4. franca 5. artificial 6. genetic classification 7. morphology 8. intra-disciplinary 9. synchronic; descriptive。II. 音标：1. bilabial nasal [m] 2. glottal fricative [h] 3. voiceless interdental fricative [θ] 4. voiced interdental fricative [ð] 5. voiced palatal affricate [dʒ] 6. voiceless labiodental fricative [f] 7. alveolar retroflex liquid [r] 8. velar nasal [ŋ] 9. voiceless alveolar fricative [s] 10. palatal glide [j]。III. 构词法与自例：1. Compounding（例 whitewash = white & wash）2. Eponyming（例 watt、curie、Fahrenheit）3. Backformation（例 peddler → peddle）4. Acronyming（例 AIDS = immune deficiency syndrome）5. Blending（例 brunch = breakfast & lunch）。IV. 术语：Allophones——a phoneme is an abstract sound unit; the variantsrealized in different contexts are allophones（如 clear [l] in lead / dark [ł] in deal）；Phonetics——the study of speech sounds, 包括 articulatory、acoustic、auditory 三分支；Suprasegmental features——stress、tone、intonation 等超越音段的特征；TG grammar——Chomsky 提出，语法是说话人心中的隐性规则系统，有限规则生成无限句子，语言学家的任务是充分描述并解释该规则系统。V. 辨析：free morphemes（water、desire 等可独立成词）vs bound morphemes（de-、dis-、-ish、-ly 等必须依附于自由语素），判别标准为能否独立用于口语和书面语；theme（句子信息的起点，如 Tom broke the teapot 的 Tom）vs rheme（句子其余部分；The teapot was broken by Tom 中起点变为 the teapot），同一命题换主位即换信息结构。\n——\n📌 解析：客观题部分靠平时积累；音标题按“声带振动—发音部位—发音方式”三要素还原；构词法必须“判名+自举例”两步齐全；术语定义走“定义+例子”套路；辨析题先给判别标准再各配最小对比例句。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2016年真题（综合）"
+ },
+ {
+  "id": "pq-2016-011",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2016年",
+  "front": "〔真题·2016年 综合〕2016 学硕卷（英语专业基础·语言学）整卷综合条目：I. Fill in the following blanks in English (20%，20空)；II. Formulate the following rules (10%：辅音去浊化规则与不送气规则)；III. Explain each of the following terms (20%：pragmatic presupposition、allomorphs、phrase structure rules、indirect speech acts)；IV. Indicate the semantic relationship of word pairs and types of opposite pairs (20%)；V. Answer the following questions (30%：TG语法与系统功能语法的研究取向；为什么学一门语言还要了解其文化)。",
+  "back": "II. 规则公式：1) 去浊化规则 [+voiced, +consonantal] → [-voiced] / [-voiced, +consonantal] ___；2) 不送气规则 [-voiced, +stop] → [-aspirated] / [-voiced, +consonantal] ___。III. 术语：1) Pragmatic presupposition——a relation holding between a speaker and the appropriateness of a sentence in a context, an inference worked out from the mutual knowledge of speaker and hearer; something the speaker assumes to be the case prior to making an utterance; 触发语有三类：某些动词（regret、continue）、某些句法结构（反事实条件句）、某些疑问词（when、where、why）。2) Allomorphs——the variant morphs of the same morpheme，如英语前缀 in- 有 im-、ir-、il-、in- 四个变体（impossible、irregular、illegal、invariant）。3) Phrase structure rules——rules that specify the constituents of syntactic categories，主要用归纳法得出，如 S → NP + VP。4) Indirect speech acts——those in which there is no correspondence between a structure and a function，如陈述句表请求（It's cold in here.）、疑问句表邀请（Why don't you go with us?）；听话人需推理，处理更耗时，但更礼貌。IV. 词对差异依次为 synonyms differing in affective meaning / in collocation / in styles / dialectal synonyms / synonyms of different registers；反义类型依次为 complementary、reversal、reversal、gradable、reversal、gradable；句间语义关系依次为 inconsistent、entailment、tautology、contradiction、semantically anomalous。V. 1) TG grammar（Chomsky）：科学的语法须达到观察、描写、解释三重充分性，须解释所有且仅解释合语法句子；语法是说话人共有的隐性知识，是有限规则生成无限句子的系统，语言学家的任务是充分描写并解释这套规则。Systemic-Functional grammar：从功能与意义出发，把语言视为意义潜势系统，句子结构是选择过程的结果；语法系统是一套选项，语言形式是功能的实现，语言学家须解释功能与形式间的复杂关系。2) 语言与文化在整个文明史中相互依存：语言是文化不可分割的组成部分；语言受文化影响甚至被文化塑造（尤其语义结构与社会交际中的实际使用）；语言的习得与使用依赖文化传递（文化传递这一设计特征）；没有相应的文化环境，语言习得无从谈起，故学语言必须学文化。\n——\n📌 解析：规则题要写成标准形式化公式并注明结构描述；术语按“定义+触发语/例子”作答；语义关系题先判断大类（同义差异/反义类型/句间关系）再套术语；两道问答均为“总—分—总”结构，TG与SFG对照作答、语言与文化按四点分述。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2016年真题（综合）"
+ },
+ {
+  "id": "pq-2018-010",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2018年",
+  "front": "〔真题·2018年 综合〕2018 学硕卷（英语专业基础·语言学）整卷综合条目：Part One——I. Transcribe the initial sound of each word and describe it (10 points)；II. Write the number of morphemes of each word and point out how it is formed (10 points)；III. Define the following terms (20 points：arbitrariness、phonological rules、function)；IV. What are the lexical sense relations of the following pairs of words? (10 points，10组)；V. Answer the questions (30 points：语言学分支——intra/inter-disciplinary；形式与功能两大阵营；推导 Help yourself to the cake 的表层结构)。Part Two (70 points)——I. Define the following terms (25 points：sociolect、syllabus、interlanguage、ostensive communication、utterance meaning)；II. Conversation analysis (10 points)；III. Answer the following questions (35 points：Labov 的变体研究；discourse markers 及其功能分类；anaphoric 与 cataphoric reference；错误分析三步骤)。",
+  "back": "Part One I. 音标与描述：[r] retroflex alveolar liquid；[s] voiceless alveolar fricative；[æ] front low unround lax vowel；[p] voiceless bilabial stop；[ɔː] back mid round tense vowel；[ʌ] central low unround lax vowel；[m] voiced bilabial nasal；[tʃ] voiceless palatal affricate；[g] voiced velar stop；[θ] voiceless interdental fricative。II. 语素数与构词（依次）：2 derivation；3 derivation；5 derivation；5 derivation；2 blending；1 conversion；1 conversion；4 derivation；2 compounding；1 acronym。III. 术语：1) Arbitrariness——语言的设计特征之一，音义联系大多任意（house/maison/dom/casa 同指一物）；拟声词貌似例外，跨语言比较后仍不同（tick-tock vs 滴答；buzz vs 嗡嗡），说明语言是约定俗成的。2) Phonological rules——把“什么音在什么语境中以什么方式变化”的规律概括成规则，如去浊化规则（play→pray、snow、smart 类似语境）、鼻化规则（time、bean 前）、闪音规则（重读元音后非重读元音前的齿龈塞音变闪音：water、butter、writer、rider）。3) Function——语言在日常生活中承担的角色；概念功能：语言作为联系人与世界的媒介，用于认知与概念化；人际功能：语言把言语社区成员黏合在一起；语篇功能：组织信息使之合乎上下文。IV. 词对：torch/flashlight 方言同义；pass/fail 互补反义；ascend/descend 逆转反义；tree/willow 上下义；pale/pail 同音异义；cold/hot 等级反义；true/false 互补反义；cheap/expensive 等级反义；push/pull 逆转反义；assassinate/murder 搭配差异同义。V. 1) 分支：intra-disciplinary 聚焦语言一个侧面（语音、音系、形态、句法、语义、语用），基于“语言由声音、结构、意义三方面组成”的语言观；inter-disciplinary 研究语言与相关因素的关系（社会语言学、心理语言学、应用语言学等），如心理语言学考察语言与心智的相关。2) 两大阵营：形式语言学假设语言是自主系统，从观察语言形式出发；功能语言学认为语言因其所做而为其所是，从观察意义如何由词汇语法实现出发。3) Help yourself to the cake：深层结构 You help you to the cake，先施反身化规则（同一所指的第二 NP 换为反身代词 yourself），再施祈使句规则（删除主语 you），得表层结构（树形图见解析）。Part Two I. 术语：sociolect——按社会阶层划分的语言变体，社会经济地位造成语言的分层；syllabus——权威规定教学与学习内容与原则的官方文件，设计时参照教学的社会目标、学习者情况、课时、语言与习得理论；interlanguage——见前；ostensive communication——显式-推理交际，同时涉及编码与推理，融合代码模式与推理模式；utterance meaning——话语意义属语用学范畴，指话语如何被接受和理解，受语境、说话人意图、听话人理解等因素影响。II. 会话分析：1) B 违反关联准则，含义是 B 因身体不适没吃午饭；2) B 遵守一致准则，虽不认为 A 的画美，但以“我没有审美眼光”淡化分歧。III. 1) Labov 对纽约百货公司词尾 postvocalic [r] 的研究：发现 [r] 的使用与顾客社会经济地位相关，中上阶层更常用 prestigeful 形式——社会语言学经典变体研究。2) Discourse markers 是口语和书面语中起路标作用的词与短语，无特定句法功能、不改变命题内容，如 oh、well、you know、I mean、in addition；功能涉及话题转换、重新表述、语篇规划、强调、模糊限制与反馈信号（backchanneling）。3) anaphoric reference 指向前文（A boy and a girl are planting a tree. She…he…it），cataphoric reference 指向后文（I could hardly believe it. The man wriggled…）。4) 错误分析三步骤：识别（将学习者句子与母语者对应句比较，区分 error 与 mistake）→ 描写（按语法归类：omission、addition、selection、misordering）→ 解释（追溯来源：interlingual 与 intralingual errors）。\n——\n📌 解析：本卷题量大：语音题按“音标+三要素描述”速答；sense relations 题记牢五类关系各两例；两大阵营、Labov 研究与错误分析均为高频考点，按解析分点背诵；术语定义一律“定义+例子”。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2018年真题（综合）"
+ },
+ {
+  "id": "pq-2019-010",
+  "book": "linguistics",
+  "chapter": 6,
+  "section": "真题·2019年",
+  "front": "〔真题·2019年 综合〕2019 学硕卷（英语专业基础·语言学）其余各题综合条目（deixis 分类与 Sapir-Whorf 两个20分题已另收入库）：I. Transcribe the sound represented by the underlined letter and describe it (10 points，5个)；II. Identify differences between Column A and Column B（复合词 blackboard 类 vs 短语 a black board 类，15 points）；III. What is the difference between prefixation and suffixation? Give at least 5 examples for each (15 points)；IV. Paraphrase \"I can see the man with a pair of binoculars\" and draw tree diagrams to show their differences (20 points)；V. Explain the relation between bank (the side of a river) and bank (the financial institute), and the relation between head (the upper part of the human body) and head (the leader of an organization) (10 points)；VI. What is metaphor? Give 2 instances for each of the listed conceptual metaphors (20 points)；IX. One effective mode of analyzing learners' language is error analysis. What are the steps of the analysis? Illustrate the relations between error analysis and language learning & teaching (20 points)。",
+  "back": "I. 音标与描述：[f] voiceless labiodental fricative；[r] retroflex alveolar liquid；[ɑː] back low unround tense vowel；[k] voiceless velar stop；[iː] front high unround tense vowel。II. Column A 为复合词（a blackboard），Column B 为冠词+修饰语+名词（a black board）：结构上前者是复合名词、后者是短语；重音上复合词重音在最左语素、短语重音在名词；意义上复合词义不等于成分义之和（blackboard = 供书写的板），短语按字面义（黑色的板）。III. Prefixation 把前缀加于词基之前构新词，多数只改变意义不改变词性（un- in unhappy、dis- in dishonest、ex- in ex-wife、re- in rewrite、in- in incomplete）；suffixation 把后缀加于词基之后，多数改变词性而非意义（-ness 使形容词变名词、-ize in modernize、-ment in treatment、-ful in useful、-en in harden）。IV. 两解：1) PP 修饰 NP——“I can see the man who carries a pair of binoculars.”；2) PP 修饰 VP——“I can see the man with the help of a pair of binoculars.”；各配树形图（PP 分别挂 NP 与 VP 节点下）。V. bank（河岸）与 bank（银行）是 homonymy（同形异义）：形式相同而意义不同且无派生联系，如 bear（忍受）/bear（动物）；head（人的头）与 head（组织领导）是 polysemy（一词多义）：同一词的多个相关意义，“人体的上半部/头”为中心义，“组织的领导”是其隐喻扩展。VI. 概念隐喻理论认为隐喻是认知装置：源域（具体熟悉）向目标域（抽象陌生）的映射基于两域对应关系；隐喻特征有系统性、相似性的创造与想象理性。举例：(1) TIME IS MONEY——How do you spend your time? / You need to budget your time. (2) HAPPY IS UP; SAD IS DOWN——I'm feeling up. / He is really low these days. (3) LIFE IS A JOURNEY——My son is just beginning life's journey. / She has come to a crossroads in her life. (4) ARGUMENTS ARE FIGHTINGS——He shot down all of my arguments. / Her team won the debate. IX. 步骤：识别错误（比较学习者句子与母语者对应句，区分 error 与 mistake）→ 描写错误（按语法归类：omission、addition、selection、misordering）→ 解释错误（追溯来源：interlingual / intralingual）。意义：理论上有助于构建二语习得理论、为心理语言学提供反馈；实践上向教师显示教材与教学手段的有效性并提供反馈。局限：只看错误会忽视学习者语言的全貌；不能覆盖学习者的所有困难领域；错误少不一定等于学得好。\n——\n📌 解析：复合词题固定“结构+重音+意义”三点；前后缀对比记“前缀改义、后缀改性”口诀再各举五例；同形异义与一词多义的区别在“意义有无联系”；概念隐喻题先给理论框架再按四组各举两例；错误分析题按“三步骤+意义+局限”作答。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2019年真题（综合）"
+ },
+ {
+  "id": "pq-2020-010",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2020年",
+  "front": "〔真题·2020年 综合〕2020 学硕卷（英语专业基础·语言学）整卷综合条目：I. Multiple Choice (10 points)；II. Blank Filling (10 points：structure、metafunction、voiced、contrastive、SPORT、thesaurus、perlocutionary act、temporal、ethnocentrism、learning)；III. True or False (10 points)；IV. Linguistic Terms (30 points：syllable、metafunction、intonation、acculturation、intake、backformation 等术语定义)；V. Short Questions (40 points：\"This is a beautiful girl's dress\" 歧义分析；丘吉尔把张伯伦比作“喂鳄鱼人”的隐喻解读；四段对话的格莱斯准则违反)；另含两道大题（文化传承与语言；隐喻研究计划/设想）与 VI. Questions for Discussion (50 points：书面语的价值；语篇/文本分析)。",
+  "back": "III. T/F：1.T 2.F（指某地居民）3.T 4.T 5.F（…is grammatical）6.T 7.F（成分分析不能用于全部词汇，只适用于同一语义场内的词）8.T 9.F（直接言语行为结构与功能对应，间接不对应）10.F（应把 register 与 dialect 调换）。IV. 术语：Syllable——音系单位，由一个以上音位组成，必有核（nucleus，通常是元音，也可为成节音liquid/nasal），核前可有过) onset、核后可有尾音 coda；核+尾构成韵（rhyme）。Metafunction——Halliday 所说语言同时扮演的三大抽象功能（概念、人际、语篇）。Intonation——为区分话语意义而作的音高变化，英语有降调、升调、降升调三种基本模式。Acculturation——对目标语文化的适应与调整过程，由学习者与目标文化间的社会距离和心理距离决定。Intake——Gass 二语习得过程模型中的一环，被理解输入并不都成为吸收。Backformation——去真实或假想后缀逆构新词，如 edit 逆构自 editor、peddle 自 peddler。V. 简答：1) \"This is a beautiful girl's dress\" 线性结构相同而层级结构不同（[beautiful [girl's dress]] vs [[beautiful girl]'s dress]），故为结构歧义句（可用直接成分分析说明）。2) 丘吉尔把绥靖者张伯伦比作鳄鱼的喂养者、把希特勒比作鳄鱼：隐喻不仅是修辞也是认知手段，借熟悉的具体概念说明抽象政治，使公众意识到希特勒的危险与政策的不智。3) 四对话：妻子违反数量准则（提供过量信息——暗示今天是情人节该买礼物）；姐姐/妹妹漠视关联准则（该赶校车了）；女孩违反数量准则（信息不足——不想搭理男孩）；妈妈违反方式准则（逐字母拼读 ice-cream，故意的晦涩使孩子听不懂而不索要冰淇淋）。文化传承大题：语言是文化的象征性表征，文化几乎全部内容由语言编码传递；文化振兴可挖掘并保存值得传承的文化元素——有意识学习（阅读、被告知）与无意识学习（日常生活、影视、传说）两级，政府可在公共场所渗透核心信息（如展示中华传统美德的广告牌）。隐喻研究计划：研究对象为政治演讲中的隐喻；研究问题：政治演讲中有哪些隐喻、其功能为何；方法：语料库统计各类隐喻频率；步骤：隐喻识别—按源域分类（如 fight against poverty 归入冲突隐喻）—频率计算比较；假设：冲突、旅程、建筑、人物隐喻出现频率更高。VI. 书面语价值：现代语言学优先口语，但书面语不可替代（填表、简历等必须书面；多方言国家靠标准书面语统一交流），某些场合书面语更易把握。文本/语篇分析：text 是语义单位（意义单位而非形式单位），texture 使语篇区别于非语篇，由衔接手段实现；三大衔接途径——语法衔接（reference 人称/指示/比较、substitution 名词性/动词性/分句性、ellipsis 三类）、词汇衔接（reiteration 同词/同义词/上下义/概指词、collocation）、连词（addition、adversative、causal、temporal 四类）；coherence 是语篇连贯的目的，cohesion 是达成连贯的手段。\n——\n📌 解析：客观题只记答案与一句批注；术语题按“定义+结构公式/例子”；Girl's dress 用 IC 层级差异说明；丘吉尔题须点出“隐喻即认知”再落到政治语用；语篇分析大题按“text—texture—cohesion 三大类—coherence 与 cohesion 关系”框架展开。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2020年真题（综合）"
+ },
+ {
+  "id": "pq-2021-010",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2021年",
+  "front": "〔真题·2021年 综合〕2021 学硕卷（英语专业基础·语言学）整卷综合条目：I. True or False (15 points)；II. Gap-filling (15 points：Creativity、structure、distinctive、tone、morpheme、explanatorily、the degree of resemblance to the prototype、regional dialect、connotative、ideational、relevance、modality、deictic center、componential analysis、complementary、rheme、formality 等)；III. Linguistic Terms (30 points，5 points each：displacement、categorization、communicative competence、linguistic relativism、modality、formality)；IV. Tree Diagrams (10 points：The governor is a fighter of a dirty street.)；V. Conversation Analysis (10 points)；VI. Short Questions (20 points：现代语言学的特点；TG 语法的目标)；VII. Questions for Discussion (50 points：主位—述位分析 Alice 句对；War is war / Boys will be boys 的语义与语用解读；形式与功能两大语言学阵营)。",
+  "back": "I. T/F 答案：1.T 2.T 3.F 4.T 5.F 6.T 7.F 8.T 9.T 10.F 11.T 12.F 13.T 14.F 15.T（解析附要点：3. 前者浊音类后者清音类；5. allophone 条件之一是不出现于相同语音环境；7. 系统功能语法—Halliday，普遍语法—Chomsky；10. pidgin 未成为母语，creole 已成为母语；12. 应为 the study of interlanguage；14. coherence 与 cohesion 的定义和地位说反了）。II. 填空答案如题干所列（16. Creativity 注意 C 大写等）。III. 术语：displacement——设计特征，语言可指称真实或想象、过去现在未来之事，不受时空限制（狗再聪明也无法用叫声诉说父母曾受虐待）；categorization——人们用语言对自己周围及内部世界进行分类的过程，是人类认知的基础；communicative competence——Hymes 提出的统摄语言隐性知识与使用能力的概念，含四参数：能否（在多大程度上）实现、可行、得体、实际去做；linguistic relativism——Sapir-Whorf 假说的弱式：语言结构分化越大，对世界的概念化越多样；modality——yes/no 两极之间的中间状态，由情态意义（modalization）与意态（modulation）表达；formality——语言正式度是梯度概念，Joos (1962) 分五级：Frozen（礼服）/Formal（西装）/Consultative（夹克便装）/Casual（休闲装）/Intimate（家人密友）。IV. 树形图两解：[a fighter of [a dirty street]]（打击肮脏街道的斗士）与复合词解 a street fighter who is dirty（肮脏的街头斗士）——解析给两棵树，分别挂 PP 与复合 NP。V. 会话分析：a. 孩子的回答违反数量准则（不给母亲想要的信息），含义是回避责备；b. John 漠视关联准则，含义是不愿议论女主人。VI. 1) 现代语言学发端于20世纪初，奠基人索绪尔，《普通语言学教程》1915年出版后改变了语言学的方向：优先口语；共时优先于历时；描写与解释而非规定；理论取向而非教学取向。2) TG 语法目标（Chomsky）：科学语法须达到观察、描写、解释三重充分性，解释所有且仅解释合语法句子；语法是有限规则生成无限句子的系统；按标准理论，从词库选词、按短语结构规则组合成深层结构，再经转换规则得表层结构。VII. 41) 系统功能语法中文本功能由主位—述位实现：41(a) 以 somebody（Alice）为出发点，41(b) 以 something（vase）为出发点；41(a) 的主位是 41(b) 的述位、41(a) 的述位进入 41(b) 的主位——已知信息链条推进。42) 语义上两句均为同义反复（tautology），必然为真而述位不提供新信息；语用上违反数量准则，\"War is war.\" 的含义是战争残酷，\"Boys will be boys.\" 的含义是男孩总是淘气。43) 两大阵营：形式语言学假设语言是自主系统，从语言形式出发（如 TG：有限规则生成无限句子、深层的转换生成）；功能语言学认为语言因其所做而为其所是，从意义如何由词汇语法实现出发（如系统功能语法：意义潜势、选择即意义）。\n——\n📌 解析：T/F 与填空按“答案+一句批注”复习；术语六连每条“定义+一句例”；树形图注意复合词解与短语解两棵树；讨论题42必须分语义（tautology）与语用（违反数量准则→含义）两层作答。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2021年真题（综合）"
+ },
+ {
+  "id": "pq-2022-010",
+  "book": "linguistics",
+  "chapter": 7,
+  "section": "真题·2022年",
+  "front": "〔真题·2022年 简答〕2022 专硕卷 IV. Answer the following questions briefly (10×2=20 points)：(1) What are the theories discussed in the Cooperative Principle? Which maxim does the following conversation flout in terms of CP? — Husband: Let's dine out with the kids tonight. Wife (spelling out the word McDonald's): Okay, but not M-c-D-o-n-a-l-d-s. (2) Please describe error analysis procedures in second language research.",
+  "back": "(1) CP 由 Grice 提出：人们交谈时相互合作，遵守四准则——数量准则（提供所要求的信息量，不多不少）、质量准则（说真话、有充分证据）、关联准则（说话相关）、方式准则（避免晦涩与歧义、简洁、有条理）。本对话违反的是方式准则：妻子的回答不简洁也不直接，不直接说 McDonald's 而逐字母拼出 M-c-D-o-n-a-l-d-s；其含义（implicature）是不便直说——也许不想让在场的孩子们听到。丈夫据此推断出她的话语意义。(2) Corder 指出错误具有理论与实践双重意义；错误分析分三步：1) 识别错误——把学习者产出的句子与母语者表达同一意义的对应句比较，并区分 error 与 mistake；2) 描写错误——对已识别的错误作语法归类，如 omission（遗漏）、addition（添加）、selection（误选）、misordering（错序）；3) 解释错误——追溯错误来源，按是否由母语引起分为 interlingual errors（母语干扰）与 intralingual errors（与母语无关、二语学习者皆会产生的错误）。评价：错误分析聚焦错误，可能忽视学习者语言的全貌，也不能覆盖二语学习的全部困难领域，故宜结合其他手段。\n——\n📌 解析：第1问先完整写出CP与四准则再判定违反的是方式准则，并完成含义推理（不想让孩子听见）；第2问按“识别—描写—解释”三步分点作答，末尾补一句局限体现批判性；两问分别对应语言学第7章与第11章。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2022年真题（简答）"
+ },
+ {
+  "id": "pq-2022-011",
+  "book": "linguistics",
+  "chapter": 8,
+  "section": "真题·2022年",
+  "front": "〔真题·2022年 综合〕2022 学硕卷（英语专业基础·语言学）其余各题综合条目（学习者因素20分题已另收入库 825-2020-003）：I. Blank Filling (30 points)；II. True or False (20 points)；III. Linguistic Terms (30 points，5 points each：segment、stress、acronym、shield、reiteration、euphemism)；IV. How do you understand metaphor as a rhetorical device and metaphor as a cognitive device? (10 points)；V. Paraphrase \"The witch touched the child with the wand\" and draw tree diagrams to show their differences in meaning (20 points)；VI. Reference, substitution and ellipsis are the three ways of grammatical cohesion. How do you get them defined and classified? Explain each type (20 points)。",
+  "back": "III. 术语：1) Segment (in Phonetics)——语音学中可切分出的最小线性语音单位。2) Stress——超音段特征，音节相对的响亮与突显程度，可区别词义与词性。3) Acronym——由词组首字母拼读成词的缩合词（可如单词般发音），如 AIDS。4) Shield——掩饰语（模糊限制语的一种），显示命题内容与说话人承诺之间的模糊关系，不改变命题真值；分为 plausibility shields（说话人对命题真值不确定：I think、perhaps、seem）与 attribution shields（把命题归于他人：according to、It is said that、as is known to all）。5) Reiteration——词汇衔接中的意义重复，可由同词（boy）、同义词（lad）、上下义词（child）或概指词（idiot）实现。6) Euphemism——避用冒犯或令人不安的词语，如 developing countries、economic recession、mentally retarded。IV. 修辞观：隐喻是对日常语言的偏离与装饰，使语言生动多彩，突出其审美功能；认知观（概念隐喻理论）：隐喻是认知装置，语言知识是一般认知的一部分，语义结构反映基于经验的心理范畴，隐喻是范畴化与思维过程的基本要素。V. 两解：1) with the wand 修饰 VP——“女巫借助魔杖碰了孩子”；2) with the wand 修饰 NP——“女巫碰了那个带着魔杖的孩子”；解析给出两棵树形图（PP 分别挂 VP 与 NP 节点）。VI. 语法衔接三手段：reference（指称——用某项指称他项获得语义解释，分 personal、demonstrative、comparative reference）；substitution（替代——用一个项替换另一个项，分名词性替代 one/ones/some/same、动词性替代 do/does、分句性替代 so/not）；ellipsis（省略——“省去不说”，通过删除旧信息突显新信息，也是衔接手段，分名词性省略（Would you like to hear another verse? I know three more.）、动词性省略（John brought some apples and Amy some pears.）、分句性省略（How many hours did you do lessons? Ten hours.））。\n——\n📌 解析：术语题中 shield 与 reiteration 是细考点，务必记两分类/四实现；隐喻两观对比按“审美功能 vs 认知功能”作答；witch 句与2019 binoculars 句同理，先释义再画两棵树；衔接题按“定义+分类+例句”三件套。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2022年真题（综合）"
+ },
+ {
+  "id": "pq-2023-011",
+  "book": "linguistics",
+  "chapter": 1,
+  "section": "真题·2023年",
+  "front": "〔真题·2023年 综合〕2023 学硕卷（英语专业基础·语言学）其余各题综合条目（元功能20分论述题已另收入库 825-2023-006）：I. Blank filling (40 points, 2 points each)；II. Term explanation (20 points, 4 points each：standard variety、deictic center、Problem-Solution textual pattern、indirect speech act、antonymy)；III. Short-answer questions (50 points, 10 each：prescriptive 与 descriptive grammar 之辨；辅音的三个描述维度；derivational 与 inflectional morphemes 之辨等)；IV. Questions for discussion (40 points：metaphor 与 metonymy 之辨 20 points；元功能 20 points 已另收)。",
+  "back": "II. 术语：1) standard variety——由政府和传播媒体使用、学校与大学教授、作为主要或唯一书面语形式的语言变体；使用最广、比其他变体更固定，允许的变化更少。2) deictic center——指示语以自我为中心，须依说话人的位置解读：说话人从个人视点组织信息，如 \"Go there\" 与 \"Come here\" 的 there/here 随说话人位置而定。3) Problem-Solution textual pattern——Hoey 归纳的常见语篇模式，四要素：situation（提供背景）、problem（需要回应的方面）、response（对问题的回应）、evaluation（对回应的评价/结果）。4) indirect speech act——结构与功能不对应的言语行为，如 It's cold in here.（陈述句表请求）；听话人需推理意图，处理更耗时，但更礼貌。5) antonymy——反义关系分三类：gradable antonyms（rich/poor，两极间有连续统）、complementary antonyms（male/female，肯定一方即否定另一方）、reversal antonyms（push/pull，同一关系或过程的两方向）。III. 简答：1) 规定语法试图规定人们应当如何说话、为语言立规则；描写语法力求客观陈述语言的规律并解释其原因，旨在弄清语言实际上是怎样被使用的。2) 辅音从三个维度描述：发音部位（气流受阻点：bilabial、labiodental、interdental、alveolar、palatal、velar、glottal）、发音方式（气流受阻方式：stop、fricative、affricate、liquid、glide、nasal、flap）、声带状态（voiced / voiceless）。3) 派生语素用于构成新词或同一词的不同语法形式，不限于后缀，编码新的词汇意义，与句法无关，可改变词性或意义或两者；屈折语素不构成新词，只标示词的语法功能（名词的格与数、动词的时与体、形容/副词的级），与句法相关，绝不改变词的语法类别。IV. 隐喻与转喻之辨：概念转喻理论认为转喻是一种概念操作——以载体（vehicle）借关联识别目标（target），如 (a) 句以 faces 识别 people，属 WHOLE VIA PART 的域内映射；概念隐喻是跨域映射，如 (b) 句用 \"life is a journey\"（源域 journey/crossroads，目标域 life/人生抉择点）。区别四点：1) 两个心理实体间的关系，隐喻是类比性的（analogical），转喻是相邻性的（contiguous）；2) 隐喻基于相似，转喻基于相邻；3) 隐喻是 \"X 被理解为 Y\" 的概念关系，转喻是 \"X 代表 Y\"；4) 隐喻涉及跨域映射，转喻只涉及单一域（或域矩阵）内的映射。\n——\n📌 解析：术语五连均为高频：standard variety 记“政府+媒体+学校+书面语+固定”五要素；转喻/隐喻大题先给两个概念理论再列四点区别，并以 (a)(b) 两句分别坐实。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2023年真题（综合）"
+ },
+ {
+  "id": "pq-2013-015",
+  "book": "literature",
+  "chapter": 13,
+  "section": "真题·2013年",
+  "front": "〔真题·2013年 综合〕2013 美国文学卷综合条目：VI. Fill in the blanks (5 points：T.S. Eliot 的剧作、田纳西·威廉斯符合题干的作品、《麦田里的守望者》作者、享有国际盛名的\"美国文学之父\"、多元文化主义)；VII. 判断5题；VIII. Explain the following terms (15 points：Imagism、Slave Narrative、Chicano Literature)；IX. Answer the question (15 points：非裔美国文学三时期——哈莱姆文艺复兴、战后民权运动时期、后民权时代及各自代表作家作品)；X. Read the excerpt (10 points：《红色英勇勋章》选段——出自哪部小说、作者全名、所属流派及特征、主人公的战争心理与战争观)；Part II. Translation (30 points：猫在西方的历程等)。",
+  "back": "填空答案：drama（《大教堂谋杀案》为 T.S. Eliot 戏剧）；A Streetcar Named Desire；J.D. Salinger；Washington Irving；multiculturalism。判断：1.T 等（解析给出各题对错）。术语：Imagism——20世纪初英美少数诗人发动的文学运动，反传统诗歌，原则为直接处理\"事物\"、使用精确意象、语言清晰、常用口语及自由体等非传统诗形，不使用无助于呈现的词；庞德（美国现代诗歌之父）为意象主义运动领袖。Slave Narrative——前奴隶或逃亡奴隶的自传性写作，记录奴役经历、逃亡与之后的生存，见证从文盲到识字（识字即解放的关键面），支持废奴事业，代表如 Frederick Douglass 的作品。Chicano Literature——1960年代以来美国墨西哥裔社区的文学，反映身份、疏离、社会正义与在美国社会争取承认的抗争。IX. 三时期：哈莱姆文艺复兴——非裔美国文化知识生活在1920-30年代繁荣，纽约哈莱姆区为中心，代表作家朗斯顿·休斯（以其诗歌著称）；战后时期以民权运动为标志，文学反映种族平等的斗争，代表 Ralph Ellison《看不见的人》；后民权时代文学处理民权运动的遗产与兴起的文化战争，代表 Toni Morrison《宠儿》，探究奴隶制的持久创伤。X. 选段出自 The Red Badge of Courage，作者 Stephen Crane，属 American Naturalism：自然主义者不带道德评判地忠实反映现实、极度客观，笔调讽刺悲观，写人在冷酷世界中面对环境与遗传碾压性力量的无助与渺小；主人公心理：起初对战争抱浪漫热情，怀疑自己是否真能参加实战，经历战争洗礼后热情破灭、恐惧羞愧交织，最终认识到战争是过往时代的遗物，转向对战争的厌恶与成熟认知。翻译：英译汉\"猫在西方的历程\"——要点：书面语体、长句切分、插入语与破折号处理；内容涉及猫因捕鼠护仓而崛起、得宠于权贵（黎塞留红衣主教遗产赠14只猫）、成为诗人伴侣，以及瓦莱里对猫\"坚不可摧的优越感与自我主义\"的沉思。\n——\n📌 解析：填空靠作品—作家对应；术语按\"定义+特征+例子\"；三时期题以时间为轴、每时期\"背景+代表作\"两点作答；克莱恩题先定流派再套自然主义特征，人物心理按\"热情—幻灭—成熟\"三段展开；翻译注意书面化与长句拆分。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2013年真题（综合）"
+ },
+ {
+  "id": "pq-2015-013",
+  "book": "literature",
+  "chapter": 3,
+  "section": "真题·2015年",
+  "front": "〔真题·2015年 综合〕2015 英国文学卷综合条目：I. Choose…(5 points，10题)；II. Define the following terms (15 points：art for art's sake、theatre of the absurd、Narrative mode、English Renaissance、Blank verse)；III. Answer the questions briefly (10 points：评奥斯卡·王尔德《道林·格雷的画像》；《傲慢与偏见》的主要主题)；IV. Reading Comprehension (20 points：Passage 1《威尼斯商人》夏洛克独白——辨认说话人；考察其修辞（语言质地与比喻的使用与否）；独白如何整体反映其性格；说话人是否值得同情；Passage 2 马洛《浮士德博士的悲剧》选段——出自何作、作者是谁、浮士德在选定魔法前考虑过哪些行业又为何放弃、最终选择有何悲剧性)。",
+  "back": "I. 答案：1.C 2.D（红白玫瑰战争在兰开斯特与约克家族之间）3.B（《坎特伯雷故事集》不以讽刺为主要特征）4.D（A、B为马洛作品，C为《皆大欢喜》）5.A（《天路历程》为班扬所作）6.C（蒲柏译荷马，济慈诗中提及）7.A 8.C 9.A 10.A。II. 术语：art for art's sake——唯美主义旗帜：艺术无需道德或政治的正当性辩护，艺术的价值在于美与感官愉悦本身，反对中产阶级的体面标准（王尔德为代表）；theatre of the absurd——以存在主义为底色、放弃常规理性手段与非写实形式呈现人类处境之荒诞的戏剧；现代人感到深切的徒劳与无意义；剧作家以黑色幽默呈现人的困境，观众笑着笑着便觉出痛，故多为悲喜剧；最具原创性的荒诞剧作家是贝克特（《等待戈多》被视为最著名最有影响的荒诞派剧作；英国卷举例写 Beckett，美国卷举例写 Albee）；Narrative mode——叙事模式，即作者讲述故事所采取的叙述方式与角度；English Renaissance——古典学问的复兴，在英国为古典形式与英国内容的融合，本质是人文主义，巨匠有马洛、莎士比亚、培根；blank verse——无韵抑扬格五音步诗行，由萨里伯爵引入英国，被称为最自然的戏剧诗形，文艺复兴时期广为使用（马洛剧作），大家有马洛与弥尔顿。III. 1) 《道林·格雷的画像》是对人性双重性的深刻探索：美与道德堕落并存，画像承载体面之下灵魂的溃烂；既是唯美主义宣言又含道德训诫，是社会讽刺与文学艺术的经典。2) 《傲慢与偏见》主题：婚姻、傲慢与偏见。IV. Passage 1：1) 说话人是《威尼斯商人》中的夏洛克；2) 修辞：语言直接有力，用简单词语传达愤怒与挫折；不借助繁复比喻，而以连续排比的诘问（Hath not a Jew eyes?…）步步紧逼，显示其情感的强度与粗粝；独白揭示其内心风暴与讨回公道的决心，哪怕诉诸残酷报复；3) 独白展现其复杂多面：愤怒、怨恨、对正义的渴望，亦有智谋与狡黠；话语显出其情感深度与作为社会边缘人所受的伤痛；4) 从正反两面答：他作为受辱的犹太人值得同情，但他索取安东尼奥\"一磅肉\"的复仇要求残忍越界，又不值得全然同情。Passage 2：1) 出自 The Tragical History of Dr. Faustus；2) 作者 Christopher Marlowe；3) 浮士德曾考虑哲学、医学、法律与神学，但与魔法相比，这些都不能许诺巨大的权力、荣耀、全能尤其是永生，故一一放弃；4) 有悲剧性：他弃智慧与善而追逐致其毁灭的权力与知识，以灵魂换魔法，被孤立并走向覆灭；幡然醒悟已太迟，终受永罚——是野心误航后果的悲怆警示。\n——\n📌 解析：选择与术语按文学史定位；夏洛克题四问环环相扣：认人—析修辞（排比诘问、少藻饰）—性格（愤怒/正义/狡黠/伤痛）—同情与否须两面答；浮士德题记住\"哲学、医学、法律、神学\"四行业及放弃的理由。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2015年真题（综合）"
+ },
+ {
+  "id": "pq-2016-012",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2016年",
+  "front": "〔真题·2016年 简答〕2016 美国文学卷 II. Questions and answers (20%)：(1) 以《白鲸》为例说明梅尔维尔运用的写作技巧；(2) Explain the features of Robert Frost's poetry（弗罗斯特诗歌特色）；(3) Summarize the main plot of The Great Gatsby by Fitzgerald（概述《了不起的盖茨比》情节）；(4) Analyze the theme(s) of The Hairy Ape by Eugene O'Neill（分析奥尼尔《毛猿》的主题）。\",",
+  "back": "1) 《白鲸》的写作技巧主要是象征与多视角：象征——\"裴廓德号\"注定的航程映照亚哈复仇使命的失败；白鲸可作多重解读，总体代表不可知、不可征服的自然之力，其白色又象征死亡与纯洁；亚哈是人类追寻意义与生存之战的象征。多视角——小说经由多个人物的视角展开，穿插不同文化与哲学视角的讨论，达成模糊性（ambiguity）的效果。综上，象征与多视角并用，多主题得到开掘。2) 弗罗斯特诗歌三特色：偏爱传统形式，是传统诗体的大师并能娴熟驾驭；诗歌主要写新英格兰，反映那里的乡村风光与人们的生活，这一背景常用来探索更深层的人类经验；与自然诗紧密相连——自然不只是背景，更像一个角色，映照并影响人的经验与情感。3) 《了不起的盖茨比》情节：叙述者尼克迁居纽约，卷入杰伊·盖茨比及其奢华派对；盖茨比对黛西的爱推动故事，黛西已嫁汤姆·布坎南；盖茨比的追求揭开了时代的堕落与道德溃烂；小说以盖茨比之死收场——死于黛西的冷酷，尼克由此反思美国梦的空虚。4) 《毛猿》主题是\"自我认同\"：现代人无助无力的悲剧感贯穿奥尼尔一生创作，本剧是极好例证；主人公扬克在社会中感到孤立，对自身地位与归属困惑，这种困惑终致悲剧（被大猩猩所杀）；随着剧情推进，扬克不断追问自我价值与归属感，揭示现代社会中个体寻找自我认同的困境。\n——\n📌 解析：四问均为作品题：技巧题按\"手法+文本例证+效果\"三步；作家特色题分点作答；情节题按开端—发展—结局概述并落到美国梦主题；主题题结合主人公命运提炼关键词 self-identity。（本卷 III 论述 Southern Gothic 已并入 825-2025-016。）",
+  "source": "东师学科英语专业课二历年真题.pdf · 2016年真题（简答）"
+ },
+ {
+  "id": "pq-2016-013",
+  "book": "literature",
+  "chapter": 8,
+  "section": "真题·2016年",
+  "front": "〔真题·2016年 综合〕2016 英国文学卷综合条目：I. Explain the following terms (15 points：Allegory、The War Poets、The Campus Novel)；II. Answer the questions (15 points：多恩《别离辞：莫伤悲》的中心思想及奇喻；华兹华斯《丁登寺》中人与自然关系的三阶段；除意识流外《达洛维夫人》还体现哪些现代主义通则)；III. Discuss the following topics briefly (20 points：De Quincey 论《麦克白》敲门声与\"被悬置的生命\"；默多克《黑王子》中真与幻的关系)；翻译 (20%)。",
+  "back": "I. 术语：Allegory——通过一整套虚构情节而非显白的自然秩序来传递意义的叙事或象征性虚构作品；多见于文学尤其是诗歌；英国文学著名寓言有班扬《天路历程》、奥威尔《动物农场》。The War Poets——写并亲历一战的英国诗人群体；他们既书写一战也经历一战；常以坚守浪漫主义传统来排解战争的忧惧，作品以士兵承受的身体与情感创伤为特征；其平白口语把英国诗歌从过往花哨古旧的文风中解放出来。The Campus Novel——校园小说：情节通常发生于大学内，聚焦知识分子的弊病；主人公多为在校园工作的知识分子，情节围绕其治学与教学经历；旨在揭示知识分子的自负与人性弱点，风格通常喜剧化、讽刺化。II. 1) 《别离辞：莫伤悲》中心思想：两人的爱深到超越肉体在场、经得起别离考验；诗以意蕴丰富的奇喻（conceits）与戏剧性对照为特征，用临终、地震、数学、新科学发现等意象；如对比两种爱与两种\"地震\"暗示灵智之爱，又把两人比作圆规两脚——分离仍相连，喻灵魂不可断的联系；总之是对超越肉体、恒久不渝之爱的礼赞。2) 《丁登寺》按时间顺序写人与自然三阶段：童年——回忆儿时在自然中的经历，写置身自然的单纯快乐带来的宁静；少年——对自然的欣赏深化为更强烈的美感与情感回应，自然的声色引起更深共鸣；成年——与自然的关系更具精神与哲学意味，自然成为慰藉之源、道德与情感成长的指引；总：终生与自然的纽带由童年之乐到少年之敬畏，最终升华为深刻的精神联结。3) 《达洛维夫人》除意识流外的现代主义通则：内心独白揭示达洛维夫人的内心世界及其对周围世界的反应与思考；打破传统线性叙事、采用碎片化叙事结构以反映现代生活——通过多视角切换与时间往复跳跃构建；探索女性的角色、地位与自我认同，带有女性主义关怀。III. 1) 德·昆西《论〈麦克白〉中的敲门声》探讨邓肯被弑后敲门声的心理效果：敲门声造成\"被悬置的生命\"（suspended life）——日常世界瞬间停摆，黑暗魔域得以进入；这一刻凸显麦克良心的骚乱与罪行的后果；敲门声象征人性的回归与日常生活的恢复，却也强调下一次堕入黑暗前那喘息的短促可怕。2) 《黑王子》通过哲学、艺术与人际关系的透镜探究真与幻的复杂关系：主人公布拉德利在现实与感知、情感关系与艺术追求之间挣扎于模糊界限；小说提出真相往往难以捉摸且主观，幻觉令人安慰却具有欺骗性；人物在道德、身份与爱的本质问题上跋涉；最终表明对真的追寻虽艰难不安，却是人格成长与更深理解世界所必需。翻译 (20%)：英译汉为约翰逊《致切斯特菲尔德伯爵书》选段（\"自您府上的外厅我曾静候七载……我未曾得到过一次帮助、一句鼓励、一丝青睐……直到我已为人所知，不再需要它\"）；汉译英为鲁迅《故乡》开头（\"我回到相隔二千余里、别了二十余年的故乡去……\"）；要点：英译汉再现书卷语体与讥诮语气（维吉尔牧歌典故、\"未收之惠不为债\"）；汉译英注意冬日萧瑟场景的描写顺序与 \"Ah! Is this the hometown…?\" 的感叹处理。\n——\n📌 解析：三个术语分别配班扬/奥威尔、一战背景、校园讽刺记忆；多恩题中心思想+奇喻（圆规）两件套；《丁登寺》按童年—少年—成年三阶段时间线；De Quincey 题抓住\"suspended life\"概念；翻译注意约翰逊信的讽刺语体。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2016年真题（综合）"
+ },
+ {
+  "id": "pq-2018-012",
+  "book": "literature",
+  "chapter": 4,
+  "section": "真题·2018年",
+  "front": "〔真题·2018年 综合〕2018 英国文学卷（除已入库术语 Dramatic Monologue 与 Metaphysical Poets 外）综合条目：II. Short Answers——《失乐园》中撒旦为何是真正的英雄；辨识所给作品/作者（William Blake 相关）；辨析班扬《天路历程》：作者、作品、其宗教寓言性质及情节寓意；II. Give a Summary of the British Romanticism（英国浪漫主义总结——该点已并入 825-2025-014 / 825-2026-014，不另立）；IV. Paraphrase the following sentences（改述3句：约翰逊《致切斯特菲尔德伯爵书》段；《裘力斯·凯撒》Brutus 语；《名利场》罗登/丽贝卡段）。",
+  "back": "简答：1) 撒旦是《失乐园》真正的英雄：他是质疑上帝权威的精神化身；虽犯有骄傲、嫉妒与野心过盛之过，却是一个公正刚毅、意志不屈的悲剧英雄——他憎恨专制的上帝，并在与上帝及几乎全体天军的对抗中未曾屈服；这种反抗暴政的不屈意志与勇气使他在诗中比天使更像英雄。（解析原文有截断，按《失乐园》通行解读整理。）2) 作品辨识：所引诗句出自 William Blake（如《天真之歌》/《经验之歌》中诗行——\"skeletons were recovered\" 等识别点以原卷为准）。3) (1) 作者 John Bunyan；(2) 作品 The Pilgrim's Progress（天路历程）；(3) 它是一部散文宗教寓言，写基督徒（Christian）的精神朝圣：以作者之梦的形式展开，分上下两部；基督徒逃离毁灭之城，历经名利场（Vanity Fair）与怀疑堡（Doubting Castle）的种种危险诱惑，直面并战胜恶魔，最终到达快乐山与天城（Celestial City）；这一旅程的象征意义是对灵魂救赎的追寻；寓言描绘了清教徒争取信仰自由的斗争、人寻求与上帝合一的永恒挣扎；风格庄严、朴素而富象征性。改述（语内翻译：先通读明大意，再同义替换、化繁为简，语意不变）：1) 约翰逊致切斯特菲尔德伯爵书信段——\"我发现我的拜访如此之少，出于自尊（或谦卑）我再不敢登门。当初我曾以退隐而不失礼的学者的全部伎俩当众取悦阁下……无人愿意自己的利益被漠视，无论多么微小。\" 2) 《裘力斯·凯撒》——\"若有人问布鲁图斯为何反对凯撒，我的回答是：我爱罗马胜过爱凯撒。你们宁愿凯撒活着、众人做奴隶而死，还是凯撒死去、众人作自由人而生？\" 3) 《名利场》——\"尽管罗登的技能毋庸置疑且不断得手，丽贝卡却清楚意识到他们的地位岌岌可危：即便几乎不付任何人报酬，他们微薄的资本终有一天会缩水归零。”\n——\n📌 解析：撒旦题抓住\"反叛精神+悲剧英雄\"两面；班扬寓言按\"梦的形式—逃离毁灭之城—名利场/怀疑堡—天城\"的路线图复述寓意；改述题即语内翻译，先通读、再同义替换、复杂句化简；浪漫主义总结已在 825-2025-014/825-2026-014 收录，无需重复作答。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2018年真题（综合）"
+ },
+ {
+  "id": "pq-2018-011",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2018年",
+  "front": "〔真题·2018年 综合〕2018 美国文学卷综合条目：I. Explain the following terms (Harlem Renaissance、Dramatic Monologue)；II. Answer the questions briefly (庞德为意象主义制定的三原则)；V. Comment on the Following Poem (赫里克 To the Virgins, to Make Much of Time 的 carpe diem 主题评论)。",
+  "back": "I. 术语：Harlem Renaissance——1920-30年代非裔美国人文化与知识生活的繁荣；时称\"新黑人运动\"（New Negro Movement），得名于阿兰·洛克1925年编选的《新黑人》文选；以纽约哈莱姆区为中心，波及全美各城市中心；挑战白人家长式作风与种族主义，非裔艺术家与知识分子拒绝模仿欧洲人和美国白人的风格，转而礼赞黑人的尊严与创造力。Dramatic Monologue（戏剧独白）——文学中指单一说话人对无声听众说话；诗人选取戏剧性时刻或危机，让人物谈论自己的生活、心智与内心；\"旁听\"这种单向倾诉时，读者可对说话人的人品及实情形成自己的判断；T.S. 艾略特《J. 阿尔弗雷德·普鲁弗洛克的情歌》是典型例子。II. 庞德意象主义三原则：1) 直接处理\"事物\"——无论主观还是客观；2) 绝不使用无助于呈现的任何一个词；3) 依音乐性乐句的序列而非节拍器的序列来作诗（关于节奏）。解析补充：庞德关心现代文化问题——当代文化的衰败与文化更新的可能源头；在《诗章》中追溯东西帝国的兴衰、现代世界的道德与社会混乱，尤其是杰斐逊英雄时代之后美国的腐败。V. 诗歌评论：赫里克《给少女们，抓紧时光》主题为 carpe diem（及时行乐/抓紧时间）：诗人劝少女趁年轻貌美\"采摘玫瑰花苞\"——抓紧生活中所需，莫待时光留下印记、错失人生的幸福可能；结尾直接劝少女们尽早嫁人，忸怩蹉跎将落得孤独；论据建立在人生短暂与\"无常\"（mutability）之上——时间飞逝、人生苦短，没有理由不尽享此生光阴；这一主题如其拉丁语名所示古已有之，见于罗马诗人尤其早期意大利爱情诗人彼特拉克；体现文艺复兴现世哲学：寻求知识与经验的愉悦而不思死后的生命。结构上，全诗按\"花堪折时直须折—太阳东升西落—青春易逝—及时成婚\"逐节推进 carpe diem 论证。\n——\n📌 解析：两个术语各自记住\"运动+中心/例证\"；庞德三原则为高频背诵点，注意第三条\"音乐性乐句而非节拍器\"；诗歌评论按解析模板走总分总：总起句—主题内容—结构韵律—技巧—总结句。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2018年真题（综合）"
+ },
+ {
+  "id": "pq-2019-011",
+  "book": "literature",
+  "chapter": 6,
+  "section": "真题·2019年",
+  "front": "〔真题·2019年 综合〕2019 英国文学卷（除已入库术语 Chivalric Romance 与 Shakespeare's Sonnets 外）综合条目：II. Short Answers (Becky Sharp 人物形象；辨析开篇名句的作者与作品及其反讽；Wordsworth《孤寂的割麦人》——作者、篇名、分析)；III. 论述：Explain the Reasons for the Rise of the Novel in the 18th Century English Literature and List Some Representative Novelists（18世纪英国小说兴起的原因及代表作家，5点）；IV. Paraphrase the Following Sentences（3句：夏洛克 Hath not a Jew eyes 段；《一个温和的建议》结尾段；《呼啸山庄》希刺克厉夫退场段）；V. Comment on the Following Poem（拜伦 When We Two Parted）。",
+  "back": "II. 1) Becky Sharp（利蓓加·夏普）：《名利场》中的孤儿；精明、不择手段、远超年龄的老练，决心不惜一切钻入上流社会；是敛财本能（money-grubbing instinct）的经典标本，人生的唯一抱负是不论正邪攫取财富与地位；萨克雷并未把她当作例外——名利场上人人都想捞一把、行事与她如出一辙；她生活在敛财是统治阶级一切成员主要动机的世界里；为过舒适生活，她与力所能及的富有有权男人（无论老少）调情并保持不正当关系；当然她也有虚荣：想在美貌与驾驭男人的权力上压倒其他女人、想跻身显贵社会，但这种虚荣与贪财密不可分。2) 开篇名句：作者 Jane Austen，作品 Pride and Prejudice；开篇句表面上说\"拥有大笔财产的单身汉总要娶位太太\"，作为反讽实际暗示一个\"真理\"：没有财产的女子需要有钱的丈夫；全书女性视角由此揭示；用的是言语反讽（verbal irony）——言此意彼。3) 《孤寂的割麦人》：(1) 作者 William Wordsworth；(2) 篇名 The Solitary Reaper；(3) 全诗是对一次强烈情感经历的追忆，写一位孤独收割女之歌：诗人被苏格兰农家女的美妙歌声迷住，一边看她劳作一边聆听；他将她的歌声与夜莺、杜鹃相比而断言她的歌最美；虽无法破解歌词含义，他知道那是一支哀婉之歌；诗人伫立不动直到离去，歌声却长留心头——离开多年仍能听见，美好的经历留下深刻而持久的愉悦。III. 18世纪英国小说兴起的五点原因：1) 社会历史语境：资本主义兴起与工业革命带来的世界巨变；2) 城市化（urbanization）；3) 印刷业的发展；4) 识字率的提高使人们重视独特的个人经验，把它当作真理与身份之源；统治群体中个人主义的世俗人生观盛行；5) 中产阶级的生活方式影响深远（咖啡馆闲谈等）。代表作家（按英国小说史补全）：Defoe（笛福）、Richardson（理查逊）、Fielding（菲尔丁）、Swift（斯威夫特）、Sterne（斯特恩）。IV. 改述：1) 夏洛克——\"我是一个犹太人。难道犹太人没有眼睛吗？没有五官四肢、知觉、血气吗？不是吃同样的食物、受同样的武器伤害、害同样的病、用同样的药医、冬天同样冷夏天同样热吗？你们刺我们，我们不出血吗？搔我们，我们不笑吗？毒害我们，我们不死吗？你们欺侮了我们，我们不该复仇吗？别处都与你们相同，这一点也相同。犹太人欺侮了基督徒会怎样？复仇。基督徒欺侮了犹太人照基督徒的榜样该怎样？复仇。\" 2) 《一个温和的建议》结尾——\"我郑重声明：我提议此事纯粹出于公益，别无半点私利；我的幼子已九岁，妻子早已过了生育年龄，我并无子女可从中牟利。\" 3) 《呼啸山庄》——\"说话间我察觉一丝轻动，回头看见希刺克厉夫从长凳上起身，悄然溜了出去。他一直听到凯瑟琳说嫁给他会有失身份，便不再听下去了。\" V. 拜伦 When We Two Parted 评论：全诗采用 Byron 常用的 ABAB CDCD 押韵格式；用词处处唤起悲伤——\"silence and tears\" 意象、恋人面容的苍白冰冷；分别使叙述者\"心碎一半\"，而彻底的分离是持续多年的割舍；下半节织入宿命感：叙述者忆起两人的吻已冷而无情感，意识到分别早注定—— warmth 一旦离开，离愁早有预兆；第二节承接第一节的克制，回顾关系中预示分手的种种迹象；\"the vows are all broken\" 或指情侣的通常誓约，或指婚誓——亦暗示不忠可能是压垮关系的最后一击：对方名字蒙羞、婚誓被违背暗指一桩涉及外遇的丑闻；叙述者听闻恋人名字如闻\"丧钟\"（knell，葬礼钟声）；\"why wert you so dear?\" 一问有力：虽有丑闻与背叛，叙述者仍会为恋人之名战栗，痛楚深长——无法言说、无法前行；末节重复\"silence and tears\"将哀伤主题收束：两人秘恋，故叙述者只能独自哀伤，感到被遗忘与背叛；若再相逢将无话可说、无路可走，唯有流泪——本诗是拜伦此段艰难人生中悔恨之情的动人写照。\n——\n📌 解析：Becky Sharp 按\"出身—性格—敛财本能—非例外—虚荣与贪财\"六点；开篇句三问（作者/作品/反讽）必须点出 verbal irony；《割麦人》按追忆框架写\"聆听—比较—不解其意—余音长存\"；小说兴起五点+代表作家名单；诗歌评论按总分总并扣\"silence and tears\"首尾呼应。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2019年真题（综合）"
+ },
+ {
+  "id": "pq-2019-012",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2019年",
+  "front": "〔真题·2019年 综合〕2019 美国文学卷综合条目：I. Explain the following terms (Naturalism、Black humour)；II. Short Answers (Chillingworth 人物形象；《白鲸》：作者辨认、Ishmael 与 Ahab 的对照)；III. Give a summary of New England Transcendentalism（该点已并入 825-2026-012，不另立）；IV. Paraphrase the following sentences (2句)；V. Answer the following questions (人蛇冲突小说：Q1 冲突的性质；Q2 结尾父亲态度的转变；Q3 第一人称限知视角的效果；Q4 分析角度提示)。",
+  "back": "I. 术语：Naturalism（自然主义）——（比现实主义更进一步地）把客观与超然的科学原则应用于研究人；发端于法国，受达尔文进化论影响；美国自然主义者撕碎斯文的面具，写人的无助、人在冷酷世界中的渺小、面对环境与遗传碾压之力时的尊严丧失；主题特征：1) 细致描写底层与反常者的生活，记录人如何被环境与遗传之力吞没，直陈人的激情、暴力与性；2) 全景灰暗阴郁，基调是无望与绝望；代表：Frank Norris、Theodore Dreiser、Jack London、Stephen Crane。Black humour（黑色幽默）——1) 把怪诞与幽默并置以震惊读者、迫使人对失序世界的恐怖现实发笑的写作；2) 绝望中的幽默、含泪的笑，传达对制度化的荒诞占上风之境况的愤怒，讽刺虚伪、种族偏见，尤其是现代社会对个人的非人化；3) 盛行于现代美国文学；4) 约瑟夫·海勒《第二十二条军规》是黑色幽默的绝好例证，冯内古特《五号屠场》亦然。II. 1) Chillingworth 是霍桑笔下阴冷无血的\"人形动物\"标本：他通过精神折磨那个负罪的年轻人实施复仇；因偏执的复仇而被道德腐蚀堕落；他代表霍桑最关注的恶之源——自视过高、过分自信的越界智性（over-reaching intellect）；因毫无温情与感情而成为可怕的反派。2) 《白鲸》：(1) 作者 Herman Melville；(2) 作品 Moby-Dick；(3) 以实玛利是叙述事件的普通水手，如《圣经》中同名的流浪者；他抛弃早年的生活方式去寻求幸福理想的生活，开始体会凡人之间爱与手足之情的意义；对以实玛利而言航行已成为求知与求索价值的旅程，他想理解世界的意义，却为生命奥秘的可怕空虚而惊惶；而亚哈决意超越这种理解，按自己的规格重造世界；以实玛利从冷漠转向人之爱，亚哈却被禁锢于冷冰冰的敌意之中——所以从沉船中幸存的是以实玛利。IV. 改述2句：1) \"In this way, he talked about the purpose of my coming, his sincere wish to see me, and the comfort he anticipated from me. …He claimed that it was a family and constitutional evil for which he could not discover a cure; he also quickly added that it was only a nervous affection that would surely pass.\"（先通读、再同义替换）2) 盖茨比结尾段——\"当时我不懂他的意思，但无所谓，因为明天我们会跑得更快、手臂伸得更远……总有一天美好的清晨——\" V. 问答（人蛇冲突小说，可从叙述视角、背景、情节、人物、主题等方面分析）：Q1 人与动物的冲突：这片土地是为生存而挣扎之地，父亲为保护玉米地杀死公蛇；也是人性内部理性与情感的冲突——出于理性，父亲不得不杀死公蛇。Q2 结尾目睹母蛇的举动后，父亲对蛇的态度发生转变——\"我\"亲眼见到公蛇的行为后对生命之爱有了更深的理解；人与蛇在情感上是相通的。Q3 小说采用第一人称限知视角：让读者透过叙述者之眼观察体验事件，既降低故事的虚构感，又易与读者共鸣；第一人称内聚焦通常带有回顾性与体验性视角，增强阅读中的情感体验，唤起对母蛇困境的同情怜悯。Q4 可从叙述视角、背景、情节、人物、主题等方面展开分析。\n——\n📌 解析：两个术语各记定义+特征+代表作；Chillingworth 落在\"越界智性之恶\"；白鲸题按\"作者—作品—两人对照—幸存者\"作答，对照务必成对写；视角题答\"第一人称限知+降低虚构感+唤起同情\"三层。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2019年真题（综合）"
+ },
+ {
+  "id": "pq-2020-011",
+  "book": "literature",
+  "chapter": 3,
+  "section": "真题·2020年",
+  "front": "〔真题·2020年 综合〕2020 英国文学卷（除已入库术语 soliloquy 与 Moll Flanders 外）综合条目：II. Answer the questions briefly (小说与旧罗曼司之别及小说兴起；Tess 悲剧的主客观成因)；III. Comment on the poetical statement of The Lyrical Ballads, \"For all good poetry is the spontaneous overflow of powerful feelings.\"（评论华兹华斯\"好诗是强烈情感的自然流露\"之说）；IV. Paraphrase the following sentences；V. Comment on the following poem (莎士比亚十四行诗29 \"When in disgrace with fortune and men's eyes\")。",
+  "back": "II. 1) 小说是一种新实践，与此前处理幻想与远方之事的旧罗曼司（romances）形成鲜明对照；新的社会历史语境——资本主义兴起带来的世界巨变——催生了以当代普通人、个人经验为对象的小说（人物、情节、环境具有现实可信性，面向中产读者）。2) 苔丝的悲剧由她自身缺陷与社会环境共同造成：主观上，苔丝是被传统妇德养大的纯洁女子，其软弱使她先后被亚雷与安吉尔伤害摧毁；客观上，她的不幸、贫穷与切肤之痛及最终悲剧，是对社会最沉痛的抗议与控诉——是对资产阶级虚伪道德、资本主义入侵农村并摧毁英国农民的猛烈抨击（19世纪末）；在某种意义上苔丝似乎被命运一步步引向毁灭，巧合错上加错直至无路可走；宿命论虽起重要作用，作品中也有对非理性、虚伪不公的维多利亚体制、成规与道德的辛辣批判乃至公开挑战——农业受到入侵资本主义势力威胁，苔丝不被那个社会所容，故为悲剧人物；另一角度看，苔丝最终奋起反抗命运以逃离社会的虚伪，可见哈代对此环境中此类人物寄予深切同情。III. 《抒情歌谣集》序言\"所有的好诗都是强烈情感的自然流露\"：这是华兹华斯对诗是什么、该如何创作的信念；他认为诗源于\"宁静中回忆起来的情感\"（emotion recollected in tranquility）；他反对当时偏重形式与理路、抽干诗歌强烈情感的倾向，坚持日常生活场景与事件、普通人的语言才是诗歌能够且应当采用的原料；他相信诗应回望并聚焦一个动人心魄的瞬间，且具有普遍性。IV. 改述（源句 OCR 未存完整，仅存片段答案）：如 \"…guilty about my previous existence\"（为前半生的所作所为感到内疚）。V. 十四行诗29评论：这是一首十四行的传统莎士比亚体十四行诗，遵循 ABAB CDCD EFEF GG 的严格韵式，五音步抑扬格；前三行（第一个四行组）写叙述者常处的心境：自感时运不济、遭人白眼，独自哭诉漂泊的处境，觉得苍天聋聩、上帝对他的哭喊充耳不闻，诅咒自己的命运；第二个四行组延续此调：他希望自己\"更富希望\"，羡慕那些朋友众多、前途更广、技能更多的人——他自感缺少他人所有之物，愁苦之深可见是根本性的；末六行（与多数莎氏十四行诗不同）并未给出解决问题的办法——这种心态没有明确出路，却有安慰（balm）；最后对句总束前十二行：想到那位爱人（fair youth）时，他的心境便如云雀破晓腾起，为有此爱他不屑与君王换位；技巧上有头韵、明喻、跨行（enjamment）等。\n——\n📌 解析：Tess 悲剧题务必\"主观+客观+宿命/批判+作者同情\"四层齐备；Wordsworth 名言之评按\"信念—emotion recollected in tranquility—反对形式理路—日常题材与普通人语言\"展开；Sonnet 29 按\"四行组推进+末六行转折+对句\"结构梳理并点出修辞。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2020年真题（综合）"
+ },
+ {
+  "id": "pq-2021-012",
+  "book": "literature",
+  "chapter": 10,
+  "section": "真题·2021年",
+  "front": "〔真题·2021年 综合〕2021 美国文学卷综合条目：一、名词解释 (每小题5分，共10分：The Lost Generation；The Southern Renaissance——已并入 825-2025-016，不另立)；二、简答 (每小题5分，共15分：Briefly comment on the significance of Ralph Emerson in American literature；Give a brief comment on Theatre of the Absurd in American literature with an example；Give an analysis of the character Holden Caulfield from Catcher in the Rye)；三、简述 (10分：Give a comment on American Local Colorism)；四、改述 (每小题5分，共15分)；五、作品阐释 (25分：坡《厄舍府的倒塌》选段的哥特氛围)。",
+  "back": "一、1) The Lost Generation（迷惘的一代）：一战后的一群美国作家；语出1926年《太阳照常升起》卷首题词；其创作与一战及战时战后的社会巨变相关，作品多自传性或含作者生平特征；\"迷惘\"指其承袭的价值观在战后世界失效——对传统价值与理想失去信心，变得叛逆而无所归依；美国梦之死是另一常见主题，人物渐渐得出结论：生活并非原先被描述的那样；另一重要主题是堕落（decadence），菲茨杰拉德作品中多见；代表作家 Fitzgerald 与 Hemingway。（Southern Renaissance 见 825-2025-016。）二、1) 爱默生的意义三点：19世纪中叶美国超验主义运动的领袖，其哲学表达于《论自然》；发表演讲《美国学者》，被誉为\"美国思想上的独立宣言\"，呼吁文化独立，在美国思想史上地位重要；许多美国作家受其沾溉——他的美学引发美国文学的革命，标志着真正的美国诗歌与真正美国诗人（惠特曼、狄金森）的诞生。2) 美国文学中的荒诞派戏剧：兴起于1950-60年代，主题围绕生命之无意义、其痛苦显得可笑甚至荒诞；以爱尔兰贝克特为代表的荒诞派剧作家试图让观众直面人类处境的本相而非呈现假象；美国文学中的例证是 Edward Albee——《谁害怕弗吉尼亚·伍尔夫？》的作者，美国荒诞派剧作家的杰出代表。3) Holden Caulfield（《麦田里的守望者》）：性格复杂多面，折射青春期向成年过渡的挣扎；首先，他与周围世界脱节，对社会、学校与同侪都有疏离感，全书处于情感孤立状态；其次，他对成人世界尤其是虚伪做作的成人世界深怀愤世嫉俗，用 \"phony\" 称呼他所认为不真诚的人；尽管愤世，他又强烈渴望真诚的联系；再次，他最显著的特征是保护儿童纯真的愿望——想象自己作\"麦田里的守望者\"，救住从悬崖跌入成人世界的孩子们；结论：Holden 是疏离、愤世与纯真守护者的化身。三、American Local Colorism（美国乡土文学/地方色彩主义）：指关注特定地区特有的方言、习俗等特征文学作品（regional literature）；代表作家是马克·吐温，代表作《哈克贝利·费恩历险记》；乡土作家扎根各自地域，关注地方生活的真实色彩。四、改述3句（原句未存，答案示例）：2) \"After placing her purse on the table, she took a seat…she was wise to be unafraid of thieves, because she herself was the only one that will eventually make her have nothing left.\"（把手提包放上桌后她坐下来，端着一杯凉咖啡，心想不怕贼是对的——因为最终会让她一无所有的只有她自己。）3) \"The genius longs for spontaneity, which in his opinion means not only rejecting the propriety but also going beyond the belief of emulation.\"（天才渴望率性而为，在他看来这不仅意味着拒绝礼法，还意味着超越争胜之念。）五、作品阐释：选段出自爱伦·坡 The Fall of the House of Usher（由文中 House of Usher 可知）。选段主要写环境与无名叙述者趋近厄舍府的过程：叙述者独自骑马而行，暮色中望见阴沉的厄舍府，勒马之际只觉四周诡异不安。手法特征上，哥特元素显著：哥特小说通常有阴宅、悬念、恐怖、超自然等，本篇怪诞意象俯拾皆是；天气与氛围映照叙述者忧郁的心绪——开篇\"一个晦暗、无光、阒寂的秋日\"与\"低垂得令人压抑的云\"点出压迫气氛；选段末尾\"灰色芦苇、恐怖的树干、空洞眼睛般的窗\"的倒影再度加深阴郁与恐惧。总结：本段以描写性语言与生动而怪诞的意象营造不祥不安之感，为后文超自然事件张本；池中扭曲的倒影是人物心理与宅邸本身的隐喻——那座宅邸仿佛有自己的生命，处于衰朽与疯狂之中。\n——\n📌 解析：迷惘的一代记\"一战+《太阳照常升起》题词+幻灭叛逆+菲茨杰拉德海明威\"；爱默生三点与 Holden 三特征皆分点作答；Local Colorism 记\"方言习俗+吐温\"；作品阐释按\"作者作品—内容—哥特手法—总结\"模板，引原文短语增强说服力。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2021年真题（综合）"
+ },
+ {
+  "id": "pq-2022-012",
+  "book": "literature",
+  "chapter": 7,
+  "section": "真题·2022年",
+  "front": "〔真题·2022年 综合〕2022 英国文学卷（除已入库术语 Ballad 与 Critical Realism 外）综合条目：二、简答 (每小题5分，共15分：马洛剧作中的文艺复兴精神；Samuel Johnson 对英国文学的贡献；Macbeth 中 Lady Macbeth 人物理解)；三、简述 (10分：Give a comment on the Aesthetic Movement——已并入 825-2025-013，不另立)；四、改述 (每小题5分，共15分)；五、作品阐释 (25分：吉卜林 If——维多利亚式坚韧)。",
+  "back": "二、1) 文艺复兴精神在马洛剧作中的体现：文艺复兴时期英国文学作品的通则之一是主人公怀有宏大抱负，马洛剧作即为例证——《帖木儿大帝》中主人公帖木儿从牧羊人起步终成征服者，代表文艺复兴对无限权力与权威的渴望；除野心外，对知识与权力的渴望亦见于剧作：人文主义是文艺复兴的精髓，视人为能够自我发展至完善、生而有权质询探索与享受的生命；《浮士德博士的悲剧》中内省而哲学化的浮士德对知识有永不餍足的渴求，正是人文主义者的特征；帖木儿与浮士德这类怀抱权力与知识之野心的形象是马洛笔下的文艺复兴英雄，人文理想与文艺复兴精神由此得到诠释。2) Samuel Johnson 的贡献：首先，作为词典家意义重大——编成英国人自己编的第一部英语词典《英语词典》（A Dictionary of the English Language），对英语的规范化及日后的教学与使用影响深远；其次，作为受尊崇的批评家——其《诗人传》对52位诗人作了洞见迭出的传记与评骘，塑造了后世看待这些文学人物的方式；他同时也是诗人、散文家，创作与批评兼擅。3) Lady Macbeth：从野心的悲剧、女性的\"男性化\"等角度分析——她野心冷酷，不惜以谋杀达到目的；怂恿、操控麦克白，质问其男子气概，促其弑君；她比丈夫更\"男性化\"、更坚强；麦克白的堕落很大程度上归于她；然而她也是悲剧人物：对权力的无情追逐与狠辣行径终致自身覆灭（梦游、负罪），显示不加约束的野心之毁灭性；总括：她是一个男性化的悲剧女性人物、操控大师，野心无节制亦无约束。四、改述3句（原句未全存，答案片段）：1) \"…winter approaches.\"（…冬日将临。）2) 《远大前程》——\"loyalty is something no wisdom can replace in Pip's eyes, but Pip thinks he can never take back what he has done.\"（在皮普眼中忠诚是任何智慧都无法替代的，但皮普明白自己所为已无从挽回。）3) \"When I looked into the darkness above, I perceived myself as someone pushed and mocked by vanity; and pain and indignation scorched my eyes.\"（我望向头顶的黑暗，觉得自己像个被虚荣推搡嘲弄的人；痛苦与义愤灼烧着我的双眼。）五、作品阐释：这首诗题为 \"If\"，作者鲁德亚德·吉卜林（维多利亚时期诗人，非重点作家，辨识难度大，需长期积累）。诗以父亲的口吻教导儿子如何面对人生的挑战与境遇，用一连串\"假如……\"的情景说明如何成为真正的人。艺术手法：每节八行，韵式严格为 \"abababab\"；全诗写得坚定有力、气度不凡，同类母题的诗难以仿效；语言直白无饰却分量千钧、令人信服。主题上，诗中维多利亚式的坚韧与英国人的坚毅性格展现得淋漓尽致，使此诗成为英国传统美德的象征；诗对\"成人/男子气概\"的探索不限于体魄，而深入真正绅士的德性：自持自律、默默忍受、直面真相的勇气、从经验中学习的谦卑；强调忠诚、荣誉与求知的价值，敦促读者过有目标、有意义的生活。总结：这首诗以其体现英国价值之精髓的内涵与有力的语言，成为指引人正直坚强生活的箴言。\n——\n📌 解析：马洛题扣\"文艺复兴英雄（帖木儿+浮士德）=野心+求知=人文主义\"；Johnson 记\"词典+《诗人传》52位诗人\"；Lady Macbeth 按\"冷酷野心—操控—悲剧性\"两面作答；If 的阐释按模板走并记 abababab 韵式这一辨识点；Aesthetic Movement 已并入 825-2025-013。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2022年真题（综合）"
+ },
+ {
+  "id": "pq-2022-013",
+  "book": "literature",
+  "chapter": 13,
+  "section": "真题·2022年",
+  "front": "〔真题·2022年 综合〕2022 美国文学卷综合条目：六、名词解释 (每小题5分，共10分：Imagism、Realism)；七、简答 (每小题5分，共15分：Briefly comment on the significance of Mark Twain in American literature；Give a brief analysis of the character Hester Prynne from The Scarlet Letter；In The Great Gatsby, what makes Gatsby great?)；八、简述 (10分：Give a comment on American Romanticism)；九、改述 (每小题5分，共15分)；十、作品阐释 (25分：《看不见的人》选段——不可见性与身份)。",
+  "back": "六、术语：Imagism——20世纪初英美少数诗人发动的文学运动；反传统诗歌，以意象主义诗纲为特征；原则：直接处理\"事物\"、使用精确意象、清晰语言、常用口语及自由体等非传统诗形；不使用无助于呈现的词；庞德（美国现代诗歌之父）为意象主义运动领袖。Realism——美国内战终结了美国浪漫主义，战后美国现实主义应运而生；现实主义反拨浪漫主义、为现代主义铺路；现实主义者对生活各层面的现实抱有浓厚兴趣，不带主观偏见、理想主义或浪漫色彩；不去想生死之谜与英雄个人主义，而是表达对平凡与低微者的关切，对人性与经验提供客观视角；马克·吐温为美国现实主义领军人物。七、1) 马克·吐温的意义：作为现实主义领军人物，他偏好通过自己最熟悉的地方——尤其是普通人——来再现社会生活，其素材来自对人与地的丰富了解；他使用方言土语与（有些不合语法的）生动句式，为美国文学确立本土语言风格；他热爱生活、热爱人民、崇尚自由与正义。2) Hester Prynne：一个坚强、独立、善良而敢于对抗世俗成规的女性。坚强在于她面对逆境的态度：被判通奸后忍受公开羞辱与放逐，坚韧不屈、不坠绝望；独立体现在她被社会唾弃后仍决意留下私生女独自抚养，并成为熟练缝纫妇，靠双手养活母女；善良见于她为穷人与病人缝衣相助。海丝特的形象探索罪、愧与救赎的主题，其经历折射个人对抗社会压迫性势力的抗争。3) Gatsby 何以为\"了不起\"（正反两面）：其\"了不起\"在于财富——成功与权力的象征，为人艳羡；他是自我造就者，实现了从底层跻身上流的美国梦；拥有巨宅，因每周六晚的盛大派对而闻名。然而\"了不起\"亦是反讽：他的生活与追梦方式终被证明空洞而不可持续；其伟大与其悲剧性覆灭及梦想之未偿密不可分；菲茨杰拉德借盖茨比的败落批判美国梦的幻灭。八、American Romanticism：美国浪漫主义时期从18世纪末延至内战爆发；其兴盛得益于经济腾飞、平等与民主的理想及多种外来影响，故既模仿又独立：模仿，因为仍受欧洲影响（如欧文的作品对浪漫主义有发轫之功）；独立，因为西进运动提供了新题材，清教影响巨大——受清教影响，美国浪漫主义倾向说教而非娱乐。它在1840年代前后达于顶峰，是为超验主义或\"美国文艺复兴\"；代表人物之一爱默生，其《论自然》被称为\"美国文艺复兴的宣言\"；著名小说家有霍桑与梅尔维尔，诗人有惠特曼与狄金森。九、改述3句：1) \"Although I don't complain for personal reasons, I do complain a lot about the situation of American literature, because the only esteemed arts are architecture and movies in the US where industrialism, finance and science thrive.\"（我虽不为一己之私抱怨，却极抱怨美国文学的处境：在这个工业、金融与科学昌盛的国度，受人尊崇的艺术竟只剩建筑与电影。）2) \"Holding a gun is not bravery. Going for it and sticking to it whatever happens is. That is what I want you to know about what bravery really is.\"（持枪不是勇敢，不管发生什么都敢做敢当才是——这才是我要你懂的真正的勇敢。）3) \"What you wish to forget lingers in your mind, while what you wish to bear in mind fades away.\"（你想忘的萦绕于心，你想记的却渐渐淡去。）十、作品阐释：选段出自 Ralph Ellison 的《看不见的人》。选段通过象征性行为与物件探索\"不可见性\"与\"身份\"主题：白人给予叙述者的只是有条件的承认——\"总有一天他会带领他的人民走正路\"；反讽正在于此：只有遵从白人划定的\"正路\"，他才能\"带领他的人民\"。总结：选段凸显种族主义盛行之社会中\"有条件承认\"的反讽，写尽黑人的不可见性与身份困境。\n——\n📌 解析：两个流派术语按\"时期+反拨对象+原则+代表\"；吐温记\"地方题材+方言口语+热爱正义\"；海丝特按\"坚强—独立—善良\"三点加实例；Gatsby 之\"了不起\"必须正反两面并以反讽收束；Invisible Man 扣\"有条件承认的反讽\"。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2022年真题（综合）"
+ },
+ {
+  "id": "pq-2023-012",
+  "book": "literature",
+  "chapter": 8,
+  "section": "真题·2023年",
+  "front": "〔真题·2023年 综合〕2023 英国文学卷综合条目：I. Identify the authors of the following quotations (20 points, each 2 points，10句：乔叟、莎翁、马洛、邓恩、笛福、济慈、狄更斯、Emily Bronte、哈代、贝克特)；II. Explain the following terms (10 points, each 5 points：blank verse；Romanticism——Romanticism 已并入 825-2025-014 / 825-2026-014，不另立)；III. Comment on the following statements (20 points, each 5 points：《鲁滨逊漂流记》之人际与经济；济慈 negative capability；《雾都孤儿》善之存续；荒诞哲学)；IV. 英译汉5段。",
+  "back": "I. 作者（写全名）：1. Geoffrey Chaucer（《坎特伯雷故事集》描绘包括修女在内的形形色色人物）；2. William Shakespeare（最著名的犹太人独白——《威尼斯商人》夏洛克）；3. Christopher Marlowe（由 Faustus 判断为《浮士德博士的悲剧》）；4. John Donne（相爱的人分别之诗——《别离辞：莫伤悲》）；5. Daniel Defoe（由 Moll Flanders 推断）；6. John Keats（由 immortal Bird 推断为《夜莺颂》）；7. Charles Dickens（狄更斯爱写孤儿，此句出自《雾都孤儿》）；8. Emily Bronte（由 Heathcliff 判断为《呼啸山庄》）；9. Thomas Hardy；10. Samuel Beckett。II. blank verse——无韵抑扬格五音步诗行；由萨里伯爵引入英国，被称为最自然的戏剧诗形；文艺复兴时期英国文学作品广为使用，尤见于马洛剧作；英国大家有马洛与弥尔顿。（Romanticism：1798《抒情歌谣集》出版始、1832司各特卒止；反新古典主义的秩序、平静、和谐、均衡与理性，强调个人、主观、非理性、想象、自发、情感与超越性；从关注外部社会文明转向人类精神内部世界；两派——湖畔派/逃避派 Wordsworth、Coleridge，积极浪漫主义 Byron、Shelley、Keats——详见 825-2025-014。）III. 1) 《鲁滨逊漂流记》陈述（可从正反两角度）：该观点认为除与经济考量交织之处外，小说几乎不关注人际关系；反观之，鲁滨逊与星期五的关系确实让人窥见人际关系与陪伴的重要；总之《鲁滨逊漂流记》虽非一部主要写人际关系的小说，却确实探索了陪伴与人对联结的需要。2) 济慈 negative capability：该陈述是对济慈\"消极感受力\"概念的简明解读；正确指出济慈倡导一种接纳多重思想与观念而不急于判断或归类的心境——所谓消极感受力，即诗人将自己的心理身份消融于所描写对象之中、与之共感共处的能力；总而言之，消极感受力既是济慈对艺术创作的态度，也是他对感知与理解世界的哲学思考。3) 《雾都孤儿》：该陈述指狄更斯同名小说的主人公奥利弗·退斯特；它点明小说的一个核心主题——善在逆境中的存续；反映狄更斯对人性本善及人战胜苦难能力的信念；也暗含道德的胜利——善的力量终将战胜逆境。4) 荒诞哲学：该陈述深入存在主义与哲学问题，尤其与荒诞主义哲学相关；它暗示若缺乏目的感或与超越自身之物的联结，一切行为都可能被视为无意义、荒诞而徒劳；亦暗示荒诞是现代性或传统价值失落的后果；总之，缺乏目的或与更大整体的联结会使行动失去意义而流于荒诞。IV. 英译汉5段（原文未随解析收录，采分要点）：1) 诗歌语段翻译注意语言风格，译文应当书面化（如\"籍/言辞得体，纯洁无瑕……\"）。2) \"光自下而上地凝视着，给人感觉像是头冲锋的牛\"等形象句注意比喻的保留。3) \"庭渊源都无从得知\"句注意语序重组。4) 演说家段——\"如同往昔，某位名扬四海的演说家，在雅典或自由的罗马城，雄辩之花盛开之地，自沉静中起身，为一项崇高的事业发声……那个诱惑者满怀激情，便如此开启了他的言辞。\"（排比与四字格的运用。）5) 《等待戈多》段——\"《等待戈多》所营造的不确定性，以及这种不确定的起伏变化——从期待戈多的身份到屡次的失望——正是这部戏的精髓。试图通过批评分析来确定戈多的身份进而得到明确解释，就好比试图通过刮掉油漆来发现伦勃朗画作中隐藏在明暗对比中的清晰轮廓一样愚蠢。\"（翻译时将主语从\"不确定性\"调整为《等待戈多》；句子不可过长，可用逗号隔开。）\n——\n📌 解析：作者辨识靠\"意象关键词\"定位（immortal Bird→济慈、Heathcliff→艾米莉·勃朗特、Moll Flanders→笛福等），务必写全名；blank verse 记\"无韵抑扬格五音步+萨里伯爵引入+马洛弥尔顿\"；观点评论题按\"转述观点—具体分析—总结\"三步、可正反两角度；英译汉以书面化与长句切分为要。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2023年真题（综合）"
+ },
+ {
+  "id": "pq-2023-013",
+  "book": "literature",
+  "chapter": 12,
+  "section": "真题·2023年",
+  "front": "〔真题·2023年 综合〕2023 美国文学卷综合条目：V. Identify the authors of the following quotations (20 points, each 2 points，10句：梅尔维尔、菲茨杰拉德、梭罗、富兰克林、海明威、霍桑、弗罗斯特、惠特曼、爱默生、吐温)；VI. Explain the following terms (10 points, each 5 points：American Naturalism、The Sun Also Rises)；VII. Comment on the following statements (20 points, each 5 points：爱默生论\"至美\"；海明威评《哈克贝利·费恩》\"全部现代美国文学皆源自一书\"；Gatsby 结尾句\"逆水行舟\"；惠特曼论身体与灵魂)；VIII. Translate the following passages into Chinese (25 points, each 5 points，5段)。",
+  "back": "V. 作者（写全名）：1. Herman Melville（该句为《白鲸》开场白 \"Call me Ishmael\"）；2. F. Scott Fitzgerald（该段为《了不起的盖茨比》第一段）；3. Henry Thoreau（由 Walden Pond 推断出自《瓦尔登湖》）；4. Benjamin Franklin（强调拥有一技之长之重要）；5. Ernest Hemingway；6. Nathaniel Hawthorne；7. Robert Frost（出自《未选择的路》）；8. Walt Whitman（Oh Captain! My Captain! 纪念林肯）；9. Ralph Waldo Emerson（出自《论自助》Self-Reliance）；10. Mark Twain（由 The Adventures of Tom Sawyer 之名推断为续作《哈克贝利·费恩历险记》）。VI. 术语：American Naturalism——19世纪末至20世纪初盛行于美国，是现实主义的更高阶段或极端形式；随工业化与城市化而生，受达尔文学说启发，认为人的命运由遗传与环境决定；自然主义者不带道德评判、极度客观地描写生活与社会；代表作有克莱恩《红色英勇勋章》、德莱塞《嘉莉妹妹》。The Sun Also Rises——海明威《太阳照常升起》：小说探究战争对个人的深刻影响，写战后年轻一代的迷失、困惑与无助及其道德与精神困境；主人公 Jake Barnes 与 Lady Brett Ashley 是\"迷惘的一代\"的代表，其爱与生活经历揭示这一代的情感挣扎与人生难题；海明威的\"冰山理论\"体现于此——语言简洁、对话生动、情节直白，给读者留下广阔的想象空间；本书地位重要，是探讨战争、爱与生命意义的经典。VII. 1) 爱默生论\"至美\"：该陈述表达一种期望——曾启迪东方文化（尤其希伯来人）的深邃至美也能俘获并启迪西方；\"至美\"或指深深影响东方人的某种文化或精神现象，期望它在西方产生相似效应；\"神谕\"（oracles）一词暗示这种美具有历史或预言意义，承载超越时空的讯息或真理；作为超验主义者，爱默生此语诗意盎然、任人诠释，表达对超越文化界限之美与智慧的普遍体验的向往。2) 海明威评《哈克贝利·费恩》（可从正反两角度）：该陈述是对《哈克贝利·费恩历险记》影响美国文学的大胆断言；此书公认重要——叙事风格创新、关切时代社会议题，其方言运用对美国文学表现地域声音影响持久；但\"全部现代美国文学皆源于一书\"言过其实；总之《哈克贝利·费恩》固然重要，却非美国文学伟大的唯一来源，美国的书来自形形色色的思想与故事。3) Gatsby 结尾句（可结合小说 context 分析主人公）：该句是对人生体验的沉思——写我们向前的渴望与过去的引力之间的张力；\"逆水行舟\"（boats against the current）暗示与把人向后推的力量抗争，可视为人类境况的隐喻：我们执拗地奋力前行，而\"被不断推回到过去\"则意味着对过去的渴望或无法挣脱过去；它说明过去的经历与记忆持续影响着我们的当下；此句凸显小说的美国梦主题与盖茨比对昔日恋人的执念；归结为抗争、执着与怀旧。4) 惠特曼论身体与灵魂：该句反映人之肉体与精神存在的深刻联结；惠特曼宣告自己作为诗人同时礼赞有形的身体与无形的灵魂，二者同等重要、皆值得诗意表达；本质上，惠特曼自视为热爱人之为人的全部——既物质又精神——的诗人，认为两者皆美且重要。VIII. 英译汉5段（原文未随解析收录，采分要点）：1) 注意被动句变主动句——\"最近的一阵风，刮去了覆在树上的白色霜冻。树木之间好像在朝着彼此倾斜，在昏暗的光线下显得漆黑、不吉利。\" 2) 《麦田里的守望者》选段注意不文绉绉，用白话词语还原霍尔顿的语言风格——\"你要真想了解的话，首先你可能会想知道我生在哪儿……但你要是想听真话的话，我要说的是，我不想多谈一句。\" 3) how 一词要学会补译出\"做\"字。4) \"她十八岁，聪明、害羞，充满了年少无知的幻想。\"（形容词并列的处理。）5) \"世上就算有她不感兴趣的事物的话，那它也没列在我的清单上。\"（否定与条件的语序。）\n——\n📌 解析：作者辨识靠关键词定位（Call me Ishmael→梅尔维尔、Walden Pond→梭罗、未选择的路→弗罗斯特、Self-Reliance→爱默生）；《太阳照常升起》术语按\"主题+人物+冰山理论+地位\"四点；观点评论题先转述再分析、允许正反两面；翻译五段分别记\"被动变主动、口语化、补译'做'、形容词并列、否定条件语序\"。",
+  "source": "东师学科英语专业课二历年真题.pdf · 2023年真题（综合）"
+ }
+]

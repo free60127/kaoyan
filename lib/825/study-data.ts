@@ -50,10 +50,11 @@ export type StudyData825 = {
 
 /** Called only after the learner opens 825; Vite keeps these JSON files out of the initial bundle. */
 export async function load825StudyData(): Promise<StudyData825> {
-  const [linguisticsModule, literatureModule, questionsModule] = await Promise.all([
+  const [linguisticsModule, literatureModule, questionsModule, pastCardsModule] = await Promise.all([
     import("./linguistics.json"),
     import("./literature.json"),
     import("./past-questions.json"),
+    import("./past-question-cards.json"),
   ]);
 
   const linguistics = linguisticsModule.default as {
@@ -64,11 +65,13 @@ export async function load825StudyData(): Promise<StudyData825> {
     book: { id: "literature"; name: string; chapters: Chapter825[] };
     cards: Card825[];
   };
-  const questionData = questionsModule.default as { questions: Question825[] };
+  const questionData = questionsModule.default as unknown as { questions: Question825[] };
 
+  // 历年真题按章节映射成"真题卡"，与笔记闪卡同池复习；front 带〔真题·年份 题型〕题源标注
+  const pastCards = (pastCardsModule.default as Card825[]).map((card) => ({ ...card, section: card.section }));
   return {
     books: [linguistics.book, literature.book],
-    cards: [...linguistics.cards, ...literature.cards],
+    cards: [...linguistics.cards, ...literature.cards, ...pastCards],
     questions: questionData.questions,
   };
 }

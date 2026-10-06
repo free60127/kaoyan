@@ -203,6 +203,8 @@ async function getReferences(ctx: MockQuizContext) {
     const chapterNumbers = range.chapters ?? chapters.map((item) => item.number);
     if (!Array.isArray(chapterNumbers) || !chapterNumbers.length || chapterNumbers.some((number) => !Number.isInteger(number) || !chapters.some((item) => item.number === number))) throw new Error("所选章节不属于当前书目。");
     if (range.section !== undefined && !nonempty(range.section)) throw new Error("当前小节无效，请重新选择。");
+    // 第一遍收集, 第二遍统一决定: 有笔记的章节正常出卷; 无笔记章节只在"全部章节都无笔记"时报错,
+    // 否则跳过并计入 coverage.uncoveredUnits(如索引题专属的整卷综合章)。
     for (const chapterNo of chapterNumbers) {
       const section = range.section?.trim();
       const unitKey = `${book.id}:${chapterNo}:${section ?? ""}`;
@@ -216,7 +218,7 @@ async function getReferences(ctx: MockQuizContext) {
         return cardSection?.trim() === section;
       });
       const notes = relevantCards.filter((card) => nonempty(card.front) && nonempty(card.back) && card.front.length + card.back.length <= 6000).map(({ id, front, back }) => ({ id, front, back }));
-      if (!notes.length) throw new Error(`《${book.name}》第${chapterNo}章或所选小节缺少可核对的笔记资料，无法生成模拟卷。`);
+      if (!notes.length) continue;
       // 风格样例优先取有参考答案的完整真题(给主观题提供材料/设问/要点范例), 每题答案截断防超长
       const style = data
         ? (() => {
@@ -242,6 +244,7 @@ export async function generateMockQuiz(key: string, input: MockQuizConfig, conte
   checkCancelled(signal);
   const references = await getReferences(ctx);
   checkCancelled(signal);
+  if (!references.some(({ notes }) => notes.length)) throw new Error("所选范围内没有可核对的笔记资料（如索引题专属章节），请更换范围后重试。");
   const total = MOCK_QUIZ_TYPES.reduce((sum, type) => sum + config[type], 0);
   const result: MockQuizQuestion[] = [];
   const seen = new Set<string>();
