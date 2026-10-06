@@ -65,6 +65,31 @@ test("real lazy catalogs match app chapter and section models", () => {
   }
   assert.ok(catalogs["825"].questions.length > 0);
 });
+test("sessions on the new practice/mistakes/stats/search views round trip through backup", () => {
+  const storage = fullStorage();
+  const raw = JSON.parse(storage.values.get(sessionKey));
+  raw.locations["333"].view = "practice";
+  raw.locations.politics.view = "mistakes";
+  raw.locations["825"].view = "stats";
+  raw.locations.english.view = "search";
+  storage.values.set(sessionKey, JSON.stringify(raw));
+  const backup = collect(storage, catalogs, now);
+  const restored = backup.records[sessionKey];
+  assert.equal(restored.locations["333"].view, "practice");
+  assert.equal(restored.locations.politics.view, "mistakes");
+  assert.equal(restored.locations["825"].view, "stats");
+  assert.equal(restored.locations.english.view, "search");
+  const target = memory({});
+  apply(target, JSON.stringify(backup), catalogs);
+  assert.equal(JSON.parse(target.values.get(sessionKey)).locations.politics.view, "mistakes");
+});
+test("politics still rejects quiz and mock views in backup", () => {
+  const storage = fullStorage();
+  const raw = JSON.parse(storage.values.get(sessionKey));
+  raw.locations.politics.view = "quiz";
+  storage.values.set(sessionKey, JSON.stringify(raw));
+  assert.throws(() => collect(storage, catalogs, now), /未知页面/);
+});
 test("all thirteen keys round trip realistic three-subject records, future dates, drafts and full papers", () => {
   const source = fullStorage(), backup = collect(source, catalogs, now), target = memory({ unrelated: "untouched", "yantu-key": "private" });
   assert.deepEqual(Object.keys(backup.records), BACKUP_STORAGE_KEYS);

@@ -1,6 +1,11 @@
 /** 轻量每日学习统计: 每次评分/新学/答题按日累计, 供统计页与连续天数计算。 */
 export type DayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number };
 export type StatStore = { getItem(key: string): string | null; setItem(key: string, value: string): void };
+/** 广播存储写入结果; Node/测试环境无 window 时静默。 */
+function notifyStorage(type: string, detail?: Record<string, string>) {
+  if (typeof window === "undefined" || typeof window.dispatchEvent !== "function") return;
+  window.dispatchEvent(new CustomEvent(type, { detail }));
+}
 export const statsKey = (subject: string) => `yantu-stats-v1-${subject}`;
 
 export const studyDate = (now: Date): string => {
@@ -31,8 +36,14 @@ export function recordStat(store: StatStore, subject: string, patch: Partial<Omi
     quizCorrect: base.quizCorrect + (patch.quizCorrect || 0),
   };
   days[date] = next;
-  try { store.setItem(statsKey(subject), JSON.stringify(days)); } catch { /* 存储不可用时静默 */ }
-  return next;
+  try {
+    store.setItem(statsKey(subject), JSON.stringify(days));
+    notifyStorage("yantu-storage-saved");
+    return next;
+  } catch {
+    notifyStorage("yantu-storage-error", { store: "stats", subject });
+    return next;
+  }
 }
 
 export function listStats(store: StatStore, subject: string): DayStat[] {

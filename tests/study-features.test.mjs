@@ -11,7 +11,7 @@ async function realModule(path) {
 }
 
 test("practice-quiz: 题干来自卡正面、正确项可定位、干扰项互不相同", async () => {
-  const { buildPracticeQuestions, firstAnswerClause } = await realModule("../lib/practice-quiz.ts");
+  const { buildPracticeQuestions, firstAnswerClause, isMcqSuitable } = await realModule("../lib/practice-quiz.ts");
   const cards = Array.from({ length: 12 }, (_, index) => ({
     id: `c${index}`, book: "mayuan", chapter: 2,
     front: `〔考点${index}〕第${index}个考点的问题是什么？`,
@@ -29,6 +29,17 @@ test("practice-quiz: 题干来自卡正面、正确项可定位、干扰项互�
   // 确定性: 同 seed 同卷
   const again = buildPracticeQuestions(cards, { bookId: "mayuan", count: 5, seed: 42 });
   assert.deepEqual(questions, again);
+  // 多点列举类卡不进选择题池
+  assert.equal(isMcqSuitable("〔考点1〕简述教育的功能"), true);
+  assert.equal(isMcqSuitable("〔考点1〕教育有哪些基本功能"), false);
+  assert.equal(isMcqSuitable("〔考点1〕列举七个特征"), false);
+  assert.equal(isMcqSuitable("〔考点1〕比较两派异同"), false);
+  const multiCards = [
+    ...cards.slice(0, 4),
+    { id: "multi1", book: "mayuan", chapter: 2, front: "〔考点9〕教学有哪些基本原则", back: "1.A 2.B 3.C。" },
+  ];
+  const filtered = buildPracticeQuestions(multiCards, { bookId: "mayuan", count: 10, seed: 7 });
+  assert.ok(filtered.every(q => q.cardId !== "multi1"));
   // 章节过滤
   const scoped = buildPracticeQuestions(cards, { bookId: "mayuan", chapters: [2], count: 20, seed: 1 });
   assert.equal(scoped.length, 12);
@@ -70,6 +81,17 @@ test("mistakes: 累计错误次数、移除与按科目清空", async () => {
   assert.equal(selectRequizList(list2, "politics").length, 0);
   const many = Array.from({ length: 30 }, (_, i) => ({ id: `333:card:c${i}`, subject: "333", kind: "card", refId: `c${i}`, label: `卡${i}`, wrongCount: 1, lastAt: now.toISOString() }));
   assert.equal(selectRequizList(many, "333").length, 20);
+  // 同卡两类错题去重: 取较新条目, 错误次数合并, 不重复出卷
+  const dupEntries = [
+    { id: "333:card:x:old", subject: "333", kind: "card", refId: "x", label: "旧", wrongCount: 2, lastAt: "2026-10-01T10:00:00.000Z" },
+    { id: "333:practice:x:new", subject: "333", kind: "practice", refId: "x", label: "新", wrongCount: 3, lastAt: "2026-10-05T10:00:00.000Z" },
+    { id: "333:card:y", subject: "333", kind: "card", refId: "y", label: "另一张", wrongCount: 1, lastAt: "2026-10-02T10:00:00.000Z" },
+  ];
+  const deduped = selectRequizList(dupEntries, "333");
+  assert.equal(deduped.length, 2);
+  assert.equal(deduped[0].refId, "x");
+  assert.equal(deduped[0].label, "新");
+  assert.equal(deduped[0].wrongCount, 5);
   // 按 refId 批量移出(重练答对场景): 只删该科目的匹配 ref, 跨科目同名 ref 不误删
   recordMistake("333", "practice", "shared", "333的卡", now);
   recordMistake("politics", "practice", "shared", "政治的同名卡", now);

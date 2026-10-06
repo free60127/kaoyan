@@ -41,11 +41,19 @@ function shuffled<T>(items: T[], rng: () => number): T[] {
   return out;
 }
 
+/** 多点列举/比较类问题不适合"选出一项"的选择题形态(正确项只是部分要点, 选对不等于掌握)。
+ *  这些卡仍走闪卡复习与费曼, 不进自动选择自测。 */
+const MULTI_POINT_STEM = /(列举|有哪些|包括哪些|哪几[个种项条点]|分别[是说]|异同|比较一下|对比一)/;
+
+export function isMcqSuitable(front: string): boolean {
+  return !MULTI_POINT_STEM.test(front.replace(/^〔.+?〕\s*/, ""));
+}
+
 export type PracticeOptions = { bookId: string; chapters?: number[]; count: number; seed: number };
 
 export function buildPracticeQuestions(cards: readonly PracticeCard[], options: PracticeOptions): PracticeQuestion[] {
   const { bookId, count, seed } = options;
-  const pool = cards.filter(card => card.book === bookId && (!options.chapters || options.chapters.length === 0 || options.chapters.includes(card.chapter)));
+  const pool = cards.filter(card => card.book === bookId && isMcqSuitable(card.front) && (!options.chapters || options.chapters.length === 0 || options.chapters.includes(card.chapter)));
   const rng = mulberry32(seed);
   const chosen = shuffled(pool, rng).slice(0, Math.max(0, Math.min(count, pool.length)));
   const answersByChapter = new Map<number, string[]>();

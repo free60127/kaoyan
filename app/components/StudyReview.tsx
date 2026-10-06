@@ -73,8 +73,10 @@ export function StudyReviewCards({ review, cards, books, bookId, chapter, sectio
   // 键盘: 空格/回车翻面, 1-4 评分, 浏览模式 ←/→
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      // 焦点在可交互元素上时让原生行为生效(如按钮的 Enter/空格点击), 组合键与按住重复也跳过
+      if (event.ctrlKey || event.altKey || event.metaKey || event.repeat) return;
       const target = event.target as HTMLElement | null;
-      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.tagName === "SELECT" || target.isContentEditable)) return;
+      if (target && (target.closest("button, a, select, input, textarea, label, summary, [contenteditable], [role=button]") !== null)) return;
       if (document.querySelector(".key-modal, .backup-shade")) return;
       if (event.key === " " || event.key === "Enter") {
         event.preventDefault();

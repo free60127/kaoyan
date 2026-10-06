@@ -1,4 +1,4 @@
-import { learningSessionKey, restoreLearningSession, type BookIds, type LearningLocation, type LearningSession, type StudySubject } from "./learning-session";
+import { isRestorableView, learningSessionKey, restoreLearningSession, type BookIds, type LearningLocation, type LearningSession, type StudySubject } from "./learning-session";
 import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
 import type { MockPracticeBook } from "./mock-practice-state";
@@ -118,7 +118,7 @@ function location(value: unknown, subject: StudySubject, catalogs: BackupCatalog
   const chapter = subject === "english" ? integer(row.chapter, 1, 10_000, path) : chapterFor(bookFor(catalogs, subject, book, path), row.chapter, path);
   const section = text(row.section, path);
   if (subject === "english" ? book !== "" || section !== "" : section !== "" && !bookFor(catalogs, subject, book, path).chapters[chapter - 1].sections.includes(section)) fail(path, "未知小节");
-  if (!["overview", "chapters", "cards", "quiz", "mock", "feynman", "planner"].includes(String(row.view)) || (subject === "politics" && ["quiz", "mock"].includes(String(row.view)))) fail(path);
+  if (!isRestorableView(subject, row.view)) fail(path, "未知页面");
   if (row.pastMode !== "index" && row.pastMode !== "practice") fail(path);
   integer(row.pastYear, 1900, 2200, path); integer(row.pastIndex, 0, 100_000, path);
   return { book, chapter, section, view: row.view as LearningLocation["view"], pastMode: row.pastMode as LearningLocation["pastMode"], pastYear: row.pastYear as number, pastIndex: row.pastIndex as number };

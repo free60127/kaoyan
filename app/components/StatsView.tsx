@@ -4,8 +4,8 @@ import { lastNDays, streakDays, type DayStat, type StatStore } from "@/lib/stats
 
 type Book = { id: string; name: string; short: string; tone: string; chapters: unknown[] };
 
-export function StatsView({ subject, subjectLabel, books, done, due, newToday, learnedCards, totalCards, storage }: {
-  subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; newToday: number; learnedCards: number; totalCards: number; storage: StatStore;
+export function StatsView({ subject, subjectLabel, books, done, due, learnedCards, totalCards, storage }: {
+  subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; learnedCards: number; totalCards: number; storage: StatStore;
 }) {
   const [tick, setTick] = useState(0);
   const days: DayStat[] = useMemo(() => lastNDays(storage, subject, 14), [subject, tick]);
