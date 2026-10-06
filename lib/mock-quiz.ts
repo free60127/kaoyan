@@ -193,7 +193,7 @@ async function getReferences(ctx: MockQuizContext) {
   const knowledge333 = is825 ? [] : await loadKnowledgeCards();
   const availableCards = data ? data.cards : [...cards, ...knowledge333];
   const bookData = data ? data.books : books;
-  const result: { unit: MockQuizUnit; notes: { id: string; front: string; back: string }[]; style: { type: string; stem: string }[] }[] = [];
+  const result: { unit: MockQuizUnit; notes: { id: string; front: string; back: string }[]; style: { type: string; stem: string; referenceAnswer?: string }[] }[] = [];
   const unitKeys = new Set<string>();
   for (const range of ranges) {
     if (!range || typeof range !== "object") throw new Error("命题范围格式有误。");
@@ -217,8 +217,14 @@ async function getReferences(ctx: MockQuizContext) {
       });
       const notes = relevantCards.filter((card) => nonempty(card.front) && nonempty(card.back) && card.front.length + card.back.length <= 6000).map(({ id, front, back }) => ({ id, front, back }));
       if (!notes.length) throw new Error(`《${book.name}》第${chapterNo}章或所选小节缺少可核对的笔记资料，无法生成模拟卷。`);
+      // 风格样例优先取有参考答案的完整真题(给主观题提供材料/设问/要点范例), 每题答案截断防超长
       const style = data
-        ? data.questions.filter((row) => row.book === book.id && row.practiceReady).slice(0, 5).map(({ type, stem }) => ({ type, stem }))
+        ? (() => {
+            const pool = data.questions.filter((row) => row.book === book.id && row.practiceReady);
+            const withAnswer = pool.filter((row) => row.referenceAnswer && row.referenceAnswer.length >= 90);
+            const rest = pool.filter((row) => !withAnswer.includes(row));
+            return [...withAnswer, ...rest].slice(0, 6).map(({ type, stem, referenceAnswer }) => ({ type, stem, referenceAnswer: referenceAnswer ? referenceAnswer.slice(0, 600) : undefined }));
+          })()
         : questions.filter((row) => row.book === book.id).slice(0, 5).map(({ stem }) => ({ type: "single-choice", stem }));
       result.push({ unit, notes, style });
     }
