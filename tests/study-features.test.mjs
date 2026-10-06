@@ -164,25 +164,26 @@ test("practice-draft: 保存/读取/过期与损坏防护", async () => {
   const store = new Map();
   globalThis.localStorage = { getItem: k => store.get(k) ?? null, setItem: (k, v) => store.set(k, v), removeItem: k => store.delete(k) };
   const questions = [1, 2, 3].map(n => ({ cardId: "c" + n, stem: "题" + n, hint: "考点", options: ["a", "b", "c", "d"], answer: 1, source: "自测" }));
-  const base = { subject: "333", mode: "practice", meta: { bookId: "principles", bookName: "教育学原理", chapter: 2, scope: "chapter" }, questions, index: 0, choice: null, right: 0, answers: {} };
-  assert.equal(savePracticeRound({ ...base, index: 2, choice: 1, right: 1, answers: { 0: 1, 1: 3 } }), true);
+  const base = { subject: "333", mode: "practice", meta: { bookId: "principles", bookName: "教育学原理", chapter: 2, scope: "chapter" }, questions, index: 0, choice: null, right: 0, answers: {}, wrongIds: [] };
+  assert.equal(savePracticeRound({ ...base, index: 2, choice: 1, right: 1, answers: { 0: 1, 1: 3 }, wrongIds: ["c2"] }), true);
   const restored = loadPracticeRound("333", "practice");
   assert.ok(restored);
   assert.equal(restored.index, 2);
   assert.equal(restored.answers["1"], 3);
+  assert.deepEqual(restored.wrongIds, ["c2"]);
   // 科目不匹配 → null
   assert.equal(loadPracticeRound("politics", "practice"), null);
   // 过期(3天前)
-  const stale = JSON.parse(store.get(practiceDraftKey));
+  const stale = JSON.parse(store.get(practiceDraftKey('333', 'practice')));
   stale.savedAt = "2026-09-01T00:00:00.000Z";
-  store.set(practiceDraftKey, JSON.stringify(stale));
+  store.set(practiceDraftKey('333', 'practice'), JSON.stringify(stale));
   assert.equal(loadPracticeRound("333", "practice"), null);
   // 损坏
-  store.set(practiceDraftKey, "{broken");
+  store.set(practiceDraftKey('333', 'practice'), "{broken");
   assert.equal(loadPracticeRound("333", "practice"), null);
   // answer越界的选项被拒
-  const bad = { ...base, questions: [{ ...questions[0], answer: 9 }] };
-  store.set(practiceDraftKey, JSON.stringify({ ...bad, version: 1, savedAt: new Date().toISOString(), answers: {} }));
+  const bad = { ...base, questions: [{ ...questions[0], answer: 9 }], wrongIds: [] };
+  store.set(practiceDraftKey('333', 'practice'), JSON.stringify({ ...bad, version: 1, savedAt: new Date().toISOString(), answers: {}, wrongIds: [] }));
   assert.equal(loadPracticeRound("333", "practice"), null);
   clearPracticeRound();
   assert.equal(loadPracticeRound("333", "practice"), null);

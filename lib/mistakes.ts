@@ -60,11 +60,14 @@ export function removeMistake(id: string): Mistake[] {
   return removeMistakes([id]);
 }
 
-/** Remove several mistakes at once by entry id. */
+/** Remove several mistakes at once by entry id. 写失败时广播事件（横幅提示），内存结果仍返回供本次会话使用。 */
 export function removeMistakes(ids: readonly string[]): Mistake[] {
   const drop = new Set(ids);
   const updated = readMistakes().filter(item => !drop.has(item.id));
-  try { localStorage.setItem(mistakesStorageKey, JSON.stringify(updated)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));
+    notifyStorage(mistakesSavedEvent);
+  } catch { notifyStorage(mistakesSaveFailedEvent, { store: "mistakes" }); }
   return updated;
 }
 
@@ -72,13 +75,20 @@ export function removeMistakes(ids: readonly string[]): Mistake[] {
 export function removeMistakesByRef(subject: string, refIds: readonly string[]): Mistake[] {
   const drop = new Set(refIds);
   const updated = readMistakes().filter(item => !(item.subject === subject && drop.has(item.refId)));
-  try { localStorage.setItem(mistakesStorageKey, JSON.stringify(updated)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));
+    notifyStorage(mistakesSavedEvent);
+  } catch { notifyStorage(mistakesSaveFailedEvent, { store: "mistakes" }); }
   return updated;
 }
 
+/** Clear one subject's mistakes. 同上，失败可见。 */
 export function clearMistakes(subject: string): Mistake[] {
   const updated = readMistakes().filter(item => item.subject !== subject);
-  try { localStorage.setItem(mistakesStorageKey, JSON.stringify(updated)); } catch { /* ignore */ }
+  try {
+    localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));
+    notifyStorage(mistakesSavedEvent);
+  } catch { notifyStorage(mistakesSaveFailedEvent, { store: "mistakes" }); }
   return updated;
 }
 

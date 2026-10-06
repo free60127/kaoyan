@@ -11,12 +11,15 @@ export type SavedRound = {
   index: number;
   choice: number | null;
   right: number;
-  /** 已作答的 {cardId: 所选index}; index-1 及之前各题。最后一题未确认不计。 */
+  /** 已确认作答: {题号: 所选选项index}。 */
   answers: Record<string, number>;
+  /** 试卷内答错的卡(重练的"移出错题本"判定与自测的错题入库都以恢复后的集合为准)。 */
+  wrongIds: string[];
   savedAt: string;
 };
 
-export const practiceDraftKey = "yantu-practice-round-v1";
+/** 每个科目×模式独立草稿键: 开始另一套题不会覆盖别科的未完成卷。 */
+export const practiceDraftKey = (subject: string, mode: string) => `yantu-practice-round-v1-${subject}-${mode}`;
 const MAX_QUESTIONS = 60;
 const MAX_AGE_MS = 3 * 86400000;
 
@@ -24,19 +27,26 @@ export function savePracticeRound(round: Omit<SavedRound, "version" | "savedAt">
   if (round.questions.length > MAX_QUESTIONS) return false;
   const payload: SavedRound = { ...round, version: 1, savedAt: new Date().toISOString() };
   try {
-    localStorage.setItem(practiceDraftKey, JSON.stringify(payload));
+    localStorage.setItem(practiceDraftKey(round.subject, round.mode), JSON.stringify(payload));
     return true;
   } catch { return false; }
 }
 
-export function clearPracticeRound(): void {
-  try { localStorage.removeItem(practiceDraftKey); } catch { /* ignore */ }
+export function clearPracticeRound(subject?: string, mode?: "practice" | "requiz"): void {
+  try {
+    if (subject && mode) { localStorage.removeItem(practiceDraftKey(subject, mode)); return; }
+    // 未指定时清理全部科目的自测草稿(仅自测与重练两族前缀)
+    for (const subjectId of ["333", "825", "politics"]) {
+      localStorage.removeItem(practiceDraftKey(subjectId, "practice"));
+      localStorage.removeItem(practiceDraftKey(subjectId, "requiz"));
+    }
+  } catch { /* ignore */ }
 }
 
 /** 读取可续做的试卷: 同科目同模式且三天内才有效; 损坏/过期返回 null。 */
 export function loadPracticeRound(subject: string, mode: "practice" | "requiz"): SavedRound | null {
   try {
-    const raw = localStorage.getItem(practiceDraftKey);
+    const raw = localStorage.getItem(practiceDraftKey(subject, mode));
     if (!raw) return null;
     const parsed: unknown = JSON.parse(raw);
     if (!parsed || typeof parsed !== "object") return null;
@@ -49,6 +59,7 @@ export function loadPracticeRound(subject: string, mode: "practice" | "requiz"):
     const answers = row.answers && typeof row.answers === "object" && !Array.isArray(row.answers)
       ? Object.fromEntries(Object.entries(row.answers).filter(([, v]) => typeof v === "number" && v >= 0 && v < 4))
       : {};
+    const wrongIds = Array.isArray(row.wrongIds) ? row.wrongIds.filter((id): id is string => typeof id === "string" && id.length <= 200) : [];
     return {
       version: 1,
       subject: String(row.subject),
@@ -58,6 +69,7 @@ export function loadPracticeRound(subject: string, mode: "practice" | "requiz"):
       index,
       choice: typeof row.choice === "number" ? row.choice : null,
       right: typeof row.right === "number" ? row.right : 0,
+      wrongIds,
       answers,
       savedAt: row.savedAt,
     };

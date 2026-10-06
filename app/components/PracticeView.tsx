@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { buildPracticeQuestions, firstAnswerClause, type PracticeQuestion } from "@/lib/practice-quiz";
+import { buildPracticeQuestions, firstAnswerClause, isMcqSuitable, type PracticeQuestion } from "@/lib/practice-quiz";
 import { recordMistake } from "@/lib/mistakes";
 import { recordStat, type StatStore } from "@/lib/stats";
 import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
@@ -35,7 +35,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   const requizPool = useMemo(() => {
     if (!requiz) return [];
     const ids = new Set(requizEntries!.map(entry => entry.refId));
-    return cards.filter(card => ids.has(card.id));
+    // 重练与普通自测共用题目资格规则: 不适合选择题形态的卡不进卷(错题本里保留, 走闪卡复习)
+    return cards.filter(card => ids.has(card.id) && isMcqSuitable(card.front));
   }, [requiz, requizEntries, cards]);
 
   const available = useMemo(() => {
@@ -80,25 +81,33 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     } else {
       questions = buildPracticeQuestions(cards, { bookId, chapters: scope === "chapter" ? [chapter] : [], count, seed: Math.floor(Math.random() * 2 ** 31) });
     }
-    clearPracticeRound();
-    setResumable(null);
-    setRound({
-      questions, index: 0, choice: null, right: 0, done: false, wrongIds: [], chosenByIndex: {},
+    const initial = {
+      questions, index: 0, choice: null as number | null, right: 0, done: false, wrongIds: [] as string[], chosenByIndex: {} as Record<number, number>,
       meta: { bookId, bookName: activeBook?.name || subjectName, chapter, scope },
+    };
+    savePracticeRound({
+      subject, mode: requiz ? "requiz" : "practice", meta: initial.meta, questions,
+      index: 0, choice: null, right: 0, wrongIds: [], answers: {},
     });
+    setResumable(null);
+    setRound(initial);
   }
   function answer(index: number) {
     if (!round || round.choice !== null) return;
     const question = round.questions[round.index];
+    const firstAttempt = round.chosenByIndex[round.index] === undefined;
     const correct = index === question.answer;
-    recordStat(storage, subject, { quiz: 1, quizCorrect: correct ? 1 : 0 });
-    if (!correct) {
-      recordMistake(subject, "practice", question.cardId, question.stem);
-      setRound(previous => previous ? { ...previous, wrongIds: [...previous.wrongIds, question.cardId] } : previous);
+    // 只在首次作答时计分/记错题: 续做恢复的题不会重复计分
+    if (firstAttempt) {
+      recordStat(storage, subject, { quiz: 1, quizCorrect: correct ? 1 : 0 });
+      if (!correct) recordMistake(subject, "practice", question.cardId, question.stem);
     }
     setRound(previous => {
       if (!previous) return previous;
-      const nextRound = { ...previous, choice: index, right: previous.right + (correct ? 1 : 0), chosenByIndex: { ...previous.chosenByIndex, [previous.index]: index } };
+      const wrongIds = correct && firstAttempt
+        ? previous.wrongIds
+        : (previous.wrongIds.includes(question.cardId) ? previous.wrongIds : [...previous.wrongIds, question.cardId]);
+      const nextRound = { ...previous, wrongIds, choice: index, right: previous.right + (correct && firstAttempt ? 1 : 0), chosenByIndex: { ...previous.chosenByIndex, [previous.index]: index } };
       persistRound(nextRound);
       return nextRound;
     });
@@ -112,6 +121,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
       index: target.index,
       choice: target.choice,
       right: target.right,
+      wrongIds: target.wrongIds,
       answers: Object.fromEntries(Object.entries(target.chosenByIndex).map(([key, value]) => [key, value])),
     });
   }
@@ -122,7 +132,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
         const mastered = round.questions.map(question => question.cardId).filter(id => !round.wrongIds.includes(id));
         onRequizDone?.(mastered);
       }
-      clearPracticeRound();
+      clearPracticeRound(subject, requiz ? "requiz" : "practice");
       setRound({ ...round, done: true });
       return;
     }
@@ -150,16 +160,16 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
           const byId = new Map(cards.map(card => [card.id, card]));
           // 卡库中已找不到的卡(数据更新后)剔除; 全部失效则放弃续做
           const questions = resumable.questions.filter(q => byId.has(q.cardId));
-          if (!questions.length) { clearPracticeRound(); setResumable(null); return; }
+          if (!questions.length) { clearPracticeRound(subject, requiz ? "requiz" : "practice"); setResumable(null); return; }
           setRound({
             questions, index: Math.min(resumable.index, questions.length - 1),
             choice: null, right: resumable.right, done: false,
-            wrongIds: [], chosenByIndex: Object.fromEntries(Object.entries(resumable.answers).map(([k, v]) => [Number(k), v])),
+            wrongIds: [...resumable.wrongIds], chosenByIndex: Object.fromEntries(Object.entries(resumable.answers).map(([k, v]) => [Number(k), v])),
             meta: resumable.meta,
           });
           setResumable(null);
         }}>继续作答</button>
-        <button className="secondary" onClick={() => { clearPracticeRound(); setResumable(null); }}>放弃</button>
+        <button className="secondary" onClick={() => { clearPracticeRound(subject, requiz ? "requiz" : "practice"); setResumable(null); }}>放弃</button>
       </div>
     </div>}
     <button className="primary" disabled={!available.length || (!requiz && available.length < 4)} onClick={start}>{requiz ? "开始重练" : "开始自测"}</button>

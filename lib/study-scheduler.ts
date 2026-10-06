@@ -188,23 +188,25 @@ export function forecastLoad(catalog: readonly CardIdentity[], progress: StudyPr
   const scopes = normalizeStudyScopes(progress.scopes, cards);
   const out: { date: string; review: number; learning: number }[] = [];
   const byDay = new Map<string, { review: number; learning: number }>();
+  // 按本地日历日分桶: "未来第N天" = 今天(不含)之后的第N个日历日, 当天23:59前的到期都算入该日
+  const localDayKey = (date: Date) => new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   for (const card of cards) {
     if (!matches(card, scopes) || !own(progress.cards, card.id)) continue;
     const review = normalizedReview(progress.cards[card.id]);
     if (!review) continue;
     const due = Date.parse(review.dueAt);
     if (!Number.isFinite(due) || due <= instant) continue;
-    const offset = Math.floor((due - instant) / 86400000);
-    if (offset < 0 || offset >= days) continue;
-    const dueDate = new Date(due);
-    const key = new Date(dueDate.getTime() - dueDate.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    const slot = byDay.get(key) || { review: 0, learning: 0 };
+    const dueDay = localDayKey(new Date(due));
+    const todayKey = localDayKey(new Date(instant));
+    const offset = Math.round((Date.parse(dueDay + "T00:00:00") - Date.parse(todayKey + "T00:00:00")) / 86400000);
+    if (offset < 1 || offset > days) continue;
+    const slot = byDay.get(dueDay) || { review: 0, learning: 0 };
     if (review.stage === "review") slot.review += 1; else slot.learning += 1;
-    byDay.set(key, slot);
+    byDay.set(dueDay, slot);
   }
   for (let offset = 1; offset <= days; offset += 1) {
     const dayDate = new Date(instant + offset * 86400000);
-    const key = new Date(dayDate.getTime() - dayDate.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    const key = localDayKey(dayDate);
     const slot = byDay.get(key) || { review: 0, learning: 0 };
     out.push({ date: key, ...slot });
   }

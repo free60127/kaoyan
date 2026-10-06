@@ -43,7 +43,7 @@ function shuffled<T>(items: T[], rng: () => number): T[] {
 
 /** 多点列举/比较类问题不适合"选出一项"的选择题形态(正确项只是部分要点, 选对不等于掌握)。
  *  这些卡仍走闪卡复习与费曼, 不进自动选择自测。 */
-const MULTI_POINT_STEM = /(列举|有哪些|包括哪些|哪几[个种项条点]|分别[是说]|异同|比较一下|对比一)/;
+const MULTI_POINT_STEM = /(列举|有哪些|包括哪些|哪几[个种项条点]|分别[是说指是]|各自|异同|比较一下|对比一|关系如何|区别.{0,6}联系|几个方面|哪些方面|哪些要求|哪些特点|哪些因素|哪些措施|哪些主张|哪些贡献|哪些内容|哪些任务|哪些条件|哪些原则|哪些方法|哪些类型|哪些形式|哪些特征)/;
 
 export function isMcqSuitable(front: string): boolean {
   return !MULTI_POINT_STEM.test(front.replace(/^〔.+?〕\s*/, ""));
