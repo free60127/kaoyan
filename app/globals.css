@@ -78,3 +78,12 @@
 .essay-answer b { display: block; margin-bottom: 6px; }
 .essay-answer p { white-space: pre-line; font-size: 0.9rem; line-height: 1.7; margin-bottom: 8px; }
 .essay-answer small { color: #8a8f9e; }
+.activity-list { display: flex; flex-direction: column; gap: 6px; }
+.activity-row { display: flex; gap: 8px; align-items: baseline; padding: 6px 8px; border-bottom: 1px dashed var(--line, #e8eaf1); }
+.activity-row:last-child { border-bottom: none; }
+.activity-row small { color: #8a8f9e; flex-shrink: 0; }
+.activity-row b { font-size: 0.88rem; font-weight: 500; min-width: 0; }
+.activity-kind { flex-shrink: 0; font-size: 0.72rem; padding: 1px 6px; border-radius: 6px; background: #eef1f7; color: #4b5563; }
+.kind-rating { background: #e8f0fb; color: #2d5aa8; }
+.kind-undo { background: #fdeeea; color: #b45309; }
+.kind-practice { background: #e9f5ef; color: #2d7a4f; }

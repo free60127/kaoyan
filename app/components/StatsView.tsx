@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 import { Flame } from "lucide-react";
 import { lastNDays, streakDays, type DayStat, type StatStore } from "@/lib/stats";
+import { todayActivities, type ActivityEntry } from "@/lib/activity";
 
 type LoadDay = { date: string; review: number; learning: number };
 
 type Book = { id: string; name: string; short: string; tone: string; chapters: unknown[] };
 
-export function StatsView({ subject, subjectLabel, books, done, due, learnedCards, totalCards, storage, forecast }: {
-  subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; learnedCards: number; totalCards: number; storage: StatStore; forecast: LoadDay[];
+export function StatsView({ subject, subjectLabel, books, done, due, learnedCards, totalCards, storage, forecast, activities }: {
+  subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; learnedCards: number; totalCards: number; storage: StatStore; forecast: LoadDay[]; activities: ActivityEntry[];
 }) {
   const [tick, setTick] = useState(0);
   const days: DayStat[] = useMemo(() => lastNDays(storage, subject, 14), [subject, tick]);
@@ -52,6 +53,17 @@ export function StatsView({ subject, subjectLabel, books, done, due, learnedCard
       </div>
       <div className="chart-legend"><span><i className="bar-review"/>到期复习</span><span><i className="bar-learning"/>短间隔回顾</span></div>
       <p className="mock-help">新卡不排期、不计入负荷；连续学习会让短间隔回顾落在未来几天内。到期总数 {forecast.reduce((sum, day) => sum + day.review, 0)} 张。</p>
+    </section>
+    <section className="panel">
+      <div className="panel-heading"><div><span className="eyebrow">TODAY'S LOG</span><h2>今天实际完成了什么</h2></div></div>
+      {activities.length === 0 ? <p className="mock-help">今天还没有记录。闪卡评分、真题与自测答题都会出现在这里。</p> : <div className="activity-list">
+        {activities.map((entry, index) => <div key={entry.t + String(index)} className="activity-row">
+          <small>{entry.t.slice(11, 16)}</small>
+          <span className={"activity-kind kind-" + entry.kind}>{entry.kind === "rating" ? "评分" : entry.kind === "undo" ? "撤销" : entry.kind === "quiz" ? "真题" : "自测"}</span>
+          <b>{entry.label}</b>
+          {entry.detail && <small>{entry.detail}</small>}
+        </div>)}
+      </div>}
     </section>
     <section className="panel">
       <div className="panel-heading"><div><span className="eyebrow">CHAPTER PROGRESS</span><h2>各书章节进度</h2></div></div>

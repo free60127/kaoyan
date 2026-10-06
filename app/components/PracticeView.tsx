@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { buildPracticeQuestions, firstAnswerClause, isMcqSuitable, type PracticeQuestion } from "@/lib/practice-quiz";
 import { recordMistake } from "@/lib/mistakes";
 import { recordStat, type StatStore } from "@/lib/stats";
+import { recordActivity } from "@/lib/activity";
 import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
+import { addMcqExcluded, readMcqExcluded } from "@/lib/mcq-excluded";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string };
@@ -27,6 +29,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   const [count, setCount] = useState(10);
   const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; chosenByIndex: Record<number, number>; meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" } } | null>(null);
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
+  const [excluded, setExcluded] = useState(() => readMcqExcluded());
   useEffect(() => {
     // 同科目同模式的三天内未完成试卷可续做; 换科目自动失效
     setResumable(loadPracticeRound(subject, requiz ? "requiz" : "practice"));
@@ -40,10 +43,11 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   }, [requiz, requizEntries, cards]);
 
   const available = useMemo(() => {
-    if (requiz) return requizPool;
+    if (requiz) return requizPool.filter(card => !excluded.has(card.id));
     const activeBook = books.find(item => item.id === bookId);
-    return activeBook ? cards.filter(card => card.book === activeBook.id && (scope === "book" || card.chapter === chapter)) : [];
-  }, [requiz, requizPool, books, cards, bookId, chapter, scope]);
+    return activeBook ? cards.filter(card => card.book === activeBook.id && !excluded.has(card.id) && (scope === "book" || card.chapter === chapter)) : [];
+  }, [requiz, requizPool, books, cards, bookId, chapter, scope, excluded]);
+
 
   function start() {
     if (!available.length) return;
@@ -95,6 +99,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     const question = round.questions[round.index];
     const firstAttempt = round.chosenByIndex[round.index] === undefined;
     const correct = index === question.answer;
+    recordActivity(storage, subject, "practice", question.stem, correct ? "答对" : "答错");
     // 只在首次作答时计分/记错题: 续做恢复的题不会重复计分
     if (firstAttempt) {
       recordStat(storage, subject, { quiz: 1, quizCorrect: correct ? 1 : 0 });
@@ -193,7 +198,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     {question.hint && <small className="practice-hint">{question.hint}</small>}
     <h2>{question.stem}</h2>
     <div className="options">{question.options.map((item, index) => <button key={index} disabled={round.choice !== null} className={round.choice === null ? "" : index === question.answer ? "correct" : round.choice === index ? "wrong" : ""} onClick={() => answer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div>
-    {round.choice !== null && <div className="explanation"><b>{round.choice === question.answer ? "答对了" : "正确答案：" + "ABCD"[question.answer]}</b><p>对应闪卡：{cards.find(card => card.id === question.cardId)?.back.slice(0, 160) || question.source}</p></div>}
+    {round.choice !== null && <div className="explanation"><b>{round.choice === question.answer ? "答对了" : "正确答案：" + "ABCD"[question.answer]}</b><p>对应闪卡：{cards.find(card => card.id === question.cardId)?.back.slice(0, 160) || question.source}</p><div className="practice-meta-actions"><button type="button" className={excluded.has(question.cardId) ? "mode-button active" : "mode-button"} onClick={() => setExcluded(addMcqExcluded(question.cardId))}>{excluded.has(question.cardId) ? "已排除出自动组卷" : "不适合选择题，排除出自动组卷"}</button></div></div>}
     <div className="quiz-footer"><span>本组 {round.right} / {round.index + (round.choice !== null ? 1 : 0)} 题正确</span><button className="primary" disabled={round.choice === null} onClick={next}>{round.index + 1 >= round.questions.length ? (requiz ? "完成重练" : "查看结果") : "下一题"}</button></div>
   </section>;
 }

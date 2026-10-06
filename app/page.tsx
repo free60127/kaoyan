@@ -9,6 +9,7 @@ import { useStudyReview } from "@/lib/use-study-review";
 import { readMistakes, recordMistake, removeMistakes } from "@/lib/mistakes";
 import { listStats, studyDate } from "@/lib/stats";
 import { recordStat } from "@/lib/stats";
+import { dropLastActivity, recordActivity, todayActivities } from "@/lib/activity";
 import { forecastLoad } from "@/lib/study-scheduler";
 import { StudyReviewCards } from "./components/StudyReview";
 import { MockPractice } from "./components/MockPractice";
@@ -107,7 +108,8 @@ export default function Home() {
   const books333WithSections = useMemo(() => knowledge333 ? withSectionLabels(cards333Model, books333Model).books : base333.books, [knowledge333, cards333Model]);
   const [quizIndex, setQuizIndex] = useState(0);
   const [wrongOnly, setWrongOnly] = useState(false);
-  const [wrongQuizIds, setWrongQuizIds] = useState<Set<string>>(new Set());
+  // 持久化错题本中的真题错题 + 本次会话新增, 合并为"只练错题"范围
+  const [wrongQuizIds, setWrongQuizIds] = useState<Set<string>>(() => new Set(readMistakes().filter(item => item.subject === "333" && item.kind === "quiz").map(item => item.refId)));
   const pendingQuizJump = useRef<string | null>(null);
   // 各科分别保留最近一次评分的副作用; 撤销只回滚当前科目, 不会误伤其他科目的统计
   const ratingSideEffects = useRef<Record<string, {
@@ -320,6 +322,7 @@ export default function Home() {
   function chooseSection(nextSection: string) { updateLocation({ section: nextSection }); }
   const localStorageStore = useMemo(() => ({ getItem: (key: string) => localStorage.getItem(key), setItem: (key: string, value: string) => localStorage.setItem(key, value) }), []);
   function handleRated(card: Card, grade: string, wasNew: boolean) {
+    recordActivity(localStorageStore, subject, "rating", card.front, grade === "again" ? "重来" : grade === "hard" ? "困难" : grade === "easy" ? "很熟悉" : "记住了");
     // 记录本次评分的统计与错题副作用, 供撤销时一并回滚
     const existingMistake = grade === "again" ? readMistakes().find(item => item.subject === subject && item.refId === card.id && item.kind === "card") : undefined;
     if (!ratingSideEffects.current) ratingSideEffects.current = {};
@@ -337,6 +340,8 @@ export default function Home() {
   function undoLastRating() {
     const effects = ratingSideEffects.current?.[subject];
     if (!effects) return;
+    dropLastActivity(localStorageStore, subject, "rating");
+    recordActivity(localStorageStore, subject, "undo", "撤销了一次闪卡评分");
     review.undoLastRating();
     delete ratingSideEffects.current![subject];
     // 统计回滚: 按评分当日的日期扣回(支持跨日撤销), 只动本科目
@@ -376,8 +381,10 @@ export default function Home() {
   }
   function handleQuizAnswer(index: number) {
     if (!quiz) return;
+    // 计分在选项点击后统一进行; 活动记录在答案判定处
     const correct = index === quiz.answer;
     recordStat(localStorageStore, "333", { quiz: 1, quizCorrect: correct ? 1 : 0 });
+    recordActivity(localStorageStore, "333", "quiz", quiz.stem, correct ? "答对" : "答错");
     if (!correct) {
       recordMistake("333", "quiz", quiz.id, quiz.stem);
       setWrongQuizIds(previous => new Set(previous).add(quiz.id));
@@ -495,7 +502,7 @@ export default function Home() {
           {view === "practice" && subject === "333" && <>{heading("SELF QUIZ", "333 · 选择题自测", "由 333 闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。答错自动进入错题本。")}{picker}<PracticeView subject="333" subjectName="333 教育综合" books={books} cards={cards333Model} bookId={book} chapter={chapter} storage={localStorageStore}/></>}
           {view === "practice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView subject="825" subjectName="825 英语专业基础" books={books} cards={(data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Model, politics: politicsModels.cards, "825": (data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
-          {view === "stats" && <>{heading("STUDY STATS", "学习统计", "每日评分、练习与连续学习天数；数据保存在本浏览器，可用“备份与导出”迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, Date.now(), 14)}/></>}
+          {view === "stats" && <>{heading("STUDY STATS", "学习统计", "每日评分、练习与连续学习天数；数据保存在本浏览器，可用“备份与导出”迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, Date.now(), 14)}/></>}
           {view === "search" && <>{heading("GLOBAL SEARCH", "搜索全部闪卡", "跨科目搜索 3600+ 张闪卡，点击结果直达对应章节与卡片。")}{!searchEntries.length ? <div className="panel empty">正在汇总三科卡片索引…</div> : <SearchView entries={searchEntries} onJump={(entry) => jumpToCard(entry.id)}/>}</>}
           {view === "quiz" && subject === "825" && <>{heading("PAST PAPERS", "825 真题 · 开放题练习与索引", "按书目和年份筛选。题目没有章节归属；可文字作答并查看可用参考答案，不自动判分。")}<div className="past-filters"><label>书目<select value={book} onChange={(event) => { chooseChapter(event.target.value, 1, "quiz"); setPastYear(2026); }}><option value="linguistics">语言学</option><option value="literature">英美文学</option></select></label><label>年份<select value={activeYear || ""} onChange={(event) => { setPastYear(Number(event.target.value)); setPastIndex(0); setPastRevealed(false); }} disabled={!years.length}>{years.map((year) => <option key={year} value={year}>{year} 年</option>)}</select></label><button className={pastMode === "practice" ? "mode-button active" : "mode-button"} onClick={() => { setPastMode("practice"); setPastIndex(0); setPastRevealed(false); }}>可练习题 ({yearQuestions.filter((item) => item.practiceReady).length})</button><button className={pastMode === "index" ? "mode-button active" : "mode-button"} onClick={() => { setPastMode("index"); setPastIndex(0); setPastRevealed(false); }}>索引浏览 ({yearQuestions.filter((item) => !item.practiceReady).length})</button></div><section className="panel quiz-card"><div className="past-question-heading"><div className="quiz-top"><span>{pastMode === "practice" ? "可练习真题" : "仅索引浏览"}</span><small>{pastPool.length ? "第 " + (pastPosition + 1) + " / " + pastPool.length + " 条" : "当前年份没有该类记录"}</small></div></div>{pastQuestion ? <><div className="question-meta"><span>{pastQuestion.year} 年</span><span>{questionType[pastQuestion.type] || "其他题型"} ({pastQuestion.type})</span><span>{statusLabel[pastQuestion.status]}</span></div><h2>{pastQuestion.stem}</h2>{pastMode === "practice" ? <><p className="not-scored">文字作答练习 · 不自动判分</p><label className="answer-label" htmlFor="past-answer">我的作答</label><textarea id="past-answer" ref={pastAnswerRef} className="past-answer" value={pastAnswer} onChange={(event) => setPastAnswer(event.target.value)} placeholder="组织答案；完成后可查看资料中的参考答案。"/><CopyAnswerButton text={pastAnswer} answerRef={pastAnswerRef}/><button className="primary reveal-button" onClick={() => setPastRevealed((value) => !value)}>{pastRevealed ? "收起参考信息" : "查看参考答案与解析"}</button>{pastRevealed && <div className="explanation past-explanation">{pastQuestion.referenceAnswer ? <><b>参考答案 · 非官方资料，仅供对照</b><p>{pastQuestion.referenceAnswer}</p></> : <><b>该题没有参考答案</b><p>当前资料没有可用参考答案；系统不会对你的文字作答评分。</p></>}{pastQuestion.analysis ? <><strong>解析</strong><p>{pastQuestion.analysis}</p></> : <p>当前记录没有单独的解析文本。</p>}{pastQuestion.answerSource && <small>答案来源：{pastQuestion.answerSource}</small>}</div>}</> : <div className="limitation-box"><b>索引浏览 · 不进入练习</b><p>{pastQuestion.limitation || "该记录未通过可练习校验，仅供目录和出处浏览。"}</p></div>}<div className="source-details"><p><b>来源状态：</b>{statusLabel[pastQuestion.status]}</p><p><b>原题来源：</b>{pastQuestion.source}</p><p><b>原 PDF：</b>{pastQuestion.sourceFile} · 第 {pastQuestion.sourcePage} 页</p></div><div className="quiz-footer"><span>按书目和年份整理 · 未提供章节映射</span><button className="secondary" disabled={pastPosition === 0 || !pastPool.length} onClick={() => { setPastIndex((index) => Math.max(0, index % pastPool.length - 1)); setPastRevealed(false); }}>上一题</button><button className="primary" disabled={pastPool.length < 2} onClick={() => { setPastIndex((index) => (index + 1) % pastPool.length); setPastRevealed(false); }}>下一题</button></div></> : <div className="empty">当前年份没有记录，请切换年份或书目。</div>}</section></>}
           {view === "feynman" && <>{heading("TEACH IT BACK", subject === "825" ? "用自己的话讲清一个知识点" : "把知识讲给“别人”听", "可打字或使用浏览器语音转文字。DeepSeek 的评分和反馈仅是学习建议，不是标准答案。")}{picker}<div className="feynman-layout"><section className="panel speaking"><span className="eyebrow">CURRENT TOPIC</span><h2>{section || chapterName}</h2><p>{subject === "825" ? "AI 会参考当前书目中有限的相关笔记；可选择章节或小节。" : subject === "politics" ? "建议按“是什么 → 为什么 → 有哪些要点 → 易混点”讲述，可选择考点小节。尽量不照着闪卡念。" : "建议按“是什么 → 为什么 → 举一个课堂例子 → 易混点”讲述，可选择小节。尽量不用照着教材念。"}</p>{sectionHints.length > 0 && <div className="section-outline topic-hints"><strong>本节知识点（来自笔记卡，供复述自查）</strong>{sectionHints.map((item, index) => <div key={index}><span>{String(index + 1).padStart(2, "0")}</span>{item}</div>)}</div>}<SpeechInputControls key={JSON.stringify([subject, book, chapter, section])} language={speechLanguage} onLanguageChange={setSpeechLanguage} setAnswer={setAnswer} answerRef={answerRef}/></section><section className="panel writing"><label htmlFor="answer">我的复述</label><textarea id="answer" ref={answerRef} value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder="例如：我会这样向同学解释这个概念……"/><div className="write-footer"><small>{answer.length} 字</small><CopyAnswerButton text={answer} answerRef={answerRef}/><button className="primary" disabled={!answer.trim() || loading} onClick={() => ask("feedback")}><Sparkles size={17}/>{loading ? "分析中…" : "让 DeepSeek 评分并反馈"}</button>{loading && <button className="secondary" onClick={cancelRequest}>取消生成</button>}</div>{feedback && <><div className="ai-caveat">AI 反馈是练习参考，不能替代教材或权威评分。</div><div className="ai-result"><b><Brain size={18}/> DeepSeek 反馈</b><p>{feedback}</p></div></>}</section></div></>}
