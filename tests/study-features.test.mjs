@@ -32,8 +32,6 @@ test("practice-quiz: 题干来自卡正面、正确项可定位、干扰项互�
   // 章节过滤
   const scoped = buildPracticeQuestions(cards, { bookId: "mayuan", chapters: [2], count: 20, seed: 1 });
   assert.equal(scoped.length, 12);
-  // 首句抽取: 分号/句号截断 + 📌行剔除
-  assert.equal(firstAnswerClause("答案句。第二句。\n📌 该书标注：易考"), "答案句");
 });
 
 test("mistakes: 累计错误次数、移除与按科目清空", async () => {

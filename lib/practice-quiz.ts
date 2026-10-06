@@ -16,10 +16,20 @@ export function mulberry32(seed: number) {
   };
 }
 
-export function firstAnswerClause(back: string, max = 96): string {
+/** 取卡背的开头若干句作为选项文本: 逐句累加直到达到最小长度, 再按上限截断。
+ *  判断式卡片(如“不对。原因是…”)的首句太短, 单独用作选项没有区分度。 */
+export function firstAnswerClause(back: string, max = 110): string {
   const cleaned = back.replace(PIN_LINE, "").trim();
-  const firstLine = cleaned.split(/[\n。；;]/)[0].trim() || cleaned.slice(0, max);
-  return firstLine.length > max ? firstLine.slice(0, max - 1) + "…" : firstLine;
+  const hasCjk = /[\u4e00-\u9fff]/.test(cleaned);
+  const min = hasCjk ? 12 : 30;
+  const parts = cleaned.split(/(?<=[。；;\n])/);
+  let out = "";
+  for (const part of parts) {
+    out += part;
+    if (out.replace(/\s/g, "").length >= min) break;
+  }
+  out = out.trim() || cleaned.slice(0, max);
+  return out.length > max ? out.slice(0, max - 1) + "…" : out;
 }
 
 function shuffled<T>(items: T[], rng: () => number): T[] {
