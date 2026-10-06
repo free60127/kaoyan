@@ -1,5 +1,5 @@
 /** 科目能力的唯一事实源: 导航过滤、资料懒加载触发、备份/位置校验都从这里派生。 */
-import { Target, BookOpen, Layers3, CircleHelp, ClipboardList, Sparkles, Mic, LineChart, Search, type LucideIcon } from "lucide-react";
+import { Target, BookOpen, Layers3, CircleHelp, ClipboardList, Sparkles, Mic, LineChart, Search, FileText, type LucideIcon } from "lucide-react";
 import type { StudySubject, StudyView } from "./learning-session";
 
 export type SubjectInfo = { id: StudySubject; name: string; mark: string; short: string; tone: string; hasData: boolean; books: string[] };
@@ -20,6 +20,7 @@ export const subjectHasData: Record<StudySubject, boolean> = { english: false, p
  *  政治没有真题与模拟卷数据。 */
 export function viewAvailable(subject: StudySubject, view: StudyView): boolean {
   if (subject === "politics" && (view === "quiz" || view === "mock")) return false;
+  if (view === "essay") return subject === "333"; // 主观题库目前仅 333 资料
   return true;
 }
 
@@ -36,6 +37,7 @@ export const views: ViewInfo[] = [
   { id: "chapters", label: "章节学习", Icon: BookOpen, group: "学习" },
   { id: "cards", label: "Anki 闪卡", Icon: Layers3, group: "学习" },
   { id: "quiz", label: "真题练习", Icon: CircleHelp, group: "练习" },
+  { id: "essay", label: "主观题库", Icon: FileText, group: "练习" },
   { id: "practice", label: "选择自测", Icon: ClipboardList, group: "练习" },
   { id: "mock", label: "AI 模拟卷", Icon: Sparkles, group: "练习" },
   { id: "mistakes", label: "错题本", Icon: ClipboardList, group: "工具" },

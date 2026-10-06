@@ -18,7 +18,9 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
     if (refreshedForUpdate) return;
     refreshedForUpdate = true;
     if (document.visibilityState !== "visible") return;
-    const busy = document.querySelector(".mock-progress, .speech-input-controls [class*=listening], .ai-result ~ * , [data-busy=true]");
+    const busy = document.querySelector(".mock-progress") !== null
+      || document.documentElement.hasAttribute("data-speech-busy")
+      || document.documentElement.hasAttribute("data-ai-busy");
     const typing = document.activeElement instanceof HTMLTextAreaElement || document.activeElement instanceof HTMLInputElement;
     if (busy || typing) {
       const banner = document.createElement("div");

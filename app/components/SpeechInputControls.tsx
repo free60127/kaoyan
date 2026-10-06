@@ -22,6 +22,13 @@ export function SpeechInputControls({ language, onLanguageChange, setAnswer, ans
       if (controller.current === current) controller.current = null;
     };
   }, [language, setAnswer]);
+  // 真实语音状态挂到根元素: SW 更新保护据此判断"正在语音输入"不可自动刷新
+  useLayoutEffect(() => {
+    const busy = state.status !== "idle";
+    if (busy) document.documentElement.setAttribute("data-speech-busy", "true");
+    else document.documentElement.removeAttribute("data-speech-busy");
+    return () => { document.documentElement.removeAttribute("data-speech-busy"); };
+  }, [state.status]);
 
   const active = state.status !== "idle";
   return <div className="speech-input-controls">

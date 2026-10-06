@@ -50,10 +50,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     let questions: PracticeQuestion[];
     if (requiz) {
       const byId = new Map(cards.map(card => [card.id, card]));
-      // 干扰项借用同科目全部卡，正确项固定为错题卡
-      questions = requizEntries!
-        .map(entry => byId.get(entry.refId))
-        .filter((card): card is Card => !!card)
+      // 与"可用N张"一致: 从过滤后的合格池出题(不适合选择题形态的卡已排除)
+      questions = available
         .slice(0, Math.max(count, 5))
         .map(card => {
           const hintMatch = card.front.match(/^〔(.+?)〕/);
@@ -104,7 +102,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     }
     setRound(previous => {
       if (!previous) return previous;
-      const wrongIds = correct && firstAttempt
+      // 答对永不进入错题集合(即使这道题是续做恢复前答过的); 答错只补记一次
+      const wrongIds = correct
         ? previous.wrongIds
         : (previous.wrongIds.includes(question.cardId) ? previous.wrongIds : [...previous.wrongIds, question.cardId]);
       const nextRound = { ...previous, wrongIds, choice: index, right: previous.right + (correct && firstAttempt ? 1 : 0), chosenByIndex: { ...previous.chosenByIndex, [previous.index]: index } };

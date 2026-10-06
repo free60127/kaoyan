@@ -19,6 +19,8 @@ import { MistakesView } from "./components/MistakesView";
 import { PracticeView } from "./components/PracticeView";
 import { StatsView } from "./components/StatsView";
 import { SearchView, type SearchEntry } from "./components/SearchView";
+import { EssayBank } from "./components/EssayBank";
+import { loadEssayQuestions, type EssayQuestion } from "@/lib/essay-questions";
 import { Overview333, Overview825, OverviewPolitics } from "./components/OverviewPanels";
 import { selectedAnswer } from "@/lib/copy-answer";
 import { createLearningSession, defaultPlannerPrompt, feynmanDraftKey, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type StudySubject, type StudyView } from "@/lib/learning-session";
@@ -87,6 +89,13 @@ export default function Home() {
   const [data825, setData825] = useState<StudyData825 | null>(null), [dataError, setDataError] = useState(""), [loadAttempt, setLoadAttempt] = useState(0);
   const [dataPolitics, setDataPolitics] = useState<StudyDataPolitics | null>(null);
   const [knowledge333, setKnowledge333] = useState<Card[] | null>(null);
+  const [essayQuestions, setEssayQuestions] = useState<EssayQuestion[] | null>(null);
+  useEffect(() => {
+    if (essayQuestions) return;
+    let cancelled = false;
+    loadEssayQuestions().then(data => { if (!cancelled) setEssayQuestions(data); }).catch(() => { /* 主观题库加载失败不影响其他功能 */ });
+    return () => { cancelled = true; };
+  }, [essayQuestions]);
   const [jumpCard, setJumpCard] = useState<string | undefined>(undefined);
   useEffect(() => {
     let cancelled = false;
@@ -100,7 +109,15 @@ export default function Home() {
   const [wrongOnly, setWrongOnly] = useState(false);
   const [wrongQuizIds, setWrongQuizIds] = useState<Set<string>>(new Set());
   const pendingQuizJump = useRef<string | null>(null);
-  const ratingSideEffects = useRef<{ subject: string; stats: { ratings: number; again: number; newCards: number }; mistakeRefId: string | null; mistakeExistedBefore: boolean } | null>(null);
+  // 各科分别保留最近一次评分的副作用; 撤销只回滚当前科目, 不会误伤其他科目的统计
+  const ratingSideEffects = useRef<Record<string, {
+    subject: string;
+    date: string;
+    stats: { ratings: number; again: number; newCards: number };
+    mistakeRefId: string | null;
+    mistakeExistedBefore: boolean;
+    mistakePreviousCount: number;
+  }>>({});
   const [choice, setChoice] = useState<number | null>(null), [score, setScore] = useState({ right: 0, total: 0 });
   const [doneStorageError, setDoneStorageError] = useState("");
   const [recordSaveErrors, setRecordSaveErrors] = useState<Record<string, boolean>>({});
@@ -304,44 +321,57 @@ export default function Home() {
   const localStorageStore = useMemo(() => ({ getItem: (key: string) => localStorage.getItem(key), setItem: (key: string, value: string) => localStorage.setItem(key, value) }), []);
   function handleRated(card: Card, grade: string, wasNew: boolean) {
     // 记录本次评分的统计与错题副作用, 供撤销时一并回滚
-    ratingSideEffects.current = {
+    const existingMistake = grade === "again" ? readMistakes().find(item => item.subject === subject && item.refId === card.id && item.kind === "card") : undefined;
+    if (!ratingSideEffects.current) ratingSideEffects.current = {};
+    ratingSideEffects.current[subject] = {
       subject,
+      date: today(),
       stats: { ratings: 1, again: grade === "again" ? 1 : 0, newCards: wasNew ? 1 : 0 },
       mistakeRefId: grade === "again" ? card.id : null,
-      mistakeExistedBefore: grade === "again" ? readMistakes().some(item => item.subject === subject && item.refId === card.id) : false,
+      mistakeExistedBefore: !!existingMistake,
+      mistakePreviousCount: existingMistake?.wrongCount ?? 0,
     };
-    recordStat(localStorageStore, subject, ratingSideEffects.current.stats);
+    recordStat(localStorageStore, subject, ratingSideEffects.current[subject].stats);
     if (grade === "again") recordMistake(subject, "card", card.id, card.front);
   }
   function undoLastRating() {
-    review.undoLastRating();
-    const effects = ratingSideEffects.current;
-    ratingSideEffects.current = null;
+    const effects = ratingSideEffects.current?.[subject];
     if (!effects) return;
-    // 统计回滚: 同日计数按本次评分扣回
-    const days = listStats(localStorageStore, effects.subject);
-    const todayKey = studyDate(new Date());
-    const day = days.find(entry => entry.date === todayKey);
-    if (day) {
-      const stored = JSON.parse(localStorage.getItem("yantu-stats-v1-" + effects.subject) || "{}");
-      const current = stored[todayKey];
-      if (current) {
-        stored[todayKey] = {
-          date: todayKey,
-          ratings: Math.max(0, current.ratings - effects.stats.ratings),
-          again: Math.max(0, current.again - effects.stats.again),
-          newCards: Math.max(0, current.newCards - effects.stats.newCards),
-          quiz: current.quiz,
-          quizCorrect: current.quizCorrect,
-        };
-        try { localStorage.setItem("yantu-stats-v1-" + effects.subject, JSON.stringify(stored)); } catch { /* 横幅会提示 */ }
+    review.undoLastRating();
+    delete ratingSideEffects.current![subject];
+    // 统计回滚: 按评分当日的日期扣回(支持跨日撤销), 只动本科目
+    const stored = JSON.parse(localStorage.getItem("yantu-stats-v1-" + effects.subject) || "{}");
+    const current = stored[effects.date];
+    if (current) {
+      stored[effects.date] = {
+        date: effects.date,
+        ratings: Math.max(0, current.ratings - effects.stats.ratings),
+        again: Math.max(0, current.again - effects.stats.again),
+        newCards: Math.max(0, current.newCards - effects.stats.newCards),
+        quiz: current.quiz,
+        quizCorrect: current.quizCorrect,
+      };
+      try {
+        localStorage.setItem("yantu-stats-v1-" + effects.subject, JSON.stringify(stored));
+        window.dispatchEvent(new CustomEvent("yantu-storage-saved"));
+      } catch {
+        window.dispatchEvent(new CustomEvent("yantu-storage-error", { detail: { store: "stats", subject: effects.subject } }));
       }
     }
-    // 错题回滚: 本次新建的错题移除; 已存在的保留(只算累计)
-    if (effects.mistakeRefId && !effects.mistakeExistedBefore) {
+    // 错题回滚: 本次新建的移除; 已存在的恢复原错误次数
+    if (effects.mistakeRefId) {
       const list = readMistakes();
       const target = list.find(item => item.subject === effects.subject && item.refId === effects.mistakeRefId && item.kind === "card");
-      if (target) removeMistakes([target.id]);
+      if (target && !effects.mistakeExistedBefore) removeMistakes([target.id]);
+      else if (target && effects.mistakeExistedBefore) {
+        const rolled = list.map(item => item.id === target.id ? { ...item, wrongCount: effects.mistakePreviousCount } : item);
+        try {
+          localStorage.setItem("yantu-mistakes-v1", JSON.stringify(rolled));
+          window.dispatchEvent(new CustomEvent("yantu-storage-saved"));
+        } catch {
+          window.dispatchEvent(new CustomEvent("yantu-storage-error", { detail: { store: "mistakes" } }));
+        }
+      }
     }
   }
   function handleQuizAnswer(index: number) {
@@ -400,7 +430,10 @@ export default function Home() {
       if (currentRequest !== requestId.current) return;
       mode === "plan" ? setReply(data.text || "") : setFeedback(data.text || "");
     } catch (error) { if (currentRequest === requestId.current) { const message = error instanceof Error ? error.message : "连接失败"; mode === "plan" ? setReply(message) : setFeedback(message); } }
-    finally { if (currentRequest === requestId.current) { requestController.current = null; setLoading(false); } }
+    finally {
+      if (!requestController.current) document.documentElement.removeAttribute("data-ai-busy");
+      if (currentRequest === requestId.current) { requestController.current = null; setLoading(false); }
+    }
   }
 
   const overviewProps = {
@@ -458,6 +491,7 @@ export default function Home() {
           {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} onRated={handleRated} onUndoRating={undoLastRating}/></>}
           {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}{wrongQuizIds.size > 0 && <span> · 本次会话答错 {wrongQuizIds.size} 题</span>}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button></div>{quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
           {view === "practice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView subject="politics" subjectName="政治" books={books} cards={politicsModels.cards} bookId={book} chapter={chapter} storage={localStorageStore}/></>}
+          {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "《高效答题手册》84 道完整主观题：材料、设问与分点参考答案原样保留；先自己作答再展开对照。")}<EssayBank entries={(essayQuestions || []).map(q => ({ id: q.id, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
           {view === "practice" && subject === "333" && <>{heading("SELF QUIZ", "333 · 选择题自测", "由 333 闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。答错自动进入错题本。")}{picker}<PracticeView subject="333" subjectName="333 教育综合" books={books} cards={cards333Model} bookId={book} chapter={chapter} storage={localStorageStore}/></>}
           {view === "practice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView subject="825" subjectName="825 英语专业基础" books={books} cards={(data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Model, politics: politicsModels.cards, "825": (data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}

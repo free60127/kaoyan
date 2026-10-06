@@ -9,7 +9,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "test:mock-quiz": "node --test tests/mock-quiz*.mjs",
     "test:backup-pdf": "node --test tests/backup-pdf.test.mjs",
-    "test": "node --test tests/mock-practice-state.mjs tests/*.test.mjs"
+    "test": "node --test tests/*.mjs"
   },
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
