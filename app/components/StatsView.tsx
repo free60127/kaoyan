@@ -2,10 +2,12 @@ import { useMemo, useState } from "react";
 import { Flame } from "lucide-react";
 import { lastNDays, streakDays, type DayStat, type StatStore } from "@/lib/stats";
 
+type LoadDay = { date: string; review: number; learning: number };
+
 type Book = { id: string; name: string; short: string; tone: string; chapters: unknown[] };
 
-export function StatsView({ subject, subjectLabel, books, done, due, learnedCards, totalCards, storage }: {
-  subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; learnedCards: number; totalCards: number; storage: StatStore;
+export function StatsView({ subject, subjectLabel, books, done, due, learnedCards, totalCards, storage, forecast }: {
+  subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; learnedCards: number; totalCards: number; storage: StatStore; forecast: LoadDay[];
 }) {
   const [tick, setTick] = useState(0);
   const days: DayStat[] = useMemo(() => lastNDays(storage, subject, 14), [subject, tick]);
@@ -33,6 +35,23 @@ export function StatsView({ subject, subjectLabel, books, done, due, learnedCard
       </div>
       <div className="chart-legend"><span><i className="bar-rating"/>闪卡评分</span><span><i className="bar-quiz"/>练习答题</span></div>
       <p className="mock-help">统计自本功能启用起按日累计，保存在本浏览器。</p>
+    </section>
+    <section className="panel">
+      <div className="panel-heading"><div><span className="eyebrow">UPCOMING LOAD</span><h2>未来 14 天复习负荷</h2></div></div>
+      <div className="load-chart" role="img" aria-label="未来14天复习负荷图">
+        {forecast.map((day) => {
+          const max = Math.max(1, ...forecast.map(item => item.review + item.learning));
+          return <div key={day.date} className="chart-column" title={`${day.date}：到期复习 ${day.review} · 短间隔回顾 ${day.learning}`}>
+            <div className="chart-bars">
+              <i style={{ height: `${100 * day.review / max}%` }} className="bar-review"/>
+              <i style={{ height: `${100 * day.learning / max}%` }} className="bar-learning"/>
+            </div>
+            <small>{day.date.slice(5)}</small>
+          </div>;
+        })}
+      </div>
+      <div className="chart-legend"><span><i className="bar-review"/>到期复习</span><span><i className="bar-learning"/>短间隔回顾</span></div>
+      <p className="mock-help">新卡不排期、不计入负荷；连续学习会让短间隔回顾落在未来几天内。到期总数 {forecast.reduce((sum, day) => sum + day.review, 0)} 张。</p>
     </section>
     <section className="panel">
       <div className="panel-heading"><div><span className="eyebrow">CHAPTER PROGRESS</span><h2>各书章节进度</h2></div></div>

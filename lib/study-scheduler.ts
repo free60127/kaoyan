@@ -180,6 +180,37 @@ function matches(card: CardIdentity, scopes: readonly StudyScope[]): boolean {
   return scopes.some(scope => scope.bookId === card.book && scope.chapters.includes(card.chapter) && (scope.section === undefined || scope.section === card.section));
 }
 
+/** 未来 n 天的复习负荷: 按日统计将到期的复习卡与短间隔回顾(新卡不排期, 不计入)。
+ *  供统计页的负荷预览——按天看会来多少张、都是什么类型。 */
+export function forecastLoad(catalog: readonly CardIdentity[], progress: StudyProgress, now: StudyTime, days: number): { date: string; review: number; learning: number }[] {
+  const instant = time(now).getTime();
+  const cards = identities(catalog);
+  const scopes = normalizeStudyScopes(progress.scopes, cards);
+  const out: { date: string; review: number; learning: number }[] = [];
+  const byDay = new Map<string, { review: number; learning: number }>();
+  for (const card of cards) {
+    if (!matches(card, scopes) || !own(progress.cards, card.id)) continue;
+    const review = normalizedReview(progress.cards[card.id]);
+    if (!review) continue;
+    const due = Date.parse(review.dueAt);
+    if (!Number.isFinite(due) || due <= instant) continue;
+    const offset = Math.floor((due - instant) / 86400000);
+    if (offset < 0 || offset >= days) continue;
+    const dueDate = new Date(due);
+    const key = new Date(dueDate.getTime() - dueDate.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    const slot = byDay.get(key) || { review: 0, learning: 0 };
+    if (review.stage === "review") slot.review += 1; else slot.learning += 1;
+    byDay.set(key, slot);
+  }
+  for (let offset = 1; offset <= days; offset += 1) {
+    const dayDate = new Date(instant + offset * 86400000);
+    const key = new Date(dayDate.getTime() - dayDate.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    const slot = byDay.get(key) || { review: 0, learning: 0 };
+    out.push({ date: key, ...slot });
+  }
+  return out;
+}
+
 export function buildStudyQueue(catalog: readonly CardIdentity[], progress: StudyProgress, now: StudyTime, filter?: StudyScope | StudyScope[]): StudyQueue {
   const instant = time(now).getTime();
   const cards = identities(catalog);
@@ -262,5 +293,17 @@ export function applyRating(progress: StudyProgress, cardId: string, grade: Rati
     daily: { date: localStudyDate(now), admitted: admittedToday(progress, now) },
   };
   next.daily.admitted = admittedToday(next, now);
+  return next;
+}
+
+export type RatingUndo = { cardId: string; previous: ReviewState | null; daily: StudyProgress["daily"] };
+
+/** 撤销最近一次评分: 恢复该卡此前的复习状态与当日新卡准入名单。
+ *  只支持撤最近一次(不留链), 避免误点连撤把学习记录搞乱。 */
+export function undoRating(progress: StudyProgress, undo: RatingUndo): StudyProgress {
+  const cards = { ...progress.cards };
+  if (undo.previous) cards[undo.cardId] = undo.previous;
+  else delete cards[undo.cardId];
+  const next: StudyProgress = { ...progress, cards, daily: undo.daily };
   return next;
 }

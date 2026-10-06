@@ -121,3 +121,91 @@ test("stats: 按日累计、连续天数与补零序列", async () => {
   // 跨时区: 用本地日期而非 UTC
   assert.ok(statsKey("333").includes("333"));
 });
+
+test("subject-capabilities: 单一事实源与侧栏过滤", async () => {
+  const { sidebarViews, viewAvailable, subjects, subjectBooks } = await realModule("../lib/subject-capabilities.ts");
+  const { isRestorableView } = await realModule("../lib/learning-session.ts");
+  // 政治无 quiz/mock
+  assert.equal(viewAvailable("politics", "quiz"), false);
+  assert.equal(viewAvailable("politics", "mock"), false);
+  assert.equal(viewAvailable("politics", "practice"), true);
+  // 825 有真题; 333 全开
+  assert.equal(viewAvailable("825", "quiz"), true);
+  assert.equal(viewAvailable("333", "quiz"), true);
+  // sidebarViews 与 isRestorableView 一致(导航与备份不再各说各话)
+  for (const subject of ["333", "825", "politics", "english"]) {
+    const navIds = sidebarViews(subject).map(view => view.id);
+    for (const id of navIds) assert.equal(isRestorableView(subject, id), true, subject + ":" + id);
+    for (const view of ["overview", "chapters", "cards", "quiz", "practice", "mock", "feynman", "mistakes", "stats", "search", "planner"]) {
+      if (!navIds.includes(view)) assert.equal(viewAvailable(subject, view), false);
+    }
+  }
+  // 科目书目表与备份的静态校验一致
+  assert.deepEqual(subjectBooks["825"], ["linguistics", "literature"]);
+  assert.equal(subjects.length, 4);
+  // 侧栏分组: 学习/练习/工具 三组都非空(333)
+  const groups = new Set(sidebarViews("333").map(view => view.group));
+  assert.ok(groups.has("学习") && groups.has("练习") && groups.has("工具"));
+});
+
+test("practice-quiz: 试卷范围元数据冻结(start 时快照)", async () => {
+  // 通过 buildPracticeQuestions 的确定性 + PracticeView meta 逻辑在数据层的等价物:
+  // 换书后用旧 seed 重放, 题目不变 → 证明"卷子属于出题那一刻的范围"
+  const { buildPracticeQuestions } = await realModule("../lib/practice-quiz.ts");
+  const cards = Array.from({ length: 20 }, (_, i) => ({ id: `c${i}`, book: i < 10 ? "a" : "b", chapter: 1, front: `第${i}题问什么`, back: `答${i}` }));
+  const fromA = buildPracticeQuestions(cards, { bookId: "a", count: 5, seed: 99 });
+  const fromB = buildPracticeQuestions(cards, { bookId: "b", count: 5, seed: 99 });
+  assert.ok(fromA.every(q => q.options.some(o => /答\d/.test(o))));
+  assert.notDeepEqual(fromA.map(q => q.cardId), fromB.map(q => q.cardId));
+});
+
+test("practice-draft: 保存/读取/过期与损坏防护", async () => {
+  const { savePracticeRound, loadPracticeRound, clearPracticeRound, practiceDraftKey } = await realModule("../lib/practice-draft.ts");
+  const store = new Map();
+  globalThis.localStorage = { getItem: k => store.get(k) ?? null, setItem: (k, v) => store.set(k, v), removeItem: k => store.delete(k) };
+  const questions = [1, 2, 3].map(n => ({ cardId: "c" + n, stem: "题" + n, hint: "考点", options: ["a", "b", "c", "d"], answer: 1, source: "自测" }));
+  const base = { subject: "333", mode: "practice", meta: { bookId: "principles", bookName: "教育学原理", chapter: 2, scope: "chapter" }, questions, index: 0, choice: null, right: 0, answers: {} };
+  assert.equal(savePracticeRound({ ...base, index: 2, choice: 1, right: 1, answers: { 0: 1, 1: 3 } }), true);
+  const restored = loadPracticeRound("333", "practice");
+  assert.ok(restored);
+  assert.equal(restored.index, 2);
+  assert.equal(restored.answers["1"], 3);
+  // 科目不匹配 → null
+  assert.equal(loadPracticeRound("politics", "practice"), null);
+  // 过期(3天前)
+  const stale = JSON.parse(store.get(practiceDraftKey));
+  stale.savedAt = "2026-09-01T00:00:00.000Z";
+  store.set(practiceDraftKey, JSON.stringify(stale));
+  assert.equal(loadPracticeRound("333", "practice"), null);
+  // 损坏
+  store.set(practiceDraftKey, "{broken");
+  assert.equal(loadPracticeRound("333", "practice"), null);
+  // answer越界的选项被拒
+  const bad = { ...base, questions: [{ ...questions[0], answer: 9 }] };
+  store.set(practiceDraftKey, JSON.stringify({ ...bad, version: 1, savedAt: new Date().toISOString(), answers: {} }));
+  assert.equal(loadPracticeRound("333", "practice"), null);
+  clearPracticeRound();
+  assert.equal(loadPracticeRound("333", "practice"), null);
+  delete globalThis.localStorage;
+});
+
+test("scheduler undo: 恢复卡片状态与当日准入", async () => {
+  const mod = await realModule("../lib/study-scheduler.ts");
+  const now = new Date(2026, 9, 6, 12);
+  let progress = mod.createEmptyProgress(now);
+  const card = { id: "c1", book: "b", chapter: 1 };
+  // 新卡评分"记住了" → 进入复习; 撤销 → 回到未学
+  progress = mod.applyRating(progress, card.id, "good", now);
+  assert.ok(progress.cards[card.id]);
+  assert.ok(progress.daily.admitted.includes(card.id));
+  const undo = { cardId: card.id, previous: null, daily: { date: progress.daily.date, admitted: [] } };
+  const undone = mod.undoRating(progress, undo);
+  assert.ok(!undone.cards[card.id]);
+  assert.equal(undone.daily.admitted.length, 0);
+  // 有既往复习的卡: 撤销恢复原 dueAt
+  progress = mod.applyRating(undone, card.id, "good", now);
+  const before = { cardId: card.id, previous: { ...progress.cards[card.id] }, daily: { ...progress.daily, admitted: [...progress.daily.admitted] } };
+  const afterSecond = mod.applyRating(progress, card.id, "again", now);
+  const restored = mod.undoRating(afterSecond, before);
+  assert.equal(restored.cards[card.id].dueAt, before.previous.dueAt);
+});

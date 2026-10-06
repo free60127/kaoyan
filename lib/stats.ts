@@ -13,13 +13,33 @@ export const studyDate = (now: Date): string => {
   return local.toISOString().slice(0, 10);
 };
 
+const DAY_FIELDS = ["ratings", "again", "newCards", "quiz", "quizCorrect"] as const;
+
+function sanitizeDay(value: unknown, date: string): DayStat | null {
+  if (!value || typeof value !== "object") return null;
+  const row = value as Record<string, unknown>;
+  const out: DayStat = { date, ratings: 0, again: 0, newCards: 0, quiz: 0, quizCorrect: 0 };
+  for (const field of DAY_FIELDS) {
+    const num = row[field];
+    if (typeof num === "number" && Number.isFinite(num) && num >= 0 && num <= 1_000_000) out[field] = Math.floor(num);
+  }
+  return out;
+}
+
+/** 读取并净化: 损坏条目丢弃而非整体失败, 数值夹紧到合法区间(与 study-backup 的容错风格一致)。 */
 function readDays(store: StatStore, subject: string): Record<string, DayStat> {
   try {
     const raw = store.getItem(statsKey(subject));
     if (!raw) return {};
     const parsed: unknown = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object") return {};
-    return parsed as Record<string, DayStat>;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    const out: Record<string, DayStat> = {};
+    for (const [date, value] of Object.entries(parsed as Record<string, unknown>)) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
+      const day = sanitizeDay(value, date);
+      if (day) out[date] = day;
+    }
+    return out;
   } catch { return {}; }
 }
 

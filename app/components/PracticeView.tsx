@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { buildPracticeQuestions, firstAnswerClause, type PracticeQuestion } from "@/lib/practice-quiz";
 import { recordMistake } from "@/lib/mistakes";
 import { recordStat, type StatStore } from "@/lib/stats";
+import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string };
@@ -24,7 +25,12 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   const requiz = !!requizEntries?.length;
   const [scope, setScope] = useState<"chapter" | "book">("chapter");
   const [count, setCount] = useState(10);
-  const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" } } | null>(null);
+  const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; chosenByIndex: Record<number, number>; meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" } } | null>(null);
+  const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
+  useEffect(() => {
+    // 同科目同模式的三天内未完成试卷可续做; 换科目自动失效
+    setResumable(loadPracticeRound(subject, requiz ? "requiz" : "practice"));
+  }, [subject, requiz]);
 
   const requizPool = useMemo(() => {
     if (!requiz) return [];
@@ -74,8 +80,10 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     } else {
       questions = buildPracticeQuestions(cards, { bookId, chapters: scope === "chapter" ? [chapter] : [], count, seed: Math.floor(Math.random() * 2 ** 31) });
     }
+    clearPracticeRound();
+    setResumable(null);
     setRound({
-      questions, index: 0, choice: null, right: 0, done: false, wrongIds: [],
+      questions, index: 0, choice: null, right: 0, done: false, wrongIds: [], chosenByIndex: {},
       meta: { bookId, bookName: activeBook?.name || subjectName, chapter, scope },
     });
   }
@@ -88,7 +96,24 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
       recordMistake(subject, "practice", question.cardId, question.stem);
       setRound(previous => previous ? { ...previous, wrongIds: [...previous.wrongIds, question.cardId] } : previous);
     }
-    setRound(previous => previous ? { ...previous, choice: index, right: previous.right + (correct ? 1 : 0) } : previous);
+    setRound(previous => {
+      if (!previous) return previous;
+      const nextRound = { ...previous, choice: index, right: previous.right + (correct ? 1 : 0), chosenByIndex: { ...previous.chosenByIndex, [previous.index]: index } };
+      persistRound(nextRound);
+      return nextRound;
+    });
+  }
+  function persistRound(target: NonNullable<typeof round>) {
+    if (target.done) return;
+    savePracticeRound({
+      subject, mode: requiz ? "requiz" : "practice",
+      meta: target.meta,
+      questions: target.questions,
+      index: target.index,
+      choice: target.choice,
+      right: target.right,
+      answers: Object.fromEntries(Object.entries(target.chosenByIndex).map(([key, value]) => [key, value])),
+    });
   }
   function next() {
     if (!round) return;
@@ -97,10 +122,13 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
         const mastered = round.questions.map(question => question.cardId).filter(id => !round.wrongIds.includes(id));
         onRequizDone?.(mastered);
       }
+      clearPracticeRound();
       setRound({ ...round, done: true });
       return;
     }
-    setRound({ ...round, index: round.index + 1, choice: null });
+    const advanced = { ...round, index: round.index + 1, choice: null };
+    persistRound(advanced);
+    setRound(advanced);
   }
 
   const activeBook = books.find(item => item.id === bookId);
@@ -115,6 +143,25 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
       <label>题数<select value={count} onChange={(event) => setCount(Number(event.target.value))}>{[10, 20, 30].map(n => <option key={n} value={n}>{n} 题</option>)}</select></label>
     </div>}
     <p className="mock-selection">当前范围可用卡片：{available.length} 张{!requiz && available.length < 4 ? " · 至少需要 4 张才能组卷" : ""}</p>
+    {resumable && <div className="practice-resume" role="status">
+      <span>有一组未完成{resumable.mode === "requiz" ? "重练" : "自测"}（{resumable.meta.bookName || subjectName}{resumable.meta.scope === "chapter" ? ` 第${resumable.meta.chapter}章` : ""} · 第 {resumable.index + 1} / {resumable.questions.length} 题 · 已答对 {resumable.right} 题）。</span>
+      <div className="next-actions">
+        <button className="primary" onClick={() => {
+          const byId = new Map(cards.map(card => [card.id, card]));
+          // 卡库中已找不到的卡(数据更新后)剔除; 全部失效则放弃续做
+          const questions = resumable.questions.filter(q => byId.has(q.cardId));
+          if (!questions.length) { clearPracticeRound(); setResumable(null); return; }
+          setRound({
+            questions, index: Math.min(resumable.index, questions.length - 1),
+            choice: null, right: resumable.right, done: false,
+            wrongIds: [], chosenByIndex: Object.fromEntries(Object.entries(resumable.answers).map(([k, v]) => [Number(k), v])),
+            meta: resumable.meta,
+          });
+          setResumable(null);
+        }}>继续作答</button>
+        <button className="secondary" onClick={() => { clearPracticeRound(); setResumable(null); }}>放弃</button>
+      </div>
+    </div>}
     <button className="primary" disabled={!available.length || (!requiz && available.length < 4)} onClick={start}>{requiz ? "开始重练" : "开始自测"}</button>
   </section>;
 

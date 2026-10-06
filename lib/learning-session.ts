@@ -1,3 +1,4 @@
+import { viewAvailable } from "./subject-capabilities";
 export type StudySubject = "333" | "825" | "politics" | "english";
 export type StudyView = "overview" | "chapters" | "cards" | "quiz" | "practice" | "mock" | "feynman" | "planner" | "mistakes" | "stats" | "search";
 export type LearningLocation = {
@@ -13,9 +14,11 @@ export const learningSessionKey = "yantu-learning-session-v1";
 export const defaultPlannerPrompt = "请结合当前科目的书目和进度，为我安排今天可执行的学习计划，包含主动回忆、练习和复盘。";
 const subjects: StudySubject[] = ["333", "825", "politics", "english"];
 const views: StudyView[] = ["overview", "chapters", "cards", "quiz", "practice", "mock", "feynman", "planner", "mistakes", "stats", "search"];
-/** 页面可用性的唯一事实源: 学习位置恢复与备份校验共用, 政治没有真题与模拟卷数据。 */
-export const isRestorableView = (subject: StudySubject, view: unknown): view is StudyView =>
-  views.includes(view as StudyView) && !(subject === "politics" && (view === "quiz" || view === "mock"));
+/** 页面可用性: 委托给科目能力表(静态导入; capabilities 只引类型与图标, 无循环)。 */
+export const isRestorableView = (subject: StudySubject, view: unknown): view is StudyView => {
+  if (!views.includes(view as StudyView)) return false;
+  return viewAvailable(subject, view as StudyView);
+};
 const record = (value: unknown): value is Record<string, unknown> => !!value && typeof value === "object" && !Array.isArray(value);
 const text = (value: unknown): value is string => typeof value === "string" && value.length <= 200_000;
 const integer = (value: unknown, min: number, max: number) => typeof value === "number" && Number.isSafeInteger(value) && value >= min && value <= max;

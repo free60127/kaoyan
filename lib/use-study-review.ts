@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { applyRating, buildStudyQueue, createEmptyProgress, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, type CardIdentity, type Rating, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { applyRating, buildStudyQueue, createEmptyProgress, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, undoRating, type CardIdentity, type Rating, type RatingUndo, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
@@ -130,6 +130,14 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
       const instant = clock();
       return mutate(latest => rateStudyReviewCard(latest, catalog, cardId, grade, instant, scope));
     },
+    /** 撤销支持: 记录评分前该卡状态与当日准入, 供 undo 恢复。 */
+    snapshotForUndo(cardId: string): RatingUndo {
+      const progress = session.progress;
+      return { cardId, previous: progress.cards[cardId] ? { ...progress.cards[cardId] } : null, daily: { ...progress.daily, admitted: [...progress.daily.admitted] } };
+    },
+    undoLastRating(undo: RatingUndo) {
+      return mutate(latest => ({ ...latest, progress: undoRating(latest.progress, undo) }));
+    },
   };
 }
 
@@ -139,6 +147,7 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
   const [now, setNow] = useState(() => Date.now());
   const [storageError, setStorageError] = useState("");
   const [lastRating, setLastRating] = useState<{ cardId: string; dueAt: string } | null>(null);
+  const undoRef = useRef<RatingUndo | null>(null);
   useEffect(() => {
     // In particular, 825 must not normalize or persist before its real catalog arrives.
     if (!enabled) return;
@@ -173,10 +182,20 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     pauseScope(scope: StudyScope) { syncRef.current?.sync.pauseScope(scope); },
     setDailyNewLimit(value: number) { syncRef.current?.sync.setDailyNewLimit(value); },
     rateCard(cardId: string, grade: Rating, scope?: StudyScope) {
+      const undoSnapshot = syncRef.current?.sync.snapshotForUndo(cardId);
       const next = syncRef.current?.sync.rateCard(cardId, grade, scope);
       if (!next) return;
+      undoRef.current = undoSnapshot ?? null;
       setLastRating({ cardId, dueAt: next.progress.cards[cardId].dueAt });
     },
+    undoLastRating() {
+      const undo = undoRef.current;
+      if (!undo) return;
+      const next = syncRef.current?.sync.undoLastRating(undo);
+      undoRef.current = null;
+      if (next) setLastRating(null);
+    },
+    canUndo: !!undoRef.current,
     preview(cardId: string, grade: Rating) { return previewSchedule(current.progress.cards[cardId], grade, now); },
   };
 }

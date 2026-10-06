@@ -7,7 +7,7 @@ import type { StatStore } from "@/lib/stats";
 const kindLabel: Record<Mistake["kind"], string> = { card: "闪卡", quiz: "真题", practice: "自测" };
 const subjectName: Record<string, string> = { "333": "333 教育综合", "825": "825 英语专业基础", politics: "政治" };
 
-export function MistakesView({ subject, onReviewCard, cards, storage }: { subject: string; onReviewCard: (cardId: string) => void; cards: Record<string, { id: string; book: string; chapter: number; section?: string; front: string; back: string }[]>; storage: StatStore }) {
+export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage }: { subject: string; onReviewCard: (cardId: string) => void; onRedoQuiz: (quizId: string) => void; cards: Record<string, { id: string; book: string; chapter: number; section?: string; front: string; back: string }[]>; storage: StatStore }) {
   const [items, setItems] = useState<Mistake[]>(() => readMistakes());
   const [only, setOnly] = useState<string>(subject);
   const [requiz, setRequiz] = useState(false);
@@ -73,6 +73,7 @@ export function MistakesView({ subject, onReviewCard, cards, storage }: { subjec
         </div>
         <div className="mistake-actions">
           {item.kind === "card" && item.refId && <button className="secondary" onClick={() => onReviewCard(item.refId)}>去复习</button>}
+          {item.kind === "quiz" && <button className="secondary" onClick={() => onRedoQuiz(item.refId)}>去重做</button>}
           <button className="icon-button" aria-label="移除该错题" onClick={() => setItems(removeMistakes([item.id]))}><Trash2 size={16}/></button>
         </div>
       </div>)}
