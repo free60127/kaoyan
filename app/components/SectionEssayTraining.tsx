@@ -9,7 +9,6 @@ const questionTypes = { "short-answer": "简答题", essay: "论述题", materia
 /** The caller keys this panel by the visible card's book/chapter/section. */
 export function SectionEssayTraining({ scope, bookName, chapterTitle, cards, open, onOpenChange }: Props) {
   const [load, setLoad] = useState<{ status: "idle" | "loading" | "ready" | "error"; entries: ResolvedTrainingEntry[] }>({ status: "idle", entries: [] });
-  const [attempt, setAttempt] = useState(0);
   const [index, setIndex] = useState(0);
   const [answerOpen, setAnswerOpen] = useState(false);
   useEffect(() => {
@@ -22,7 +21,7 @@ export function SectionEssayTraining({ scope, bookName, chapterTitle, cards, ope
       if (!cancelled) setLoad({ status: "error", entries: [] });
     });
     return () => { cancelled = true; };
-  }, [scope.book, open, attempt]);
+  }, [scope.book, open]);
   const entries = scopedTrainingEntries(load.entries, scope);
   const entry = entries[index];
   function move(next: number) { setIndex(next); setAnswerOpen(false); }
@@ -34,7 +33,7 @@ export function SectionEssayTraining({ scope, bookName, chapterTitle, cards, ope
       <p className="section-essay-scope">{bookName} · 第 {scope.chapter} 章{chapterTitle ? " · " + chapterTitle : ""}<br/>{scope.section || "本章全部小节（相同资料原题合并显示）"}</p>
       <p className="section-essay-help">先口述或在纸上组织答案，再展开对照。训练展开期间，闪卡键盘快捷键暂停；仍可点击闪卡按钮评级。</p>
       {(load.status === "idle" || load.status === "loading") && <p role="status">正在读取大题资料…</p>}
-      {load.status === "error" && <div role="alert"><p>大题资料加载失败，请重试。</p><button className="secondary" onClick={() => setAttempt(value => value + 1)}>重新加载大题资料</button></div>}
+      {load.status === "error" && <div role="alert"><p>大题资料加载失败。请确认网络连接后刷新页面，再展开训练；已保存的学习位置和进度会保留。</p><button className="secondary" onClick={() => window.location.reload()}>刷新页面重试</button></div>}
       {load.status === "ready" && !entry && <p className="empty">当前{scope.section ? "小节" : "章"}暂无大题训练资料。</p>}
       {load.status === "ready" && entry && <>
         <div className="section-essay-nav" role="group" aria-label="大题翻题"><button className="secondary" disabled={index === 0} onClick={() => move(index - 1)}>上一题</button><span>{index + 1} / {entries.length} 题</span><button className="secondary" disabled={index >= entries.length - 1} onClick={() => move(index + 1)}>下一题</button></div>

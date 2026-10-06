@@ -16,7 +16,7 @@ export function EssayBank({ entries }: { entries: EssayEntry[] }) {
   return <section className="panel essay-panel">
     <div className="panel-heading"><div><span className="eyebrow">ESSAY BANK</span><h2>原资料题库 · {entries.length} 条记录</h2></div>
       <div className="mistake-filters"><button className={category === "all" ? "mode-button active" : "mode-button"} onClick={() => setCategory("all")}>全部 ({entries.length})</button>
-        {categories.map(cat => <button key={cat} className={category === cat ? "mode-button active" : "mode-button"} onClick={() => setCategory(cat)}>{cat.replace(/（.*）/, "").replace(/教育学原理|教育心理学/, m => m.slice(0, 4))} ({entries.filter(entry => entry.category === cat).length})</button>)}
+        {categories.map(cat => <button key={cat} className={category === cat ? "mode-button active" : "mode-button"} onClick={() => setCategory(cat)}>{cat} ({entries.filter(entry => entry.category === cat).length})</button>)}
       </div></div>
     <p className="mock-help">保留全部 {entries.length} 条原资料记录：{subjectiveCount} 条 333 主观题、{choiceCount} 条选择题、{extendedCount} 条教育研究扩展题。资料包括《高效答题手册》、丹丹中秋国庆卷与母题资料；保留材料、设问、参考答案及原 OCR 校对提示。先自己组织答案，再展开对照。</p>
     <div className="essay-list">

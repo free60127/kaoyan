@@ -1,7 +1,8 @@
 import { books, cards, loadKnowledgeCards, questions } from "./study-data";
 import { load825StudyData } from "./825/study-data";
 import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "./mock-paper-templates";
-import type { ResolvedTrainingEntry, TrainingBook } from "./essay-training";
+import { scopedTrainingEntries, type ResolvedTrainingEntry, type TrainingBook } from "./essay-training";
+import { loadTrainingBook } from "./essay-training-data";
 
 export const MAX_MOCK_QUIZ_QUESTIONS = 60;
 export const MOCK_QUIZ_TYPES = ["single-choice", "definition", "short-answer", "essay", "material-analysis"] as const;
@@ -215,8 +216,7 @@ async function getReferences(ctx: MockQuizContext, includeSubjectiveStyle: boole
   const availableCards = data ? data.cards : [...cards, ...knowledge333];
   const bookData = data ? data.books : books;
   // Keep the handbook/mother-question bank lazy for 825 and MCQ/definition-only requests.
-  const training = !is825 && includeSubjectiveStyle
-    ? await Promise.all([import("./essay-training-data"), import("./essay-training")]) : undefined;
+  const training = !is825 && includeSubjectiveStyle;
   const trainingByBook = new Map<TrainingBook, Promise<ResolvedTrainingEntry[]>>();
   const result: { unit: MockQuizUnit; notes: { id: string; front: string; back: string }[]; style: { type: string; stem: string; referenceAnswer?: string }[]; subjectiveEntries?: ResolvedTrainingEntry[] }[] = [];
   const unitKeys = new Set<string>();
@@ -254,9 +254,9 @@ async function getReferences(ctx: MockQuizContext, includeSubjectiveStyle: boole
       let subjectiveEntries: ResolvedTrainingEntry[] | undefined;
       if (training) {
         const trainingBook = book.id as TrainingBook;
-        if (!trainingByBook.has(trainingBook)) trainingByBook.set(trainingBook, training[0].loadTrainingBook(trainingBook));
-        const entries = await trainingByBook.get(trainingBook)!;
-        subjectiveEntries = training[1].scopedTrainingEntries(entries, { book: trainingBook, chapter: chapterNo, ...(section ? { section } : {}) })
+        if (!trainingByBook.has(trainingBook)) trainingByBook.set(trainingBook, loadTrainingBook(trainingBook));
+        const entries = await trainingByBook.get(trainingBook)!.catch(() => { throw new Error("333 大题参照资料加载失败，请刷新页面后再生成。"); });
+        subjectiveEntries = scopedTrainingEntries(entries, { book: trainingBook, chapter: chapterNo, ...(section ? { section } : {}) })
           .filter(entry => !entry.ocrWarning && (entry.origin === "adapted" || (
             // Source questions may be associated with one section while requiring
             // facts from other books/chapters. Prefer a conservative omission.
