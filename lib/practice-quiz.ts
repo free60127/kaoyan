@@ -1,6 +1,9 @@
 /** 从既有闪卡生成选择题自测: 题干用卡正面, 正确项取卡背首句, 干扰项取同章其他卡的答案。 */
 
 export type PracticeCard = { id: string; book: string; chapter: number; front: string; back: string };
+/** 人工"不适合选择题"排除标记(由用户在答题界面设置)。 */
+export let mcqExcludedIds: ReadonlySet<string> = new Set();
+export function setMcqExcluded(ids: ReadonlySet<string>) { mcqExcludedIds = ids; }
 export type PracticeQuestion = { cardId: string; stem: string; hint: string; options: string[]; answer: number; source: string };
 
 const LABEL = /^〔.+?〕\s*/;
@@ -29,6 +32,11 @@ export function firstAnswerClause(back: string, max = 110): string {
     if (out.replace(/\s/g, "").length >= min) break;
   }
   out = out.trim() || cleaned.slice(0, max);
+  // 丹丹模式: 选项取首个完整句子(≤64字), 避免长段落选项
+  if (out.length > 64) {
+    const m = out.match(/^[^。；;]{8,60}[。；;]?/);
+    if (m && m[0].replace(/\s/g, "").length >= (hasCjk ? 8 : 18)) out = m[0].trim();
+  }
   return out.length > max ? out.slice(0, max - 1) + "…" : out;
 }
 
@@ -53,7 +61,7 @@ export type PracticeOptions = { bookId: string; chapters?: number[]; count: numb
 
 export function buildPracticeQuestions(cards: readonly PracticeCard[], options: PracticeOptions): PracticeQuestion[] {
   const { bookId, count, seed } = options;
-  const pool = cards.filter(card => card.book === bookId && isMcqSuitable(card.front) && (!options.chapters || options.chapters.length === 0 || options.chapters.includes(card.chapter)));
+  const pool = cards.filter(card => card.book === bookId && isMcqSuitable(card.front) && !mcqExcludedIds.has(card.id) && (!options.chapters || options.chapters.length === 0 || options.chapters.includes(card.chapter)));
   const rng = mulberry32(seed);
   const chosen = shuffled(pool, rng).slice(0, Math.max(0, Math.min(count, pool.length)));
   const answersByChapter = new Map<number, string[]>();

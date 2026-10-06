@@ -5,6 +5,7 @@ import { recordStat, type StatStore } from "@/lib/stats";
 import { recordActivity } from "@/lib/activity";
 import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
 import { addMcqExcluded, readMcqExcluded } from "@/lib/mcq-excluded";
+import { setMcqExcluded } from "@/lib/practice-quiz";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string };
@@ -30,6 +31,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; chosenByIndex: Record<number, number>; meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" } } | null>(null);
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
   const [excluded, setExcluded] = useState(() => readMcqExcluded());
+  useEffect(() => { setMcqExcluded(excluded); }, [excluded]);
   useEffect(() => {
     // 同科目同模式的三天内未完成试卷可续做; 换科目自动失效
     setResumable(loadPracticeRound(subject, requiz ? "requiz" : "practice"));

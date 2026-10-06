@@ -68,14 +68,14 @@ test("real lazy catalogs match app chapter and section models", () => {
 test("sessions on the new practice/mistakes/stats/search views round trip through backup", () => {
   const storage = fullStorage();
   const raw = JSON.parse(storage.values.get(sessionKey));
-  raw.locations["333"].view = "practice";
+  raw.locations["333"].view = "choice";
   raw.locations.politics.view = "mistakes";
   raw.locations["825"].view = "stats";
   raw.locations.english.view = "search";
   storage.values.set(sessionKey, JSON.stringify(raw));
   const backup = collect(storage, catalogs, now);
   const restored = backup.records[sessionKey];
-  assert.equal(restored.locations["333"].view, "practice");
+  assert.equal(restored.locations["333"].view, "choice");
   assert.equal(restored.locations.politics.view, "mistakes");
   assert.equal(restored.locations["825"].view, "stats");
   assert.equal(restored.locations.english.view, "search");

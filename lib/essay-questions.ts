@@ -1,5 +1,6 @@
 export type EssayQuestion = {
   id: string;
+  book: string;
   category: string;
   number: number;
   topic: string;

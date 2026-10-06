@@ -128,7 +128,7 @@ test("subject-capabilities: 单一事实源与侧栏过滤", async () => {
   // 政治无 quiz/mock
   assert.equal(viewAvailable("politics", "quiz"), false);
   assert.equal(viewAvailable("politics", "mock"), false);
-  assert.equal(viewAvailable("politics", "practice"), true);
+  assert.equal(viewAvailable("politics", "choice"), true);
   // 825 有真题; 333 全开
   assert.equal(viewAvailable("825", "quiz"), true);
   assert.equal(viewAvailable("333", "quiz"), true);
@@ -136,7 +136,7 @@ test("subject-capabilities: 单一事实源与侧栏过滤", async () => {
   for (const subject of ["333", "825", "politics", "english"]) {
     const navIds = sidebarViews(subject).map(view => view.id);
     for (const id of navIds) assert.equal(isRestorableView(subject, id), true, subject + ":" + id);
-    for (const view of ["overview", "chapters", "cards", "quiz", "practice", "mock", "feynman", "mistakes", "stats", "search", "planner"]) {
+    for (const view of ["overview", "chapters", "cards", "quiz", "choice", "essay", "mock", "feynman", "mistakes", "stats", "search", "planner"]) {
       if (!navIds.includes(view)) assert.equal(viewAvailable(subject, view), false);
     }
   }

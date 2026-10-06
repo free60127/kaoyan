@@ -38,7 +38,7 @@ export const views: ViewInfo[] = [
   { id: "cards", label: "Anki 闪卡", Icon: Layers3, group: "学习" },
   { id: "quiz", label: "真题练习", Icon: CircleHelp, group: "练习" },
   { id: "essay", label: "主观题库", Icon: FileText, group: "练习" },
-  { id: "practice", label: "选择自测", Icon: ClipboardList, group: "练习" },
+  { id: "choice", label: "选择题练习", Icon: ClipboardList, group: "练习" },
   { id: "mock", label: "AI 模拟卷", Icon: Sparkles, group: "练习" },
   { id: "mistakes", label: "错题本", Icon: ClipboardList, group: "工具" },
   { id: "stats", label: "学习统计", Icon: LineChart, group: "工具" },
