@@ -2,6 +2,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
 import { localStudyDate, type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
+import { SectionEssayTraining } from "./SectionEssayTraining";
+import type { TrainingBook } from "../../lib/essay-training";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
@@ -41,8 +43,9 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
 
-export function StudyReviewCards({ review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId }: { review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string }) {
+export function StudyReviewCards({ review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, essayTraining = false }: { review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string; essayTraining?: boolean }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
+  const [trainingOpen, setTrainingOpen] = useState(false);
   const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
   const [browsePosition, setBrowsePosition] = useState({ scopeKey: locationKey, index: 0 });
@@ -74,7 +77,7 @@ export function StudyReviewCards({ review, cards, books, bookId, chapter, sectio
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       // 焦点在可交互元素上时让原生行为生效(如按钮的 Enter/空格点击), 组合键与按住重复也跳过
-      if (event.ctrlKey || event.altKey || event.metaKey || event.repeat) return;
+      if (trainingOpen || event.ctrlKey || event.altKey || event.metaKey || event.repeat) return;
       const target = event.target as HTMLElement | null;
       if (target && (target.closest("button, a, select, input, textarea, label, summary, [contenteditable], [role=button]") !== null)) return;
       if (document.querySelector(".key-modal, .backup-shade")) return;
@@ -111,6 +114,7 @@ export function StudyReviewCards({ review, cards, books, bookId, chapter, sectio
         return <button key={grade} onClick={() => rate(grade)}>{label}<small className="kbd-hint">{index + 1}</small><span>{formatStudyDue(preview.dueAt)}</span></button>;
       }) : <button className="secondary" onClick={() => setRevealedCard(null)}>返回问题</button>}</div>
       {mode === "browse" && <div className="study-browse-nav"><button className="secondary" disabled={browseIndex === 0} onClick={() => setBrowsePosition(previous => ({ scopeKey: locationKey, index: previous.scopeKey === locationKey ? Math.max(previous.index - 1, 0) : 0 }))}>上一张</button><button className="secondary" disabled={browseIndex >= browseCards.length - 1} onClick={() => setBrowsePosition(previous => ({ scopeKey: locationKey, index: previous.scopeKey === locationKey ? Math.min(previous.index + 1, browseCards.length - 1) : 1 }))}>下一张</button></div>}
+      {essayTraining && ["principles", "china", "foreign", "psychology"].includes(card.book) && <SectionEssayTraining key={JSON.stringify([card.book, card.chapter, card.section || undefined])} scope={{ book: card.book as TrainingBook, chapter: card.chapter, section: card.section || undefined }} bookName={books.find(book => book.id === card.book)?.name || card.book} chapterTitle={books.find(book => book.id === card.book)?.chapters[card.chapter - 1]?.title} cards={cards} open={trainingOpen} onOpenChange={setTrainingOpen}/>}
     </div> : <div className="panel empty study-queue-empty">{mode === "browse" ? "当前章 / 小节暂无闪卡，请切换浏览位置。" : <>
       <b>{mode === "scope" ? "当前章 / 小节暂无待复习卡" : review.progress.scopes.length ? "全部学习范围当前队列已完成" : "先选择今天想学的范围"}</b>
       {mode === "scope" ? <><p>可把当前章 / 小节加入上方今日新学范围，或切换到全部学习范围复习。切换位置不会自动加入学习。</p><p>当前范围只显示已进入今日队列的卡；新卡额度与其他范围共享。已学卡到期时会自动刷新。</p><button className="secondary" onClick={() => setMode("all")}>全部学习范围复习{review.queue.items.length ? `（${review.queue.items.length} 张）` : ""}</button></> : <p>{review.progress.scopes.length ? "已学卡会按评分时间再次进入队列；今日新卡来自上方所选范围。" : "上方可按书目勾选章节，或切回当前章复习并加入当前章 / 小节。"}</p>}
