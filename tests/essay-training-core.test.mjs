@@ -137,11 +137,11 @@ test("original card and essay ids retain their complete order; supplemental note
   assert.equal(essays.length, 129);
   assert.equal(hashIds(essays), "b7e632f80fa352a398c83bc3e86b9755c0ed77cda345cd09fdd2a8babc01bef9");
   const extras = cards.filter(card => card.id.startsWith("principles-extra-"));
-  assert.equal(extras.length, 4);
+  assert.equal(extras.length, 5);
   assert.equal(new Set(cards.map(card => card.id)).size, cards.length);
   for (const card of extras) {
     assert.match(card.source, /补充资料/);
-    assert.match(card.source, /高效答题手册|母题班课件/);
+    assert.match(card.source, /高效答题手册|母题班课件|选择题方法论课件/);
     assert.doesNotMatch(card.source, /应试解析/);
   }
 });

@@ -1,0 +1,1276 @@
+[
+  {
+    "id": "training-china-c2-s2-1",
+    "book": "china",
+    "chapter": 2,
+    "section": "第二节 春秋战国时期各学派的教育思想",
+    "topic": "孔孟荀墨教学思想及现实启示",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第17页",
+    "analysis": "把孔孟荀墨的教学主张置于先秦私学背景中，按教育家分述原理与课堂应用，再归纳主动学习、差异教学、循序渐进和知行结合，现代启示须说明具体应用。",
+    "knowledgeCardIds": [
+      "china-k2-026",
+      "china-k2-028",
+      "china-k2-041",
+      "china-k2-051",
+      "china-k2-063",
+      "china-k2-065"
+    ],
+    "originalQuestionId": "hb-zhongjiao-01"
+  },
+  {
+    "id": "training-china-c2-s2-2",
+    "book": "china",
+    "chapter": 2,
+    "section": "第二节 春秋战国时期各学派的教育思想",
+    "topic": "儒墨教学方法比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第19页",
+    "analysis": "用比较题结构组织儒墨教学思想：教育目标和学派背景作为解释，再比较主动与启发、述与作、知与行、量力施教。两派同处本节，应逐维对照后再评价。",
+    "knowledgeCardIds": [
+      "china-k2-028",
+      "china-k2-063",
+      "china-k2-064",
+      "china-k2-065",
+      "china-k2-066",
+      "china-k2-068"
+    ],
+    "originalQuestionId": "hb-zhongjiao-02"
+  },
+  {
+    "id": "training-china-c2-s2-3",
+    "book": "china",
+    "chapter": 2,
+    "section": "第二节 春秋战国时期各学派的教育思想",
+    "topic": "先秦人性论与教育作用",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第21页",
+    "analysis": "本节的性相近、性善、性恶与素丝说构成不同前提。先分别说明人性假设，再比较教育必要性、可能性和教化机制，评价后天教育价值及先验人性论的局限。",
+    "knowledgeCardIds": [
+      "china-k2-016",
+      "china-k2-035",
+      "china-k2-045",
+      "china-k2-046",
+      "china-k2-056",
+      "china-k2-058"
+    ],
+    "originalQuestionId": "hb-zhongjiao-03"
+  },
+  {
+    "id": "training-china-c2-s3-1",
+    "book": "china",
+    "chapter": 2,
+    "section": "第三节 战国后期的教育论著",
+    "topic": "学记教学思想与现实启示",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第23页",
+    "analysis": "围绕《学记》教育作用、教学原则、教师与教学相长组织答案，每一原则连接文本含义与当代教学行为。本题不替代同节《大学》《中庸》的专题训练。",
+    "knowledgeCardIds": [
+      "china-k2-078",
+      "china-k2-081",
+      "china-k2-082",
+      "china-k2-083",
+      "china-k2-084",
+      "china-k2-085"
+    ],
+    "originalQuestionId": "hb-zhongjiao-04"
+  },
+  {
+    "id": "training-china-c3-s2-1",
+    "book": "china",
+    "chapter": 3,
+    "section": "第2节 汉代的教育思想",
+    "topic": "王充教育作用、目标与教学思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第25页",
+    "analysis": "按教育作用、人才目标、教学方法、评价四层展开王充专题，突出在化不在性、鸿儒、问难与贵通，解释批判谶纬及经学迷信的背景，并区分与董仲舒的立场。",
+    "knowledgeCardIds": [
+      "china-k3-026",
+      "china-k3-027",
+      "china-k3-028",
+      "china-k3-029"
+    ],
+    "originalQuestionId": "hb-zhongjiao-05"
+  },
+  {
+    "id": "training-china-c4-s2-1",
+    "book": "china",
+    "chapter": 4,
+    "section": "第二节 隋唐时期的教育制度与实践",
+    "topic": "隋唐官学体系",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第26页",
+    "analysis": "交代崇儒兴学背景，从中央地方、儒学专门学校、教育管理机构三个层面复原隋唐官学，区分国子监行政职能与六学一馆办学职能，再评价体系特点。",
+    "knowledgeCardIds": [
+      "china-k4-010",
+      "china-k4-011",
+      "china-k4-012",
+      "china-k4-014",
+      "china-k4-015",
+      "china-k4-016"
+    ],
+    "originalQuestionId": "hb-zhongjiao-06"
+  },
+  {
+    "id": "training-china-c4-s2-2",
+    "book": "china",
+    "chapter": 4,
+    "section": "第二节 隋唐时期的教育制度与实践",
+    "topic": "科举制度与学校教育关系",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第27页",
+    "analysis": "以隋唐科举创立及学校联系切入。原题跨至中国教育史第5章宋元明清；按关系演变、积极作用、负面影响、评价展开，不把跨章制度都归于隋唐。",
+    "knowledgeCardIds": [
+      "china-k4-027",
+      "china-k4-031",
+      "china-k4-035",
+      "china-k4-036",
+      "china-k4-037",
+      "china-k4-038"
+    ],
+    "originalQuestionId": "hb-zhongjiao-07"
+  },
+  {
+    "id": "training-china-c5-s1-1",
+    "book": "china",
+    "chapter": 5,
+    "section": "第一节 宋元明清时期的教育制度与实践",
+    "topic": "科举制度与学校教育关系",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第27页",
+    "analysis": "复用跨章原题，重点练宋元明清科举学校关系：宋代改革、明清入学应试衔接及附庸化。完整题还涵盖第4章隋唐；比较选拔功能与课程窄化后再评价。",
+    "knowledgeCardIds": [
+      "china-k5-043",
+      "china-k5-044",
+      "china-k5-047",
+      "china-k5-048",
+      "china-k5-049"
+    ],
+    "originalQuestionId": "hb-zhongjiao-07"
+  },
+  {
+    "id": "training-china-c4-s3-1",
+    "book": "china",
+    "chapter": 4,
+    "section": "第三节 魏晋南北朝与隋唐时期的教育思想",
+    "topic": "颜之推士大夫与家庭教育",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第29页",
+    "analysis": "以门阀社会解释士大夫教育必要性及德艺周厚目标，展开早教、严慈结合、环境影响和实践学习，再评价家庭教育贡献及体罚等历史局限。",
+    "knowledgeCardIds": [
+      "china-k4-039",
+      "china-k4-040",
+      "china-k4-041",
+      "china-k4-042",
+      "china-k4-043",
+      "china-k4-045"
+    ],
+    "originalQuestionId": "hb-zhongjiao-08"
+  },
+  {
+    "id": "training-china-c5-s1-2",
+    "book": "china",
+    "chapter": 5,
+    "section": "第一节 宋元明清时期的教育制度与实践",
+    "topic": "宋元蒙学教材",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第31页",
+    "analysis": "按识字、伦理、历史、知识等类别组织蒙学教材，举实例并说明韵语、难易次序、识字德育结合的编写特点。原题聚焦宋元，避免把历代教材都归入同一时期。",
+    "knowledgeCardIds": [
+      "china-k5-039",
+      "china-k5-040",
+      "china-k5-041",
+      "china-k5-042"
+    ],
+    "originalQuestionId": "hb-zhongjiao-09"
+  },
+  {
+    "id": "training-china-c5-s1-3",
+    "book": "china",
+    "chapter": 5,
+    "section": "第一节 宋元明清时期的教育制度与实践",
+    "topic": "书院产生发展与特点",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第32页",
+    "analysis": "按产生条件、历代发展、教学管理特征、评价展开书院专题，说明讲会、自学、师生交流和研究价值，同时分析官学化趋势及其对书院自主的影响。",
+    "knowledgeCardIds": [
+      "china-k5-022",
+      "china-k5-023",
+      "china-k5-024",
+      "china-k5-026",
+      "china-k5-032",
+      "china-k5-033"
+    ],
+    "originalQuestionId": "hb-zhongjiao-10"
+  },
+  {
+    "id": "training-china-c5-s2-1",
+    "book": "china",
+    "chapter": 5,
+    "section": "第二节 宋元明清时期的教育思想",
+    "topic": "朱子读书法与碎片化阅读",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第34页",
+    "analysis": "以朱子读书法六条分析碎片化阅读，解释循序渐进、熟读精思等原则，再提出整体规划、反思和实践策略。启示须由理论推出，不能仅列古语与阅读口号。",
+    "knowledgeCardIds": [
+      "china-k5-058",
+      "china-k5-059",
+      "china-k5-060"
+    ],
+    "originalQuestionId": "hb-zhongjiao-11"
+  },
+  {
+    "id": "training-china-c5-s2-2",
+    "book": "china",
+    "chapter": 5,
+    "section": "第二节 宋元明清时期的教育思想",
+    "topic": "王守仁儿童教育",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第35页",
+    "analysis": "以良知说和随人分限为背景，说明儿童喜动恶拘、顺导性情、歌诗习礼读书方法，现实启示与历史评价分开，分析尊重兴趣价值及心学教育局限。",
+    "knowledgeCardIds": [
+      "china-k5-065",
+      "china-k5-068",
+      "china-k5-069",
+      "china-k5-070"
+    ],
+    "originalQuestionId": "hb-zhongjiao-12"
+  },
+  {
+    "id": "training-china-c5-s1-4",
+    "book": "china",
+    "chapter": 5,
+    "section": "第一节 宋元明清时期的教育制度与实践",
+    "topic": "北宋三次兴学",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第36页",
+    "analysis": "按庆历熙宁崇宁顺序比较主导者、措施和学校取士关系，解释苏湖教法与三舍法的育才选才机制，评价改革作用和未能摆脱科举制约的条件。",
+    "knowledgeCardIds": [
+      "china-k5-010",
+      "china-k5-011",
+      "china-k5-012",
+      "china-k5-013",
+      "china-k5-014",
+      "china-k5-016"
+    ],
+    "originalQuestionId": "hb-zhongjiao-13"
+  },
+  {
+    "id": "training-china-c6-s4-1",
+    "book": "china",
+    "chapter": 6,
+    "section": "考点四 颜元的教育思想",
+    "topic": "颜元教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第37页",
+    "analysis": "从反理学空疏说明背景，再论实才实德目标、实学课程、六斋与习行，肯定实践取向并分析复古六艺和偏重习行的局限，避免只列课程名。",
+    "knowledgeCardIds": [
+      "china-k6-015",
+      "china-k6-016",
+      "china-k6-017",
+      "china-k6-018",
+      "china-k6-019",
+      "china-k6-020"
+    ],
+    "originalQuestionId": "hb-zhongjiao-14"
+  },
+  {
+    "id": "training-china-c7-s1-1",
+    "book": "china",
+    "chapter": 7,
+    "section": "第一节 近代教育改革措施",
+    "topic": "洋务学堂",
+    "questionType": "short-answer",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第38页",
+    "analysis": "按学堂类型、代表学校、新旧特征、近代意义展开，以外国语军事实业人才培养说明突破，再结合中体西用解释封建教育因素的保留。",
+    "knowledgeCardIds": [
+      "china-k7-008",
+      "china-k7-009",
+      "china-k7-010",
+      "china-k7-011",
+      "china-k7-013",
+      "china-k7-015"
+    ],
+    "originalQuestionId": "hb-zhongjiao-15"
+  },
+  {
+    "id": "training-china-c7-s1-2",
+    "book": "china",
+    "chapter": 7,
+    "section": "第一节 近代教育改革措施",
+    "topic": "洋务与明治教育改革比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第39页",
+    "analysis": "跨书原题，本节支撑洋务学堂、课程、留学和局限；明治部分来自外国教育史第11章。按指导思想、管理学制、人才目标、范围与结果逐项比较，解释社会变革程度差异。",
+    "knowledgeCardIds": [
+      "china-k7-008",
+      "china-k7-009",
+      "china-k7-010",
+      "china-k7-019",
+      "china-k7-020"
+    ],
+    "originalQuestionId": "hb-zhongjiao-16"
+  },
+  {
+    "id": "training-china-c8-s1-1",
+    "book": "china",
+    "chapter": 8,
+    "section": "第一节 教育改革措施",
+    "topic": "清末新政教育改革",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第41页",
+    "analysis": "按学制制定、废科举、教育行政、宗旨、留学推进组织清末新政，分析近代化与封建政治目标并存。壬寅未实行与癸卯正式实行要准确区分。",
+    "knowledgeCardIds": [
+      "china-k8-012",
+      "china-k8-013",
+      "china-k8-018",
+      "china-k8-019",
+      "china-k8-020",
+      "china-k8-021"
+    ],
+    "originalQuestionId": "hb-zhongjiao-17"
+  },
+  {
+    "id": "training-china-c8-s1-2",
+    "book": "china",
+    "chapter": 8,
+    "section": "第一节 教育改革措施",
+    "topic": "维新与洋务教育主张比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第43页",
+    "analysis": "跨中国教育史第7章洋务与第8章维新原题，此分组提供维新实践。按宗旨、西学范围、科举态度与学校目标比较，并联系本章思想节说明改革依据。",
+    "knowledgeCardIds": [
+      "china-k8-004",
+      "china-k8-009",
+      "china-k8-011"
+    ],
+    "originalQuestionId": "hb-zhongjiao-18"
+  },
+  {
+    "id": "training-china-c7-s2-1",
+    "book": "china",
+    "chapter": 7,
+    "section": "第二节 近代教育思想",
+    "topic": "维新与洋务教育主张比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第43页",
+    "analysis": "跨章原题在本节练中体西用，维新部分来自第8章康梁严复。按体用关系、人才目标、改革范围、科举观逐维比较，说明技术学习与国民启蒙的范围差异。",
+    "knowledgeCardIds": [
+      "china-k7-021",
+      "china-k7-023",
+      "china-k7-024",
+      "china-k7-025"
+    ],
+    "originalQuestionId": "hb-zhongjiao-18"
+  },
+  {
+    "id": "training-china-c8-s2-1",
+    "book": "china",
+    "chapter": 8,
+    "section": "第二节 教育思想",
+    "topic": "维新与洋务教育主张比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第43页",
+    "analysis": "同一跨章原题在思想分组练维新理论，洋务部分来自第7章。比较中体西用、开民智伸民权、三育论与体用一致，再说明思想如何导向不同改革措施。",
+    "knowledgeCardIds": [
+      "china-k8-027",
+      "china-k8-030",
+      "china-k8-032",
+      "china-k8-035",
+      "china-k8-036",
+      "china-k8-037"
+    ],
+    "originalQuestionId": "hb-zhongjiao-18"
+  },
+  {
+    "id": "training-china-c9-s1-1",
+    "book": "china",
+    "chapter": 9,
+    "section": "第一节 教育改革措施",
+    "topic": "1922年新学制",
+    "questionType": "short-answer",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第45页",
+    "analysis": "先解释七项标准，再复原六三三及分段弹性，联系职业、师范和课程调整，在中国国情与美国影响背景中评价，不把提出标准等同于现实普及。",
+    "knowledgeCardIds": [
+      "china-k9-007",
+      "china-k9-008",
+      "china-k9-009",
+      "china-k9-010",
+      "china-k9-011"
+    ],
+    "originalQuestionId": "hb-zhongjiao-19"
+  },
+  {
+    "id": "training-china-c9-s2-1",
+    "book": "china",
+    "chapter": 9,
+    "section": "第二节 教育思想",
+    "topic": "蔡元培思想与实践",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第46页",
+    "analysis": "先用五育说明教育理想，再以北大校风、思想自由、教授治校及教学改革说明实践。蔡元培五育是历史分类，不能替换为今日德智体美劳。",
+    "knowledgeCardIds": [
+      "china-k9-018",
+      "china-k9-019",
+      "china-k9-020",
+      "china-k9-021",
+      "china-k9-022",
+      "china-k9-023"
+    ],
+    "originalQuestionId": "hb-zhongjiao-20"
+  },
+  {
+    "id": "training-china-c9-s2-2",
+    "book": "china",
+    "chapter": 9,
+    "section": "第二节 教育思想",
+    "topic": "新文化运动中的民主教育",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第49页",
+    "analysis": "以民主科学为背景，分别讨论观念、受教对象、课程语言和教学实验变化，联系平民教育与个性发展，评价对封建教育的冲击及受现实条件制约的局限。",
+    "knowledgeCardIds": [
+      "china-k9-027",
+      "china-k9-028",
+      "china-k9-029",
+      "china-k9-030",
+      "china-k9-031",
+      "china-k9-039"
+    ],
+    "originalQuestionId": "hb-zhongjiao-21"
+  },
+  {
+    "id": "training-china-c12-s5-1",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点五 陈鹤琴的“活教育”探索",
+    "topic": "陈鹤琴活教育及当代意义",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第51页",
+    "analysis": "按活教育目的、课程、教学三论展开，联系儿童教育实践与当代意义。大自然大社会是活教材需说明如何转化为观察实验和实际行动，不只列口号。",
+    "knowledgeCardIds": [
+      "china-k12-029",
+      "china-k12-030",
+      "china-k12-031",
+      "china-k12-032",
+      "china-k12-033"
+    ],
+    "originalQuestionId": "hb-zhongjiao-22"
+  },
+  {
+    "id": "training-china-c12-s6-1",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点六 陶行知的“生活教育”思想与实践",
+    "topic": "陶行知生活教育及改革启示",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第53页",
+    "analysis": "用生活即教育、社会即学校、教学做合一解释理论，晓庄等实践作论据，现实启示对应学校社会联系与实践学习，评价经验和系统知识关系。",
+    "knowledgeCardIds": [
+      "china-k12-034",
+      "china-k12-035",
+      "china-k12-038",
+      "china-k12-039",
+      "china-k12-040",
+      "china-k12-041"
+    ],
+    "originalQuestionId": "hb-zhongjiao-23"
+  },
+  {
+    "id": "training-china-c12-s5-2",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点五 陈鹤琴的“活教育”探索",
+    "topic": "陶行知生活教育与陈鹤琴活教育比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第55页",
+    "analysis": "原题要求生活教育与活教育共同特点，此分组提供陈鹤琴一侧，陶行知来自同章考点六。按立足中国、生活社会资源、做中学、儿童主动性等共同维度作答，不能误写仅比较差异。",
+    "knowledgeCardIds": [
+      "china-k12-030",
+      "china-k12-031",
+      "china-k12-032",
+      "china-k12-033"
+    ],
+    "originalQuestionId": "hb-zhongjiao-24"
+  },
+  {
+    "id": "training-china-c12-s6-2",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点六 陶行知的“生活教育”思想与实践",
+    "topic": "陶行知生活教育与陈鹤琴活教育比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第55页",
+    "analysis": "跨同章分组原题的陶行知侧依据生活教育三命题及创造教育，陈鹤琴来自考点五。按共同实践取向、教育资源、儿童主体及中国化探索展开，完整共同特点答案由题库保留。",
+    "knowledgeCardIds": [
+      "china-k12-038",
+      "china-k12-039",
+      "china-k12-040",
+      "china-k12-041",
+      "china-k12-042"
+    ],
+    "originalQuestionId": "hb-zhongjiao-24"
+  },
+  {
+    "id": "training-china-c12-s2-1",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点二 黄炎培的职业教育思想与实践",
+    "topic": "黄炎培职业教育",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第57页",
+    "analysis": "按职业教育目的、社会化科学化、教学原则、职业道德与大职业教育主义展开，联系中华职业教育社，解释职业教育为何需要社会经济及其他教育共同合作。",
+    "knowledgeCardIds": [
+      "china-k12-009",
+      "china-k12-010",
+      "china-k12-011",
+      "china-k12-012",
+      "china-k12-013",
+      "china-k12-014"
+    ],
+    "originalQuestionId": "hb-zhongjiao-25"
+  },
+  {
+    "id": "training-china-c12-s3-1",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点三 晏阳初的乡村教育实验",
+    "topic": "晏阳初与梁漱溟比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第59页",
+    "analysis": "此分组支撑晏阳初四大教育、三大方式、化农民与农民化，梁漱溟来自同章考点四。按问题诊断、理论基础、目标、组织与方法比较后评价，避免混同两人实验。",
+    "knowledgeCardIds": [
+      "china-k12-015",
+      "china-k12-016",
+      "china-k12-017",
+      "china-k12-018",
+      "china-k12-019",
+      "china-k12-020"
+    ],
+    "originalQuestionId": "hb-zhongjiao-26"
+  },
+  {
+    "id": "training-china-c12-s4-1",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点四 梁漱溟的乡村教育建设",
+    "topic": "晏阳初与梁漱溟比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第59页",
+    "analysis": "此分组提供梁漱溟伦理本位与乡农学校，晏阳初来自同章考点三。比较问题诊断、教育内容、组织形式及共同局限，解释乡村教育与社会改造的关系。",
+    "knowledgeCardIds": [
+      "china-k12-022",
+      "china-k12-023",
+      "china-k12-024",
+      "china-k12-025",
+      "china-k12-026",
+      "china-k12-027"
+    ],
+    "originalQuestionId": "hb-zhongjiao-26"
+  },
+  {
+    "id": "training-china-c12-s1-1",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点一 杨贤江与马克思主义教育理论",
+    "topic": "杨贤江马克思主义教育观点",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第61页",
+    "analysis": "论教育上层建筑属性及历史性阶级性，联系教育万能论等批判与全人生指导，先准确解释理论，再评当代青年发展与社会实践价值，保留其历史问题意识。",
+    "knowledgeCardIds": [
+      "china-k12-001",
+      "china-k12-002",
+      "china-k12-003",
+      "china-k12-004",
+      "china-k12-005",
+      "china-k12-006"
+    ],
+    "originalQuestionId": "hb-zhongjiao-27"
+  },
+  {
+    "id": "training-china-c12-s1-2",
+    "book": "china",
+    "chapter": 12,
+    "section": "考点一 杨贤江与马克思主义教育理论",
+    "topic": "主观题第31题",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第6页",
+    "analysis": "同一杨贤江分组追加当代价值原题，重点由教育本质与全人生指导推出具体启示。先解释历史理论，再联系青年全面发展与社会实践，不写无理论依据的口号。",
+    "knowledgeCardIds": [
+      "china-k12-002",
+      "china-k12-003",
+      "china-k12-004",
+      "china-k12-005",
+      "china-k12-006"
+    ],
+    "originalQuestionId": "dd-31"
+  },
+  {
+    "id": "training-china-c11-s5-1",
+    "book": "china",
+    "chapter": 11,
+    "section": "第五节 革命根据地教育的基本经验",
+    "topic": "革命根据地教育经验",
+    "questionType": "short-answer",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第63页",
+    "analysis": "按政治方向、教育劳动结合、群众办学说明根据地基本经验及实施机制，评价对新中国影响。原题涉及全章背景，应补具体实践例证，避免把本节概括等同于全章每节训练。",
+    "knowledgeCardIds": [
+      "china-k11-020",
+      "china-k11-021",
+      "china-k11-022"
+    ],
+    "originalQuestionId": "hb-zhongjiao-28"
+  },
+  {
+    "id": "training-china-c1-s1-1",
+    "book": "china",
+    "chapter": 1,
+    "section": "第一节 西周的教育制度",
+    "topic": "西周官学体系与学在官府",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第13页；《应试解析·中国教育史》2027版 PDF第14页；《中教专题班课件》PDF第5–6页",
+    "analysis": "从经济政治文化原因解释制度，再按国学乡学和家庭教育展开，说明贵族社会如何决定教育形态。",
+    "knowledgeCardIds": [
+      "china-k1-001",
+      "china-k1-002",
+      "china-k1-003",
+      "china-k1-004",
+      "china-k1-008",
+      "china-k1-011"
+    ],
+    "stem": "论述西周“学在官府”的形成原因、制度表现及历史特点。",
+    "referenceAnswer": "（一）形成原因。生产力和文化资源有限，土地与政治权力集中于贵族，文字典籍、礼器和学术由官府掌握，教育依附宗法分封制度。\n（二）制度表现。政教合一、官师合一，官吏兼任教师，贵族垄断学校教育；国学面向贵族子弟，分大学与小学，乡学设于地方，以乡三物进行教化和选拔，家庭教育与学校教育相接。\n（三）目的内容。以明人伦、以礼造士为宗旨，培养统治人才，六艺是基本内容，礼乐居中心。\n（四）评价。学校层级和礼乐教育为后世留下制度传统；教育机会又受身份血缘限制，须分别评述制度建设与等级性。"
+  },
+  {
+    "id": "training-china-c1-s2-1",
+    "book": "china",
+    "chapter": 1,
+    "section": "第二节 “六艺”教育",
+    "topic": "六艺课程的结构及价值",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第15页；《中教专题班课件》PDF第30–31页",
+    "analysis": "依六项内容、大小艺分工和礼乐中心作答，再从文武兼备与实践活动评价，说明现代借鉴的适用边界。",
+    "knowledgeCardIds": [
+      "china-k1-013",
+      "china-k1-014",
+      "china-k1-015",
+      "china-k1-016",
+      "china-k1-017",
+      "china-k1-018"
+    ],
+    "stem": "试述西周六艺教育的内容和特点，并分析其历史影响。",
+    "referenceAnswer": "（一）内容。礼学习伦理秩序与仪式，乐借音乐舞蹈陶冶情感，礼乐相辅相成；射御训练军事与驾车能力，书数提供文字和计算技能。\n（二）层级。礼乐射御为大艺，安排于大学；书数为小艺，主要安排于小学，体现阶段培养。\n（三）特点。以礼乐为中心，伦理教育、军事技能和文化知识并存，文武兼重，重实际活动，服务贵族统治与生活。\n（四）评价。六艺形成早期课程体系，留下各方面训练及实践经验；目标对象受等级制度限制。现代可借鉴课程协同和实践活动，不能直接照搬礼制等级及古代军事训练。"
+  },
+  {
+    "id": "training-china-c2-s1-1",
+    "book": "china",
+    "chapter": 2,
+    "section": "第一节 春秋战国时期的教育制度与实践",
+    "topic": "私学兴起与教育转型",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第19–20页；《应试解析·中国教育史》2027版 PDF第20页；《中教专题班课件》PDF第7–8页",
+    "analysis": "用学在官府瓦解作前后对照，说明社会条件通过士阶层与办学自由改变教育，不将古代私学等同于现代营利学校。",
+    "knowledgeCardIds": [
+      "china-k2-001",
+      "china-k2-003",
+      "china-k2-004",
+      "china-k2-005"
+    ],
+    "stem": "分析春秋战国私学兴起的原因及其对中国教育发展的影响。",
+    "referenceAnswer": "（一）条件。生产关系与政治秩序变化削弱官府文化垄断，礼崩乐坏使官学知识人才流入民间；士阶层活跃，各国用人需求增长，思想争鸣促进学派办学。\n（二）形态。私人聚徒讲学，师生来源扩大，讲学与著述政治活动结合，在办学、从学、讲学、游学和争鸣方面享有较大自由。\n（三）影响。扩大受教对象，推动学术下移，内容方法多样化，教师成为相对独立职业，师生关系与教育理论发展。\n（四）评价。私学打破学在官府，是教育史重要转折；机会扩大尚不等于现代普遍平等，仍受经济和阶层条件限制。"
+  },
+  {
+    "id": "training-china-c2-s1-2",
+    "book": "china",
+    "chapter": 2,
+    "section": "第一节 春秋战国时期的教育制度与实践",
+    "topic": "稷下学宫的制度特色",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第21页；《应试解析·中国教育史》2027版 PDF第22页；《中教专题班课件》PDF第7–8页",
+    "analysis": "以性质、四种活动、自由交流与师生规范构成论证，区分官办支持和私学式自主性，再讨论政治条件。",
+    "knowledgeCardIds": [
+      "china-k2-006",
+      "china-k2-007",
+      "china-k2-008",
+      "china-k2-009",
+      "china-k2-010",
+      "china-k2-011"
+    ],
+    "stem": "论述稷下学宫的性质、办学特点和历史意义。",
+    "referenceAnswer": "（一）性质。齐国设立、具有私学性质的高等学府，兼具学术和政治咨询功能，经济实力、招贤需要与诸子活跃提供条件。\n（二）组织。集讲学、著述、研究和议政于一体，学者获优厚待遇，参与政治咨询而不以任官事务为主要任务。\n（三）学术教学。容纳不同学派，鼓励争鸣交流，体现学术自由；师生能够选择与交流，《弟子职》又反映学习生活规范。\n（四）意义。促成学术繁荣和学派融合，提供尊重学者、研究教学并重的经验。\n（五）评价。学宫依赖政治支持，其繁荣不能自动产生治理成功；应分析自由讨论价值与官办政治依附的关系。"
+  },
+  {
+    "id": "training-china-c2-s3-2",
+    "book": "china",
+    "chapter": 2,
+    "section": "第三节 战国后期的教育论著",
+    "topic": "大学与中庸的修养路径",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第44页；《应试解析·中国教育史》2027版 PDF第45页；《应试解析·中国教育史》2027版 PDF第46页；《中教专题班课件》PDF第37,39–40页",
+    "analysis": "补充同节《学记》之外的两部论著，比较目的、修养程序和学习环节，说明三纲八目关系而非只列名称。",
+    "knowledgeCardIds": [
+      "china-k2-069",
+      "china-k2-070",
+      "china-k2-071",
+      "china-k2-072",
+      "china-k2-073",
+      "china-k2-074"
+    ],
+    "stem": "比较《大学》与《中庸》的教育目的及修养、学习路径，并评价其教育意义。",
+    "referenceAnswer": "（一）《大学》。三纲领为明明德、亲民、止于至善，目的由个人德性走向社会治理；八条目为格物、致知、诚意、正心、修身、齐家、治国、平天下，以修身为枢纽，联结内在修养与政治实践。\n（二）《中庸》。重诚与自觉修养，提出博学、审问、慎思、明辨、笃行，贯通知识获取、质疑、思考、判断与实践。\n（三）比较。二者重道德人格及个人社会关系，《大学》突出修身治国层次，《中庸》突出诚和学习过程。\n（四）评价。体现循序、自觉与知行联系，具有学习论价值；伦理政治目标受时代约束，现代可借鉴环节和自觉修养，不能照搬封建规范。"
+  },
+  {
+    "id": "training-china-c3-s1-1",
+    "book": "china",
+    "chapter": 3,
+    "section": "第1节 汉代的教育制度与实践",
+    "topic": "汉代独尊儒术与育才选才",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第53页；《应试解析·中国教育史》2027版 PDF第54页；《应试解析·中国教育史》2027版 PDF第57页；《应试解析·中国教育史》2027版 PDF第58页；《中教专题班课件》PDF第5,7,13–15,34页",
+    "analysis": "按政策、博士太学、察举机制和影响贯通，注意汉代察举太学尚无后世科举学校的制度衔接。",
+    "knowledgeCardIds": [
+      "china-k3-002",
+      "china-k3-003",
+      "china-k3-004",
+      "china-k3-005",
+      "china-k3-018",
+      "china-k3-019"
+    ],
+    "stem": "论述汉武帝“独尊儒术”政策的内容、实施途径和教育影响。",
+    "referenceAnswer": "（一）背景内容。中央集权需要统一政治文化秩序，汉武帝采纳董仲舒建议，以推明孔氏抑黜百家为总纲，兴太学养士，重选举任贤。\n（二）落实。专立五经博士使经典成为官方课程；置博士弟子建立太学，培养经明行修官吏；察举以考察举荐与分科考试结合，使儒学学习与官员选拔联系。\n（三）作用。国家组织教育，教育治国地位提高，太学地方学校发展，儒经广泛传播，育才选才配合。\n（四）局限。其他学说受压，经典权威居中心，内容趋单一；举荐仍受权贵干预。应分开评价制度建设和思想文化限制。"
+  },
+  {
+    "id": "training-china-c3-s2-2",
+    "book": "china",
+    "chapter": 3,
+    "section": "第2节 汉代的教育思想",
+    "topic": "董仲舒的人性与道德教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第58页；《应试解析·中国教育史》2027版 PDF第59页；《中教专题班课件》PDF第36,39页",
+    "analysis": "补充王充原题以外的董仲舒专题，说明人性与善的可能现实关系，再把性三品与德教立政联系到教育目的和局限。",
+    "knowledgeCardIds": [
+      "china-k3-021",
+      "china-k3-022",
+      "china-k3-023",
+      "china-k3-024",
+      "china-k3-025"
+    ],
+    "stem": "试述董仲舒的人性论、教育作用观和道德教育思想，并作历史评价。",
+    "referenceAnswer": "（一）人性。包含仁气贪气，性有成善可能，善依教化实现；性三品分圣人、中民、斗筲，中民是主要教育对象。\n（二）作用。教育使人向善，德教是立政之本，教化为本刑罚为辅，服务国家伦理秩序。\n（三）内容。三纲五常为核心，规范君臣父子夫妇及仁义礼智信。\n（四）方法。重义轻利，以仁安人以义正我，必仁且智，强勉行道，联系认知情感践行。\n（五）评价。论证教育必要性并促进儒学制度化，认识到德行积累；性三品与纲常也为专制等级提供依据，不能用作现代平等教育理论。"
+  },
+  {
+    "id": "training-china-c4-s1-1",
+    "book": "china",
+    "chapter": 4,
+    "section": "第一节 魏晋南北朝的教育制度与实践",
+    "topic": "魏晋南北朝学校与门阀选士",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第65页；《应试解析·中国教育史》2027版 PDF第66页；《中教专题班课件》PDF第6,13–15页",
+    "analysis": "比较国子学太学与学校九品取士关系，解释门阀政治如何导致等级化及学校选才功能削弱。",
+    "knowledgeCardIds": [
+      "china-k4-001",
+      "china-k4-002",
+      "china-k4-003",
+      "china-k4-004",
+      "china-k4-006",
+      "china-k4-007"
+    ],
+    "stem": "论述魏晋南北朝官学与选士制度的特点及其对教育的影响。",
+    "referenceAnswer": "（一）门阀背景。政治分裂与士族制度使教育选士强调家世。西晋国子学按官品分入学资格，形成国子学太学并行格局，强化等级性。\n（二）官学变化。南朝儒玄史文四馆及总明观反映学术范围扩展，北魏恢复建设官学，推动北方教育。\n（三）九品中正制。由中正品评人物、依品第授官，后来门第成为主要依据，上品无寒门、下品无势族，学校学习难以决定仕途。\n（四）影响。等级招生与门第取士压抑寒门，削弱学校育才选才功能；专门学术机构又呈现内容多样发展，须兼顾政治依附和学术扩展。"
+  },
+  {
+    "id": "training-china-c4-s3-2",
+    "book": "china",
+    "chapter": 4,
+    "section": "第三节 魏晋南北朝与隋唐时期的教育思想",
+    "topic": "韩愈师道思想",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第78页；《应试解析·中国教育史》2027版 PDF第79页；《应试解析·中国教育史》2027版 PDF第80页；《应试解析·中国教育史》2027版 PDF第81页；《中教专题班课件》PDF第38页",
+    "analysis": "覆盖同节颜之推外的韩愈，依背景任务标准关系评价组织，区分开放求学意义与道统的内容限制。",
+    "knowledgeCardIds": [
+      "china-k4-046",
+      "china-k4-047",
+      "china-k4-051",
+      "china-k4-052",
+      "china-k4-053",
+      "china-k4-054"
+    ],
+    "stem": "论述韩愈《师说》的师道主张及其教育史意义。",
+    "referenceAnswer": "（一）背景。门阀观念与耻于从师风气妨碍学习，韩愈以复兴儒家道统重建教师地位。\n（二）任务。教师传道、授业、解惑，传道居中心，也要教授学业、解决疑问，说明教师育才的重要性。\n（三）择师。道之所存师之所存，以道和学问为依据，突破贵贱年龄限制。\n（四）师生观。弟子不必不如师，师不必贤于弟子，闻道有先后、术业有专攻，师生可互相学习，能力并非固定。\n（五）评价。系统论述教师任务和求师标准，影响尊师重道传统；传道内容依儒家道统，仍有历史限制，现代可借鉴以学问择师和相互学习。"
+  },
+  {
+    "id": "training-china-c5-s2-3",
+    "book": "china",
+    "chapter": 5,
+    "section": "第二节 宋元明清时期的教育思想",
+    "topic": "朱熹教育阶段与德育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第103页；《应试解析·中国教育史》2027版 PDF第104页；《中教专题班课件》PDF第36,39–40页",
+    "analysis": "补充读书法外的教育结构，比较小学教事与大学穷理，说明人性论、阶段任务及德育如何贯通。",
+    "knowledgeCardIds": [
+      "china-k5-052",
+      "china-k5-053",
+      "china-k5-054",
+      "china-k5-055",
+      "china-k5-056",
+      "china-k5-057"
+    ],
+    "stem": "论述朱熹的教育作用观、小学大学教育及其相互关系。",
+    "referenceAnswer": "（一）基础。理气人性论解释本性和气质差异，教育要去气质之蔽、明人伦、恢复天理，培养合儒家规范的人。\n（二）小学。先教事，学习洒扫应对进退等规范，通过生活行为形成习惯并掌握基础知识。\n（三）大学。强调穷理、格物致知，理解行为规范根据，深化道德认识并修身治人。\n（四）关系。小学提供行为知识基础，大学发展理解，前后相续，体现年龄阶段和习惯认识的联系。\n（五）评价。分阶段及习惯认知结合有启发；目标课程依封建伦理，存天理灭人欲又有压抑合理需要的局限，需历史分析。"
+  },
+  {
+    "id": "training-china-c6-s1-1",
+    "book": "china",
+    "chapter": 6,
+    "section": "考点一 理学教育思想的批判",
+    "topic": "明清之际启蒙教育的共同特征",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第111页；《应试解析·中国教育史》2027版 PDF第112页；《中教专题班课件》PDF第37–40页",
+    "analysis": "用黄宗羲议政、王夫之知行、颜元习行论证共同特征，比较时保留各自独特主张而非互换观点。",
+    "knowledgeCardIds": [
+      "china-k6-001",
+      "china-k6-002",
+      "china-k6-003"
+    ],
+    "stem": "试述明清之际早期启蒙思想家对理学教育的批判及其共同教育主张。",
+    "referenceAnswer": "（一）背景。经世需要促使黄宗羲、王夫之、颜元等反思理学空疏、八股取士和学校脱离现实。\n（二）内容方法。反对仅凭静坐读书穷理获取真实能力，提倡实学实践、独立思考和学问社会用途。\n（三）人的发展。重现实生活与后天学习，批判禁欲及义利对立，强调行动修养和知行联系。\n（四）社会作用。反思学校仅服务君主科举，拓展育才、议政与社会教化职能。\n（五）评价。呈现反理学、经世启蒙倾向，提供改革资源；各人不可混同，仍有复古、社会方案不足等限制，并未建立完整近代学制。"
+  },
+  {
+    "id": "training-china-c6-s2-1",
+    "book": "china",
+    "chapter": 6,
+    "section": "考点二 黄宗羲的教育思想",
+    "topic": "黄宗羲学校议政与教学思想",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第112页；《应试解析·中国教育史》2027版 PDF第113页；《中教专题班课件》PDF第38,40页",
+    "analysis": "由育才到议政说明学校职能扩大，用教学内容和教师观补充体系，评价民主因素时保持历史尺度。",
+    "knowledgeCardIds": [
+      "china-k6-004",
+      "china-k6-005",
+      "china-k6-006",
+      "china-k6-007",
+      "china-k6-008",
+      "china-k6-009"
+    ],
+    "stem": "论述黄宗羲“公其非是于学校”的主张及其教育思想。",
+    "referenceAnswer": "（一）学校职能。除育才还应公开议论政治是非，使天下是非不由君主一人独断，而由学校公议。\n（二）设想。提高学校学者地位，由有德有学者主持，君主官员参与听取议论，地方学校也评论政事，以舆论约束政治权力。\n（三）内容方法。重经学史学和经世致用，要求独立思考，联系实践，不盲从权威。\n（四）教师观。重教师品行实际学问，尊重讨论及师生不同见解。\n（五）评价。突破学校单纯专制附庸观念，有启蒙意义；主体仍是学校士人，未形成现代公众参与与法治监督，不可等同现代民主制度。"
+  },
+  {
+    "id": "training-china-c6-s3-1",
+    "book": "china",
+    "chapter": 6,
+    "section": "考点三 王夫之的教育思想",
+    "topic": "王夫之日生日成与知行",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第113页；《应试解析·中国教育史》2027版 PDF第114页；《中教专题班课件》PDF第36–39页",
+    "analysis": "以日生日成解释教育可能性，再将学思博约知行关系转化为教学论，区别其知行观与颜元偏重习行。",
+    "knowledgeCardIds": [
+      "china-k6-010",
+      "china-k6-011",
+      "china-k6-012",
+      "china-k6-013",
+      "china-k6-014"
+    ],
+    "stem": "试述王夫之的人性论、教学思想和道德教育思想，并分析其价值。",
+    "referenceAnswer": "（一）人性。日生日成强调人性在发展和后天实践中不断形成，教育对个人塑造及社会风俗具有作用。\n（二）教学。重学思结合、博约结合，广泛积累与抓住要点、独立思考并用；知行各有作用又相互促进，实际行动深化认识。\n（三）德育。重立志、具体行为和德行积累，自我反省与实际履行结合，反对空谈。\n（四）教师。善于诱导，了解学生特点，选用适当方法促进思考实践。\n（五）评价。突出后天发展及知行联系，可启发持续学习与实践育人；仍受古代哲学伦理限制，具体主张应由现代证据检验。"
+  },
+  {
+    "id": "training-china-c7-s1-3",
+    "book": "china",
+    "chapter": 7,
+    "section": "第一节 近代教育改革措施",
+    "topic": "近代教会学校的双重影响",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第121页；《应试解析·中国教育史》2027版 PDF第122页；《中教专题班课件》PDF第12,33页",
+    "analysis": "补充洋务外的教会教育，从宗教目的、新式教育渠道与教育主权三个维度解释，不一概归纳所有学校。",
+    "knowledgeCardIds": [
+      "china-k7-001",
+      "china-k7-004",
+      "china-k7-005",
+      "china-k7-006",
+      "china-k7-007"
+    ],
+    "stem": "评述鸦片战争后教会学校在中国的教育活动及其影响。",
+    "referenceAnswer": "（一）背景目的。传教士借条约及来华活动设校，以办学传播宗教、扩大文化影响，学校发展与外国势力相联系。\n（二）活动。教宗教知识，也引入外语、自然科学、新教材方法，发展女子教育；学校与教科书委员会组织课程教材协作。\n（三）积极影响。提供接触近代知识和学校的渠道，培养部分外语科技人才，促进女子入学与新式课程传播。\n（四）消极影响。外人掌握办学权，带有宗教灌输和文化侵略倾向，影响教育主权。\n（五）评价。结合具体课程与管理权双向分析，科学传播不消除侵略背景，政治目的也不抹去内容上的客观教育影响。"
+  },
+  {
+    "id": "training-china-c7-s1-4",
+    "book": "china",
+    "chapter": 7,
+    "section": "第一节 近代教育改革措施",
+    "topic": "洋务留学教育的实施与评价",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第127页；《应试解析·中国教育史》2027版 PDF第128页；《中教专题班课件》PDF第32页",
+    "analysis": "按对象、目标、方式和结局逐项比较，再解释封建政治文化约束如何影响留学计划与成效。",
+    "knowledgeCardIds": [
+      "china-k7-017",
+      "china-k7-018",
+      "china-k7-019",
+      "china-k7-020"
+    ],
+    "stem": "比较幼童留美与派遣留欧的实施特点，分析洋务留学教育的意义和局限。",
+    "referenceAnswer": "（一）留美。学生年龄小，在美接受长期学校教育、寄居家庭，接触外语科技和社会生活；保守观念及管理矛盾使计划中途撤回。\n（二）留欧。从船政等学堂选已有专业基础学生，重船舶制造驾驶、海军等训练，与洋务专业需要联系更直接。\n（三）共同意义。突破封闭，培养外语科技人才，扩大视野，积累留学制度经验，为产业学堂提供人员。\n（四）比较局限。留美普通教育范围广，留欧目标专门；都受中体西用与封建管理约束，学习易限于技术，缺乏整体制度改革。"
+  },
+  {
+    "id": "training-china-c8-s1-3",
+    "book": "china",
+    "chapter": 8,
+    "section": "第一节 教育改革措施",
+    "topic": "维新教育实践的改革方向",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第134页；《应试解析·中国教育史》2027版 PDF第135页；《应试解析·中国教育史》2027版 PDF第136页；《中教专题班课件》PDF第16–21页",
+    "analysis": "分别叙述维新前活动与百日维新措施，用目的范围说明与洋务差异，区别提出措施、实施和影响。",
+    "knowledgeCardIds": [
+      "china-k8-004",
+      "china-k8-005",
+      "china-k8-006",
+      "china-k8-007",
+      "china-k8-008",
+      "china-k8-011"
+    ],
+    "stem": "论述维新派兴学活动与百日维新教育改革措施，并分析其历史意义。",
+    "referenceAnswer": "（一）维新前。创学堂讲学机构、学会报刊，以育才与宣传传播思想；万木草堂等联系学术讨论和改革，女学扩展受教对象。\n（二）百日维新。倡书院改学堂、各地兴学，废八股改策论，设京师大学堂，派留学译西书，使教育与政治改革救亡结合。\n（三）特点。超越洋务专门技术培养，重新人才、国民启蒙和学校系统，教育实践与思想政治改革紧密关联。\n（四）评价。冲击科举封建教育，推进学堂与观念近代化；时间短、基础薄弱，许多措施未落实，不能把改革诏令都写成既成成果。"
+  },
+  {
+    "id": "training-china-c8-s2-2",
+    "book": "china",
+    "chapter": 8,
+    "section": "第二节 教育思想",
+    "topic": "康有为的教育改革与大同理想",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第144页；《中教专题班课件》PDF第22–26,40页",
+    "analysis": "按现实改革、大同组织和阶段目标展开，比较对象与方法，避免把其理想体系误当清末正式学制。",
+    "knowledgeCardIds": [
+      "china-k8-027",
+      "china-k8-028",
+      "china-k8-029"
+    ],
+    "stem": "试述康有为的教育改革主张及《大同书》教育体系，并作评价。",
+    "referenceAnswer": "（一）现实主张。兴学育才决定国强弱，主张废八股改策论、办学校、派留学译西书、男女教育平等，为维新培养人才。\n（二）大同体系。社会承担儿童抚养教育，人本院、育婴院、慈幼院、小学院、中学院、大学院前后相接，覆盖胎教至高等教育。\n（三）阶段重点。学前养体快乐启蒙，小学重德与体，中学德智体并重且注意禀赋，大学重开智实验、自由选专业。\n（四）评价。普遍教育、男女平等、阶段衔接冲击封建制度；大同方案带乌托邦色彩，体现理想而非实际实行学制，应区分现实改革与未来设想。"
+  },
+  {
+    "id": "training-china-c8-s2-3",
+    "book": "china",
+    "chapter": 8,
+    "section": "第二节 教育思想",
+    "topic": "梁启超的新民与教育改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第145页；《应试解析·中国教育史》2027版 PDF第146页；《应试解析·中国教育史》2027版 PDF第147页；《中教专题班课件》PDF第22–29,38,40页",
+    "analysis": "以新民目标统领四项改革，解释目标与措施的联系，师范幼学不只写成办校名称。",
+    "knowledgeCardIds": [
+      "china-k8-030",
+      "china-k8-031",
+      "china-k8-032",
+      "china-k8-033",
+      "china-k8-034"
+    ],
+    "stem": "论述梁启超“新民”教育目的及学制、师范、女子和儿童教育主张。",
+    "referenceAnswer": "（一）目标。开民智伸民权，培养具民力民智民德的新国民，使德智体与近代社会需求联系。\n（二）学制。依年龄发展分教育期，大办小学缓办大学，解决基础普通知识薄弱。\n（三）师范。普设师范培养兼习中西学的教师，为学校课程改革提供师资。\n（四）女学幼学。女子应受教并自立，破缠足办女学；儿童教学由易到难、重理解直观兴趣，编写适合儿童的教材。\n（五）评价。贯通国民启蒙、制度与教学，促进近代教育发展；仍受救国政治需要、性别观念和现实资源条件限制。"
+  },
+  {
+    "id": "training-china-c8-s2-4",
+    "book": "china",
+    "chapter": 8,
+    "section": "第二节 教育思想",
+    "topic": "严复三育论与体用一致",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第148页；《应试解析·中国教育史》2027版 PDF第149页；《中教专题班课件》PDF第16–21,40页",
+    "analysis": "以八股弊病、三育目标、文化基础贯通，比较中体西用时说明政治制度与技术文化的整体关系。",
+    "knowledgeCardIds": [
+      "china-k8-035",
+      "china-k8-036",
+      "china-k8-037",
+      "china-k8-038"
+    ],
+    "stem": "试述严复对八股教育的批判、三育论及体用一致的文化教育观。",
+    "referenceAnswer": "（一）批判。八股锢智慧，拒现实新知；坏心术，助作弊因袭；滋游手，脱离生产。要求除八股讲西学，重观察试验、独立思考。\n（二）三育。鼓民力改变鸦片缠足等弊病；开民智发展科学知识智慧；新民德以民主自由平等和爱国观念革新道德，服务救亡。\n（三）体用一致。中西各有体用，不能机械拼合中学制度伦理与西学技术；前期重全面学习西方，后期倡融会中西兼备体用。\n（四）评价。将科学方法、国民素质与文化制度联系，批判中体西用局限；前后思想有不彻底和摇摆，需分时期评价。"
+  },
+  {
+    "id": "training-china-c9-s1-2",
+    "book": "china",
+    "chapter": 9,
+    "section": "第一节 教育改革措施",
+    "topic": "民国初年教育方针与学制",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第153页；《应试解析·中国教育史》2027版 PDF第154页；《应试解析·中国教育史》2027版 PDF第155页；《中教专题班课件》PDF第22–26页",
+    "analysis": "补充1922外的民初制度，对照清末宗旨，再从对象、课程、年限分析变化与现实限制。",
+    "knowledgeCardIds": [
+      "china-k9-001",
+      "china-k9-002",
+      "china-k9-003",
+      "china-k9-004",
+      "china-k9-005",
+      "china-k9-006"
+    ],
+    "stem": "论述民国初年教育方针及壬子癸丑学制的主要变化和局限。",
+    "referenceAnswer": "（一）方针。重道德教育，实利教育军国民教育辅助，美感教育完成道德，相比清末忠君尊孔体现共和国育才与国民发展要求。\n（二）体系。壬子癸丑建立初等中等高等相接系统，安排师范实业教育，改变清末封建等级因素。\n（三）进步。趋向男女平等，取消读经等内容，重自然科学和社会需要，缩短部分年限，课程标准近代化。\n（四）局限。仍受日本模式影响，经费设施与社会条件不足，制度平等及普及难充分实现。\n（五）地位。推进共和教育，是近代学制重要阶段；与1922六三三不同，不能用后者倒写前者结构。"
+  },
+  {
+    "id": "training-china-c9-s1-3",
+    "book": "china",
+    "chapter": 9,
+    "section": "第一节 教育改革措施",
+    "topic": "收回教育权运动",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第157页；《应试解析·中国教育史》2027版 PDF第158页；《应试解析·中国教育史》2027版 PDF第159页；《中教专题班课件》PDF第33页",
+    "analysis": "围绕教育主权展开，比较扩张、诉求、立案条件与成效，区分行政控制和文化影响。",
+    "knowledgeCardIds": [
+      "china-k9-012",
+      "china-k9-013",
+      "china-k9-014",
+      "china-k9-015",
+      "china-k9-016"
+    ],
+    "stem": "论述20世纪20年代收回教育权运动的背景、主要措施与历史意义。",
+    "referenceAnswer": "（一）背景。教会学校在华扩张而管理相对独立，民族意识反帝运动增强，教育主权及宗教课程受到关注，新文化推动世俗化。\n（二）诉求。要求中国人掌握教育权，学校遵守中国法令，规范宗教与教学关系，推动学校立案。\n（三）措施。《外人捐资设立学校请求认可办法》要求申请认可服从法令，学校负责人和组织体现中国人权力，教学宗教事项受国家管理。\n（四）意义。加强主权，限制宗教性和自主扩张，促进中国化及管理课程调整。\n（五）评价。民族独立与教育改革结合，制度约束获进展，外来影响消除有限，不能理解为立即停办所有教会学校。"
+  },
+  {
+    "id": "training-china-c9-s2-3",
+    "book": "china",
+    "chapter": 9,
+    "section": "第二节 教育思想",
+    "topic": "民国教育思潮的不同路径",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第166页；《应试解析·中国教育史》2027版 PDF第167页；《应试解析·中国教育史》2027版 PDF第168页；《应试解析·中国教育史》2027版 PDF第169页；《中教专题班课件》PDF第27–29,40页",
+    "analysis": "按改革关注的问题比较内容方法和目标，补充新文化原题中多思潮细部，解释不同社会改造路径。",
+    "knowledgeCardIds": [
+      "china-k9-030",
+      "china-k9-031",
+      "china-k9-032",
+      "china-k9-033",
+      "china-k9-035",
+      "china-k9-037"
+    ],
+    "stem": "比较民国时期平民教育、工读主义、职业教育、科学教育与国家主义教育思潮的改革取向。",
+    "referenceAnswer": "（一）平民教育。使大众获得文化与识字机会，以教育改造社会，但各派对改造途径理解不同。\n（二）工读勤工俭学。将劳动学习结合，缓解求学经济困难、培养劳动精神，推动青年接触国外社会思想。\n（三）职业教育。联系学校职业社会，重谋生技能、职业道德与合作办学。\n（四）科学教育。传播科学知识，也以调查实验测量改进教育，包含科学教育化和教育科学化。\n（五）国家主义。强调国家民族利益和认同，有救国动机，也可能压制个性民主。\n（六）比较。分别侧重对象、劳学关系、课程实用、方法和政治目标，不能统一称为实用主义或只列人物。"
+  },
+  {
+    "id": "training-china-c10-s1-1",
+    "book": "china",
+    "chapter": 10,
+    "section": "第一节 教育宗旨与教育方针的变迁",
+    "topic": "南京国民政府教育方针",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第174页；《应试解析·中国教育史》2027版 PDF第175页；《中教专题班课件》PDF第5,16–21页",
+    "analysis": "依党化、三民主义、战时三个阶段，说明政治目标和教育措施的联系，再分维度评价。",
+    "knowledgeCardIds": [
+      "china-k10-001",
+      "china-k10-002",
+      "china-k10-003",
+      "china-k10-004"
+    ],
+    "stem": "试述南京国民政府教育宗旨的变化与抗战时期教育方针，并作评价。",
+    "referenceAnswer": "（一）党化教育。1927年以党化要求使学校纳入执政党政治控制，强化服从。\n（二）三民主义宗旨。随后以三民主义为教育宗旨，强调国民培养与国家目标，实际仍受统治需要制约。\n（三）战时方针。抗战提出战时须作平时看，尽量维持学业连续，配合迁校救济、课程训练调整，延续教育并适应战争。\n（四）评价。政治宗旨加强学校管控；战时坚持办学有助保存人才和文化，但战争严重破坏教育，方针与现实有差距。政治控制、国民培养、战时持续办学须分别分析，不宜用一个口号代替全部时期。"
+  },
+  {
+    "id": "training-china-c10-s2-1",
+    "book": "china",
+    "chapter": 10,
+    "section": "第二节 教育制度改革",
+    "topic": "大学院大学区制与戊辰学制",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第175–176页；《中教专题班课件》PDF第5,22–26页",
+    "analysis": "区分行政体制与学校制度，解释失败条件，避免把大学区误解为大学内部学院组织。",
+    "knowledgeCardIds": [
+      "china-k10-005",
+      "china-k10-006",
+      "china-k10-007",
+      "china-k10-008"
+    ],
+    "stem": "分析南京国民政府大学院、大学区制试验的内容与失败原因，概述戊辰学制调整方向。",
+    "referenceAnswer": "（一）设想。大学院负责全国学术教育行政，大学区组织地方教育，以大学统领区内学校，试图发挥学者管理教育作用。\n（二）失败。制度移植不适应行政财政条件，大学管理能力与地方需要不匹配，地方权力利益及政治干预形成阻力，试验停止。\n（三）戊辰调整。以1922新学制为基础，重义务教育和质量，向职业教育倾斜，以适应人才需求。\n（四）评价。大学区体现学术治教和教育独立理想，失败提示改革必须明确权责资源与地方条件；学制规定和现实普及不同，不能只据法令判断成效。"
+  },
+  {
+    "id": "training-china-c10-s3-1",
+    "book": "china",
+    "chapter": 10,
+    "section": "第三节 学校教育的管控措施",
+    "topic": "南京国民政府学校管控",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第176页；《应试解析·中国教育史》2027版 PDF第177页；《中教专题班课件》PDF第5,27–31页",
+    "analysis": "按思想组织、课程教材、考试三个层次揭示机制，说明标准和会考怎样反向制约教学。",
+    "knowledgeCardIds": [
+      "china-k10-009",
+      "china-k10-010",
+      "china-k10-011",
+      "china-k10-012",
+      "china-k10-013",
+      "china-k10-014"
+    ],
+    "stem": "论述南京国民政府对学校教育的主要管控措施及其影响。",
+    "referenceAnswer": "（一）思想组织。训育制度规范学生思想行为，中等以上学校导师制配合童子军军事训练，将纪律与政治要求联结。\n（二）课程教材。统一课程标准贯彻教育宗旨，审查教科书、限制材料，控制教学目标内容。\n（三）考试。毕业会考检验学业并反向影响教学，形成标准教材考试的管理链条。\n（四）影响。一定程度规范学校，但政治思想控制压缩师生自主，教材审查及会考可能助应试。应区分教育质量规范与政治统制，结合措施目的、内容和作用分析，不能把一切统一管理都作相同评价。"
+  },
+  {
+    "id": "training-china-c10-s4-1",
+    "book": "china",
+    "chapter": 10,
+    "section": "第四节 学校教育发展",
+    "topic": "南京国民政府各级学校的发展",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第178页；《应试解析·中国教育史》2027版 PDF第179页；《应试解析·中国教育史》2027版 PDF第180页；《中教专题班课件》PDF第6–12,22–26页",
+    "analysis": "按基础、高等、师范职业展示变化，战争与地区资源解释现实差距，不只列代表学校。",
+    "knowledgeCardIds": [
+      "china-k10-015",
+      "china-k10-016",
+      "china-k10-017",
+      "china-k10-019",
+      "china-k10-020",
+      "china-k10-021"
+    ],
+    "stem": "概述南京国民政府时期各级各类学校教育的发展，并分析其特点与制约因素。",
+    "referenceAnswer": "（一）基础。幼儿教育逐步中国化科学化，小学推进义务教育，中学在普通职业分流间调整，体系更规范。\n（二）高等。组织课程学位制度定型，研究专业培养发展，抗战内迁联合办学保存教育力量，西南联大是例证。\n（三）师范职业。师范分层培养并重教育专业实习；职教适应经济建设战时需要，联系人才需求。\n（四）特点制约。各类并进、近代制度完善，地区阶层差距、经费短缺、政治控制及战争限制发展。\n（五）评价。肯定建设与坚持办学，也要区分学校增长和普遍受教，不能用个别大学成就代替全国状况。"
+  },
+  {
+    "id": "training-china-c11-s1-1",
+    "book": "china",
+    "chapter": 11,
+    "section": "第一节 新民主主义教育的发端",
+    "topic": "新民主主义教育的发端",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第183页；《应试解析·中国教育史》2027版 PDF第184页；《中教专题班课件》PDF第16–21,40页",
+    "analysis": "分思想与群众实践，说明对象内容社会关系的变化，不能仅用后来根据地经验倒推发端期。",
+    "knowledgeCardIds": [
+      "china-k11-001",
+      "china-k11-002",
+      "china-k11-003",
+      "china-k11-004",
+      "china-k11-005",
+      "china-k11-006"
+    ],
+    "stem": "试述李大钊、恽代英的教育主张及大革命时期工农教育的特点。",
+    "referenceAnswer": "（一）李大钊。教育与社会经济政治相关，主张工农大众受教、青年参加社会实践改造，传播科学进步思想。\n（二）恽代英。反思脱离实际的中等教育，改革课程学习生活，使教育联系社会改造，儿童教育重需要和主动活动。\n（三）工农实践。以工人学校夜校、农民教育讲习等实施识字文化、政治组织教育，形式灵活，紧贴劳动和革命生活。\n（四）意义。对象扩至工农，理论与斗争结合，政治文化教育互相支持，开辟新民主主义教育路径。\n（五）评价。体现解放与教育权，早期受革命条件约束，应区别思想倡议、具体实践与后来制度。"
+  },
+  {
+    "id": "training-china-c11-s1-2",
+    "book": "china",
+    "chapter": 11,
+    "section": "第一节 新民主主义教育的发端",
+    "topic": "大革命时期干部学校",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第185页；《中教专题班课件》PDF第9–12页",
+    "analysis": "覆盖本节多个干部教育事件，以任务课程实践比较，明确学校领导关系的差别，不能只背学校名称。",
+    "knowledgeCardIds": [
+      "china-k11-007",
+      "china-k11-008",
+      "china-k11-009"
+    ],
+    "stem": "分析大革命时期党领导与参与创办的干部学校及其办学特点。",
+    "referenceAnswer": "（一）需要。革命运动需要理论、组织和群众工作干部，学校围绕现实任务培养。\n（二）形态。湖南自修大学重自学研究，上海大学传播思想培养人才，农运讲习所重农村调查和群众工作。\n（三）黄埔。国共合作创办，军事与政治教育结合，重革命精神纪律实践，培养军政人才。\n（四）共同性。任务导向课程、理论实际结合、政治教育与集体组织相互配合。\n（五）评价。促进革命并提供新型育才经验；各校领导关系和课程不同，须举具体例证论共同性，不能全当普通大学或混同党独立创办与参与办学。"
+  },
+  {
+    "id": "training-china-c11-s2-1",
+    "book": "china",
+    "chapter": 11,
+    "section": "第二节 新民主主义教育方针的形成",
+    "topic": "新民主主义教育方针形成",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第187页；《中教专题班课件》PDF第5,40页",
+    "analysis": "从形成过程到三项内涵，说明相互联系，以抗战生产和受教对象作为具体例证，区分方针与实现。",
+    "knowledgeCardIds": [
+      "china-k11-010",
+      "china-k11-011",
+      "china-k11-012"
+    ],
+    "stem": "论述革命根据地新民主主义教育方针的形成及“民族的、科学的、大众的”内涵。",
+    "referenceAnswer": "（一）形成。苏维埃时期强调共产主义精神、服务革命战争和阶级斗争、联系劳动及群众受教；抗日根据地根据抗战民主建设需要重抗战生产群众教育。\n（二）民族性。反帝压迫、维护民族独立文化，并吸收世界有益成果。\n（三）科学性。反封建迷信，重事实真理和理论实际联系，以科学态度处理知识现实。\n（四）大众性。服务人民，扩大工农受教机会，内容方法适合群众。\n（五）评价。三者相联形成新民主主义教育方向，实施受战争资源条件制约，提出方针不等于完成普及；应以办学实践说明如何落实。"
+  },
+  {
+    "id": "training-china-c11-s3-1",
+    "book": "china",
+    "chapter": 11,
+    "section": "第三节 革命根据地的干部教育",
+    "topic": "根据地干部教育与抗大",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第188页；《中教专题班课件》PDF第9–12,27–29页",
+    "analysis": "先区别集中培养和在职学习，再用抗大说明目标课程方法联系，干部教育不能只写政治口号。",
+    "knowledgeCardIds": [
+      "china-k11-013",
+      "china-k11-014",
+      "china-k11-015",
+      "china-k11-016"
+    ],
+    "stem": "试述革命根据地干部教育的形式，并以抗大为例分析其教育特点。",
+    "referenceAnswer": "（一）形式。干部学校集中培养，在职学习提高在岗理论与工作能力，互相补充。\n（二）抗大目标。培养抗战军政干部，要求正确政治方向、艰苦朴素作风和灵活战略战术，注重革命精神纪律。\n（三）课程。政治理论、军事知识和工作技能结合，随任务调整，重思想政治教育。\n（四）方法。理论联系实际，自学讨论启发与训练相结合，联系劳动群众工作，反对空洞书本化。\n（五）评价。政治方向知识技能实践统一，适应人才需求；战争条件限制办学，不宜直接套用现代普通高校专业模式。"
+  },
+  {
+    "id": "training-china-c11-s4-1",
+    "book": "china",
+    "chapter": 11,
+    "section": "第四节 革命根据地的群众教育和普通教育",
+    "topic": "根据地群众与普通教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·中国教育史》2027版 PDF第189页；《中教专题班课件》PDF第6–12,27–29页",
+    "analysis": "按对象任务区别群众、儿童学校和高等教育，解释适应性办学怎样走向正规化，避免仅列冬学夜校。",
+    "knowledgeCardIds": [
+      "china-k11-017",
+      "china-k11-018",
+      "china-k11-019"
+    ],
+    "stem": "论述革命根据地群众教育和普通教育的任务、组织形式及发展方向。",
+    "referenceAnswer": "（一）群众。以扫盲政治动员生产生活知识为内容，用冬学夜校识字班等适应劳动季节和时间。\n（二）小学。教基础文化与思想，联系地方生活抗战生产，依靠群众组织解决师资经费。\n（三）正规化。解放区条件变化后整顿课程教学管理，使系统知识教育稳定，同时保留社会联系。\n（四）高等。通过整顿、设立和接管改造等建设人才培养力量。\n（五）评价。扩大参与受教，积累因地制宜经验；群众扫盲与儿童学校任务不同，不能互相代替，灵活性应与正规化、系统知识培养结合。"
+  }
+]

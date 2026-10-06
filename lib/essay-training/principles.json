@@ -1,0 +1,1283 @@
+[
+  {
+    "id": "training-principles-c1-s1-1",
+    "book": "principles",
+    "chapter": 1,
+    "section": "第一节 教育的概念",
+    "topic": "教育语言与教育本质辨析",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k1-001",
+      "principles-k1-003",
+      "principles-k1-006",
+      "principles-k1-009",
+      "principles-k1-010"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第8页；《应试解析·教育学原理》2027版 PDF第9页；《应试解析·教育学原理》2027版 PDF第10页",
+    "stem": "某社区宣传栏写着“教育改变人生”，志愿者说“教师是点亮心灵的灯”。社区课程说明把本项目的教育界定为“有计划地帮助居民掌握健康知识与技能的活动”，父母则在家庭劳动中有意识地培养孩子的责任感。\n（1）辨析材料中前三种教育表述的性质，并说明教育定义可以有哪些类型。\n（2）说明判断一种活动是否属于教育的核心依据，并分析社区课程与家庭劳动教育的范围。",
+    "referenceAnswer": "（1）“教育改变人生”侧重宣传鼓励，属于教育口号；“点亮心灵的灯”以比喻解释教育理想，属于教育隐喻；课程说明属于教育定义。谢弗勒区分描述性定义、规定性定义和纲领性定义：分别侧重解释既有用法、规定特定语境中的用法、表达教育应当怎样的规范。项目为统一操作范围而作界定，主要发挥规定性定义的交际功能；具体判断仍应结合上下文。\n（2）教育是有目的地培养人的社会活动，核心在于有意识地影响和促进人的发展。社区课程和父母有目的的劳动指导都符合广义教育；狭义教育主要指有目的、有组织、有计划、由专职人员承担的学校教育。不能因为活动发生在校外就否认其教育性，也不能将所有自发经历都等同于有目的的教育。",
+    "analysis": "本题把本节的语言分类与质的规定性放进同一社区情境。先辨“口号—隐喻—定义”，再以是否有目的培养人为依据判断活动，最后用广义与狭义教育限定范围，避免只凭地点分类。"
+  },
+  {
+    "id": "training-principles-c1-s1-2",
+    "book": "principles",
+    "chapter": 1,
+    "section": "第一节 教育的概念",
+    "topic": "学校教育的功能（协同育人）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k1-014",
+      "principles-k1-015",
+      "principles-k1-016"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第100页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-04",
+    "analysis": "本节对应学校、家庭、社会三种教育形态。材料的协同育人要求说明学校有系统性优势而家庭影响持久、社会提供真实生活情境；答案按学校功能—单一学校承担的局限—教师家校配合展开。原题同时涉及第三章学校教育主导作用，作答须结合该部分，不能把学校优点等同于教育责任全部归学校。"
+  },
+  {
+    "id": "training-principles-c1-s2-1",
+    "book": "principles",
+    "chapter": 1,
+    "section": "第二节 教育的结构与功能",
+    "topic": "教育功能",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k1-023",
+      "principles-k1-025",
+      "principles-k1-026"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第94页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-01",
+    "analysis": "本节训练教育功能的性质与呈现方式。材料明确指出教育既培养也可能压抑创造精神，应先界定负向功能、说明正负功能可以并存，再对应现成模式压制独特性等现象提出改进。原题另问学校与社会生活、创造性培养，须补充教育与生活联系及开放环境、独立思考、实践活动，不能仅答功能分类。"
+  },
+  {
+    "id": "training-principles-c1-s2-2",
+    "book": "principles",
+    "chapter": 1,
+    "section": "第二节 教育的结构与功能",
+    "topic": "教育的负向功能与创造性",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k1-023",
+      "principles-k1-025"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第6,15,18页",
+    "originalQuestionId": "mu-教育学原理-02",
+    "analysis": "与本节负向功能直接对应：文化传递若变为统一模式，可能妨碍个性与创造性。按功能概念—材料中的矛盾—开放教学措施作答；原题还覆盖社会生活关系与创造性培养，应说明教育联系真实生活，并保护学生首创精神和集体合作。手册同素材题也保留独立来源引用。"
+  },
+  {
+    "id": "training-principles-c1-s3-1",
+    "book": "principles",
+    "chapter": 1,
+    "section": "第三节 教育的起源与发展",
+    "topic": "教育起源学说与教育发展",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k1-029",
+      "principles-k1-030",
+      "principles-k1-031",
+      "principles-k1-032",
+      "principles-k1-033",
+      "principles-k1-035"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第16页；《应试解析·教育学原理》2027版 PDF第17页；《应试解析·教育学原理》2027版 PDF第18页；《应试解析·教育学原理》2027版 PDF第19页",
+    "stem": "试比较生物起源说、心理起源说和劳动起源说的主要观点及其局限或解释力，并论述从古代教育到现代教育的变化为何体现教育的社会历史性。",
+    "referenceAnswer": "一、生物起源说以勒图尔诺、沛西·能等为代表，把教育归于动物本能。它反对神话解释，但混淆动物适应行为与人类有目的的教育，忽视社会性。\n二、心理起源说以孟禄为代表，认为教育起源于儿童对成人无意识模仿；关注模仿，却难以说明有意识传递经验的教育。\n三、劳动起源说认为教育产生于社会劳动和生活实践：劳动需要传递生产经验、交往规范，语言和意识发展使有目的的教育成为可能，能将生物与心理条件置于社会实践中解释。\n四、古代教育具有阶级和等级性，内容狭窄，并与生产劳动和生活相分离；现代教育向民主化、全民化、终身化、信息化、国际化等发展，强调科学与人文、教育与劳动、教育与生活相结合。变化与社会生产、文化和组织方式发展相联系，说明教育形态具有历史性，不能将某时代教育当作永恒模式。",
+    "analysis": "先比较三学说的起源依据，再以古今教育目的、对象、内容及劳动联系的变化支撑社会历史性。起源说是解释框架，现代特征是历史演变的论据，二者不能混作同一分类。"
+  },
+  {
+    "id": "training-principles-c2-s1-1",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第1节 关于教育与社会关系的主要理论",
+    "topic": "学历与收益的多理论解释",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-006",
+      "principles-k2-008",
+      "principles-k2-009",
+      "principles-k2-011",
+      "principles-k2-013",
+      "principles-k2-016"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第25页；《应试解析·教育学原理》2027版 PDF第26页；《应试解析·教育学原理》2027版 PDF第27页",
+    "stem": "某地区毕业生平均收入随学历提高而增加，但同学历青年在稳定企业与临时岗位之间收入差别明显。企业招聘又把学历视为筛选条件。一些文化资源丰富家庭的孩子在同一考试中更容易成功。\n（1）运用人力资本论、筛选假设和劳动力市场理论解释前三种现象。\n（2）运用教育再生产理论解释最后一种现象，并说明综合评价教育经济作用时应注意什么。",
+    "referenceAnswer": "（1）人力资本论认为教育投资提高劳动者知识、技能和生产能力，能够增加收益、促进经济增长；学历与收入相关与此相容，却不能单凭相关关系证明因果。筛选假设认为文凭也是已有能力的信号，企业据此筛选人员，工资差异并不全由学校培养造成。劳动力市场理论区分主要与次要市场：稳定企业往往提供培训、晋升和较高工资，临时岗位流动大、培训少，同学历者收益仍不同；教育只是进入不同市场的因素之一。\n（2）再生产理论指出学校看似中立的语言、文化标准和考试可能偏向拥有优势文化资本的学生，使既有阶层优势延续。它有助于揭示隐蔽不平等，但若据此否定正规教育的全部积极价值则片面。综合评价应同时考察能力增值、文凭信号、市场结构与家庭文化资源，既重视教育投资，也改善机会与评价条件。",
+    "analysis": "本节六种理论中选取与材料直接吻合的四种。理论须解释不同证据：收入增长对应能力投资，招聘门槛对应筛选，岗位差异对应市场分割，文化优势对应再生产。最后评价各理论边界，避免教育万能式结论。"
+  },
+  {
+    "id": "training-principles-c2-s2-1",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第2节 教育的社会制约性",
+    "topic": "关系类题目（教育与科技、AI与教师）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-023",
+      "principles-k2-025"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第96页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-02",
+    "analysis": "本节对应科技及媒介对教育内容、方法、组织与教师角色的制约。智能批改和个性辅导是技术改变手段的具体证据；先写科技影响教育，再在双向关系中补充教育培养科技人才、传递科学知识的功能。第二、三问兼及教师劳动和AI素养，应说明技术支持教学仍需要教师价值引导、关系工作与专业判断。"
+  },
+  {
+    "id": "training-principles-c2-s2-2",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第2节 教育的社会制约性",
+    "topic": "中华优秀传统文化教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-021",
+      "principles-k2-022"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第5,9,12,13,14页",
+    "originalQuestionId": "mu-教育学原理-01",
+    "analysis": "本节直接对应文化对教育目标、内容、方式的影响。传统文化指导文件体现课程内容选择受文化价值制约；答第一问须同时补充教育传承、选择、融合、创新文化的反作用。原题第二问民族性与世界性、第三问开发实施跨出本节，需要论证扎根中国与融通中外统一，并具体落实课程目标、内容、活动、资源和评价。"
+  },
+  {
+    "id": "training-principles-c2-s3-1",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第3节 教育的社会功能",
+    "topic": "关系类题目（教育与科技、AI与教师）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-030"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第96页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-02",
+    "analysis": "本节对应教育的科技功能：传递科学知识、培养科技人才、促进科技创新。先以智能技术应用说明科技对教育的影响，再说明教育反作用于科技，构成双向关系。原题AI能否取代教师与应对措施属于教师及教育变革范围，仍须完整作答，不能只列科技功能。"
+  },
+  {
+    "id": "training-principles-c2-s3-2",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第3节 教育的社会功能",
+    "topic": "中华优秀传统文化教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-029"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第5,9,12,13,14页",
+    "originalQuestionId": "mu-教育学原理-01",
+    "analysis": "本节聚焦文化传承、选择、融合与创新四项功能。传统文化进入学校体现传承，精选有当代价值内容体现选择，融通中外体现融合，创造性转化体现创新。第一问还需说明文化制约教育；第二、三问分别涉及民族性与世界性、课程开发实施，按原题完整展开。"
+  },
+  {
+    "id": "training-principles-c2-s4-1",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第4节 当代社会发展对教育的需求与挑战",
+    "topic": "教育制度（终身教育与学习化社会）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-049",
+      "principles-k2-050"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第104页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-06",
+    "analysis": "本节的学习化社会要求教育超越学校与某一年龄段。材料将全部社会资源纳入学习，直接支持全民学习、终身学习、多样途径和资源开放；按学习主体转变—学习社会特征—教师成为引导者与资源组织者作答。原题也对应第五章终身教育制度改革。"
+  },
+  {
+    "id": "training-principles-c2-s4-2",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第4节 当代社会发展对教育的需求与挑战",
+    "topic": "中华优秀传统文化教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-043",
+      "principles-k2-044",
+      "principles-k2-045",
+      "principles-extra-cultural-unity"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第5,9,12,13,14页",
+    "originalQuestionId": "mu-教育学原理-01",
+    "analysis": "本节对应全球化背景下民族性与世界性的统一。材料“扎根中国、融通中外”既要求立足本民族文化，也要求平等交流、吸收优秀成果；答案应说明共同性与差异性相互支撑、反对封闭和盲目照搬。原题第一问文化关系、第三问课程开发实施须另行完整回答，不能缩成全球化一道简答。"
+  },
+  {
+    "id": "training-principles-c2-s4-3",
+    "book": "principles",
+    "chapter": 2,
+    "section": "第4节 当代社会发展对教育的需求与挑战",
+    "topic": "教师角色（生成式AI应用与教师AI素养）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k2-037",
+      "principles-k2-040",
+      "principles-k2-041"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第125页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-15",
+    "analysis": "本节对应信息化与AI带来的教育机遇、挑战和变革。资源均衡、智能辅导可支持个性化学习，答案依赖、技术差距与伦理风险提示独立思考、公平与治理问题；先写利弊，再按教师技术理解、教学融合、评价和伦理能力提出应对。第二问专门要求教师AI素养，兼及第九章。"
+  },
+  {
+    "id": "training-principles-c3-s1-1",
+    "book": "principles",
+    "chapter": 3,
+    "section": "第一节 人的身心发展特点及其对教育的制约",
+    "topic": "人的身心发展特点（评分与教育评价）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k3-001",
+      "principles-k3-002",
+      "principles-k3-004",
+      "principles-k3-005",
+      "principles-k3-008"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第98页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-03",
+    "analysis": "本节发展顺序、阶段、不平衡和差异性是分析六岁儿童评分问题的依据。带有权力控制意味的评分可能损伤儿童自信、忽视发展特点；取消机械打分不等于取消评价，应采用观察、描述反馈、进步比较和多样表现。原题同时涉及第七章教学评价改革，三问分别回答反对原因、评价必要性和具体替代措施。"
+  },
+  {
+    "id": "training-principles-c3-s2-1",
+    "book": "principles",
+    "chapter": 3,
+    "section": "第二节 关于影响人的身心发展因素的主要观点",
+    "topic": "发展因素理论的辨析",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k3-009",
+      "principles-k3-010",
+      "principles-k3-011",
+      "principles-k3-012",
+      "principles-k3-013",
+      "principles-k3-014"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第44页；《应试解析·教育学原理》2027版 PDF第45页",
+    "stem": "两名同卵双生儿童成长环境不同，成年后在兴趣和能力上呈现差异。甲据此认为“遗传不起作用”；乙认为“只要提供同样环境，就能把任何儿童培养成同样的人”。请比较内发论、外铄论与多因素交互作用论，评析甲乙观点，并提出教育实践中的判断原则。",
+    "referenceAnswer": "一、内发论侧重内部成熟、遗传或先天力量，如孟子、弗洛伊德、格赛尔的相关主张。它提醒重视发展基础，却容易低估环境和教育。外铄论侧重外部环境与教育，如荀子、洛克、华生的相关主张，肯定环境可改变人，却易忽视内部条件及主体能动性。\n二、多因素观点逐步把遗传、环境、教育和主观能动性纳入解释；交互作用论强调因素动态关联，个体也会选择、改造环境，不能用简单加法或单一原因解释发展。\n三、双生子存在差异说明相近遗传条件下环境仍起作用，并不证明遗传无作用。乙将环境视为唯一决定者，忽略成熟、个体经验和主动活动，同样片面。\n四、教育应了解学生已有发展水平、家庭环境、兴趣与活动方式，提供有目的的支持并鼓励主动参与；评价要允许差异和发展，避免先天定命与环境万能的标签。",
+    "analysis": "题目以双生子资料比较解释力。先交代理论主张及边界，再指出证据只支持“环境有影响”，不能推出“遗传无作用”，最后回到交互作用与教育支持。"
+  },
+  {
+    "id": "training-principles-c3-s3-1",
+    "book": "principles",
+    "chapter": 3,
+    "section": "第三节 人的身心发展的主要影响因素",
+    "topic": "学校教育的功能（协同育人）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k3-016",
+      "principles-k3-019",
+      "principles-k3-021",
+      "principles-k3-022",
+      "principles-k3-027"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第100页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-04",
+    "analysis": "本节对应学校教育的主导作用及其条件。学校目的明确、组织系统、专业教师与持续影响使其发挥主导，但效果经由学生主动活动实现，并受遗传与生活环境制约。材料家校社共同育人应答学校主导理由—责任不能独担—信息沟通、共同活动和一致教育要求，避免把主导写成决定一切。"
+  },
+  {
+    "id": "training-principles-c4-s1-1",
+    "book": "principles",
+    "chapter": 4,
+    "section": "第一节 教育目的与培养目标概述",
+    "topic": "教育目的与目标体系",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k4-001",
+      "principles-k4-002",
+      "principles-k4-003",
+      "principles-k4-007",
+      "principles-k4-008"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第52页；《应试解析·教育学原理》2027版 PDF第53页；《应试解析·教育学原理》2027版 PDF第54页",
+    "stem": "某高中提出“培养全面发展且有社会责任感的人”，据此确定学校培养目标；生物课程提出“理解生态系统并形成保护环境意识”，一节课则要求学生根据校园样方数据解释物种分布。\n（1）区分教育目的、培养目标、课程目标与教学目标，并说明它们的联系。\n（2）论述教育目的的主要作用，说明为何不能以一次考试分数替代教育目的。",
+    "referenceAnswer": "（1）教育目的规定所培养人的总体质量，是目标体系最高层次；培养目标依据教育目的并结合各级各类学校任务具体化；课程目标规定某课程学习的结果；教学目标落实于某教学活动的预期结果。前者制约后者，后者使前者可落实，并可通过实践反馈修正具体设计。材料中的总体人格要求、学校任务、生物课程要求和本课数据分析分别处于这四个层次。\n（2）教育目的具有定向作用，引导内容、方法和资源选择；具有调控作用，使具体活动服务总体培养；具有评价作用，为检查教育质量提供依据。它既规定社会价值取向，也关注学生发展质量。一次分数只反映特定任务与时点的表现，不能覆盖责任意识、能力、体质、审美与劳动素养，评价应使用多样证据并联系长期发展。",
+    "analysis": "本节目标体系须区分“不同学校的具体化”与“不同课程、课次的具体化”。材料层层递进，答案先定位再说明约束关系，评价部分回扣目的对活动的引导作用。"
+  },
+  {
+    "id": "training-principles-c4-s2-1",
+    "book": "principles",
+    "chapter": 4,
+    "section": "第二节 关于教育目的的主要理论",
+    "topic": "教育目的理论（杜威“教育适应生活说”）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k4-025",
+      "principles-k4-026",
+      "principles-k4-027"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第102页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-05",
+    "analysis": "本节对应斯宾塞教育准备生活说与杜威教育适应生活说的关系。材料批评仅把当下活动当作将来预备，应从有意义的当前经验、经验连续生长分析；同时说明关注未来需要有合理性，须把当下生活与未来发展贯通。按两种主张—材料论证—统一两者的实践途径展开，不将杜威写成教育没有活动目标。"
+  },
+  {
+    "id": "training-principles-c4-s2-2",
+    "book": "principles",
+    "chapter": 4,
+    "section": "第二节 关于教育目的的主要理论",
+    "topic": "教育目的的个人与社会价值",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k4-013",
+      "principles-k4-014",
+      "principles-k4-016",
+      "principles-k4-017",
+      "principles-k4-019",
+      "principles-k4-028"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第56页；《应试解析·教育学原理》2027版 PDF第57页；《应试解析·教育学原理》2027版 PDF第60页",
+    "stem": "有人认为“教育只需为社会培养合用的人，个人兴趣无须考虑”，也有人认为“教育只需满足个人愿望，社会要求无关紧要”。试运用社会本位论、个人本位论及马克思主义人的全面发展学说评析上述观点。",
+    "referenceAnswer": "一、社会本位论以社会或国家需要作为教育目的依据，肯定教育服务社会、动员公共资源的作用，但若把学生当作加工原料，会忽略个体价值和能动性。第一种主张将合理的社会要求绝对化。\n二、个人本位论以个人需要、潜能、个性为依据，维护人的价值和自由发展，但若无视社会条件与责任，容易把个体发展与社会发展割裂。第二种主张把个人价值绝对化。\n三、应历史、具体地协调社会要求与个体需要。马克思主义人的全面发展包括劳动能力全面发展、智力与体力协调发展以及个性的充分自由发展；发展受社会条件制约，又需个体主动活动。\n四、学校应提供共同基础与多样选择，将知识学习、劳动实践、公共服务与兴趣特长结合；既不以统一模子消灭个性，也不以随意偏好替代基本学习和社会责任。",
+    "analysis": "本节理论评价不能停留在代表人物。按各论合理性—片面性—全面发展的统一原则—学校行动组织答案，用材料的“只需”定位绝对化错误。"
+  },
+  {
+    "id": "training-principles-c4-s3-1",
+    "book": "principles",
+    "chapter": 4,
+    "section": "第三节 我国的教育目的",
+    "topic": "五育融合（德育与其他四育融合）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k4-035",
+      "principles-k4-037",
+      "principles-k4-038",
+      "principles-k4-039",
+      "principles-k4-040",
+      "principles-k4-041"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第120页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-13",
+    "analysis": "本节全面发展与五育关系直接对应原题。德育提供方向和动力，智育提供认识基础，体育提供机体保证，美育与劳动各有育人价值；不能用一育替代其他各育。结合材料按德育贯穿的理由—各育任务—课程、实践、劳动服务与综合评价的融合路径作答，既区分五育又说明协同。"
+  },
+  {
+    "id": "training-principles-c5-s1-1",
+    "book": "principles",
+    "chapter": 5,
+    "section": "第一节 教育制度概述",
+    "topic": "教育制度的性质与发展",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k5-001",
+      "principles-k5-002",
+      "principles-k5-004",
+      "principles-k5-005"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第68页；《应试解析·教育学原理》2027版 PDF第69页",
+    "stem": "某地随人口流动扩大入学服务，建立学籍管理、教育督导及社区继续教育平台。有人认为这些只是学校内部管理，与社会条件和终身学习无关。\n（1）阐述教育制度的含义与主要特点，结合材料评析该观点。\n（2）说明教育制度的历史发展及其面向终身教育的方向。",
+    "referenceAnswer": "（1）教育制度是教育机构体系及其运行规则的总和，包含学校及其他教育机构，也包含各项管理制度。具有客观性：机构和规模受社会生产与教育需求制约；规范性：规定入学、培养等条件；历史性：随社会发展变化；强制性：对个体行为具有约束。人口流动引起服务扩展体现社会制约与历史变化；学籍和督导体现规范与制度运行，继续教育平台说明范围不限于校内。\n（2）原始社会教育尚未独立，未形成专门教育制度；古代阶级社会有简略而非群众性的制度；近现代形成分段衔接、类型丰富的体系；当代逐步朝制度化与非制度化教育结合的终身教育发展。实践上要衔接学校、职业培训与社区学习，支持不同年龄和阶段的持续学习，同时保留必要的质量规范。",
+    "analysis": "本节考制度概念而非只考学制。把机构与规则分开说明，再用人口、学籍、督导和继续教育四类证据落实四项特点，历史演变收束于终身教育方向。"
+  },
+  {
+    "id": "training-principles-c5-s2-1",
+    "book": "principles",
+    "chapter": 5,
+    "section": "第二节 学校教育制度",
+    "topic": "学制比较与制定依据",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k5-006",
+      "principles-k5-008",
+      "principles-k5-009",
+      "principles-k5-010",
+      "principles-k5-011",
+      "principles-k5-013"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第70页；《应试解析·教育学原理》2027版 PDF第71页；《应试解析·教育学原理》2027版 PDF第72页",
+    "stem": "试比较双轨、单轨和分支型学制的结构、优点与局限，并论述制定或改革学制应依据哪些因素，说明为何不能照搬某一国家的学制。",
+    "referenceAnswer": "一、学制是各级各类学校体系及其运行关系，规定学校性质、任务、入学条件、修业年限和衔接。纵向有级、横向有类，既要分化也需联系。\n二、双轨制的学术与职业轨道长期分离，能够分工培养人才，却易固化等级、限制转换；单轨制以共同学校系统组织各级教育，有利于平等与衔接，但仍需解决差异和选择；分支型以前期共同基础、后期分化的方式兼顾共同学习与多样发展，也要防止分流僵化。\n三、制定学制须考察生产力和科技、政治经济制度与教育方针、文化传统等社会依据，学生身心发展及学段特点等人的依据，以及本国历史经验、外国经验和教育自身规律。\n四、借鉴应针对共同问题，结合本国资源、人口和发展水平调整入学年龄、学习年限、类型与衔接；建立转换途径和质量保障。结构形式本身并不自动实现公平或质量。",
+    "analysis": "本节先比较三类学制的级类关系，再以社会、人的发展、教育经验三方面解释改革选择。评价双轨时突出转换受限，不能把一切职业教育都等同于等级制。"
+  },
+  {
+    "id": "training-principles-c5-s3-1",
+    "book": "principles",
+    "chapter": 5,
+    "section": "第三节 现代教育制度改革",
+    "topic": "教育制度（终身教育与学习化社会）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k5-035",
+      "principles-k5-036",
+      "principles-k5-037",
+      "principles-k5-039"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第104页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-06",
+    "analysis": "本节对应终身教育及其制度实现。材料要求学习覆盖一生与全部社会，应写开放衔接的教育体系、学校与社会资源利用、不同阶段再次学习的机会；教师要发展学生自主学习能力并自身持续学习。原题学习化社会特征跨第二章需求挑战，须完整回答三个问题。"
+  },
+  {
+    "id": "training-principles-c5-s3-2",
+    "book": "principles",
+    "chapter": 5,
+    "section": "第三节 现代教育制度改革",
+    "topic": "现代教育制度改革的协调",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k5-028",
+      "principles-k5-029",
+      "principles-k5-030",
+      "principles-k5-031",
+      "principles-k5-032",
+      "principles-k5-034"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第77页；《应试解析·教育学原理》2027版 PDF第78页；《应试解析·教育学原理》2027版 PDF第79页",
+    "stem": "某县在巩固义务教育基础上，为高中学生提供普通课程与职业体验，建立中职、高职及继续教育衔接，并提出“上大学就是制度改革成功的唯一标准”。\n（1）说明义务教育、普通教育与职业教育改革的主要方向。\n（2）评析“唯一标准”，提出兼顾公平、质量与终身学习的制度建议。",
+    "referenceAnswer": "（1）义务教育具有免费、强制、普及特点，改革应巩固普及、推进均衡并改善质量。普通与职业教育任务各有侧重，但随社会科技发展需加强综合化：普通教育增加实践与职业认识，职业教育增强文化基础和发展能力。高中阶段应多样化、有特色，并建立合理衔接与选择转换渠道。\n（2）高等教育大众化、普及化不仅是入学规模变化，还要求招生、培养方式、质量标准和服务适应多样需求。将升大学作为唯一成功指标忽视职业发展、个体差异与终身教育。建议完善学段和类型衔接、建立继续教育与学习成果认可渠道、保证基本教育机会与支持、以培养质量和适合发展评价改革，提供多条有价值的成长路径。",
+    "analysis": "将本节的义务教育均衡、普职综合化、高中多样化和高教大众化放入县域案例。第二问的“唯一”要求评价改革目标，答案必须落到可转换与可继续学习的制度。"
+  },
+  {
+    "id": "training-principles-c6-s1-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第一节 课程的概念",
+    "topic": "《鹬蚌相争》讨论课",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-001",
+      "principles-k6-005",
+      "principles-k6-007",
+      "principles-k6-008"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第7,19,22页",
+    "originalQuestionId": "mu-教育学原理-03",
+    "analysis": "本节课程概念与古德莱德五层课程直接对应第二问。课标文本是正式课程，教师原先理解和备课对应领悟课程，临场讨论与改写是实行课程，学生实际收获是经验课程；理想课程需有专家建议依据，不能把教师个人教案误作理想课程。原题第一、三问另涉及教学方法、过程及师生关系，须完整评析。"
+  },
+  {
+    "id": "training-principles-c6-s2-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第二节 课程理论及其主要流派",
+    "topic": "三类课程理论的综合设计",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-012",
+      "principles-k6-013",
+      "principles-k6-014",
+      "principles-k6-015",
+      "principles-k6-016",
+      "principles-k6-017"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第86页；《应试解析·教育学原理》2027版 PDF第87页；《应试解析·教育学原理》2027版 PDF第88页",
+    "stem": "学校设计“家乡河流”课程。甲主张按地理、生物学科体系讲授，乙主张完全由学生兴趣决定活动，丙主张全部围绕治理污染组织。\n（1）分别辨认三种课程理论取向，比较各自价值与局限。\n（2）提出一个兼顾系统知识、学生经验和社会需求的课程方案。",
+    "referenceAnswer": "（1）甲对应知识中心理论：以学科逻辑为基础，有利于系统知识学习、实施和评价，但易忽视经验与兴趣；乙对应学习者中心理论：重视兴趣、生活和心理顺序，能激发主体性与直接经验，但完全由兴趣支配会削弱知识系统性；丙对应社会中心理论：以社会问题为核心，利于综合学习和社会参与，但不能夸大教育解决污染的能力，也不能忽视学科与学生发展。\n（2）以水循环、生态系统和数据分析建立共同基础；让学生在调查问题、表达方式上选择，开展安全的观察、访谈与样本资料分析；针对真实问题提出证据支持的建议。教师负责难度、知识连接和资源协调，评价同时考察知识理解、证据质量、合作与反思。三种来源互相校正，既保留体系也赋予学习意义。",
+    "analysis": "本节流派比较以“课程围绕什么组织”为轴。先辨认甲乙丙，再用每类局限约束方案，避免简单说三者都有道理而没有具体整合。"
+  },
+  {
+    "id": "training-principles-c6-s3-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第三节 课程类型",
+    "topic": "学生发展（学段衔接与课程类型）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-019",
+      "principles-k6-020",
+      "principles-k6-021",
+      "principles-k6-022",
+      "principles-k6-023",
+      "principles-k6-024"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第117页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-12",
+    "analysis": "本节课程类型直接对应第三问。小学适当增加活动与综合经验，初中加强分科基础并保留综合实践，高中以较系统分科和丰富选修支持发展；类型应结合目标和发展水平，不能机械认定某学段只能开一种课。第一、二问还考学生认知、情感和社会性以及高中学习特点，应先分析发展再论证课程选择。"
+  },
+  {
+    "id": "training-principles-c6-s3-2",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第三节 课程类型",
+    "topic": "主观题第33题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-021",
+      "principles-k6-023",
+      "principles-k6-024",
+      "principles-k6-025",
+      "principles-k6-026"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第6页",
+    "originalQuestionId": "dd-33",
+    "analysis": "本节以跨学科科学主题和真实任务辨析综合课程、活动课程及国家地方校本课程的不同分类依据。“做中学”整合多学科并不取消学科课程，特色开发也不免除国家要求。原题完整考课程与教学改革理念、核心素养价值、实施路径，类型判断应服务三问的论证。"
+  },
+  {
+    "id": "training-principles-c6-s4-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第四节 课程开发",
+    "topic": "中华优秀传统文化教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-034",
+      "principles-k6-035",
+      "principles-k6-043",
+      "principles-k6-044",
+      "principles-k6-046",
+      "principles-k6-047"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第5,9,12,13,14页",
+    "originalQuestionId": "mu-教育学原理-01",
+    "analysis": "第三问直接要求本节课程开发：根据社会文化需要、学生发展与学科知识确定目标，精选文化内容、安排渐进学习经验与综合活动，并设计评价；国家课程、地方课程和校本课程形成衔接。第一、二问另涉及文化关系与民族世界性，须用其结论作为开发依据完整作答。"
+  },
+  {
+    "id": "training-principles-c6-s4-2",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第四节 课程开发",
+    "topic": "布卢姆教育目标分类",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-048",
+      "principles-k6-049"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第161页",
+    "originalQuestionId": "hb-jiaoyuan-anli-06",
+    "analysis": "本节布卢姆目标分类直接对应认知层次缺失。《高效答题手册》PDF第161—162页本案例答案采用原版“知识、领会、运用、分析、综合、评价”；《应试解析·教育学原理》PDF第99页采用修订版“记忆、理解、应用、分析、评价、创造”。关联知识卡的两版对照是本轮补注，不能当作原题解析已有内容。按原题所用版本，由抄定义定位低层目标不足，再设计解释、应用、分析、综合与评价任务；若补充修订版应注明版本及对应关系。"
+  },
+  {
+    "id": "training-principles-c6-s4-3",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第四节 课程开发",
+    "topic": "课程开发模式比较",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-034",
+      "principles-k6-036",
+      "principles-k6-037",
+      "principles-k6-038",
+      "principles-k6-039",
+      "principles-k6-041"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第94页；《应试解析·教育学原理》2027版 PDF第95页；《应试解析·教育学原理》2027版 PDF第96页",
+    "stem": "某校编制“校园节能”课程，先规定知识测试达标率，再统一安排活动；有教师主张保留学生探究中出现的问题，另一教师建议由师生、家长和管理人员共同审议资源与实施条件。\n（1）运用目标模式、过程模式和实践模式解释三种主张。\n（2）提出开发方案，并说明如何组织学习经验及防止模式的局限。",
+    "referenceAnswer": "（1）预先确定目标、选择并组织经验、评价目标达成体现泰勒目标模式，便于计划和检查，却可能忽视生成性结果、把复杂目标窄化。关注探究过程和生成问题体现斯腾豪斯过程模式，重视知识理解、教师反思与活动价值，但对教师专业判断要求较高。围绕师生、学科内容、环境等要素共同审议体现施瓦布实践模式，重视具体情境中的权衡，不能化为任意折中。\n（2）把学科理解、节能调查与公共责任作为共同目标，以学生已有经验、社会需要和学科知识为依据；安排数据采集、概念学习、方案比较、试行与反思。纵向保持连续性和顺序性，横向整合科学、数学等经验。保留对新问题的探究空间，邀请相关人员审议可行性，同时用作品、过程记录及知识任务检验效果，兼顾预期目标与意外结果。",
+    "analysis": "材料三个决策点分别定位三模式。回答方案要体现模式互补，并用连续性、顺序性、整合性说明活动间关系，不能只列活动清单。"
+  },
+  {
+    "id": "training-principles-c6-s5-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第五节 课程实施",
+    "topic": "中华优秀传统文化教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-059",
+      "principles-k6-060",
+      "principles-k6-062",
+      "principles-k6-063",
+      "principles-k6-064",
+      "principles-k6-065"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第5,9,12,13,14页",
+    "originalQuestionId": "mu-教育学原理-01",
+    "analysis": "第三问对应本节实施取向、影响因素、课程资源与教师角色。实施传统文化教育需理解课标、结合学校学生实际调整、开发社区与家庭资源，在活动中组织和引导；可说明忠实、相互适应、创生取向的侧重。原题还要求文化关系和民族世界性，应先形成价值依据，再提出可执行步骤。"
+  },
+  {
+    "id": "training-principles-c6-s5-2",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第五节 课程实施",
+    "topic": "课程实施取向与资源利用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-060",
+      "principles-k6-062",
+      "principles-k6-063",
+      "principles-k6-064",
+      "principles-k6-065"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第104页；《应试解析·教育学原理》2027版 PDF第105页",
+    "stem": "某校要求教师严格按统一教案开展地方文化课程。学生提出调查本地非遗传承人，教师与学生共同调整任务；因场馆距离远，学校又改用传承人进校与线上资料。\n（1）比较三种课程实施取向，分析材料中的实施变化。\n（2）论述影响实施的因素和资源开发要求，并提出保障学习质量的措施。",
+    "referenceAnswer": "（1）忠实取向重视按预定方案实施；相互适应取向在方案与具体条件之间调整；创生取向把课程看成师生共同创造的教育经验。统一教案偏向忠实，因距离调整资源体现相互适应，师生围绕真实问题形成新活动体现创生；三者不是按先进落后机械排序。\n（2）实施受课程变革特点、学校条件、教师和学生及外部支持影响。课程资源包括知识、经验、设施、人员与环境，既有素材性也有条件性资源。应围绕目标筛选可信资料、联系社区人员、保证安全和可及性，明确访谈任务和证据标准。教师承担开发、组织、引导、评价等角色，比较实施后的学生作品与目标，及时调整而非只追求活动热闹。",
+    "analysis": "本节强调方案、情境和生成经验的关系。以教案、共同调查、距离调整三处证据定位取向，措施须回应真实的资源与质量问题。"
+  },
+  {
+    "id": "training-principles-c6-s6-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第六节 课程评价",
+    "topic": "课程评价的多种视角",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-066",
+      "principles-k6-067",
+      "principles-k6-069",
+      "principles-k6-070",
+      "principles-k6-071",
+      "principles-k6-072"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第106页；《应试解析·教育学原理》2027版 PDF第107页",
+    "stem": "“校园劳动”课程完成后，学校只检查学生是否记住劳动知识，未了解活动负担、参与差异及学生建议。\n（1）比较目标达成、目标游离、应答和CIPP课程评价模式在本案例中的关注点。\n（2）设计评价方案，说明课程评价如何支持改进。",
+    "referenceAnswer": "（1）目标达成模式比较实际结果与预定目标，能检验知识目标，但容易遗漏目标之外的结果。目标游离模式重视课程实际产生的全部效果，应发现负担和参与差异。应答模式关注相关人员的关切，通过师生等意见理解活动意义。CIPP分别评价背景、输入、过程和成果，考察需求、资源方案、实施情况与效果，服务决策。\n（2）背景阶段调查劳动经验与课程需要；输入阶段核查资源、安全、教师准备和方案；过程阶段观察分工、参与、负担及指导，收集学生建议；成果阶段评价知识、操作表现、态度与实际服务效果，注意意外结果。结合问卷、访谈、作品与观察，反馈给课程设计和实施者，改进任务难度、资源和支持。课程评价根本在于发现价值并促进课程完善，不能以一次记忆测验代表全部质量。",
+    "analysis": "本节模式比较要落到评价对象与决策用途。材料遗漏的负担、差异和建议提供目标外效果及利益相关者关切，CIPP方案须写四环节而非只解释字母。"
+  },
+  {
+    "id": "training-principles-c6-s7-1",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第七节 课程改革",
+    "topic": "主观题第33题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-091",
+      "principles-k6-092",
+      "principles-k6-093",
+      "principles-k6-094",
+      "principles-k6-095",
+      "principles-k6-096"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第6页",
+    "originalQuestionId": "dd-33",
+    "analysis": "本节新课程核心理念、核心素养、综合实践与学习方式改革对应原题三问。跨学科、真实实践与人文浸润说明面向每位学生发展；分析价值时联系科学探究、问题解决、责任与合作，实施时落实课程整合、任务设计、资源和多元评价。原题同时涉及第七章教学改革，应完整回答。"
+  },
+  {
+    "id": "training-principles-c6-s7-2",
+    "book": "principles",
+    "chapter": 6,
+    "section": "第七节 课程改革",
+    "topic": "教学改革（合作学习）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k6-091",
+      "principles-k6-096",
+      "principles-k6-097"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第108页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-08",
+    "analysis": "本节合作学习及课程评价改革对应材料的不适应问题。改革要从被动接受走向自主、合作、研究性学习，但需要真实任务、分工、共同目标和个人责任；负担与参与不均不能直接证明合作无效。三问分别解释社会必要性、既有课堂习惯原因和渐进改革建议，同时兼及教学组织形式。"
+  },
+  {
+    "id": "training-principles-c7-s1-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第一节 教学及相关概念",
+    "topic": "教学概念与育人任务",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k7-001",
+      "principles-k7-002",
+      "principles-k7-003",
+      "principles-k7-004",
+      "principles-k7-009"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第122页；《应试解析·教育学原理》2027版 PDF第124页",
+    "stem": "某教师认为“教学就是讲清知识和完成考试，体育、美育、品德与教学无关”。请阐述教学的含义，辨析教学与教育、智育、上课的关系，并结合“历史人物研究”课说明教学如何实现多方面育人任务。",
+    "referenceAnswer": "一、教学是在教育目的指导下，由教师的教和学生的学共同组成的活动，通过文化科学知识技能学习促进全面发展。教师引导与学生主动学习均不可缺。\n二、教育范围最广，教学是学校实现教育目的的基本途径；智育侧重知识能力，教学能够承担智育并兼有德育等任务；上课是教学工作的一个环节，教学还包括备课、作业、辅导与评价。\n三、教学任务不仅使学生掌握系统知识和基本技能，还发展智力与能力、形成科学世界观和品德、发展身心等。历史人物研究可通过史料比较学习知识和证据推理，通过理解人物处境讨论公共责任，通过图文表达与合作发展审美和社会能力。各任务应与内容有机联系，避免课末机械附加德育。\n四、当代教学强调发展、学生主体、交往与开放。考试是检查的一种方式，不能代替完整的教学目的。",
+    "analysis": "本节以“就是”定位概念窄化。先说明范围关系，再从历史研究的具体任务论证多方面育人，不能把多育要求写成与学科内容无关的附加口号。"
+  },
+  {
+    "id": "training-principles-c7-s2-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第二节 当代主要教学理论流派",
+    "topic": "主观题第34题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-016",
+      "principles-k7-017",
+      "principles-k7-018"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第7页",
+    "originalQuestionId": "dd-34",
+    "analysis": "本节人本主义教学理论对应第三问的罗杰斯知情统一、非指导性教学及真诚、接受、移情理解。材料灌输与忽视情感说明心理氛围不足，应设置有意义的自主学习和支持性反馈。第一问科尔伯格、第二问学习动机属于教育心理学，原题仍完整呈现，须按三问分别作答。"
+  },
+  {
+    "id": "training-principles-c7-s2-2",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第二节 当代主要教学理论流派",
+    "topic": "程序教学与发现教学比较",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k7-010",
+      "principles-k7-011",
+      "principles-k7-012",
+      "principles-k7-013",
+      "principles-k7-014",
+      "principles-k7-015"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第125页；《应试解析·教育学原理》2027版 PDF第126页",
+    "stem": "请比较行为主义程序教学与布鲁纳发现教学的目标、学习过程和教师作用，并为“理解分数大小”设计两种教学片段，说明各自适用条件。",
+    "referenceAnswer": "一、程序教学依据反应及其后果建立相倚组织，明确行为目标，将内容分成小步，要求学生积极反应，及时反馈并按个人速度推进；适合清晰、可分解的基础学习，但单独使用易忽视复杂理解与创造。\n二、发现教学强调获得学科基本结构和发现方法。教师创设问题，学生形成假设、用材料检验并概括，重视动机、结构、序列与反馈。它能促进思维和迁移，但需要先备知识、充分时间与合适指导。\n三、程序片段：先判断同分母分数，逐步引入同分子与通分，每步作答后说明依据并纠错。发现片段：提供相同整体的分数纸条，让学生比较、提出比较规则，选反例检验，再归纳。\n四、二者都需要目标、反馈和教师组织，不能把发现学习等同于放任。依据学生基础、概念难度与时间组合使用，保证规则理解而非只奖励答案。",
+    "analysis": "本节理论流派比较须写学习过程与可操作片段。相同内容便于比较小步反馈和假设验证的差别，适用条件体现理论评价。"
+  },
+  {
+    "id": "training-principles-c7-s3-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第三节 教学模式",
+    "topic": "项目式学习等教学模式",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-021",
+      "principles-k7-031",
+      "principles-k7-032",
+      "principles-k7-033",
+      "principles-k7-034",
+      "principles-k7-037"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第174页",
+    "originalQuestionId": "hb-jiaoyuan-anli-09",
+    "analysis": "本节项目探究教学模式直接对应案例中的垃圾分类真实问题、持续调查、跨学科合作、成果与改进。按问题确定—计划—实施—分析—展示—反思说明程序和核心特征；第二问再从社会需求、身心发展论证必要性。不能把一次分组活动都称为项目式学习，也须说明教师支持。"
+  },
+  {
+    "id": "training-principles-c7-s3-2",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第三节 教学模式",
+    "topic": "主观题第33题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-031",
+      "principles-k7-032",
+      "principles-k7-033",
+      "principles-k7-034"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第6页",
+    "originalQuestionId": "dd-33",
+    "analysis": "本节做中学、探究学、项目学对应教学模式的目标、活动程序、支持系统及评价。原题要求将其放在科学教育改革中分析核心素养价值和落地路径，应说明真实任务、探究证据、持续反思与教师支持，不能只列模式名称；课程整合属于跨章要求，仍完整回答。"
+  },
+  {
+    "id": "training-principles-c7-s4-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第四节 教学过程",
+    "topic": "教学过程基本关系",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-039",
+      "principles-k7-040",
+      "principles-k7-041",
+      "principles-k7-042",
+      "principles-k7-043",
+      "principles-k7-044"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第158页",
+    "originalQuestionId": "hb-jiaoyuan-anli-05",
+    "analysis": "本节基本关系直接对应历史课堂重记忆、忽视因果分析、德育附加和注意差异。逐一写间接与直接经验、知识与能力、知识与品德、智力与非智力、主导与主体关系，再给出史料探究、情境讨论、分层支持和自主表达等改进，关系要与具体证据配对。"
+  },
+  {
+    "id": "training-principles-c7-s4-2",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第四节 教学过程",
+    "topic": "《鹬蚌相争》讨论课",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-040",
+      "principles-k7-042",
+      "principles-k7-044"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第7,19,22页",
+    "originalQuestionId": "mu-教育学原理-03",
+    "analysis": "第一问对应特殊认识过程与教师主导、学生主体统一：学生质疑推动真实问题产生，教师组织证据讨论，知识理解与推理能力同时发展。原题还考教学方法、古德莱德课程层次和师生关系，须先评价教学的事实再跨章完整作答。"
+  },
+  {
+    "id": "training-principles-c7-s5-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第五节 教学设计",
+    "topic": "AI教学设计（技术与教学融合）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-048",
+      "principles-k7-049",
+      "principles-k7-050",
+      "principles-k7-055"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第156页",
+    "originalQuestionId": "hb-jiaoyuan-anli-04",
+    "analysis": "本节教学设计对应目标、内容、学生基础、方法媒体和评价的一致性。AI热闹而语言逻辑下降，提示设计未围绕学习目标、认知特点与参与任务组织；应设置有目的的AI辅助、学生分析和独立实践，再以表现证据评价。第一、三问科技作用与教师素养另涉第二、九章，仍完整回答。"
+  },
+  {
+    "id": "training-principles-c7-s6-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第六节 教学组织形式",
+    "topic": "教学组织形式（班级授课制与机会均等）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-059",
+      "principles-k7-062",
+      "principles-k7-063",
+      "principles-k7-064",
+      "principles-k7-065"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第106页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-07",
+    "analysis": "本节班级授课制及其局限对应原题。统一进度有利于效率和系统教学，但材料中教师关注少数优秀生说明个别需要和参与机会不足；答题结合分组、个别辅导、轮流提问和差异支持改进。须按原题完整阐述机会均等与师生互动，不能认为班级授课制必然排斥公平。"
+  },
+  {
+    "id": "training-principles-c7-s6-2",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第六节 教学组织形式",
+    "topic": "教学改革（合作学习）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-066",
+      "principles-k7-067",
+      "principles-k7-068",
+      "principles-k7-069"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第108页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-08",
+    "analysis": "本节小组合作学习对应参与不均与学得不深。先从共同目标、积极互赖、个人责任、互动与小组评价分析缺失，再设计异质分组、角色轮换、个人检查和合作技能指导。第一问社会需求另涉第二章，第三问也涉及教学改革，应完整写出必要性、成因、措施。"
+  },
+  {
+    "id": "training-principles-c7-s7-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第七节 教学原则",
+    "topic": "教学原则的情境应用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-078",
+      "principles-k7-079",
+      "principles-k7-080",
+      "principles-k7-082",
+      "principles-k7-084",
+      "principles-k7-085"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第150页；《应试解析·教育学原理》2027版 PDF第151页；《应试解析·教育学原理》2027版 PDF第152页",
+    "stem": "科学课讲“浮力”时，教师直接给出公式，让全班完成同一难题。学生未观察实验，有人不会解释沉浮，有人早已会做却只能等待。\n（1）分析该教学违反或未落实哪些教学原则。\n（2）提出改进流程，说明各项措施如何贯彻相应原则。",
+    "referenceAnswer": "（1）缺少直观经验，未充分贯彻直观性原则；直接给公式、缺少学生思考，启发性不足；由基础经验跳到难题，不符合循序渐进和量力性；忽视已有水平差异，未落实因材施教；知识脱离沉浮生活现象，理论联系实际不足。\n（2）先观察不同物体入水并记录现象，直观材料须服务概念，不能止于热闹；设置“同样物体为何在不同液体中表现不同”等问题，引导提出解释、检验；按现象—概念—关系—应用递进，提供可达到且有挑战的任务；基础学生用支架解释，较熟练学生比较新情境；最后解决生活实例并说明依据。各原则相互联系，教师根据目标和学生证据调整，不是每课机械展示所有原则。",
+    "analysis": "本节原则判断以缺失的学习条件为证据。答案须从“直接公式、统一难题、缺少观察、等待”推出对应原则，并把措施一一配对，避免背原则名称。"
+  },
+  {
+    "id": "training-principles-c7-s8-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第八节 教学方法",
+    "topic": "《鹬蚌相争》讨论课",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-087",
+      "principles-k7-089",
+      "principles-k7-090"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第7,19,22页",
+    "originalQuestionId": "mu-教育学原理-03",
+    "analysis": "第一问直接训练方法选择与谈话、讨论的实施要求。教师围绕学生真实疑问组织有证据的讨论，再引导改写，体现明确问题、充分参与、适时指导和总结。其余课程层次、师生关系问跨第六、九章，必须完整作答；不能把课堂活跃本身作为讨论有效的唯一依据。"
+  },
+  {
+    "id": "training-principles-c7-s8-2",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第八节 教学方法",
+    "topic": "师生关系及最近发展区",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-087",
+      "principles-k7-089",
+      "principles-k7-093"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第150页",
+    "originalQuestionId": "hb-jiaoyuan-anli-02",
+    "analysis": "第二问直接对应谈话法和练习指导。教师围绕学生已有知识提出递进问题、保留独立尝试并反馈，运用启发性谈话而非直接给答案。第一问难度涉及最近发展区、第三问师生关系，均需按原题回答；评价方法时要引具体提问和学生新解法。"
+  },
+  {
+    "id": "training-principles-c7-s9-1",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第九节 教学评价及其改革",
+    "topic": "教学评价（终身教育与评价改革）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-098",
+      "principles-k7-099",
+      "principles-k7-100",
+      "principles-k7-102",
+      "principles-k7-106",
+      "principles-k7-107"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第110页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-09",
+    "analysis": "本节评价功能与改革直接对应终身教育材料。先说明诊断、反馈、激励、调节等功能，再说明连续学习和多次机会改变一次成败的终局判断，最后提出多元证据、过程与发展评价、描述反馈和学生参与。第二问兼第五章终身教育，须写二者相互联系。"
+  },
+  {
+    "id": "training-principles-c7-s9-2",
+    "book": "principles",
+    "chapter": 7,
+    "section": "第九节 教学评价及其改革",
+    "topic": "人的身心发展特点（评分与教育评价）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k7-100",
+      "principles-k7-102",
+      "principles-k7-103",
+      "principles-k7-104",
+      "principles-k7-107"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第98页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-03",
+    "analysis": "评分并非评价的全部，本节对应评价方式和发展取向。第一问结合低龄儿童特点说明权力化评分的风险；第二问论证评价仍需诊断和反馈；第三问采用观察、作品、描述性评价及个体进步比较。心理发展分析跨第三章，应先立发展依据再选择方法。"
+  },
+  {
+    "id": "training-principles-c8-s1-1",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第一节 德育概述",
+    "topic": "德育概念、目标与内容",
+    "questionType": "essay",
+    "knowledgeCardIds": [
+      "principles-k8-001",
+      "principles-k8-002",
+      "principles-k8-003"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育学原理》2027版 PDF第164页；《应试解析·教育学原理》2027版 PDF第165页",
+    "stem": "某校把德育全部安排为每周一次“纪律检查”，认为学生不违纪就是德育目标已经实现。请区分广义与狭义德育，阐述学校德育目标和内容，并提出修正该方案的建议。",
+    "referenceAnswer": "一、广义德育是根据社会要求和学生发展规律，有目的、有计划、有组织地培养政治、思想、道德、法律及心理健康素质的过程；狭义德育专指道德教育，发展道德观念、情感、意志和实践能力。纪律检查只涉及部分行为规范。\n二、该书概括德育任务的三个层次：培养爱国、守法、明德的公民；培养具有科学世界观、人生观和较高思想觉悟的社会主义者；使少数优秀分子成为共产主义者。具体活动还须结合学生年龄和发展基础，把总体要求逐步落实，不能以短期服从代替稳定品德。\n三、学校德育内容包括道德、思想、政治、法治和心理健康教育：分别发展良好道德意识与行为、正确世界观人生观、政治方向立场态度、民主纪律法治意识以及健康心理素质。\n四、在规范检查外安排学科讨论、劳动服务、班集体活动、情感关怀与自我反思，把内容与目标对应。评价结合动机、理解、情感和持续行为，发现并支持学生进步，避免把德育缩成管理处罚。",
+    "analysis": "本节把概念范围、目标层次与内容相联系。材料的“不违纪”只是行为表面，答案需说明目标更丰富，并以相应活动落实。"
+  },
+  {
+    "id": "training-principles-c8-s2-1",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第二节 德育模式",
+    "topic": "德育模式（体谅模式与集体教育模式）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-008",
+      "principles-k8-009",
+      "principles-k8-013"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第168页",
+    "originalQuestionId": "hb-jiaoyuan-anli-08",
+    "analysis": "本节体谅模式与集体教育模式直接对应理解他人、班级共同生活及成长分享。以移情体验、关怀他人说明体谅，以共同目标、集体活动和个人发展说明集体教育。原题第二、三问评价方式与师生关系跨章，应说明过程发展评价、民主尊重，并避免把荣誉奖励直接等同于全部德育模式。"
+  },
+  {
+    "id": "training-principles-c8-s3-1",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第三节 德育过程",
+    "topic": "德育途径",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-015",
+      "principles-k8-016",
+      "principles-k8-017",
+      "principles-k8-018",
+      "principles-k8-019"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第163页",
+    "originalQuestionId": "hb-jiaoyuan-anli-07",
+    "analysis": "本节德育过程规律直接对应第二问。陈老师把认识、情感、意志与行为联系起来，组织活动交往、家校一致支持和持续反馈，推动学生主动接受并自我教育。第一问途径、第三问效果须完整回答；成效数字是材料事实，不能脱离过程机制只重复数字。"
+  },
+  {
+    "id": "training-principles-c8-s4-1",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第四节 德育原则",
+    "topic": "德育原则与德育方法",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-021",
+      "principles-k8-022",
+      "principles-k8-023",
+      "principles-k8-024",
+      "principles-k8-025",
+      "principles-k8-026"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第146页",
+    "originalQuestionId": "hb-jiaoyuan-anli-01",
+    "analysis": "本节原则对应王老师了解差异、肯定语文优势并提出适当要求的做法。按尊重信任与严格要求、因材施教、长善救失、疏导及知行联系逐项援引事实，并说明自信、参与和行为改善。原题还问德育方法，应区别原则的指导要求与谈话、实践等具体方式。"
+  },
+  {
+    "id": "training-principles-c8-s4-2",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第四节 德育原则",
+    "topic": "主观题第35题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-021",
+      "principles-k8-023",
+      "principles-k8-024",
+      "principles-k8-025",
+      "principles-k8-026",
+      "principles-k8-027"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第7页",
+    "originalQuestionId": "dd-35",
+    "analysis": "第二问直接要求以德育原则解释陈老师转化入学适应困难学生。尊重理解、优势任务、逐步要求、共同活动与一致持续影响分别对应原则。第一问教育成因、第三问班主任策略亦须完整作答，不能将发展性适应障碍直接归为品德缺陷。"
+  },
+  {
+    "id": "training-principles-c8-s5-1",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第五节 德育方法",
+    "topic": "德育原则与德育方法",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-028",
+      "principles-k8-029",
+      "principles-k8-030",
+      "principles-k8-031"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第146页",
+    "originalQuestionId": "hb-jiaoyuan-anli-01",
+    "analysis": "本节德育方法对应耐心谈话的说服、语文课代表任务的实践锻炼、鼓励反馈的品德评价和学生自我反思。需解释方法怎样促进认识和行为，不将表扬当作唯一方法。原题同时考原则与效果，应先用原则说明为何这样做，再用方法说明如何做。"
+  },
+  {
+    "id": "training-principles-c8-s6-1",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第六节 德育途径",
+    "topic": "德育途径",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-032",
+      "principles-k8-033",
+      "principles-k8-034"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第163页",
+    "originalQuestionId": "hb-jiaoyuan-anli-07",
+    "analysis": "第一问直接对应课程育人、实践活动及家校合作等德育途径：逐项引材料证据，区分途径与具体方法。第二问德育规律、第三问效果须完整回答，说明途径综合运用促进知情意行和持续成长。"
+  },
+  {
+    "id": "training-principles-c8-s6-2",
+    "book": "principles",
+    "chapter": 8,
+    "section": "第六节 德育途径",
+    "topic": "五育融合（德育与其他四育融合）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k8-033",
+      "principles-k8-034"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第120页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-13",
+    "analysis": "本节德育与四育融合的实施路径对应第二问。通过学科课程、体育与艺术活动、劳动实践、校园文化与协同支持实现课程育人和实践育人，目标、活动与评价连贯。第一问五育地位和关系跨第四章，须先说明德育方向性及其他各育独特功能，再写融合路径。"
+  },
+  {
+    "id": "training-principles-c9-s1-1",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第一节 教师",
+    "topic": "教师（教师劳动特点与不可替代性）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-003",
+      "principles-k9-004",
+      "principles-k9-005",
+      "principles-k9-006"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第112页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-10",
+    "analysis": "本节教师劳动复杂、创造、示范、长期等特点解释关系工作不可替代性。材料强调个体需要与关系性工作，按角色变化—劳动特点与机器边界—专业学习和技术协作作答；不可替代不等于拒绝技术，应说明教师价值判断和情感支持。"
+  },
+  {
+    "id": "training-principles-c9-s1-2",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第一节 教师",
+    "topic": "AI赋能教师（数字化赋能教师发展）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-008",
+      "principles-k9-010",
+      "principles-k9-012",
+      "principles-k9-013",
+      "principles-extra-digital-literacy"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第115页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-11",
+    "analysis": "本节教师专业发展与数字素养直接对应两问。数字化支持自主选择、资源供给与人机协同，理由需联系学生需求及教师发展；层面可从个人素养、教师教育课程、平台资源、组织支持和治理条件展开。不能把会操作工具等同于完整专业能力。"
+  },
+  {
+    "id": "training-principles-c9-s1-3",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第一节 教师",
+    "topic": "教师素养（数字技术与教师专业素养）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-003",
+      "principles-k9-005",
+      "principles-k9-008",
+      "principles-extra-digital-literacy"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第123页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-14",
+    "analysis": "本节劳动特点和专业素养对应智能助手的适配。备课、评价等环节可由技术提供支持，但教师仍需学科知识、教育理解、教学判断及数字伦理。答案按任务特点—助手用途—专业素养提升组织，引用材料典型应用，避免泛泛列技术名词。"
+  },
+  {
+    "id": "training-principles-c9-s1-4",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第一节 教师",
+    "topic": "教师角色（生成式AI应用与教师AI素养）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-008",
+      "principles-extra-ai-literacy",
+      "principles-extra-ai-opportunities"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第125页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-15",
+    "analysis": "本节AI素养与教师角色直接对应第二问。先分析生成式AI资源、个性化支持等优势及依赖、公平、数据伦理挑战，再提出技术理解、教学融合、结果评估、批判审查和伦理责任等素养。第一问与第二章教育变革交叉，应完整保留利弊与教师行动的关系。"
+  },
+  {
+    "id": "training-principles-c9-s1-5",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第一节 教师",
+    "topic": "教师劳动与学生观",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-003",
+      "principles-k9-004",
+      "principles-k9-005",
+      "principles-k9-006"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第154页",
+    "originalQuestionId": "hb-jiaoyuan-anli-03",
+    "analysis": "第一问直接对应教师劳动的复杂性、创造性、示范性与长期性。针对不同学生调整、公开认错示范与一学期陪伴需分别引用，不能只贴标签。第二问学生观属于本章另一节，仍完整说明学生独特、发展、主体等特征。"
+  },
+  {
+    "id": "training-principles-c9-s2-1",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第二节 学生",
+    "topic": "教师劳动与学生观",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-018",
+      "principles-k9-019",
+      "principles-k9-020",
+      "principles-k9-021"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第154页",
+    "originalQuestionId": "hb-jiaoyuan-anli-03",
+    "analysis": "第二问直接对应发展性、独特性和主体性学生观：不同种子与开花早晚说明差异和潜能，持续支持说明可发展，参与学习说明主体活动。第一问教师劳动另属本章第一节，须完整分析，避免把学生观写成教师无条件等待而不指导。"
+  },
+  {
+    "id": "training-principles-c9-s2-2",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第二节 学生",
+    "topic": "学生发展（学段衔接与课程类型）",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-019",
+      "principles-k9-020",
+      "principles-k9-021"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第117页",
+    "originalQuestionId": "hb-jiaoyuan-cailiao-12",
+    "analysis": "本节不同学段学生发展及学习特点对应前两问。从认知由具体到抽象、情感自主性、同伴与社会性、自我意识变化论证衔接，高中更要求独立、系统和抽象学习但仍有差异。第三问课程类型跨第六章，应由发展特点推出适合的分科、综合、活动和选修安排。"
+  },
+  {
+    "id": "training-principles-c9-s3-1",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第三节 师生关系",
+    "topic": "师生关系及最近发展区",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-028",
+      "principles-k9-029",
+      "principles-k9-031",
+      "principles-k9-032"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第150页",
+    "originalQuestionId": "hb-jiaoyuan-anli-02",
+    "analysis": "第三问直接对应教育上的授受、人际上的平等、道德上的促进以及教学相长。教师肯定学生新解法并允许试验体现尊重信任和民主互动，主导作用通过问题引导发挥。前两问最近发展区及谈话法另涉教育心理学和教学方法，须完整评析。"
+  },
+  {
+    "id": "training-principles-c9-s3-2",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第三节 师生关系",
+    "topic": "《鹬蚌相争》讨论课",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "principles-k9-029",
+      "principles-k9-031",
+      "principles-k9-032"
+    ],
+    "origin": "source-question",
+    "source": "《教原母题班课件》PDF第7,19,22页",
+    "originalQuestionId": "mu-教育学原理-03",
+    "analysis": "第三问直接训练民主平等、尊师爱生与启发式教学中的主导主体统一。教师认真对待质疑、允许讨论并组织改写，构成平等关系的具体证据。第一问教学评价、第二问古德莱德课程分类跨章，应按完整题目回答，不能把平等理解为取消教师专业引导。"
+  },
+  {
+    "id": "training-principles-c9-s1-policy-1",
+    "book": "principles",
+    "chapter": 9,
+    "section": "第一节 教师",
+    "topic": "教育家精神与教师专业发展",
+    "questionType": "material",
+    "origin": "adapted",
+    "source": "资料改编：《教原选择题方法论课件》PDF第7页；《应试解析·教育学原理》2027版 PDF第186、188、191页",
+    "knowledgeCardIds": [
+      "principles-extra-educator-ideal",
+      "principles-k9-005",
+      "principles-k9-006",
+      "principles-k9-008",
+      "principles-k9-013"
+    ],
+    "stem": "【虚拟案例】陈老师把服务学生成长与国家育才需要作为职业追求；她用自己的阅读、守信行为给学生作示范，根据学生差异设计任务，并在每次课后记录问题、参加教研、修订教学方案。某同事认为教师只要把课本内容讲完，个人言行和持续研究并不重要。\n（1）结合课件所列的理想信念、道德情操、育人智慧、躬耕态度四项，分析陈老师的实践。\n（2）运用教师劳动特点与专业发展知识，评析同事的观点并提出改进建议。",
+    "referenceAnswer": "（1）职业追求联系国家育才需要，体现理想信念；阅读、守信作榜样体现道德情操及教师劳动示范性；根据差异设计任务体现育人智慧与因材施教；反思、教研和修订体现躬耕态度与持续学习创新。答题必须把材料行为与对应维度联系，不能只排列口号。\n（2）教师工作对象、任务和影响复杂，不能以讲完教材衡量全部育人成效。教师言行会被学生观察模仿，创造性劳动要求了解学情、调整方法；教师专业素养包括理想、知识与能力，需要不断发展。改进可从具体课堂问题出发，收集学生理解和学习困难的证据，结合个人反思、同伴教研、观摩学习改进方案，并用后续表现检验。既坚持育人目标，又形成可观察的教学行动，避免只讲精神而无实践。",
+    "analysis": "方法论课件原题是选择题，只提供四项限定词辨析；这里的虚拟材料与两问为新增改编，不能标成原题。第一问按行为证据辨维度，第二问用复杂性、创造性、示范性及专业发展论证，参考答案不声称穷尽教育家精神全部内涵。"
+  }
+]

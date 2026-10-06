@@ -1,0 +1,2001 @@
+[
+  {
+    "id": "training-foreign-c11-s1-1",
+    "book": "foreign",
+    "chapter": 11,
+    "section": "第一节 19世纪的日本近代教育概况",
+    "topic": "洋务与明治教育改革比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第39页",
+    "analysis": "跨书比较题在本节练明治一侧，中国教育史第7章提供洋务一侧。依指导思想、国家管理、学校系统、课程与成效比较，解释两国社会变革如何影响教育改革。",
+    "knowledgeCardIds": [
+      "foreign-k11-001",
+      "foreign-k11-002",
+      "foreign-k11-003",
+      "foreign-k11-007",
+      "foreign-k11-008",
+      "foreign-k11-009"
+    ],
+    "originalQuestionId": "hb-zhongjiao-16"
+  },
+  {
+    "id": "training-foreign-c2-s1-1",
+    "book": "foreign",
+    "chapter": 2,
+    "section": "第一节 教育制度与教育实践",
+    "topic": "斯巴达与雅典教育比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第65页",
+    "analysis": "放在城邦经济政治条件中，按目标、对象、管理、内容方法及阶段比较斯巴达雅典，再归纳共同阶级性和国家需要对教育的影响。",
+    "knowledgeCardIds": [
+      "foreign-k2-003",
+      "foreign-k2-004",
+      "foreign-k2-006",
+      "foreign-k2-007",
+      "foreign-k2-008"
+    ],
+    "originalQuestionId": "hb-waijiao-01"
+  },
+  {
+    "id": "training-foreign-c4-s2-1",
+    "book": "foreign",
+    "chapter": 4,
+    "section": "第二节 西欧世俗教育",
+    "topic": "中世纪大学",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第66页",
+    "analysis": "按背景、行会自治、类型、课程教学及学位制度展开，评价现代大学源头意义与宗教控制，不把自治理解为完全摆脱教会。",
+    "knowledgeCardIds": [
+      "foreign-k4-010",
+      "foreign-k4-011",
+      "foreign-k4-012",
+      "foreign-k4-013",
+      "foreign-k4-014",
+      "foreign-k4-015"
+    ],
+    "originalQuestionId": "hb-waijiao-02"
+  },
+  {
+    "id": "training-foreign-c5-s1-1",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第一节 人文主义教育",
+    "topic": "人文主义、新教与天主教教育比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第67页",
+    "analysis": "原题跨本章三个分组，此处提供人文主义侧。按目的、内容、方法、制度和对象比较全人与培养信徒的取向，宗教教育部分需联系第二三节。",
+    "knowledgeCardIds": [
+      "foreign-k5-001",
+      "foreign-k5-002",
+      "foreign-k5-003",
+      "foreign-k5-004",
+      "foreign-k5-010"
+    ],
+    "originalQuestionId": "hb-waijiao-03"
+  },
+  {
+    "id": "training-foreign-c5-s2-1",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第二节 新教教育",
+    "topic": "人文主义、新教与天主教教育比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第67页",
+    "analysis": "跨本章三分组原题，此处训练新教各派，着重国家办学、普及、民族语言与宗教目的，再与第一节人文主义及第三节天主教逐项对应。",
+    "knowledgeCardIds": [
+      "foreign-k5-011",
+      "foreign-k5-012",
+      "foreign-k5-014",
+      "foreign-k5-015",
+      "foreign-k5-016",
+      "foreign-k5-017"
+    ],
+    "originalQuestionId": "hb-waijiao-03"
+  },
+  {
+    "id": "training-foreign-c5-s3-1",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第三节 天主教教育",
+    "topic": "人文主义、新教与天主教教育比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第67页",
+    "analysis": "本分组提供耶稣会侧，其余来自前两节。比较宗教目标、古典课程、严格管理、师资训练及温和方法，说明三类教育存在融合，不能简单视为全相反。",
+    "knowledgeCardIds": [
+      "foreign-k5-018",
+      "foreign-k5-019",
+      "foreign-k5-020",
+      "foreign-k5-021",
+      "foreign-k5-022"
+    ],
+    "originalQuestionId": "hb-waijiao-03"
+  },
+  {
+    "id": "training-foreign-c13-s1-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第一节 夸美纽斯的教育思想",
+    "topic": "夸美纽斯教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第68页",
+    "analysis": "从泛智与自然适应解释理论，再论普及、学制、班级授课制与原则，评价近代制度贡献及宗教、机械类比等局限，说明思想和制度的联系。",
+    "knowledgeCardIds": [
+      "foreign-k13-006",
+      "foreign-k13-007",
+      "foreign-k13-008",
+      "foreign-k13-009",
+      "foreign-k13-012",
+      "foreign-k13-013"
+    ],
+    "originalQuestionId": "hb-waijiao-04"
+  },
+  {
+    "id": "training-foreign-c13-s4-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第四节 赫尔巴特的教育思想",
+    "topic": "赫尔巴特教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第70页",
+    "analysis": "伦理学确定目的、心理学说明方法，是贯通教育性教学与形式阶段的线索。按基础、管理教学训育、目的课程和进程展开，再评系统化贡献。",
+    "knowledgeCardIds": [
+      "foreign-k13-044",
+      "foreign-k13-047",
+      "foreign-k13-048",
+      "foreign-k13-049",
+      "foreign-k13-051",
+      "foreign-k13-054"
+    ],
+    "originalQuestionId": "hb-waijiao-05"
+  },
+  {
+    "id": "training-foreign-c13-s5-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第五节 福禄培尔的教育思想",
+    "topic": "福禄培尔与蒙台梭利教育思想比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第73页",
+    "analysis": "原题跨第五七节，此节提供幼儿园、游戏恩物与自我活动。按儿童观、活动、环境教具、教师与自由纪律比较，蒙台梭利部分需联系第七节。",
+    "knowledgeCardIds": [
+      "foreign-k13-057",
+      "foreign-k13-058",
+      "foreign-k13-059",
+      "foreign-k13-060",
+      "foreign-k13-061",
+      "foreign-k13-063"
+    ],
+    "originalQuestionId": "hb-waijiao-06"
+  },
+  {
+    "id": "training-foreign-c13-s7-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第七节 蒙台梭利的教育思想",
+    "topic": "福禄培尔与蒙台梭利教育思想比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第73页",
+    "analysis": "跨第五七节原题，此处训练准备环境、儿童工作、自由纪律与感官教具。逐维对应福禄培尔游戏、象征恩物和指导方式，再评价共同贡献。",
+    "knowledgeCardIds": [
+      "foreign-k13-080",
+      "foreign-k13-081",
+      "foreign-k13-084",
+      "foreign-k13-085",
+      "foreign-k13-086",
+      "foreign-k13-090"
+    ],
+    "originalQuestionId": "hb-waijiao-06"
+  },
+  {
+    "id": "training-foreign-c13-s6-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第六节 马克思和恩格斯的教育思想",
+    "topic": "马克思与恩格斯教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第74页",
+    "analysis": "以历史唯物主义贯通社会教育关系、全面发展与教育劳动结合。说明社会条件和片面发展成因，再论发展条件与教育途径，劳动不只是技能训练。",
+    "knowledgeCardIds": [
+      "foreign-k13-068",
+      "foreign-k13-070",
+      "foreign-k13-072",
+      "foreign-k13-075",
+      "foreign-k13-076",
+      "foreign-k13-077"
+    ],
+    "originalQuestionId": "hb-waijiao-07"
+  },
+  {
+    "id": "training-foreign-c14-s1-1",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第一节 19世纪的近代教育思潮",
+    "topic": "西欧教育心理学化思潮",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第75页",
+    "analysis": "按人物接续、目的内容过程方法的心理学化、影响与局限组织。完整题跨第13章裴斯泰洛齐赫尔巴特福禄培尔及第12章第斯多惠，需明确各自贡献。",
+    "knowledgeCardIds": [
+      "foreign-k14-007",
+      "foreign-k14-008",
+      "foreign-k14-009"
+    ],
+    "originalQuestionId": "hb-waijiao-08"
+  },
+  {
+    "id": "training-foreign-c14-s1-2",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第一节 19世纪的近代教育思潮",
+    "topic": "主观题第32题",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第6页",
+    "analysis": "追加同节心理学化原题，复习儿童观、教育目的过程内容方法如何心理学化。说明人物接续，再评科学化价值与早期心理理论不足；原资料评分提示由引用保留。",
+    "knowledgeCardIds": [
+      "foreign-k14-007",
+      "foreign-k14-008",
+      "foreign-k14-009"
+    ],
+    "originalQuestionId": "dd-32"
+  },
+  {
+    "id": "training-foreign-c13-s3-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第三节 裴斯泰洛齐的教育思想",
+    "topic": "西欧教育心理学化思潮",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第75页",
+    "analysis": "跨章原题在本节重裴斯泰洛齐首倡与要素教育，完整范围涉及第14章思潮及其他人物。先解释心理学化，再用心脑手、直观要素教学论证，不把整场思潮归于一人。",
+    "knowledgeCardIds": [
+      "foreign-k13-034",
+      "foreign-k13-035",
+      "foreign-k13-036",
+      "foreign-k13-037",
+      "foreign-k13-038"
+    ],
+    "originalQuestionId": "hb-waijiao-08"
+  },
+  {
+    "id": "training-foreign-c14-s2-1",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第二节 19世纪末20世纪初的新教育运动",
+    "topic": "新教育运动与进步教育运动比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第77页",
+    "analysis": "原题跨第二三节，此处提供欧洲新学校、教育实验及劳作学校。按背景、范围、理论、儿童观和学校实践逐维比较，进步教育部分联系第三节。",
+    "knowledgeCardIds": [
+      "foreign-k14-015",
+      "foreign-k14-016",
+      "foreign-k14-017",
+      "foreign-k14-018",
+      "foreign-k14-019",
+      "foreign-k14-020"
+    ],
+    "originalQuestionId": "hb-waijiao-09"
+  },
+  {
+    "id": "training-foreign-c14-s3-1",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第三节 19世纪末20世纪初的进步教育运动",
+    "topic": "新教育运动与进步教育运动比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第77页",
+    "analysis": "同一跨节题在此练美国侧，以公立学校改革、实用主义、阶段与实验和欧洲新教育对应，解释共同反传统与社会背景、范围差异。",
+    "knowledgeCardIds": [
+      "foreign-k14-021",
+      "foreign-k14-022",
+      "foreign-k14-023",
+      "foreign-k14-024",
+      "foreign-k14-028",
+      "foreign-k14-030"
+    ],
+    "originalQuestionId": "hb-waijiao-09"
+  },
+  {
+    "id": "training-foreign-c14-s3-2",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第三节 19世纪末20世纪初的进步教育运动",
+    "topic": "美国进步教育运动",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第78页",
+    "analysis": "按兴起扩展转折衰落说明运动，用昆西、文纳特卡、道尔顿和设计教学说明实践，分析活动及个别化价值和忽视系统知识风险，不只列改革名称。",
+    "knowledgeCardIds": [
+      "foreign-k14-022",
+      "foreign-k14-023",
+      "foreign-k14-024",
+      "foreign-k14-027",
+      "foreign-k14-028",
+      "foreign-k14-029"
+    ],
+    "originalQuestionId": "hb-waijiao-10"
+  },
+  {
+    "id": "training-foreign-c9-s3-1",
+    "book": "foreign",
+    "chapter": 9,
+    "section": "第三节 20世纪上半叶的苏联现代教育制度",
+    "topic": "苏联系统知识教学与生产劳动相结合的改革",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第80页",
+    "analysis": "原题实际限定20世纪二三十年代，直接对应本节综合教学大纲、劳动教学法与1931年《关于小学和中学的决定》。按两文件规定、实施结果及知识劳动失衡逐项比较，再论平衡启示；不把1958年以后改革写入原题限定的时代。",
+    "knowledgeCardIds": [
+      "foreign-k9-012",
+      "foreign-k9-013",
+      "foreign-k9-014"
+    ],
+    "originalQuestionId": "hb-waijiao-11"
+  },
+  {
+    "id": "training-foreign-c12-s4-1",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第四节 俄国（苏联）的近现代教育家",
+    "topic": "赞科夫教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第81页",
+    "analysis": "以维果茨基发展理论解释一般发展，展开高难度、理论主导、高速度、理解过程、所有学生发展五原则，强调教学促进发展，高难度不等于盲目拔高。",
+    "knowledgeCardIds": [
+      "foreign-k12-028",
+      "foreign-k12-029"
+    ],
+    "originalQuestionId": "hb-waijiao-12"
+  },
+  {
+    "id": "training-foreign-c12-s4-2",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第四节 俄国（苏联）的近现代教育家",
+    "topic": "马卡连柯集体主义教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第82页",
+    "analysis": "以工学团实践说明集体教育，按目标组织、平行影响、前景教育、尊重要求统一与劳动展开，解释个人发展与集体建设互促关系。",
+    "knowledgeCardIds": [
+      "foreign-k12-023",
+      "foreign-k12-024",
+      "foreign-k12-025",
+      "foreign-k12-026",
+      "foreign-k12-027"
+    ],
+    "originalQuestionId": "hb-waijiao-13"
+  },
+  {
+    "id": "training-foreign-c12-s4-3",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第四节 俄国（苏联）的近现代教育家",
+    "topic": "苏霍姆林斯基教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第83页",
+    "analysis": "以个性全面和谐发展贯穿德智体美劳，解释公民教育、思维劳动、审美及家校协作怎样促进个性，不能仅列各育名称。",
+    "knowledgeCardIds": [
+      "foreign-k12-031",
+      "foreign-k12-032"
+    ],
+    "originalQuestionId": "hb-waijiao-14"
+  },
+  {
+    "id": "training-foreign-c13-s8-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第八节 杜威的教育思想",
+    "topic": "杜威教育思想",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第84页",
+    "analysis": "以实用主义经验观解释本质目的课程教学，论经验改造、儿童经验与教材心理化、反省思维和从做中学，再评民主价值与系统知识问题。",
+    "knowledgeCardIds": [
+      "foreign-k13-094",
+      "foreign-k13-099",
+      "foreign-k13-101",
+      "foreign-k13-103",
+      "foreign-k13-105",
+      "foreign-k13-106"
+    ],
+    "originalQuestionId": "hb-waijiao-15"
+  },
+  {
+    "id": "training-foreign-c14-s4-1",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第四节 20世纪中后期的现代欧美教育思潮",
+    "topic": "新传统主义教育思潮",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第86页",
+    "analysis": "本节已有新传统教育派对应卡。按要素永恒新托马斯共性差异组织，比较知识课程、教师及宗教立场，解释其反思进步教育的背景。",
+    "knowledgeCardIds": [
+      "foreign-k14-032",
+      "foreign-k14-033",
+      "foreign-k14-034",
+      "foreign-k14-035",
+      "foreign-k14-036"
+    ],
+    "originalQuestionId": "hb-waijiao-16"
+  },
+  {
+    "id": "training-foreign-c6-s4-1",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第四节 20世纪下半叶的英国现代教育制度",
+    "topic": "英国《1988年教育改革法》",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第88页",
+    "analysis": "分基础教育国家课程评价管理与高教职教管理拨款改革，注意1988与1992法时间界限，不能把高等教育双重制彻底终结提前。",
+    "knowledgeCardIds": [
+      "foreign-k6-022",
+      "foreign-k6-023",
+      "foreign-k6-027"
+    ],
+    "originalQuestionId": "hb-waijiao-17"
+  },
+  {
+    "id": "training-foreign-c13-s4-2",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第四节 赫尔巴特的教育思想",
+    "topic": "赫尔巴特与杜威教育思想比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第90页",
+    "analysis": "跨第四八节原题，此节提供伦理心理学、教育性教学课程形式阶段，杜威来自第八节。按基础目的课程教学师生角色对应比较，避免只背三中心。",
+    "knowledgeCardIds": [
+      "foreign-k13-044",
+      "foreign-k13-048",
+      "foreign-k13-049",
+      "foreign-k13-050",
+      "foreign-k13-054",
+      "foreign-k13-055"
+    ],
+    "originalQuestionId": "hb-waijiao-18"
+  },
+  {
+    "id": "training-foreign-c13-s8-2",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第八节 杜威的教育思想",
+    "topic": "赫尔巴特与杜威教育思想比较",
+    "questionType": "essay",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第90页",
+    "analysis": "同一跨节题在此练杜威经验生长活动与问题解决，赫尔巴特来自第四节。解释两套思想如何影响目的教材和进程，三中心标签只是概括。",
+    "knowledgeCardIds": [
+      "foreign-k13-094",
+      "foreign-k13-101",
+      "foreign-k13-103",
+      "foreign-k13-105",
+      "foreign-k13-106",
+      "foreign-k13-110"
+    ],
+    "originalQuestionId": "hb-waijiao-18"
+  },
+  {
+    "id": "training-foreign-c10-s4-1",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第四节 20世纪下半叶的美国现代教育制度",
+    "topic": "《国家处在危机之中》报告",
+    "questionType": "short-answer",
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第92页",
+    "analysis": "用返回基础与质量危机交代背景，按课程标准、学业要求、时间、教师、领导财政展开，报告与后续国家目标改革分清，再评质量与公平。",
+    "knowledgeCardIds": [
+      "foreign-k10-025",
+      "foreign-k10-026",
+      "foreign-k10-027",
+      "foreign-k10-028"
+    ],
+    "originalQuestionId": "hb-waijiao-19"
+  },
+  {
+    "id": "training-foreign-c1-s1-1",
+    "book": "foreign",
+    "chapter": 1,
+    "section": "第一节 古代巴比伦的教育",
+    "topic": "巴比伦学校的产生与书吏教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第8页；《外教专题班课件》PDF第13,21页",
+    "analysis": "按机构目的课程方法和评价展开，说明文字工具、书吏职业与学校产生的联系，区分苏美尔和巴比伦发展阶段。",
+    "knowledgeCardIds": [
+      "foreign-k1-001",
+      "foreign-k1-002",
+      "foreign-k1-003"
+    ],
+    "stem": "试述古代巴比伦学校教育的机构、目的、内容和方法，并分析其特点。",
+    "referenceAnswer": "（一）产生与机构。文字和行政经济活动使专门传授文化知识成为需要，苏美尔出现泥板书舍；巴比伦时期寺庙学校发展为初级高级两级。\n（二）目的。初级主要培养书吏，高级培养官吏，以读写算和管理能力满足社会组织需求。\n（三）内容方法。重楔形文字、计算，也涉及文法文学、天文医学等；临摹抄写背诵及严格纪律居重要位置，师徒传授让学生观察操作、模仿并受指导。\n（四）评价。反映学校由文字和职业需要发展，保存传播早期知识；受教为少数人垄断，机械灌输体罚限制主动性，不能把文化传承贡献与教育平等混为一谈。"
+  },
+  {
+    "id": "training-foreign-c1-s2-1",
+    "book": "foreign",
+    "chapter": 1,
+    "section": "第二节 古代埃及的教育",
+    "topic": "埃及四类学校的分工",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第8页；《应试解析·外国教育史》2027版 PDF第9页；《外教专题班课件》PDF第13,21页",
+    "analysis": "用对象、目标、内容和性质四维比较，强调学校分工与阶级等级性，区别宗教机构与世俗官署学校。",
+    "knowledgeCardIds": [
+      "foreign-k1-004",
+      "foreign-k1-005",
+      "foreign-k1-006",
+      "foreign-k1-007"
+    ],
+    "stem": "比较古代埃及四类学校的培养对象、教育内容和性质，分析其共同特点。",
+    "referenceAnswer": "（一）宫廷学校。为王室朝臣子弟培养高级官吏，学习书写阅读、宫廷礼仪及政治法律等世俗知识。\n（二）僧侣学校。附寺庙培养高级僧侣学术人才，研究天文水利数学建筑医学，兼宗教教育与学术中心性质。\n（三）职官学校。政府部门训练专项官员，教普通文化和职业知识，常以吏为师。\n（四）文士学校。培养书写计算人员，重文字算术律令，相对人数多、出身限制稍宽。\n（五）共同性。学校服务统治阶层和职业分工，教育呈等级性，普遍有灌输体罚；宗教世俗并存，不能因僧侣科学课程就把全部埃及学校都归为宗教学校。"
+  },
+  {
+    "id": "training-foreign-c1-s3-1",
+    "book": "foreign",
+    "chapter": 1,
+    "section": "第三节 古代印度的教育",
+    "topic": "印度婆罗门与佛教教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第9页；《应试解析·外国教育史》2027版 PDF第10页；《外教专题班课件》PDF第13,21页",
+    "analysis": "从种姓与宗教背景解释对象差异，按机构课程方法逐项对应，再分别评价平民性与宗教限制。",
+    "knowledgeCardIds": [
+      "foreign-k1-008",
+      "foreign-k1-009",
+      "foreign-k1-010",
+      "foreign-k1-011",
+      "foreign-k1-012"
+    ],
+    "stem": "比较古代印度婆罗门教育和佛教教育的机构、对象、内容与方法，并作评价。",
+    "referenceAnswer": "（一）共同点。以培养各自宗教信徒为目标，宗教经典居课程中心，也传授文化知识，教育与社会宗教秩序密切相连。\n（二）婆罗门教育。古儒在家庭设校，招婆罗门刹帝利吠舍子弟，排除首陀罗；以《吠陀》及语音文法祭礼等为内容，采用口授、导生和体罚。\n（三）佛教教育。寺院为教学学术场所，主张各种姓平等、扩大对象，以佛经及哲学历史逻辑等为内容，地方语教学，讲解与独立钻研结合。\n（四）评价。佛教教育较具平民性，冲击种姓受教限制；两者宗教性突出，都不是现代普遍平等学校制度。比较时要以制度对象和教学方式解释差异，不能仅列宗教名称。"
+  },
+  {
+    "id": "training-foreign-c1-s4-1",
+    "book": "foreign",
+    "chapter": 1,
+    "section": "第四节 古代希伯来的教育",
+    "topic": "希伯来家庭到学校教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第10页；《应试解析·外国教育史》2027版 PDF第11页；《外教专题班课件》PDF第13,21页",
+    "analysis": "按家庭到分级学校的过程说明变化，再从目的内容、对象与方法分析宗教文化传承和限制。",
+    "knowledgeCardIds": [
+      "foreign-k1-013",
+      "foreign-k1-014",
+      "foreign-k1-015",
+      "foreign-k1-016",
+      "foreign-k1-017",
+      "foreign-k1-018"
+    ],
+    "stem": "论述古代希伯来教育的发展阶段、主要特点及其教育意义。",
+    "referenceAnswer": "（一）家庭阶段。父亲兼祭司与教师，教《圣经·旧约》、文化职业常识，重信仰感情和亲情说服，同时仍保留体罚权。\n（二）学校阶段。犹太会堂逐步分离出学校，形成初中高层级，经典、注疏、宗教理论和法律循级加深；男生受教，女生机会受限制。\n（三）方法特点。口授背诵与惩戒并存，也鼓励发问和儿童互助，体现一定尊重儿童的因素。\n（四）初等教育。较强调广泛教育、民族生存和宗教文化传承，说明共同信仰及文化知识与民族凝聚相连。\n（五）评价。家庭学校衔接、发问互助有教育价值，但性别限制和宗教控制不可忽视，不能把较普遍初等教育等同现代机会均等。"
+  },
+  {
+    "id": "training-foreign-c2-s1-2",
+    "book": "foreign",
+    "chapter": 2,
+    "section": "第一节 教育制度与教育实践",
+    "topic": "智者与希腊化教育变迁",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第18页；《应试解析·外国教育史》2027版 PDF第19页；《外教专题班课件》PDF第13,21页",
+    "analysis": "补充斯巴达雅典比较未覆盖的后续时期，分别论职业讲学与分级学校，解释政治生活和文化传播的不同需求。",
+    "knowledgeCardIds": [
+      "foreign-k2-009",
+      "foreign-k2-010",
+      "foreign-k2-011",
+      "foreign-k2-012"
+    ],
+    "stem": "试述智者派的教育贡献及希腊化时期学校教育的发展，分析二者反映的教育变化。",
+    "referenceAnswer": "（一）智者背景。城邦公共政治生活需要辩论能力，智者以收费讲学培养参与政治者，成为早期职业教师。\n（二）贡献。扩展教育内容，重修辞辩论及广泛文化知识，关注人的认识和现实问题，推动教学方法与教师职业发展；相对主义及过重言辞技巧也有局限。\n（三）希腊化学校。初等、中等文法与高等机构分化，文化教育传播范围扩大，学园、吕克昂等推动学术研究，教育更重文化与个人发展。\n（四）联系区别。二者都推动教育超出早期武士训练，智者侧重城邦政治需要，希腊化则表现学校层级和学术文化的发展，应以社会背景解释转变，而非把所有时期称为同一教育制度。"
+  },
+  {
+    "id": "training-foreign-c2-s2-1",
+    "book": "foreign",
+    "chapter": 2,
+    "section": "第二节 教育思想",
+    "topic": "苏格拉底德育与问答法",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第20页；《应试解析·外国教育史》2027版 PDF第21页；《应试解析·外国教育史》2027版 PDF第22页；《外教专题班课件》PDF第5,21页",
+    "analysis": "按道德认识论与方法程序贯通，解释四步骤功能，再评价启发价值和知善行善之间的距离。",
+    "knowledgeCardIds": [
+      "foreign-k2-014",
+      "foreign-k2-015",
+      "foreign-k2-016",
+      "foreign-k2-017",
+      "foreign-k2-018"
+    ],
+    "stem": "论述苏格拉底“知识即美德”的教育主张和问答法，并分析其价值与局限。",
+    "referenceAnswer": "（一）目的。培养有知识、有德性的人，善行以对善的理解为基础，因而道德可教，知识学习与道德形成相联。\n（二）问答程序。讥讽通过追问揭示自相矛盾，使学生意识无知；助产引导思考，归纳从具体事例提炼共同性，定义形成一般概念。\n（三）特点。教师用问题促反省，学习者主动表达修正认识，重概念理解，具有启发性。\n（四）价值。促进独立思考、反思与对话，说明教学可从学生已有认识出发，知识伦理问题能够讨论。\n（五）局限。把知善与行善过于直接等同，忽略情感意志和社会条件；方法也受适用知识类型与谈话引导限制，现代教学须结合经验实践。"
+  },
+  {
+    "id": "training-foreign-c2-s2-2",
+    "book": "foreign",
+    "chapter": 2,
+    "section": "第二节 教育思想",
+    "topic": "柏拉图教育与理想国家",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第22页；《应试解析·外国教育史》2027版 PDF第23页；《应试解析·外国教育史》2027版 PDF第24页；《外教专题班课件》PDF第5,21页",
+    "analysis": "由灵魂转向到国家分工解释目的，再论选拔、课程和实践，评价时区分认识论与制度设计。",
+    "knowledgeCardIds": [
+      "foreign-k2-019",
+      "foreign-k2-020",
+      "foreign-k2-021",
+      "foreign-k2-022",
+      "foreign-k2-023",
+      "foreign-k2-024"
+    ],
+    "stem": "试述柏拉图的教育作用观、国家教育制度和课程设计，并作评价。",
+    "referenceAnswer": "（一）理论目的。以理念论和灵魂转向解释教育，学习即回忆，教育使灵魂转向真理，服务理想国家的分工与正义秩序。\n（二）国家组织。教育由国家管理，按能力选拔并持续考查，培养不同社会职能的人，最终育成哲学家统治者。\n（三）课程阶段。早期重音乐体育与人格习惯，进一步学习数学、辩证法，接受公共事务实践，知识训练与政治培养相接。\n（四）价值。重国家责任、长期系统教育及学科顺序，学园促进学术研究，对西方教育制度思想有深远影响。\n（五）局限。先验回忆论忽视知识社会经验来源，等级分工与精英目标限制教育平等，必须区别系统培养价值与理想国家的阶层约束。"
+  },
+  {
+    "id": "training-foreign-c2-s2-3",
+    "book": "foreign",
+    "chapter": 2,
+    "section": "第二节 教育思想",
+    "topic": "亚里士多德和谐与自然教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第25页；《应试解析·外国教育史》2027版 PDF第26页；《应试解析·外国教育史》2027版 PDF第27页；《外教专题班课件》PDF第5,21页",
+    "analysis": "把灵魂发展与体育德育智育联系，再比较习惯训练和理性教育的次序，完整评价自由教育对象的限制。",
+    "knowledgeCardIds": [
+      "foreign-k2-025",
+      "foreign-k2-026",
+      "foreign-k2-028",
+      "foreign-k2-029",
+      "foreign-k2-030",
+      "foreign-k2-031"
+    ],
+    "stem": "论述亚里士多德的和谐教育思想、年龄分期和德育方法，并分析其历史意义。",
+    "referenceAnswer": "（一）理论。将灵魂分为植物、动物、理性层次，据此重身体、情感欲望和理性发展，教育应适应自然成长。\n（二）和谐教育。体育、德育、智育相配合，理性发展居核心，教育不能只培养体力或单一技能。\n（三）年龄分期。幼儿期重身体和习惯，之后依发展阶段安排系统学习，先培养良好情感行为，再发展理性，重教育顺序。\n（四）德育。道德通过习惯和实际行为形成，适度情感与理性判断结合，反对仅靠知识说教。\n（五）评价。发展阶段、习惯实践与和谐培养推动教育理论；自由教育仍面向自由公民，轻视劳动并排除奴隶，整体培养理想不能掩盖阶级局限。"
+  },
+  {
+    "id": "training-foreign-c3-s1-1",
+    "book": "foreign",
+    "chapter": 3,
+    "section": "第一节 教育制度与教育实践",
+    "topic": "罗马学校制度的政治转向",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第32页；《应试解析·外国教育史》2027版 PDF第33页；《外教专题班课件》PDF第13,21页",
+    "analysis": "按目标、三级体系、语言内容和国家管理逐维比较，解释政治制度变化怎样影响学校而非只按年代列名。",
+    "knowledgeCardIds": [
+      "foreign-k3-001",
+      "foreign-k3-002",
+      "foreign-k3-004",
+      "foreign-k3-005",
+      "foreign-k3-006"
+    ],
+    "stem": "比较古罗马共和后期与帝国时期学校教育的目的、体系和国家管理。",
+    "referenceAnswer": "（一）共和后期。吸收希腊文化，初等学校教读写算，中等文法学校重语言文学，高等修辞学校培养雄辩家，服务公共政治与法律活动。\n（二）帝国时期。目的更趋培养官吏顺民，国家加强学校支持与控制，拉丁语言和罗马文化地位提高，同时发展医学法律等专门教育。\n（三）相同点。分级学校体系延续，语言修辞和文化知识重，教育机会为较富裕阶层占有。\n（四）差异解释。政治结构由共和国转为帝国，使育才目的与管理权变化，学校由公共演说人才培养走向行政服务。\n（五）评价。传播希腊罗马文化、积累分级与专门教育经验；学校仍有等级性，教育政治功用与文化贡献应分别评述。"
+  },
+  {
+    "id": "training-foreign-c3-s2-1",
+    "book": "foreign",
+    "chapter": 3,
+    "section": "第二节 教育思想",
+    "topic": "西塞罗与昆体良的雄辩家教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第34页；《应试解析·外国教育史》2027版 PDF第35页；《应试解析·外国教育史》2027版 PDF第36页；《外教专题班课件》PDF第21页",
+    "analysis": "逐项比较共同目的、知识与德行、培养阶段及方法，说明昆体良怎样把雄辩家目标扩展为完整教育过程。",
+    "knowledgeCardIds": [
+      "foreign-k3-009",
+      "foreign-k3-010",
+      "foreign-k3-011",
+      "foreign-k3-012",
+      "foreign-k3-013",
+      "foreign-k3-018"
+    ],
+    "stem": "比较西塞罗与昆体良的教育目的、知识要求和培养路径。",
+    "referenceAnswer": "（一）共同目标。重雄辩家培养，要求广博知识、表达能力及德行，雄辩术联系公共政治法律生活，不能等于单纯口才训练。\n（二）西塞罗。强调哲学、法律和文化知识构成演说能力基础，通过模仿、练习和实践提高表达，突出成年雄辩家的素养。\n（三）昆体良。要求善良而精于雄辩的人，从幼儿至高等修辞教育规划完整培养，重学校环境、教师和渐进练习，教育理论更系统。\n（四）评价。二人把修辞与广泛人文知识道德联系，影响后世古典教育；目标仍服务罗马上层公共生活，应以时代需要理解其专业性与阶级限制。"
+  },
+  {
+    "id": "training-foreign-c3-s2-2",
+    "book": "foreign",
+    "chapter": 3,
+    "section": "第二节 教育思想",
+    "topic": "昆体良的儿童教学与教师观",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第35页；《应试解析·外国教育史》2027版 PDF第36页；《外教专题班课件》PDF第13,21页",
+    "analysis": "补充同节雄辩目标比较外的完整教学论，按儿童环境、组织原则、教师要求解释机制，再指出目标背景。",
+    "knowledgeCardIds": [
+      "foreign-k3-014",
+      "foreign-k3-015",
+      "foreign-k3-016",
+      "foreign-k3-017"
+    ],
+    "stem": "论述昆体良关于学校教育、教学原则和教师的主张，并评价其现代启示。",
+    "referenceAnswer": "（一）儿童与学校。重早期教育，慎选乳母和教师，学校提供同伴交流、竞争榜样与公共生活经验，优于长期孤立家庭训练。\n（二）教学。依年龄能力循序学习，重兴趣、适量休息与游戏，练习和理解结合，采用集体教学，同时关注个别差异。\n（三）教师。须学识充足、品德良好、熟悉儿童，对学生有父母般感情，指导纠错耐心，反对粗暴体罚。\n（四）启示。儿童发展、同伴环境和教师人格共同影响学习，教学应兼顾整体组织与差异支持。\n（五）评价。突破机械灌输的因素值得借鉴，但仍围绕雄辩家培养，现代应用应联系更广泛目标，不能直接照搬古典课程。"
+  },
+  {
+    "id": "training-foreign-c4-s1-1",
+    "book": "foreign",
+    "chapter": 4,
+    "section": "第一节 西欧基督教教育",
+    "topic": "中世纪基督教学校",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第38页；《外教专题班课件》PDF第13,22页",
+    "analysis": "按层级、培养任务、课程和管理比较三类学校，解释宗教控制下文化教育怎样保存发展。",
+    "knowledgeCardIds": [
+      "foreign-k4-001",
+      "foreign-k4-002",
+      "foreign-k4-003"
+    ],
+    "stem": "比较西欧中世纪修道院学校、主教学校和教区学校的任务与内容，并分析其教育作用。",
+    "referenceAnswer": "（一）修道院。附修道院，培养僧侣并保存抄写经典，内部与外部学生分工，神学知识和部分七艺学习结合。\n（二）主教学校。由主教教会主持，培养神职人员并承担较高层次文化教学，成为学术教育中心之一。\n（三）教区学校。面向地方儿童，提供宗教启蒙、读写等初步教育，内容较基础。\n（四）共同性。宗教目的贯穿，学校主要受教会控制，教学重权威文本和纪律，文化知识从属信仰。\n（五）作用评价。动荡时期保存文献并延续学校教育，为后续学术发展提供条件；又制约自由思考和科学发展，应分析文化传承与思想控制两方面。"
+  },
+  {
+    "id": "training-foreign-c4-s2-2",
+    "book": "foreign",
+    "chapter": 4,
+    "section": "第二节 西欧世俗教育",
+    "topic": "宫廷与骑士教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第39页；《外教专题班课件》PDF第13,22页",
+    "analysis": "补充同节中世纪大学原题未覆盖的教育形态，逐维比较文化与军事培养，世俗教育仍可包含宗教内容。",
+    "knowledgeCardIds": [
+      "foreign-k4-004",
+      "foreign-k4-005",
+      "foreign-k4-006",
+      "foreign-k4-007",
+      "foreign-k4-008"
+    ],
+    "stem": "比较中世纪西欧宫廷学校与骑士教育的培养目标、内容和组织方式。",
+    "referenceAnswer": "（一）宫廷学校。服务王公贵族后代，查理曼宫廷学校由阿尔昆组织，教授宗教与七艺等文化知识，推动宫廷和教会的文化复兴。\n（二）骑士目标。培养忠君敬主、勇猛豪侠的封建骑士，服从领主和宗教伦理，与贵族军事身份相连。\n（三）骑士阶段内容。家庭教育后为礼仪教育，再作侍从接受骑士训练，以骑马游泳投枪击剑打猎弈棋吟诗等七技为主要内容。\n（四）比较。宫廷重文化管理人才，骑士重身份、礼仪及军事技艺，两者皆有贵族性且受宗教影响。\n（五）评价。骑士教育保留身体实践训练，但文化智育不足、贵族战争色彩突出；宫廷文化贡献也不能等于普遍世俗教育。"
+  },
+  {
+    "id": "training-foreign-c4-s2-3",
+    "book": "foreign",
+    "chapter": 4,
+    "section": "第二节 西欧世俗教育",
+    "topic": "中世纪城市学校与市民需求",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第39页；《应试解析·外国教育史》2027版 PDF第41页；《外教专题班课件》PDF第13,22页",
+    "analysis": "以工商业需求为因、办学主体和实用课程为果组织，比较城市学校与传统教会骑士教育的区别。",
+    "knowledgeCardIds": [
+      "foreign-k4-009",
+      "foreign-k4-017",
+      "foreign-k4-018"
+    ],
+    "stem": "试述中世纪城市学校产生的原因、类型和特点，说明其对教育发展的意义。",
+    "referenceAnswer": "（一）背景。城市手工业商业发展、市民阶层兴起，需要读写计算和职业能力，原有教会骑士教育不能充分满足。\n（二）类型。行会、商会及城市组织设学校，培养工商业相关人才，办学与市民生活相连。\n（三）特点。重实用课程、读写算和职业知识，更多采用本族语言，教育对象扩大，管理具有市民参与因素，相较传统学校更具世俗性。\n（四）意义。拓展教育目的和内容，增加非贵族受教渠道，推动学校与社会经济联系，为近代世俗实用教育积累经验。\n（五）局限。学校仍受宗教和城市阶层利益约束，市民机会扩大不等于普遍平等；须解释经济需求如何改变课程与办学主体。"
+  },
+  {
+    "id": "training-foreign-c5-s1-2",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第一节 人文主义教育",
+    "topic": "意大利与北欧人文主义教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第44页；《应试解析·外国教育史》2027版 PDF第45页；《应试解析·外国教育史》2027版 PDF第46页；《外教专题班课件》PDF第5,22页",
+    "analysis": "在原有三类教育跨节比较之外，细分人文主义内部目标和演变，以西塞罗主义说明理想到实践的变化。",
+    "knowledgeCardIds": [
+      "foreign-k5-001",
+      "foreign-k5-002",
+      "foreign-k5-003",
+      "foreign-k5-004",
+      "foreign-k5-005",
+      "foreign-k5-010"
+    ],
+    "stem": "比较意大利与北欧人文主义教育的目标和内容，分析后期古典化倾向。",
+    "referenceAnswer": "（一）共同性。肯定人的价值，学习古典文化，追求身心多方面发展，改进教学并反对僵化经院教育，宗教影响仍存在。\n（二）意大利。更多面向城市公民，强调世俗生活、个性和体育美育，古典文学与政治文化活动结合。\n（三）北欧。关注基督教道德改革，较强调培养君主朝臣和宗教修养，把古典学习与宗教批判结合。\n（四）古典化。后期一些学校以模仿西塞罗语言形式为目标，重拉丁文背诵，原来开阔的教育趋狭窄形式化。\n（五）评价。人文主义推动人的价值和全人教育，亦有贵族性与古典内容局限，不能只把文艺复兴概括为完全脱离宗教。"
+  },
+  {
+    "id": "training-foreign-c5-s1-3",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第一节 人文主义教育",
+    "topic": "人文主义教育家的教学实践",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第45页；《应试解析·外国教育史》2027版 PDF第46页；《外教专题班课件》PDF第5,13,22页",
+    "analysis": "以目标到课程环境方法的联系分析全人教育，分别归属三位人物主张，避免把快乐之家当全部运动。",
+    "knowledgeCardIds": [
+      "foreign-k5-007",
+      "foreign-k5-008",
+      "foreign-k5-009"
+    ],
+    "stem": "以维多里诺“快乐之家”为重点，试述人文主义教育家如何实施全人教育。",
+    "referenceAnswer": "（一）目的。培养身体、德性、知识与审美协调的人，古典学习服务人的完善及现实生活。\n（二）快乐之家。维多里诺重古典语言文学，也安排数学、音乐、体育与游戏，以良好环境和师生关系促进学习，反对压制儿童的粗暴训练，注重德育。\n（三）其他主张。弗吉里奥重自由学科、体育及品德，伊拉斯谟强调儿童早教、温和方法和教师素养，体现教育可依儿童特点改进。\n（四）价值。课程的多方面性与活动环境共同落实全人目标，教师不是只灌输古典语言。\n（五）限制。典型学校主要服务上层，宗教和古典主义未消失，个别教育家的开明实践不能代表所有人文主义学校。"
+  },
+  {
+    "id": "training-foreign-c5-s2-2",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第二节 新教教育",
+    "topic": "路德与加尔文教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第47页；《应试解析·外国教育史》2027版 PDF第48页；《应试解析·外国教育史》2027版 PDF第49页；《外教专题班课件》PDF第13,22页",
+    "analysis": "以读经需要解释普及和民族语言，再比较国家责任与纪律管理，区分宗教改革贡献与现代世俗化。",
+    "knowledgeCardIds": [
+      "foreign-k5-011",
+      "foreign-k5-012",
+      "foreign-k5-013",
+      "foreign-k5-014",
+      "foreign-k5-015",
+      "foreign-k5-016"
+    ],
+    "stem": "比较路德派与加尔文派新教教育的目的、制度和教学主张。",
+    "referenceAnswer": "（一）共同点。培养信徒又关注世俗事务，重《圣经》与文化知识，主张扩大教育并利用民族语言，教育受宗教伦理约束。\n（二）路德。人人能读经需要学校普及，强调国家和地方承担办学责任，男女儿童应受教，教育服务宗教与社会秩序，重温和教学。\n（三）加尔文。以改革宗宗教生活和有纪律的社会组织为背景，建立学校并强调严格品行管理，宗教与文化教育相连。\n（四）比较评价。二者推进普及、民族语和国家责任，拓展教会教育之外的组织方式；宗教目的及社会纪律限制思想自由。必须按制度方法对应，不能将新教教育整体视为现代世俗教育。"
+  },
+  {
+    "id": "training-foreign-c5-s3-2",
+    "book": "foreign",
+    "chapter": 5,
+    "section": "第三节 天主教教育",
+    "topic": "耶稣会学校的教育机制",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第50页；《应试解析·外国教育史》2027版 PDF第51页；《外教专题班课件》PDF第13,22页",
+    "analysis": "围绕目标怎样组织课程、师资和课堂机制展开，与原三类比较题形成独立天主教专题。",
+    "knowledgeCardIds": [
+      "foreign-k5-018",
+      "foreign-k5-019",
+      "foreign-k5-020",
+      "foreign-k5-021"
+    ],
+    "stem": "试述耶稣会学校的目标、课程管理和教学方法，并作历史评价。",
+    "referenceAnswer": "（一）目的。为维护传播天主教而育才，通过教育影响社会上层，与反宗教改革相联系。\n（二）课程。重古典语言文学和宗教知识，吸收人文主义教育内容，但课程服从宗教目标。\n（三）管理师资。严密组织、统一教学计划，严格选拔培训教师，学校制度和教师准备较完备。\n（四）方法。分班、复习练习、竞争奖赏及温和引导并用，讲授与学生训练相配合，较重教学效率。\n（五）评价。教学组织师资经验影响后世，传播古典文化；宗教控制及服从训练又限制独立思考，应区分方法进步和思想目标局限。"
+  },
+  {
+    "id": "training-foreign-c6-s1-1",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第一节 17—18世纪的英国近代教育概况",
+    "topic": "英国早期教育与阶层分化",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第54页；《应试解析·外国教育史》2027版 PDF第55页；《外教专题班课件》PDF第14,24页",
+    "analysis": "按对象、经费管理、目标课程比较，用公学的私立性质校正名词，说明实用学校构想与现实制度差别。",
+    "knowledgeCardIds": [
+      "foreign-k6-001",
+      "foreign-k6-002",
+      "foreign-k6-003",
+      "foreign-k6-004",
+      "foreign-k6-005",
+      "foreign-k6-007"
+    ],
+    "stem": "比较17—18世纪英国贫民初等学校与公学、学园，分析教育的阶层性和实用性变化。",
+    "referenceAnswer": "（一）贫民初等。慈善学校等提供基本读写与宗教道德教育，办学多依教会慈善，国家不直接普遍组织。\n（二）公学。私立寄宿学校，主要招贵族和富裕子弟，重古典语言、礼仪体育，费用高、师资条件好，作为进入大学和上层生活的准备。\n（三）学园。弥尔顿构想文实兼顾学校，同时满足升学就业，反映现代知识与实用人才需求。\n（四）比较。对象经费课程目的按阶层分化，古典教育与实用教育需求并存。\n（五）评价。国家自由放任使资源机会不均；实用课程是变化方向，但不能误将公学名称理解为公立学校，也不能把设想当全国已实行制度。"
+  },
+  {
+    "id": "training-foreign-c6-s1-2",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第一节 17—18世纪的英国近代教育概况",
+    "topic": "苏格兰大学与英国古典大学",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第55页；《外教专题班课件》PDF第14,32页",
+    "analysis": "以课程、社会联系、受教成本作比较，说明同一时期高等教育内部差异和后续改革的关系。",
+    "knowledgeCardIds": [
+      "foreign-k6-006",
+      "foreign-k6-007"
+    ],
+    "stem": "比较17—18世纪苏格兰大学与牛津、剑桥的教育取向，分析其社会意义。",
+    "referenceAnswer": "（一）古典大学。牛津剑桥沿袭宗教古典传统，课程和招生与上层社会联系紧密，对新科学、实用学科的接受较缓。\n（二）苏格兰大学。重自然科学、现代外语和实用知识，较联系社会生活与科学发展，学费相对低廉。\n（三）差异原因。经济社会及科学文化需要推动课程改变，不同地区大学传统使对新知识响应不同。\n（四）意义。显示大学可在传统机构中扩大现代科学与社会联系，为后来新大学提供经验。\n（五）评价。它改变内容取向而非立即消除所有阶层限制，不能把苏格兰大学与19世纪新大学运动或战后开放大学混同。"
+  },
+  {
+    "id": "training-foreign-c6-s2-1",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第二节 19世纪的英国近代教育概况",
+    "topic": "英国国民初等教育的建立",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第56页；《应试解析·外国教育史》2027版 PDF第57页；《外教专题班课件》PDF第24,30,35页",
+    "analysis": "以工业问题到国家责任的变化解释法案，依中央地方、私人教会与课程关系组织，严格区分强迫和免费。",
+    "knowledgeCardIds": [
+      "foreign-k6-008",
+      "foreign-k6-009",
+      "foreign-k6-010",
+      "foreign-k6-011",
+      "foreign-k6-012"
+    ],
+    "stem": "论述19世纪英国国家干预教育及《初等教育法》的主要内容与意义。",
+    "referenceAnswer": "（一）背景。工业发展、童工与城市贫困使慈善办学不足，国家由拨款补助逐步转向监督和制度建设。\n（二）前期。导生制用高年级学生协助教师，扩大低成本教学但机械性突出；《工厂法》提出童工教育要求，体现劳动保护与学习联系。\n（三）1870法。国家享补助监督权，地方设学校委员会，学校不足时由地方补办，建立强迫初等教育框架并区分世俗宗教科目。\n（四）意义。公立学校网络和地方管理发展，国民教育有法律组织基础，国家责任增强。\n（五）评价。制度建立不等于一次实现免费普及，教会与社会阶层影响仍在，应区分1870法和以后免费及义务年限调整。"
+  },
+  {
+    "id": "training-foreign-c6-s2-2",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第二节 19世纪的英国近代教育概况",
+    "topic": "英国19世纪中高等改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第57页；《应试解析·外国教育史》2027版 PDF第58页；《外教专题班课件》PDF第14,24,32页",
+    "analysis": "按中等结构、大学机构、教育推广三层，说明工业社会需求如何改变课程对象，避免把新大学与推广运动混同。",
+    "knowledgeCardIds": [
+      "foreign-k6-013",
+      "foreign-k6-014",
+      "foreign-k6-015"
+    ],
+    "stem": "试述19世纪英国中等教育分化、新大学运动和大学推广运动的特点与意义。",
+    "referenceAnswer": "（一）中等。传统文法公学仍占重要地位，调查改革提出文法、实科、职业等类型，以适应不同社会群体和人才需求，阶层差异仍强。\n（二）新大学。工业城市和中产阶级推动新学校，伦敦大学及城市学院重专业科技和实用知识，突破牛津剑桥的古典宗教限制。\n（三）大学推广。通过校内外讲座向非全日制人群开放知识，使大学与社会学习需求联系。\n（四）意义。课程现代化、受教范围扩大、社会服务增强，为高等教育大众化积累经验。\n（五）局限。改革仍受经费地域阶层制约，推广讲座不等于普遍取得大学学历；应区别三种改革层次。"
+  },
+  {
+    "id": "training-foreign-c6-s3-1",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第三节 20世纪上半叶的英国现代教育制度",
+    "topic": "英国巴尔福与费舍教育法",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第59页；《应试解析·外国教育史》2027版 PDF第60页；《外教专题班课件》PDF第24,30,35页",
+    "analysis": "从管理权责、对象年限、免费与继续教育四维比较，说明两法互相接续而非内容完全相同。",
+    "knowledgeCardIds": [
+      "foreign-k6-016",
+      "foreign-k6-017"
+    ],
+    "stem": "比较《巴尔福教育法》与《费舍教育法》的改革内容及其对公共教育体系的作用。",
+    "referenceAnswer": "（一）巴尔福法。1902年设地方教育当局，扩大对初中等、师范及学校人员的管理，拨款支持公立中等教育，形成中央地方合作的行政框架。\n（二）费舍法。1918年明确中央地方职责，发展幼儿学校，规定5至14岁义务阶段、公立小学免费，并为青年安排继续教育。\n（三）联系区别。前者侧重行政整合和中学发展，后者侧重基础教育、免费与继续学习，两者共同扩大公共教育责任。\n（四）评价。初中等联系与国民教育体系推进，免费增强机会；分轨与阶层障碍未完全克服，制度规定和现实实现须分别分析。"
+  },
+  {
+    "id": "training-foreign-c6-s3-2",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第三节 20世纪上半叶的英国现代教育制度",
+    "topic": "英国中等教育分流与综合化",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第61页；《外教专题班课件》PDF第9,24,31页",
+    "analysis": "按分流年龄、学校类型、地位与通道对应比较，区别改革构想与战后综合中学实践。",
+    "knowledgeCardIds": [
+      "foreign-k6-018",
+      "foreign-k6-019",
+      "foreign-k6-020"
+    ],
+    "stem": "比较《哈多报告》与《斯宾斯报告》的中等教育改革主张，分析分流与机会均等的关系。",
+    "referenceAnswer": "（一）哈多。以11岁划初等和中等，以考试分流进入文法及不同现代学校，承认初等之后各种教育均属中等教育，扩大中等受教观念。\n（二）斯宾斯。强调学校对等，将文法现代技术三类纳入结构，提具有多科性质的学校构想，回应技术人才需要。\n（三）贡献。推进人人受中等教育与课程多样化，为综合中学提供思想。\n（四）问题。过早考试与学校地位不均可能固化阶层差异，名义对等不自动保证实质平等。\n（五）评价。应解释分流、课程选择及升学渠道怎样影响机会，不能把提出多科性学校当作当时已完成综合中学制度。"
+  },
+  {
+    "id": "training-foreign-c6-s4-2",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第四节 20世纪下半叶的英国现代教育制度",
+    "topic": "英国1944年教育法的体系建设",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第62页；《外教专题班课件》PDF第24,30–31页",
+    "analysis": "以行政体系、阶段衔接、免费义务和分流展开，评价其里程碑作用同时说明改革尚需继续。",
+    "knowledgeCardIds": [
+      "foreign-k6-021"
+    ],
+    "stem": "论述英国《1944年教育法》的主要规定及其国民教育制度意义。",
+    "referenceAnswer": "（一）背景。战争及教育需求促成公共体系重建，国家需要统筹各阶段学校。\n（二）行政。设教育部加强国家领导，地方当局建立初等、中等、继续教育相衔接系统。\n（三）机会与结构。规定5至15岁义务教育，中学免费，按11岁考试分入文法、技术、现代中学，并涉及宗教和教师等教育安排。\n（四）意义。现代国民教育体系基本形成，教育责任与免费范围扩大，成为战后制度基础。\n（五）局限。三轨考试分流仍可能反映社会差异，因此后来综合中学改革继续推进；其与1988国家课程改革关注点不同，需区分制度阶段。"
+  },
+  {
+    "id": "training-foreign-c6-s4-3",
+    "book": "foreign",
+    "chapter": 6,
+    "section": "第四节 20世纪下半叶的英国现代教育制度",
+    "topic": "英国战后高等与教师教育改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第64页；《应试解析·外国教育史》2027版 PDF第65页；《应试解析·外国教育史》2027版 PDF第66页；《外教专题班课件》PDF第24,32页",
+    "analysis": "以机会、教师发展、体制质量和终身学习四条线解释改革，区分1988与1992以及不同报告功能。",
+    "knowledgeCardIds": [
+      "foreign-k6-024",
+      "foreign-k6-025",
+      "foreign-k6-026",
+      "foreign-k6-027",
+      "foreign-k6-028"
+    ],
+    "stem": "论述英国战后高等教育扩大机会与教师教育改革的主要方向。",
+    "referenceAnswer": "（一）机会。罗宾斯原则要求为成绩合格且有意愿的人提供高等教育课程，推动规模扩大及多样机构。\n（二）教师。詹姆斯报告提出个人教育、职前教育、在职教育三阶段，使教师培养成为持续发展过程，体现非定向培养方向。\n（三）体制。改革课程与入学途径，1992法将多科技术学院改为大学，统一相应拨款并建立质量保障，终结高等教育双重制。\n（四）终身学习。学习社会中的高等教育强调扩大规模、服务终身学习和社会需要。\n（五）评价。机会质量及持续学习共同成为目标，扩展规模仍需资源与质量保证，不能把双重制终结提前到1988。"
+  },
+  {
+    "id": "training-foreign-c7-s1-1",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第一节 17—18世纪的法国近代教育概况",
+    "topic": "法国革命与国家教育理想",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第70页；《外教专题班课件》PDF第25,35页",
+    "analysis": "用革命前教会古典教育作背景，分别论共同主张和未实施条件，区别权利理想、行政制度与现实成果。",
+    "knowledgeCardIds": [
+      "foreign-k7-001",
+      "foreign-k7-002",
+      "foreign-k7-003"
+    ],
+    "stem": "论述法国大革命前后教育管理与教育观念的变化，并评价革命时期改革方案。",
+    "referenceAnswer": "（一）革命前。天主教控制基础学校，耶稣会主导中等古典课程，传统大学保守，专门技术学校反映新的实用需要。\n（二）改革方案。塔列兰、康多塞、雷佩尔提等方案提出国家组织、普及免费、男女平等及世俗科学教育，把受教权与公民社会联系。\n（三）转变。教育由教会特权转向国家和国民权利的论证，学校系统、课程教师的世俗化成为议题。\n（四）意义。启蒙与革命冲击旧教育，激发公众教育需求，为国民教育制度提供思想资源。\n（五）局限。方案大多未实行，不同政治派别目标并不一致，激进设计与阶层利益均限制实践，不能把理想方案写成已全面实施的义务制度。"
+  },
+  {
+    "id": "training-foreign-c7-s2-1",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第二节 19世纪的法国近代教育概况",
+    "topic": "法国中央管理与初等教育立法",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第71页；《应试解析·外国教育史》2027版 PDF第72页；《外教专题班课件》PDF第25,30,35页",
+    "analysis": "按行政体制和两项法案分层，比较设校师资与义务免费世俗原则，防止把帝国大学误当高等学校。",
+    "knowledgeCardIds": [
+      "foreign-k7-004",
+      "foreign-k7-005",
+      "foreign-k7-006",
+      "foreign-k7-007"
+    ],
+    "stem": "论述19世纪法国帝国大学体制和《基佐法案》《费里法案》的改革重点。",
+    "referenceAnswer": "（一）帝国大学。全国教育行政机关而非单一大学，通过大学区管理学校教师，建立中央集权框架，教育权纳入国家。\n（二）基佐法。政府教会联合办小学，规定地方设校和经费、师范训练及教师资格，促进学校数量发展，但收费宗教仍存。\n（三）费里法。确立义务、免费、世俗化原则，6至13岁义务，免公立初等费用，取消教会监督、牧师教师特权和宗教课，设道德公民教育。\n（四）联系。国家管理和法案保障使国民初等教育逐步形成，从办学扩展走向权利和世俗制度。\n（五）评价。机会扩大不等于社会差距消失，须区分两法具体规定及行政机构名称。"
+  },
+  {
+    "id": "training-foreign-c7-s2-2",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第二节 19世纪的法国近代教育概况",
+    "topic": "法国19世纪中高等教育现代化",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第72页；《外教专题班课件》PDF第15,25,32页",
+    "analysis": "按中学课程古典现代与高教兴办衰落复兴两条线叙述，明确大学校和恢复大学的组织区别。",
+    "knowledgeCardIds": [
+      "foreign-k7-008",
+      "foreign-k7-009"
+    ],
+    "stem": "试述19世纪法国中等教育与高等教育的发展变化及其特点。",
+    "referenceAnswer": "（一）中等。国立市立古典中学重古典语言，后出现重现代语自然科学的现代中学，女子中等教育发展，古典与现代课程开始并行。\n（二）高等。拿破仑时期兴办专科军事和巴黎高师等大学校，随后部分机构受宗教政治影响衰落，第三共和国重建新型高教，1896组织法恢复大学。\n（三）特点。国家管理强，专门学校与大学并存，专业科学地位提高，神学地位下降。\n（四）意义。满足现代社会人才需求，形成具有法国特色的高等机构分工。\n（五）局限。教育类型和课程仍存在社会选择性，发展并非平直增长，大学校与大学也不能混作同一种机构。"
+  },
+  {
+    "id": "training-foreign-c7-s3-1",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第三节 20世纪上半叶的法国现代教育制度",
+    "topic": "法国统一学校运动",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第73页；《外教专题班课件》PDF第25,30–31页",
+    "analysis": "以衔接与分流的张力作主线，区分民主教育和择优录取，说明方向指导的作用及限制。",
+    "knowledgeCardIds": [
+      "foreign-k7-010",
+      "foreign-k7-011",
+      "foreign-k7-012"
+    ],
+    "stem": "论述法国“统一学校运动”的背景、主要主张、改革措施及历史作用。",
+    "referenceAnswer": "（一）背景。初中等双轨限制大众升学，古典课程优势影响机会，民主教育需要衔接学校系统。\n（二）主张。统一初等和中等教育，使高等向中学毕业生开放；以方向指导进行智力和适应性选择，兼顾普遍机会与不同发展。\n（三）措施。统一小学，中学免费和统一考试，延长义务年限，尝试方向指导班，课程改革促进古典现代并重。\n（四）贡献。冲击双轨，扩大劳动者子女中等受教机会，方向指导影响战后制度。\n（五）局限。分流仍需警惕社会差异，部分方案因战争中断；不能将统一初等和构想改革等同于完全消除各层学校差别。"
+  },
+  {
+    "id": "training-foreign-c7-s3-2",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第三节 20世纪上半叶的法国现代教育制度",
+    "topic": "法国阿斯蒂埃职业教育法",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第74页；《外教专题班课件》PDF第25,34页",
+    "analysis": "按管理、经费、学习权和课程解释机制，说明国家雇主及青年责任怎样构成制度。",
+    "knowledgeCardIds": [
+      "foreign-k7-013"
+    ],
+    "stem": "试述法国《阿斯蒂埃法》的主要规定及其职业教育意义。",
+    "referenceAnswer": "（一）组织。1919年法将职业技术教育纳入国家事业，中央及省设管理机构，市镇建立职业学校。\n（二）经费资格。国家雇主分担经费，私立学校遵守规定才能获认可和补助。\n（三）机会。18岁以下青年接受免费职业教育，雇主保障工作时间内每周学习时数，使就业与受教并行。\n（四）内容。补充普通基础知识、职业基础学科及劳动技能学习三者结合。\n（五）评价。形成有组织的国家职教，协调学校企业责任，被称技术教育宪章；实施仍依财政企业条件，不能把职教只理解为技术操作或普通教育完全替代。"
+  },
+  {
+    "id": "training-foreign-c7-s4-1",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第四节 20世纪下半叶的法国现代教育制度",
+    "topic": "法国战后教育民主化与方向指导",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第75页；《应试解析·外国教育史》2027版 PDF第76页；《外教专题班课件》PDF第25,30–31页",
+    "analysis": "以目标原则、阶段与分流对应比较，特别标明1947未实行，分析观察期设计和实际条件。",
+    "knowledgeCardIds": [
+      "foreign-k7-014",
+      "foreign-k7-015",
+      "foreign-k7-016",
+      "foreign-k7-017"
+    ],
+    "stem": "比较《郎之万—瓦隆教育改革方案》与1959年《教育改革法》的目标和学制安排。",
+    "referenceAnswer": "（一）1947方案。以民主化现代化为目标，主张社会公正、学科职业价值平等、免费完备教育、专普结合及教师培养；设计6至18岁基础、方向指导、决定三阶段。\n（二）1959法。义务教育延至6至16岁，中学设观察阶段后分不同普通和职业类型，推动初中机构与方向指导。\n（三）联系差异。都以扩大机会及适合个体发展为方向，前者理想体系更完整，后者实际制度更有限，观察期较短、操作难。\n（四）评价。1947方案未实施但影响深远，1959法推动改革也未完全实现设计。不得把两者义务年龄互换，提出制度与现实执行应分开。"
+  },
+  {
+    "id": "training-foreign-c7-s4-2",
+    "book": "foreign",
+    "chapter": 7,
+    "section": "第四节 20世纪下半叶的法国现代教育制度",
+    "topic": "法国战后课程与教育公平改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第76页；《应试解析·外国教育史》2027版 PDF第77页；《外教专题班课件》PDF第25,32,35页",
+    "analysis": "按高教治理、中小学课程、公平补偿和课程衔接四维，分别说明措施怎样回应问题，严格对应时期和文件。",
+    "knowledgeCardIds": [
+      "foreign-k7-019",
+      "foreign-k7-020",
+      "foreign-k7-021",
+      "foreign-k7-022"
+    ],
+    "stem": "试述法国《富尔法》《哈比法》及教育优先区、课程宪章的改革取向。",
+    "referenceAnswer": "（一）高教。1968富尔法倡自主自治、民主参与、多科结构，调整大学治理和学术组织。\n（二）中小学。1975哈比法重现代化课程与个别差异，用工具、启蒙、体育三分课程和心理学方法改进教学。\n（三）公平。教育优先区给最匮乏者更多更好资源，通过早教、个别教学、健康及教师发展支持减少学业失败。\n（四）课程。1992宪章坚持国家课程管理，强调学生中心及纵向衔接、横向综合。\n（五）评价。治理、课程和补偿支持共同推动改革，统一标准与差异支持须配合，部分目标受集权传统及资源制约，不宜把四项政策归为同一法案。"
+  },
+  {
+    "id": "training-foreign-c8-s1-1",
+    "book": "foreign",
+    "chapter": 8,
+    "section": "第一节 17—18世纪的德国近代教育概况",
+    "topic": "德国义务教育与泛爱主义",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第80页；《应试解析·外国教育史》2027版 PDF第81页；《外教专题班课件》PDF第16,26,30页",
+    "analysis": "依国家制度与学校思想两个层次回答，以自然原则解释课程方法，不把泛爱学校等同义务教育全部制度。",
+    "knowledgeCardIds": [
+      "foreign-k8-001",
+      "foreign-k8-002",
+      "foreign-k8-003",
+      "foreign-k8-004",
+      "foreign-k8-005"
+    ],
+    "stem": "论述17—18世纪德国义务教育的发展及泛爱学校的教育主张。",
+    "referenceAnswer": "（一）国家办学。各邦借立法推进儿童入学，宗教改革和国家人才需求促进初等学校建设，教育责任逐步制度化。\n（二）泛爱目标。巴西多受自然主义影响，主张增进现世幸福，培养有实际知识、健康乐观、具泛爱精神的人。\n（三）内容。兼顾道德身体审美劳动，增加现代语与自然科学，反经院和狭窄古典课程。\n（四）方法。适应自然，实物直观、主动学习与游戏结合，重兴趣，禁止体罚。\n（五）评价。国家立法和儿童教学改革共同推进近代教育，制度普及与具体教学思想属于不同层次；泛爱主义扩展内容方法，也受学校规模及时代条件限制。"
+  },
+  {
+    "id": "training-foreign-c8-s1-2",
+    "book": "foreign",
+    "chapter": 8,
+    "section": "第一节 17—18世纪的德国近代教育概况",
+    "topic": "德国中学与新大学运动",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第80页；《应试解析·外国教育史》2027版 PDF第81页；《外教专题班课件》PDF第16,26,32页",
+    "analysis": "比较文科实科和两所新大学，从学科、语言、研究教学说明变革，连接社会知识需求而非只背校名。",
+    "knowledgeCardIds": [
+      "foreign-k8-006",
+      "foreign-k8-007",
+      "foreign-k8-008",
+      "foreign-k8-009"
+    ],
+    "stem": "试述17—18世纪德国中学类型与新大学运动的特点和意义。",
+    "referenceAnswer": "（一）中学。文科中学重古典学术与升学，实科中学增加现代语科学及实用知识，回应商业工业需要；不同学校反映课程和社会对象分化。\n（二）新大学条件。传统大学教条与新科学需要冲突，启蒙和学术发展推动改革。\n（三）哈勒。吸收新哲学科学，重理性学者、研究及民族语言教学。\n（四）哥廷根。加强图书馆研究机构，运用讨论实验观察，改进教学，古典学问也重探究而非机械模仿。\n（五）意义。课程现代化、教与学自由及研究取向为现代大学积累经验；不能把两校的具体贡献混为一谈，也不能把新大学出现视为中学等级结构已消除。"
+  },
+  {
+    "id": "training-foreign-c8-s2-1",
+    "book": "foreign",
+    "chapter": 8,
+    "section": "第二节 19世纪的德国近代教育概况",
+    "topic": "柏林大学与现代大学理念",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第82页；《应试解析·外国教育史》2027版 PDF第83页；《外教专题班课件》PDF第26,32页",
+    "analysis": "由时代背景到宗旨自由和研究教学贯通，说明习明纳机制与现代大学贡献，评价大学社会职能的张力。",
+    "knowledgeCardIds": [
+      "foreign-k8-010",
+      "foreign-k8-011",
+      "foreign-k8-012",
+      "foreign-k8-013"
+    ],
+    "stem": "论述柏林大学的创办背景、教育理念和历史贡献。",
+    "referenceAnswer": "（一）背景。19世纪初德国国家重建与文化振兴需要高水平学术人才，洪堡推动建立柏林大学，承接新大学研究传统。\n（二）宗旨。大学以学术研究和人的学术发展为核心，反对把大学仅作职业技能机构，哲学居统整学问的重要地位。\n（三）自由管理。强调教自由、学自由及学者自治，为教授研究和学生探究提供自主空间。\n（四）教学研究。聘学术型教师，以习明纳等共同讨论研究培养人才，教学和研究相互支持。\n（五）评价。确立现代研究大学理念，影响国际大学及蔡元培北大改革；学术自由仍需制度资源支持，重纯学术也可能产生忽略职业社会需要的张力。"
+  },
+  {
+    "id": "training-foreign-c8-s3-1",
+    "book": "foreign",
+    "chapter": 8,
+    "section": "第三节 20世纪上半叶的德国现代教育制度",
+    "topic": "德国帝国与魏玛教育制度",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第83页；《应试解析·外国教育史》2027版 PDF第84页；《外教专题班课件》PDF第26,30–32,35页",
+    "analysis": "按管理、共同小学、中学类型及升学通道比較，明确魏玛民主化是阶段变化而非所有分轨立即消失。",
+    "knowledgeCardIds": [
+      "foreign-k8-014",
+      "foreign-k8-015",
+      "foreign-k8-016"
+    ],
+    "stem": "比较德意志帝国和魏玛共和国的学校制度，分析教育民主化的进展与限制。",
+    "referenceAnswer": "（一）帝国。国民、中间、文科学校形成阶层分化，后增加实科文实中学并扩大升学地位，但古典文科优势和等级性仍强。\n（二）魏玛。教育权归各州，国家监督，取消教会管理公共教育的特权；实行四年统一基础学校，取消中学预备阶段，使中学接在共同小学之后。\n（三）中高等。中学类型增多，师范高教继续改革，探索职业继续教育与学校衔接。\n（四）评价。共同基础和世俗管理冲击双轨，扩大机会；中学分类与社会差距仍在，制度平等不能自动消除阶层选择。应区分统一初等阶段与全部学校完全统一。"
+  },
+  {
+    "id": "training-foreign-c8-s4-1",
+    "book": "foreign",
+    "chapter": 8,
+    "section": "第四节 20世纪下半叶的德国现代教育制度",
+    "topic": "德国总纲计划与汉堡协定",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第84页；《应试解析·外国教育史》2027版 PDF第85页；《外教专题班课件》PDF第26,30–31页",
+    "analysis": "依共同基础、促进观察、学校类型与义务年限比较，说明分权国家如何协调以及等级性仍存。",
+    "knowledgeCardIds": [
+      "foreign-k8-017",
+      "foreign-k8-018"
+    ],
+    "stem": "比较联邦德国《总纲计划》与《汉堡协定》的学制安排及其意义。",
+    "referenceAnswer": "（一）总纲计划。1959年在科技竞争背景下改革普通教育，四年基础学校后设促进阶段，再进入主要、实科、高级等中学，适应多种人才需要。\n（二）汉堡协定。1964年协调各州，规定九年全日制义务教育，基础教育后经促进或观察阶段分入不同中学，增强制度一致性。\n（三）共同性。共同基础后分流，重分类培养与个体方向，两者衔接战后恢复和进一步改革。\n（四）意义。形成联邦德国学制框架，推动各州协调和教育扩展。\n（五）局限。传统学校地位和阶层差异保留，分类多样性不等于机会实质均等，必须分析分流时点、升学途径和课程地位。"
+  },
+  {
+    "id": "training-foreign-c8-s4-2",
+    "book": "foreign",
+    "chapter": 8,
+    "section": "第四节 20世纪下半叶的德国现代教育制度",
+    "topic": "德国高教立法与统一后改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第85页；《外教专题班课件》PDF第26,32,34–35页",
+    "analysis": "区分高教法与统一后多领域改革，以管理层次、学校类型和课程师资为维度，避免把国家统一等同学制完全单轨。",
+    "knowledgeCardIds": [
+      "foreign-k8-019",
+      "foreign-k8-020"
+    ],
+    "stem": "试述联邦德国高等学校总纲法及德国统一后教育改革的主要方向。",
+    "referenceAnswer": "（一）高教立法。高等学校总纲法形成共同法律框架，重自治、教学科研联系、大众化与参与，试图发掘大学潜力、规范治理。\n（二）统一后基础。协调各州学校体系，保持共同小学与多种中学，综合学校发展，义务与职业教育衔接。\n（三）高教职教。整合不同机构，发展学术及应用人才培养，职业教育联系社会经济，师资和课程也需适应变化。\n（四）特点。教育仍具有分权组织和国家协调并存的结构，统一意味着制度整合并非单一学校类型。\n（五）评价。改革扩大协调与参与，但地区资源、学校地位及人才培养方向存在张力；应按领域说明而非将所有变化归给一部法。"
+  },
+  {
+    "id": "training-foreign-c9-s1-1",
+    "book": "foreign",
+    "chapter": 9,
+    "section": "第一节 17—18世纪的俄国近代教育概况",
+    "topic": "俄国18世纪教育近代化",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第88页；《应试解析·外国教育史》2027版 PDF第89页；《外教专题班课件》PDF第17,27,30,33页",
+    "analysis": "按专门学校、大学、国民学校的层次论变化，解释国家现代化需求并严格区分免费学校与强迫义务。",
+    "knowledgeCardIds": [
+      "foreign-k9-001",
+      "foreign-k9-002",
+      "foreign-k9-003",
+      "foreign-k9-004"
+    ],
+    "stem": "论述彼得一世教育改革及18世纪俄国国民学校建设的特点。",
+    "referenceAnswer": "（一）彼得改革。学习西欧科技，开俄语计算学校，创军事航海工程等实科学校，设想科学院，培养国家建设及军事所需人才。\n（二）高教。罗蒙诺索夫倡设莫斯科大学，强化世俗文化科学人才培养。\n（三）国民学校章程。叶卡捷琳娜二世时期由地方领导，地方贵族商人分担经费，初级与中心国民学校分级，基础知识与实用学科衔接。\n（四）特点。国家主导、自上而下，实科倾向增强，逐步规范学校管理。\n（五）评价。推进教育近代化、扩大知识领域；社会基础薄弱、贵族强大，许多效果难持续，章程也未规定所有适龄儿童必须入学，不能误作已完成义务教育。"
+  },
+  {
+    "id": "training-foreign-c9-s2-1",
+    "book": "foreign",
+    "chapter": 9,
+    "section": "第二节 19世纪的俄国近代教育概况",
+    "topic": "俄国19世纪教育改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第90页；《外教专题班课件》PDF第27,30,33,35页",
+    "analysis": "按管理体系、招生课程、大学自治与女子教育比较，解释改革和倒退的政治社会条件。",
+    "knowledgeCardIds": [
+      "foreign-k9-005",
+      "foreign-k9-006",
+      "foreign-k9-007"
+    ],
+    "stem": "比较亚历山大一世与亚历山大二世教育改革的内容和局限。",
+    "referenceAnswer": "（一）一世改革。1803条例与1804章程设大学区，大学管理附属中小学，形成堂区县立文科中学大学体系，倡免费、招生不受出身信仰限制及大学自治。\n（二）二世改革。19世纪60年代放宽办小学权，改革古典实科中学，给予大学自治学术自由，制定女子学校章程，扩展女教。\n（三）共同取向。学校分级、国家组织及社会需求推动近代化，自治和开放带一定民主色彩。\n（四）区别。前者重体系与大学区，后者在公众压力下改革各级并增女子教育。\n（五）评价。规定未充分实行，后期反动和阶级结构使改革倒退，法律开放不能直接等同社会教育平等。"
+  },
+  {
+    "id": "training-foreign-c9-s3-2",
+    "book": "foreign",
+    "chapter": 9,
+    "section": "第三节 20世纪上半叶的苏联现代教育制度",
+    "topic": "苏俄统一劳动学校",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第91页；《外教专题班课件》PDF第17,27,30–31,35页",
+    "analysis": "补充钟摆原题的早期制度细部，分别解释统一与劳动而非把名称合并为口号，区别原则和实施条件。",
+    "knowledgeCardIds": [
+      "foreign-k9-008",
+      "foreign-k9-009",
+      "foreign-k9-010",
+      "foreign-k9-011"
+    ],
+    "stem": "论述十月革命后苏俄教育改革及《统一劳动学校规程》的主要特点。",
+    "referenceAnswer": "（一）管理与对象。新政权建立国家领导教育的机构，改革旧学校，重劳动大众受教、扫盲和世俗化。\n（二）统一。1918规程建立前后相接的两级学校，共九年、免费，反对旧制的阶层分轨，使学习机会面向大众。\n（三）劳动。学校教育联系生产劳动，试图把文化知识与实践统一，培养新社会的人。\n（四）价值。学校体系与社会改造联结，扩大机会，明确劳动教育地位。\n（五）局限。战争资源和理论准备不足，劳动实践容易挤压系统知识，统一原则不等于实际办学即全实现。该规程与20年代综合教学及1931纠偏应分阶段讨论。"
+  },
+  {
+    "id": "training-foreign-c9-s4-1",
+    "book": "foreign",
+    "chapter": 9,
+    "section": "第四节 20世纪下半叶的苏联与俄罗斯现代教育制度",
+    "topic": "苏联后期与俄罗斯体制变迁",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第95页；《外教专题班课件》PDF第27,34–35页",
+    "analysis": "此题依据本节现有卡延伸完整制度比较，区分1984与1992及三级管理；不把专题标注的非必学内容冒充正式必考结论。",
+    "knowledgeCardIds": [
+      "foreign-k9-019",
+      "foreign-k9-020",
+      "foreign-k9-021",
+      "foreign-k9-022"
+    ],
+    "stem": "概述苏联后期与俄罗斯教育体制的调整，分析教育制度与社会变化的关系。",
+    "referenceAnswer": "（一）苏联后期。1984改革加强普通和职业教育联系，重劳动、职业准备和教学质量，尝试整合知识学习与实践。\n（二）社会转型。苏联解体后，俄罗斯以教育法重构国民教育，普通与职业教育体系、办学管理关系调整，回应新的社会经济条件。\n（三）管理。联邦中央、联邦主体和地方形成分层权责，国家标准与地方办学需要协调。\n（四）关系。社会政治经济变化影响教育目的、学校结构、资源和管理，教育改革又影响人才培养与社会适应。\n（五）评价。应区分苏联知识劳动钟摆与俄罗斯体制重构，不能把前者的所有措施沿用到后者；制度转型还受资源公平及质量问题制约。"
+  },
+  {
+    "id": "training-foreign-c10-s1-1",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第一节 17—18世纪的美国近代教育概况",
+    "topic": "美国殖民地教育与公共教育理想",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第98页；《应试解析·外国教育史》2027版 PDF第99页；《外教专题班课件》PDF第18,28,30,35页",
+    "analysis": "以北中南背景解释学校差异，再论普及法案的公共责任与选才理念，区分理想和已实行制度。",
+    "knowledgeCardIds": [
+      "foreign-k10-001",
+      "foreign-k10-002",
+      "foreign-k10-003",
+      "foreign-k10-004"
+    ],
+    "stem": "论述北美殖民地教育的地区差异及杰斐逊《知识普及法案》的教育理念。",
+    "referenceAnswer": "（一）北部。乡镇学校、拉丁文法学校和哈佛等体现清教文化与共同办学，较重普及基础学习。\n（二）中南部。中部多堂区和教派学校，南部种植园社会较重家庭私教和上层学校，宗教经济人口条件造成地区差异。\n（三）18世纪变化。巡回学校适应分散居民，文实中学及州立高教发展，实用知识与地方管理增强。\n（四）法案理念。杰斐逊倡教育普及、公共学校和人才选拔，以公民知识支持共和制度。\n（五）评价。显示公共教育和分权传统源头；提案有先声意义不等于立即实现全民教育，种族性别阶层限制仍在。"
+  },
+  {
+    "id": "training-foreign-c10-s2-1",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第二节 19世纪的美国近代教育概况",
+    "topic": "美国公立学校运动与教育管理",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第99页；《应试解析·外国教育史》2027版 PDF第100页；《外教专题班课件》PDF第18,28,30,35页",
+    "analysis": "用内容、州地方联邦职责和社会作用作结构，不能把1867教育署当作全面直接管理全国学校的部门。",
+    "knowledgeCardIds": [
+      "foreign-k10-005",
+      "foreign-k10-006",
+      "foreign-k10-007",
+      "foreign-k10-008",
+      "foreign-k10-009"
+    ],
+    "stem": "论述19世纪美国公立学校运动的内容、管理体制和历史意义。",
+    "referenceAnswer": "（一）背景。工业城市、民主政治和移民社会需要公共教育，原分散学校难满足机会与国民培养需求。\n（二）内容。兴办公立学校，推进义务免费与统一体系，发展公立中学、师范培养和较适合社会的课程。\n（三）管理。州教育领导逐步建立，地方学区管理学校；联邦教育署主要收集教育信息并提供服务，教育管理仍以州地方为基础。\n（四）意义。扩大大众机会，增强国民文化能力，为公立教育普及及民主社会奠定基础。\n（五）局限。地区财政和群体差异持续，公立并不自动等于实际平等，国家协调与地方分权的关系需具体说明。"
+  },
+  {
+    "id": "training-foreign-c10-s2-2",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第二节 19世纪的美国近代教育概况",
+    "topic": "美国赠地学院与大学社会服务",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第100页；《应试解析·外国教育史》2027版 PDF第101页；《外教专题班课件》PDF第28,33–34页",
+    "analysis": "从联邦资助机制解释实用课程和机会扩展，再比较大学职能变化，明确赠地学院与服务思想不同层次。",
+    "knowledgeCardIds": [
+      "foreign-k10-010",
+      "foreign-k10-011",
+      "foreign-k10-012",
+      "foreign-k10-013"
+    ],
+    "stem": "论述《莫雷尔法案》的内容和影响，并说明威斯康星思想与康奈尔计划的大学观。",
+    "referenceAnswer": "（一）法案。1862年联邦以公共土地资助各州建立农业机械等学院，将实用技术纳入高等教育，回应工农业人才需求。\n（二）影响。扩大非古典课程与受教机会，促进产业科技、大学多样化，突破联邦不过问高教的传统。\n（三）大学模式。威斯康星思想重在拓展大学社会服务职能，以知识技术、推广和公共服务回应社会。康奈尔计划则同时体现公私合营、开放性、实用性、适应性：结合公共支持和私人办学资源，扩大对象与学科，重实用专业，并随社会需求调整教育，形成开放的大学组织模式。二者都联系社会，前者突出大学职能扩展，后者突出办学组织和课程的灵活开放。\n（四）共同价值。大学由少数古典精英培养扩展到产业及大众发展，学术与应用并存。\n（五）评价。服务应与长期研究、质量和公平协调，不能把赠地法等同直接设立所有大学或只作低层职业训练。"
+  },
+  {
+    "id": "training-foreign-c10-s3-1",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第三节 20世纪上半叶的美国现代教育制度",
+    "topic": "美国中等教育与八年研究",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第101页；《应试解析·外国教育史》2027版 PDF第102页；《应试解析·外国教育史》2027版 PDF第103页；《外教专题班课件》PDF第9,18,28页",
+    "analysis": "依目的、分段体系、实验依据组织，区别八年研究与六三三制度，评价实验结论适用范围。",
+    "knowledgeCardIds": [
+      "foreign-k10-014",
+      "foreign-k10-015",
+      "foreign-k10-016",
+      "foreign-k10-017",
+      "foreign-k10-018"
+    ],
+    "stem": "论述《中等教育的基本原则》、六三三学制与“八年研究”的教育改革取向。",
+    "referenceAnswer": "（一）目标。1918原则把健康、基本能力、家庭生活、职业、公民、闲暇和道德等需求纳入中等教育，突破单一升学目标。\n（二）体系。六三三使小学、初中、高中分阶段，综合中学结合普通职业课程，兼顾升学就业和不同发展。\n（三）八年研究。高中探索灵活课程与活动，大学放宽传统入学限制，通过跟踪比较毕业生检验改革成效，说明非传统课程也可支持大学学习。\n（四）意义。推进课程适应个性与社会生活，加强中高等衔接。\n（五）限制。实验条件和样本有限，不能推成任何活动课程都优于系统知识；需说明改革如何保证基础学习与评价。"
+  },
+  {
+    "id": "training-foreign-c10-s3-2",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第三节 20世纪上半叶的美国现代教育制度",
+    "topic": "美国初级学院与职业教育立法",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第103页；《应试解析·外国教育史》2027版 PDF第104页；《外教专题班课件》PDF第28,33–34页",
+    "analysis": "按机构与立法两层比较，明确转学就业、经费管理和师资环节怎样构成机会扩展机制。",
+    "knowledgeCardIds": [
+      "foreign-k10-019",
+      "foreign-k10-020"
+    ],
+    "stem": "试述美国初级学院运动与《史密斯—休斯法案》的特点，分析其扩大教育机会的路径。",
+    "referenceAnswer": "（一）初级学院。连接中学和大学，提供大学前段、转学及职业相关课程，成本地域更便利，适应多样求学需求。\n（二）职教法。1917法以联邦州合作、经费支持和管理体系推动农业工商业家政等职业教育，支持师资培养，促公立中学职业科发展。\n（三）共同性。课程接近社会就业与大众需要，通过机构多样化和财政制度增加学习渠道。\n（四）区别。前者是高教机构扩展，后者是全国职教支持机制，不能相互代称。\n（五）评价。拓宽机会和人才类型，也需处理普通基础与职业分流、低成本与质量的关系，职业教育不应把学习者固定在低层通道。"
+  },
+  {
+    "id": "training-foreign-c10-s4-2",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第四节 20世纪下半叶的美国现代教育制度",
+    "topic": "美国国防教育与60年代课程改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第105页；《外教专题班课件》PDF第6,28,34页",
+    "analysis": "按竞争背景、制度支持、课程理念和评价连接，区别法案资金措施与结构主义教学思想。",
+    "knowledgeCardIds": [
+      "foreign-k10-021",
+      "foreign-k10-022",
+      "foreign-k10-023"
+    ],
+    "stem": "论述美国《国防教育法》的背景、主要内容及其与60年代课程改革的关系。",
+    "referenceAnswer": "（一）背景。冷战科技竞争、苏联卫星成功引发美国对科学人才和教育质量的反思。\n（二）法案。1958年以资金、设施师资和学习支持加强科学数学外语等领域，发展技术教育，体现联邦介入教育的扩大。\n（三）课程。60年代结构主义改革重学科基本结构、探究发现和认知发展，希望提高科学学习深度与智力水平。\n（四）公平。同期对弱势群体支持和高教质量改革，使人才目标与机会议题并存。\n（五）评价。促进科学教育与研究，过于理论化课程及资源差距限制成效；科技竞争能解释重点调整，不能把所有教育目标压缩为国防工具。"
+  },
+  {
+    "id": "training-foreign-c10-s4-3",
+    "book": "foreign",
+    "chapter": 10,
+    "section": "第四节 20世纪下半叶的美国现代教育制度",
+    "topic": "美国生计教育、基础与标准改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第106页；《应试解析·外国教育史》2027版 PDF第108页；《应试解析·外国教育史》2027版 PDF第109页；《外教专题班课件》PDF第28,34–35页",
+    "analysis": "与1983报告原题互补，用生活准备、基本能力、制度标准三维解释变化，比较质量和公平的关系。",
+    "knowledgeCardIds": [
+      "foreign-k10-024",
+      "foreign-k10-025",
+      "foreign-k10-027",
+      "foreign-k10-028"
+    ],
+    "stem": "比较美国生计教育、“返回基础”运动和20世纪90年代标准改革的取向。",
+    "referenceAnswer": "（一）生计教育。将职业劳动和人生发展联系，以认识职业、探索方向、准备选择贯穿中小学，使学习适应生活就业。\n（二）返回基础。反思基础能力下降，重读写算及系统学科、纪律和学业要求，以质量纠正活动课程偏向。\n（三）标准改革。美国2000战略提出国家教育目标，2000年目标法推动国家州协调的课程、学业标准及改进机制。\n（四）联系差异。三者分别侧重社会生活准备、基础知识和质量目标，体现改革重点变化。\n（五）评价。应兼顾生涯多样与公共基础，统一标准须配资源支持和公平，不能把国家目标直接等同已实现水平或全国课程完全统一。"
+  },
+  {
+    "id": "training-foreign-c11-s2-1",
+    "book": "foreign",
+    "chapter": 11,
+    "section": "第二节 20世纪上半叶的日本现代教育制度",
+    "topic": "日本教育敕语与军国主义教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第114页；《外教专题班课件》PDF第29,35页",
+    "analysis": "从思想纲领到控制措施说明军国主义形成，明确1890时间，避免把明治所有教育进步与战争教育简单混同。",
+    "knowledgeCardIds": [
+      "foreign-k11-010",
+      "foreign-k11-012"
+    ],
+    "stem": "论述《教育敕语》对日本教育的影响及20世纪上半叶教育军国主义化的表现。",
+    "referenceAnswer": "（一）敕语。1890年把儒家伦理与日本民族意识、天皇忠诚相联系，统一思想规范教育，强化国家控制和封建民族主义。\n（二）军国主义。镇压师生民主进步运动，传播对外扩张和战争思想，将军事训练纳入学校社会生活，使教育服务战争。\n（三）机制。课程思想、师生管理和身体训练共同塑造服从，国家控制增强，独立学术与个性受到压制。\n（四）评价。人才培养和学校扩展不能抵消战争动员对教育目标的扭曲，须揭示政治意识形态与制度管理相联。\n（五）时间。敕语颁于19世纪末，因对后续时期影响置于本节，不能误写20世纪才颁布。"
+  },
+  {
+    "id": "training-foreign-c11-s2-2",
+    "book": "foreign",
+    "chapter": 11,
+    "section": "第二节 20世纪上半叶的日本现代教育制度",
+    "topic": "日本大学令与高教多样化",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第114页；《外教专题班课件》PDF第29,33页",
+    "analysis": "以人才需求、主体类型、规模专业和限制作答，比较1918多元化与1947体制整合，不重复军国主义题。",
+    "knowledgeCardIds": [
+      "foreign-k11-011"
+    ],
+    "stem": "试述1918年日本《大学令》的主要内容及其高等教育意义。",
+    "referenceAnswer": "（一）背景。经济社会发展和专业人才需要增长，原帝国大学体制难满足高等教育需求。\n（二）办学主体。大学令扩大国立、地方公立和私立等办学渠道，承认不同类型大学发展。\n（三）组织。综合与单科机构扩大，专业教育增加，形成多样高等教育布局。\n（四）意义。放宽大学设置和进入渠道，推动规模与学科发展，大学由少数官立机构拓展。\n（五）限制。仍在国家控制和当时政治思想体系中运行，办学主体多元不等于学术自由充分或教育机会完全平等；它与战后1947统一大学类型的改革方向不同，需按时代区分。"
+  },
+  {
+    "id": "training-foreign-c11-s3-1",
+    "book": "foreign",
+    "chapter": 11,
+    "section": "第三节 20世纪下半叶的日本现代教育制度",
+    "topic": "日本战后教育民主化立法",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第114页；《应试解析·外国教育史》2027版 PDF第115页；《外教专题班课件》PDF第29–30,33,35页",
+    "analysis": "比较原则法与制度法的分工，依宗旨对象学制管理解释民主化，明确回答历史文本而非现行法律。",
+    "knowledgeCardIds": [
+      "foreign-k11-013",
+      "foreign-k11-014"
+    ],
+    "stem": "论述1947年日本《教育基本法》和《学校教育法》的改革方向与意义。",
+    "referenceAnswer": "（一）宗旨原则。教育基本法重人格、和平社会建设，尊学术自由，机会均等男女同校，公共学校不搞宗教党派宣传，重教师待遇和家庭社会教育。\n（二）具体体系。学校教育法以六三三四单轨组织学校，九年义务，调整高中和大学类型，改革地方管理。\n（三）联系。前者给目标原则，后者落实学校制度，共同否定战时军国主义教育、推进和平民主方向。\n（四）意义。用法律保障教育体系重建，扩大共同受教机会，强化学校衔接。\n（五）评价。1947原始规定需按历史情境作答，不等同今日修订后的法规；制度民主化也需财政、课程教师及社会条件落实。"
+  },
+  {
+    "id": "training-foreign-c11-s3-2",
+    "book": "foreign",
+    "chapter": 11,
+    "section": "第三节 20世纪下半叶的日本现代教育制度",
+    "topic": "日本战后职业与终身教育改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第115页；《应试解析·外国教育史》2027版 PDF第116页；《外教专题班课件》PDF第29,33–34页",
+    "analysis": "按年代与改革关注点解释转变，联系职业课程、教师和高教开放，区别第三次改革与80年代原则。",
+    "knowledgeCardIds": [
+      "foreign-k11-015",
+      "foreign-k11-016",
+      "foreign-k11-017",
+      "foreign-k11-018"
+    ],
+    "stem": "试述20世纪50—80年代日本教育改革由职业振兴向终身教育转变的主要内容。",
+    "referenceAnswer": "（一）职业振兴。50—60年代产业需要推动职业高中与普通高中职业选修课，教育联系经济人才需求。\n（二）第三次改革。70年代强调终身成长、机会均等、教师培养，高教提高学术与解决问题能力、社会开放服务。\n（三）80年代。临教审等推动个性化、国际化、信息化与终身教育，改革僵化学校和过度考试竞争，重道德体育及师资。\n（四）联系。从经济职业需求扩到人的持续发展和多样选择，学校不再是教育全部边界。\n（五）评价。产业适应与个性终身目标需协调，政策理念提出并不自动解除学历竞争，应说明资源、课程和评价怎样支撑改革。"
+  },
+  {
+    "id": "training-foreign-c11-s3-3",
+    "book": "foreign",
+    "chapter": 11,
+    "section": "第三节 20世纪下半叶的日本现代教育制度",
+    "topic": "日本90年代基础与高教改革",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第117页；《外教专题班课件》PDF第29,33,35页",
+    "analysis": "按基础课程与大学组织两层作答，严格区分改革方向和后续实施时间，分析自主与公共质量的关系。",
+    "knowledgeCardIds": [
+      "foreign-k11-019",
+      "foreign-k11-020"
+    ],
+    "stem": "概述20世纪90年代日本基础教育和高等教育改革的主要方向，并分析其意义。",
+    "referenceAnswer": "（一）基础。倡较灵活课程、个性与生活学习，反思过度应试，强调学生自我学习和丰富发展，宽松理念与德育改革相联系。\n（二）高教。调整大学设置和课程标准，重创新、研究及终身服务，推动机构自主和办学制度改革。\n（三）共同取向。教育由统一僵化要求向多样化发展，联系个体能力及社会变化，质量与自主都受关注。\n（四）意义。为学习者和学校提供更多发展空间，促学校面对信息社会和终身学习。\n（五）限制。自主多样不意味着取消公共基础和质量要求；国立大学法人化为后续改革方向，不能把2000年代实际施行时间倒写成90年代已全部完成。"
+  },
+  {
+    "id": "training-foreign-c12-s1-1",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第一节 英国的近现代教育家",
+    "topic": "洛克绅士教育的体系",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第121页；《应试解析·外国教育史》2027版 PDF第122页；《外教专题班课件》PDF第5,22页",
+    "analysis": "用白板经验到习惯和培养目标贯通，分体育德育智育，再评价对象与实施途径的社会限制。",
+    "knowledgeCardIds": [
+      "foreign-k12-001",
+      "foreign-k12-002",
+      "foreign-k12-003",
+      "foreign-k12-004",
+      "foreign-k12-005"
+    ],
+    "stem": "论述洛克的教育作用观、绅士教育目标及德智体培养主张，并作评价。",
+    "referenceAnswer": "（一）作用。白板说重后天经验教育，强调习惯及环境塑造，为反先天等级提供认识基础。\n（二）目的途径。培养具德行智慧礼仪学问的绅士，倾向家庭教师个别教育，服务上层社会生活。\n（三）体育。健康身体是精神发展的基础，通过生活习惯、锻炼和适应性训练增强体质。\n（四）德智育。德行居首，理性、自制和良好习惯优先；智育重实用知识与兴趣方法，学问服务生活。\n（五）评价。重经验习惯和身心联系，反机械学校有启发；对象和家庭方式具有贵族性，贫民教育另有不同主张，不是同样绅士教育向全民开放。"
+  },
+  {
+    "id": "training-foreign-c12-s1-2",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第一节 英国的近现代教育家",
+    "topic": "斯宾塞科学教育与生活准备",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第122页；《外教专题班课件》PDF第11,22页",
+    "analysis": "以完满生活到五类活动课程的逻辑组织，解释自然顺序与自我学习方法，评价功利知识观的适用边界。",
+    "knowledgeCardIds": [
+      "foreign-k12-006",
+      "foreign-k12-007",
+      "foreign-k12-008"
+    ],
+    "stem": "论述斯宾塞“教育准备生活说”及课程、教学主张，并评价其知识价值观。",
+    "referenceAnswer": "（一）目的。教育为完满生活作准备，知识价值应由其对生活活动的作用判断，提出科学知识最有价值。\n（二）课程。依直接保全自己、间接谋生、抚育子女、社会政治及闲暇五类活动设置科学和相关课程，反对只重古典文辞。\n（三）教学。适应儿童发展，从简单到复杂、具体到抽象，重自我发现和兴趣，学习实践相连。\n（四）价值。科学课程和实际生活进入教育核心，回应工业社会人才需求。\n（五）局限。过度功利评价可能窄化人文审美价值，个体适应不应替代社会与人格全面目标。需说明五类活动和课程对应，而非只背科学重要。"
+  },
+  {
+    "id": "training-foreign-c12-s1-3",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第一节 英国的近现代教育家",
+    "topic": "赫胥黎科学与人文平衡",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第123页；《外教专题班课件》PDF第11,22页",
+    "analysis": "按共同反古典、课程依据和人文价值逐维比较，用完整自由教育说明赫胥黎的独特观点。",
+    "knowledgeCardIds": [
+      "foreign-k12-009",
+      "foreign-k12-010"
+    ],
+    "stem": "试述赫胥黎的科学教育主张，并比较其与斯宾塞的知识价值取向。",
+    "referenceAnswer": "（一）批判。古典语言独占使教育狭窄，与工业科学和现实生活脱节。\n（二）科学课程。以能够利用自然科学为目标，先设地理植物物理等，再联系道德政治、社会生活与历史。\n（三）自由教育。科学不能扼杀文学美学，科学与人文结合才形成完整教育。\n（四）比较。二者共同提高科学和实用知识地位，斯宾塞用生活功用排序，赫胥黎更重科学与人文平衡。\n（五）评价。避免古典独占及科学片面化，启发课程协同；不能将科学人文理解为简单课时相加，应说明不同知识怎样共同促进判断、能力和人格。"
+  },
+  {
+    "id": "training-foreign-c12-s2-1",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第二节 法国的近现代教育家",
+    "topic": "法国启蒙教育与国家办学",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第124页；《外教专题班课件》PDF第25,35页",
+    "analysis": "用教育作用与制度组织两个重心比较，再从受教权、课程世俗和科学价值分析共性与局限。",
+    "knowledgeCardIds": [
+      "foreign-k12-011",
+      "foreign-k12-012"
+    ],
+    "stem": "比较爱尔维修与拉夏洛泰的教育主张，分析其民主、世俗和国家办学思想。",
+    "referenceAnswer": "（一）爱尔维修。以智力天生平等反贵族天赋论，强调环境教育的塑造，支持国家办学、世俗科学课程；教育万能论又夸大教育决定作用。\n（二）拉夏洛泰。批判教会尤其耶稣会垄断，主张民族有教育人民的权利，育良好公民，重法语科学、阶段制度、课本和观察。\n（三）共同性。教育权由教会转向国家，科学和公民发展成为目标，对封建等级与宗教教育作启蒙批判。\n（四）区别评价。前者重人的可教育性，后者重国民教育组织；国家办学并不必然立即机会均等，教育万能论忽略遗传主动性及社会条件，需区别进步诉求与理论过度。"
+  },
+  {
+    "id": "training-foreign-c12-s3-1",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第三节 德国的近现代教育家",
+    "topic": "第斯多惠发展与教师思想",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第125页；《应试解析·外国教育史》2027版 PDF第126页；《外教专题班课件》PDF第5,11页",
+    "analysis": "依三因素和谐目标、知识能力、四原则及教师形成完整体系，解释自然文化关系而非仅列口诀。",
+    "knowledgeCardIds": [
+      "foreign-k12-013",
+      "foreign-k12-014",
+      "foreign-k12-015",
+      "foreign-k12-016"
+    ],
+    "stem": "论述第斯多惠关于人的发展、教学原则和教师的主张，并作评价。",
+    "referenceAnswer": "（一）发展。天资、教育、自由自主互相关联，教育要启发主动性，实现身体精神及人类共同和谐。\n（二）知识能力。反对形式与实质教育各执一端，知识获得和能力发展互相支持。\n（三）原则。自然为最高，文化次之，兼顾连续彻底、直观，从具体到抽象；文化要求应与身心规律协调。\n（四）教师。须自我教育、责任感、教育素养和教学技能，以持续发展改进教学。\n（五）评价。突出儿童主动及教师专业，推动师范发展；将自然文化协调并非放弃社会知识，现代须结合具体教学证据，不把最高原则写成放任。"
+  },
+  {
+    "id": "training-foreign-c12-s4-4",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第四节 俄国（苏联）的近现代教育家",
+    "topic": "乌申斯基教育的人学基础",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第126页；《应试解析·外国教育史》2027版 PDF第127页；《外教专题班课件》PDF第5,11页",
+    "analysis": "补充同节苏联三位原题外的乌申斯基，突出全面了解人、人学基础与教师专业的相互联系。",
+    "knowledgeCardIds": [
+      "foreign-k12-017",
+      "foreign-k12-018",
+      "foreign-k12-019",
+      "foreign-k12-020"
+    ],
+    "stem": "论述乌申斯基的教育目的、教学思想及教师教育主张。",
+    "referenceAnswer": "（一）目的。培养全面和谐的人，联系德智体、劳动习惯与爱国情感，个人民族利益相协调。\n（二）人学基础。教育是需要专门知识和才能的艺术，要全面了解人才可全面教育人，生理心理等知识提供基础。\n（三）教学。知识能力统一，适应注意记忆思维情感等特点，重直观、自觉积极、连贯巩固，课程包含民族语及现代实科。\n（四）德育师范。爱国情感与教学、说服等方法结合，教师须师德信念及教育心理知识，重专业培养和实习。\n（五）评价。推动俄国教育科学和师范发展；艺术论不意味着否认科学基础，应解释教育实践判断和理论知识的联系。"
+  },
+  {
+    "id": "training-foreign-c12-s4-5",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第四节 俄国（苏联）的近现代教育家",
+    "topic": "列宁与克鲁普斯卡娅劳动教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第127页；《应试解析·外国教育史》2027版 PDF第128页；《外教专题班课件》PDF第7,11,27页",
+    "analysis": "用政治文化任务与教学组织两个层次比较，明确劳动综合技术和少先队学前观点的归属。",
+    "knowledgeCardIds": [
+      "foreign-k12-021",
+      "foreign-k12-022"
+    ],
+    "stem": "比较列宁与克鲁普斯卡娅的青年、劳动与群众教育主张。",
+    "referenceAnswer": "（一）列宁。青年教育联系社会主义政治、生产劳动和共产主义道德实践，文化革命包含扫盲普及、旧制改革及教师建设。\n（二）克鲁普斯卡娅。培养全面发展的人，劳动教育与综合技术作为完整教育体系，关注少先队共同活动、集体纪律及学前游戏。\n（三）共同性。教育联系新社会建设，扩大大众机会，知识、劳动、道德实践结合。\n（四）区别。列宁着重政治文化任务和青年原则，克鲁普斯卡娅更多论具体教育组织、劳动课程及儿童活动。\n（五）评价。理论生活结合和大众教育有意义；劳动须与系统知识协调，不能用生产任务简单代替学习，也不能把两人独特贡献互相归属。"
+  },
+  {
+    "id": "training-foreign-c12-s4-6",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第四节 俄国（苏联）的近现代教育家",
+    "topic": "巴班斯基教学过程最优化",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第133页；《外教专题班课件》PDF第11页",
+    "analysis": "按含义、条件分析、整体实施、效果成本组织，说明最优化与理想化及固定教法的区别。",
+    "knowledgeCardIds": [
+      "foreign-k12-030"
+    ],
+    "stem": "试述巴班斯基“教学过程最优化”的含义、实施要求及评价标准。",
+    "referenceAnswer": "（一）含义。根据师生、资源和教学条件，按规律选择组织方法，以规定时间精力内达到最大可能教育效果，强调具体条件。\n（二）实施。分析目标和学生基础，整体选择内容、形式方法，科学组织师生劳动，灵活反馈调整，各环节协调而非单项追求新方法。\n（三）标准。教育效果与时间精力成本共同考虑，重实际条件可达到的最优，不求抽象完美。\n（四）价值。以整体思路协调效率质量、师生负担，反对机械套用教学法。\n（五）边界。最优化是教师工作原则，不是特殊单一方法；比较方案需依据真实学习效果和可用资源，不能把最少时间简单等同最好教育。"
+  },
+  {
+    "id": "training-foreign-c12-s5-1",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第五节 美国的近现代教育家",
+    "topic": "贺拉斯曼的公立与师范教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第136页；《外教专题班课件》PDF第28,30,35页",
+    "analysis": "将公立制度与师范质量联系起来，区分反教派控制与完全世俗教育，评价教育社会改良作用的条件。",
+    "knowledgeCardIds": [
+      "foreign-k12-033",
+      "foreign-k12-034"
+    ],
+    "stem": "论述贺拉斯·曼的教育作用观、公立学校与教师教育主张。",
+    "referenceAnswer": "（一）作用。公共教育能提高个人与社会素质，培养适应社会的工作者，减少无知贫困、推动社会进步。\n（二）学校内容。重德行、实用智育、健康和政治知识，反教派垄断但未完全排斥宗教影响，公共学校应培养共同文化。\n（三）普及。宣传并组织公立教育，扩大大众受教，强调国家公共责任和学校质量。\n（四）师范。教师专门准备是提高公校质量的手段，推动建立公立师范学校，使制度扩展和专业人才同步。\n（五）评价。对美国公立学校运动和国际教育有影响；其社会改良理解有理想化，受教平等仍需经济制度支持，不能以免费校存在推为阶层差别已消失。"
+  },
+  {
+    "id": "training-foreign-c12-s6-1",
+    "book": "foreign",
+    "chapter": 12,
+    "section": "第六节 日本的近现代教育家",
+    "topic": "福泽谕吉实学与独立国民",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第137页；《应试解析·外国教育史》2027版 PDF第138页；《外教专题班课件》PDF第29,22页",
+    "analysis": "以个人国家两层教育作用统领德智体，说明实学与民权独立关系，区别福泽启蒙和军国主义服从教育。",
+    "knowledgeCardIds": [
+      "foreign-k12-035",
+      "foreign-k12-036"
+    ],
+    "stem": "论述福泽谕吉“知识富人，教育立国”的思想及德智体教育主张。",
+    "referenceAnswer": "（一）作用。人的富贵不应由先天身份决定，勤学知识可支持个人独立；国家独立富强需要文明开化和国民教育。\n（二）智育。唯尚实学，重地理物理历史经济等有用学问，培养志向及分析现实的能力，反空疏封建学风。\n（三）德育。国家观念、独立意识和天赋民权联系，反封建服从伦理，培育能自立的国民。\n（四）体育。健康是智慧道德和独立生活基础，学校应有体育训练。\n（五）评价。把个人自主与国家现代化联系，推动明治启蒙；其时代国家目标和理论边界需历史分析，不能仅以知识致富解释教育全部价值。"
+  },
+  {
+    "id": "training-foreign-c13-s2-1",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第二节 卢梭的教育思想",
+    "topic": "卢梭自然教育的体系",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第149页；《应试解析·外国教育史》2027版 PDF第150页；《应试解析·外国教育史》2027版 PDF第151页；《外教专题班课件》PDF第5,11页",
+    "analysis": "由自然儿童观到目标、消极方法和分期贯通，解释消极教育的积极环境安排及历史局限。",
+    "knowledgeCardIds": [
+      "foreign-k13-020",
+      "foreign-k13-021",
+      "foreign-k13-022",
+      "foreign-k13-023",
+      "foreign-k13-024",
+      "foreign-k13-025"
+    ],
+    "stem": "论述卢梭自然教育的理论基础、目标与年龄分期，并作历史评价。",
+    "referenceAnswer": "（一）基础目标。性善和感觉经验观点支持自然教育，让人的教育、事物的教育服从自然发展，培养能独立生活、自由判断的自然人。\n（二）消极教育。避免过早灌输和成人干预，创条件让儿童从经验学习，自然后果使其理解行为结果，不是教师完全不作为。\n（三）分期。0至2岁重养育身体；2至12岁重感官身体；12至15岁重智育劳动；15至20岁重道德和宗教。\n（四）价值。突出儿童独特性、主动经验与阶段，冲击封建压制。\n（五）局限。理想个别环境脱离社会，分期过绝对，实际教学须联系社会文化和儿童差异，不能机械推迟所有智育德育。"
+  },
+  {
+    "id": "training-foreign-c13-s2-2",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第二节 卢梭的教育思想",
+    "topic": "卢梭自然人与公民、女子教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第151页；《应试解析·外国教育史》2027版 PDF第152页；《应试解析·外国教育史》2027版 PDF第153页；《外教专题班课件》PDF第5,22,35页",
+    "analysis": "比较个体与社会目标的情境关系，再以女子课程分析自由平等理想的实际界限，区分三种教育对象。",
+    "knowledgeCardIds": [
+      "foreign-k13-026",
+      "foreign-k13-027",
+      "foreign-k13-028",
+      "foreign-k13-029"
+    ],
+    "stem": "比较卢梭自然教育与公民教育的目标，分析其女子教育主张的局限。",
+    "referenceAnswer": "（一）自然人。针对封建社会压迫，培养自主生活、独立判断的人，以保护天性和自然发展为路径。\n（二）公民。面向未来民主社会，主张国家办学、普及低费受教，培养爱国公民，本国教师实施教育，个人发展与共同政治生活相联系。\n（三）关系。二者回应不同社会情境，独立个体可成为民主公民，不能简单视为自相矛盾。\n（四）女子教育。虽然承认女性需要教育，内容重家庭艺术治家，排除严密科学，目标为贤妻良母。\n（五）评价。儿童与公民教育有解放因素，性别观仍保守，不能把男性自然人自由自动解释为男女同等全面发展。"
+  },
+  {
+    "id": "training-foreign-c13-s3-2",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第三节 裴斯泰洛齐的教育思想",
+    "topic": "裴斯泰洛齐和谐、要素与劳动教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第155页；《应试解析·外国教育史》2027版 PDF第156页；《应试解析·外国教育史》2027版 PDF第158页；《外教专题班课件》PDF第5,7页",
+    "analysis": "补充心理学化原题外的全体系，联结心脑手目标、要素和劳动实验，评价教育性劳动与经济维持的张力。",
+    "knowledgeCardIds": [
+      "foreign-k13-031",
+      "foreign-k13-032",
+      "foreign-k13-033",
+      "foreign-k13-036",
+      "foreign-k13-037",
+      "foreign-k13-039"
+    ],
+    "stem": "论述裴斯泰洛齐的和谐教育、要素教育及教育与生产劳动相结合的实践。",
+    "referenceAnswer": "（一）目的。使心脑手诸能力和谐发展，教育面向贫困儿童，善意家庭式环境支持道德知识实践。\n（二）要素。由简单基础逐步发展，智育以数形词，体育从最简单动作，德育从儿童爱母亲情感出发，逐步拓展。\n（三）方法。直观、渐进和儿童活动相联，培养能力而非只记言语，体现心理学化取向。\n（四）劳动实验。新庄等尝试以生产支持儿童学习、把技能与教育结合，贫困资源和经济压力造成困难。\n（五）评价。推动初等教学、贫民教育与实践育人，揭示目的方法联结；要素机械化及过信劳动供养存在局限，劳动收入不能牺牲系统知识。"
+  },
+  {
+    "id": "training-foreign-c13-s5-2",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第五节 福禄培尔的教育思想",
+    "topic": "福禄培尔幼儿园与恩物",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第167页；《应试解析·外国教育史》2027版 PDF第168页；《应试解析·外国教育史》2027版 PDF第169页；《外教专题班课件》PDF第5,13页",
+    "analysis": "补充与蒙台比较之外的独立完整专题，以自我活动解释任务游戏课程，再评象征性与机械化风险。",
+    "knowledgeCardIds": [
+      "foreign-k13-057",
+      "foreign-k13-058",
+      "foreign-k13-059",
+      "foreign-k13-061",
+      "foreign-k13-063",
+      "foreign-k13-067"
+    ],
+    "stem": "论述福禄培尔幼儿园的教育任务、游戏和恩物课程，并作评价。",
+    "referenceAnswer": "（一）基础。重统一、发展、自我活动与社会联系，儿童内在潜能通过适宜环境活动展现，幼儿园补充家庭教育。\n（二）任务。使幼儿身心发展、形成良好关系及活动习惯，教师顺应发展给予指导。\n（三）游戏恩物。游戏是创造性自我活动，球体积木等恩物按形式关系逐步组织，帮助知觉、动作和认识；作业、歌谣、运动等构成课程。\n（四）价值。系统建立幼儿园和专业幼儿教育方法，推动游戏材料与师资研究。\n（五）局限。恩物附象征哲学解释、程序可能僵化，须避免教师规定替代儿童创造，不把材料形式本身当教育目标。"
+  },
+  {
+    "id": "training-foreign-c13-s7-2",
+    "book": "foreign",
+    "chapter": 13,
+    "section": "第七节 蒙台梭利的教育思想",
+    "topic": "蒙台梭利环境、自由与感官教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第175页；《应试解析·外国教育史》2027版 PDF第176页；《应试解析·外国教育史》2027版 PDF第177页；《外教专题班课件》PDF第5,13页",
+    "analysis": "按儿童心理—环境—活动—教师—评价形成因果链，区分自由纪律和感官材料目的，避免只背教具名称。",
+    "knowledgeCardIds": [
+      "foreign-k13-080",
+      "foreign-k13-081",
+      "foreign-k13-082",
+      "foreign-k13-084",
+      "foreign-k13-086",
+      "foreign-k13-088"
+    ],
+    "stem": "论述蒙台梭利的儿童观、有准备环境及感官、生活教育，并分析教师作用。",
+    "referenceAnswer": "（一）儿童观。重自发潜能、吸收性心理、敏感期与秩序需要，发展依内在力量与适宜环境相互作用。\n（二）环境。材料有秩序、美感、安全和儿童可操作性，提供自由选择、自我纠错与持续工作的条件。\n（三）课程。感官教具分辨形色大小音等，实际生活练习发展动作、独立及责任，读写算在准备基础上展开。\n（四）教师。观察需要、准备材料、示范并适时支持，自由以尊重他人和有意义活动为条件，纪律可从自控形成。\n（五）评价。独立、环境及差异支持有价值；材料训练过分独立机械可能限制想象合作，不能把自由理解为放任。"
+  },
+  {
+    "id": "training-foreign-c14-s1-3",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第一节 19世纪的近代教育思潮",
+    "topic": "自然主义教育思潮",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第192页；《应试解析·外国教育史》2027版 PDF第193页；《应试解析·外国教育史》2027版 PDF第194页；《外教专题班课件》PDF第5,11页",
+    "analysis": "先分个人理论与思潮范围，再以目标儿童观、过程方法和评价组织，避免将发展规律与自由放任混同。",
+    "knowledgeCardIds": [
+      "foreign-k14-001",
+      "foreign-k14-002",
+      "foreign-k14-003",
+      "foreign-k14-004",
+      "foreign-k14-005",
+      "foreign-k14-006"
+    ],
+    "stem": "论述近代自然主义教育思潮的发展、主要主张及影响。",
+    "referenceAnswer": "（一）发展。由适应自然思想出发，卢梭突出儿童天性与自由，之后教育家以发展阶段、心理活动和主动学习扩展，思潮不能仅等同卢梭个人学说。\n（二）目的对象。教育应尊重儿童自然本性和身心发展，重人的能力与完整成长，反压制性成人尺度。\n（三）课程方法。从具体经验、感官观察和活动起步，顺序渐进、兴趣自主与教师支持结合。\n（四）贡献。推动儿童观转变、心理研究与教学改革，促进身心整体发展。\n（五）限制。对自然的解释各异，过度依天性可能忽略社会文化和教育引导，借鉴需协调发展规律与知识责任。"
+  },
+  {
+    "id": "training-foreign-c14-s1-4",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第一节 19世纪的近代教育思潮",
+    "topic": "科学教育思潮的价值和课程",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第196页；《外教专题班课件》PDF第11页",
+    "analysis": "依产生条件、人物取向、课程方法与评价完整论述，比较生活功利和科学人文平衡的不同依据。",
+    "knowledgeCardIds": [
+      "foreign-k14-010",
+      "foreign-k14-011"
+    ],
+    "stem": "试述近代科学教育思潮的主要主张，分析其对古典课程的挑战与历史局限。",
+    "referenceAnswer": "（一）背景。自然科学和工业发展使古典语言独占无法满足生活与生产，科学知识价值成为课程争论中心。\n（二）代表。斯宾塞以生活准备论证科学最有价值，赫胥黎重科学利用且兼顾人文，体现内部不同取向。\n（三）主张。课程增加科学和实用学科，方法重观察实验、理解应用及主动学习，反空疏文辞模仿。\n（四）影响。推动内容现代化、学校与生活联系，科学教育成为公共人才培养的一部分。\n（五）局限。功利排序过强可忽略人文伦理，科学课程也需适应儿童认知；应讨论科学与人文互补，不简单主张用所有实科替掉文化教育。"
+  },
+  {
+    "id": "training-foreign-c14-s1-5",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第一节 19世纪的近代教育思潮",
+    "topic": "国家主义教育思潮",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第197页；《外教专题班课件》PDF第11,35页",
+    "analysis": "从国家形成到管理课程公民目标说明机制，逐层评价公共性与个人自由的关系，区别不同历史强度。",
+    "knowledgeCardIds": [
+      "foreign-k14-012",
+      "foreign-k14-013",
+      "foreign-k14-014"
+    ],
+    "stem": "论述国家主义教育思潮的主要观点及其积极作用与局限。",
+    "referenceAnswer": "（一）背景。民族国家形成和国家竞争使教育被视为建设共同文化、政治认同和人才的重要手段。\n（二）目的。以国家需要为中心，培养有国家意识、纪律和服务能力的公民，教育与民族政治目标紧密相连。\n（三）制度内容。强调国家办学和管理、国民教育、民族语言历史文化及爱国教育，课程体现统一认同。\n（四）作用。增强公共责任，推动教育普及与共同文化，支持国家建设。\n（五）局限。过度国家目标可能压抑个人自由多样性，走向民族排他或政治服从，必须区分共同责任与极端控制，不能将国家主义一律等同军国主义，也不应忽视其风险。"
+  },
+  {
+    "id": "training-foreign-c14-s2-2",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第二节 19世纪末20世纪初的新教育运动",
+    "topic": "新教育中的实验与劳作学校",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第199页；《外教专题班课件》PDF第7,11页",
+    "analysis": "这是外国史思潮专题，不引用教育研究扩展资料；按改革问题、理论、方式和目标比较两项实际历史主张。",
+    "knowledgeCardIds": [
+      "foreign-k14-019",
+      "foreign-k14-020"
+    ],
+    "stem": "比较实验教育学与凯兴斯泰纳劳作学校的理论重点和教育改革方式。",
+    "referenceAnswer": "（一）实验教育学。梅伊曼拉伊反思概念思辨，倡真实学校中的实验、统计比较，为课程方法改革提供经验依据，促进理论科学化。\n（二）劳作学校。凯兴斯泰纳以有用国家公民为目标，劳动的职业准备、伦理陶冶和团体合作结合，儿童在主动创造劳动中形成能力品格。\n（三）共同性。反僵化书本教育，重实际活动与改革效果。\n（四）区别。前者关注证据与研究教育的方法，后者关注公民目标和劳动课程，不能把劳动学校直接归为一种统计实验法。\n（五）评价。经验依据和实践课程均有贡献；前者过信实验有局限，后者国家目的与职业分流需兼顾个体自由及系统知识。"
+  },
+  {
+    "id": "training-foreign-c14-s3-3",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第三节 19世纪末20世纪初的进步教育运动",
+    "topic": "进步教育教学实验比较",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第203页；《应试解析·外国教育史》2027版 PDF第204页；《外教专题班课件》PDF第10页",
+    "analysis": "在运动总论原题之外直接训练三项具体实践，按课程结构、时间组织、教师、评价维度逐项对应。",
+    "knowledgeCardIds": [
+      "foreign-k14-027",
+      "foreign-k14-028",
+      "foreign-k14-029"
+    ],
+    "stem": "比较文纳特卡计划、道尔顿制与设计教学法的课程和学习组织，分析其价值与局限。",
+    "referenceAnswer": "（一）文纳特卡。共同知识技能以个别自学和教师辅导掌握，创造社会作业以小组活动组织，兼顾基础与合作。\n（二）道尔顿。学科作业室、合同和进度表支持自由安排学习，师生合作替代固定课堂进度。\n（三）设计教学。以儿童有目的活动组织，依确定目的、计划、实施、评价推进，连接社会环境与实际问题。\n（四）比较。三者都重主动差异，前者保留明确基础学科，后两者更打破固定程序；活动的结构与评价不同。\n（五）评价。激发自主合作但需要高质量指导，可能弱化系统学习，现代借鉴须确保基础知识、任务难度和反馈，不能把自由等同无计划。"
+  },
+  {
+    "id": "training-foreign-c14-s4-2",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第四节 20世纪中后期的现代欧美教育思潮",
+    "topic": "改造主义的社会问题课程",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第206页；《外教专题班课件》PDF第11页",
+    "analysis": "依社会危机、目的、问题课程、民主方法与评价展开，比较改造社会理想和实际教育能力的边界。",
+    "knowledgeCardIds": [
+      "foreign-k14-031"
+    ],
+    "stem": "论述改造主义教育的目标、课程教学主张及其局限。",
+    "referenceAnswer": "（一）背景目标。由实用主义进步教育分化，对社会危机作回应，以教育改造社会、建立共同生活新秩序为目标。\n（二）课程。以贫困种族歧视环境战争等社会问题为中心，使学习联系公共生活，培养社会意识和共同责任。\n（三）教学。重行为科学依据、民主讨论和劝说，反灌输，教师引导学生认识问题与行动可能。\n（四）价值。扩展教育社会责任，促进知识与公共问题联系。\n（五）局限。过信教育重建社会，具体实施方案不足，社会一致也可能压缩差异；学校行动须与现实制度和多元讨论配合，不能把教育当独立解决所有社会矛盾的工具。"
+  },
+  {
+    "id": "training-foreign-c14-s4-3",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第四节 20世纪中后期的现代欧美教育思潮",
+    "topic": "存在主义与人本主义教育",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第209页；《应试解析·外国教育史》2027版 PDF第210页；《外教专题班课件》PDF第5,11页",
+    "analysis": "按理论基础、人格目标、师生与学习环境逐维比较，不把两者自我实现口号等同为同一学派。",
+    "knowledgeCardIds": [
+      "foreign-k14-037",
+      "foreign-k14-039"
+    ],
+    "stem": "比较存在主义和人本主义教育的目标、师生关系及其局限。",
+    "referenceAnswer": "（一）存在主义。自我意识、自由选择和品格生成居中心，强调个别教育、民主对话和信任，教师支持学生完成自我。\n（二）人本主义。以马斯洛罗杰斯心理学为基础，育完整自我实现者，重情感认知一体、自由心理环境与有个人意义的学习。\n（三）共同性。反机械灌输与忽视个人，强调主体人格和支持关系。\n（四）差异。前者侧重哲学意义的选择责任，后者侧重需要心理和整体成长，课程及理论依据不同。\n（五）评价。个性情感价值推动观念更新；过重个人选择可能忽略公共知识、社会责任和制度条件，自由须与他人权利和共同规范协调。"
+  },
+  {
+    "id": "training-foreign-c14-s4-4",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第四节 20世纪中后期的现代欧美教育思潮",
+    "topic": "结构主义课程与发现学习",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第210页；《外教专题班课件》PDF第6,11页",
+    "analysis": "以学科结构和儿童表征适切性解释课程，说明发现学习的教师条件，评价理论化和认知负荷风险。",
+    "knowledgeCardIds": [
+      "foreign-k14-038"
+    ],
+    "stem": "试述结构主义教育的课程、教学主张及其对改革的影响和局限。",
+    "referenceAnswer": "（一）目标基础。依认知发展重智能培养，皮亚杰布鲁纳相关理论支持课程顺应并促进儿童认识。\n（二）内容。教学重学科基本概念、原理和方法，即基本结构，帮助知识相联、迁移，而非零散事实。\n（三）组织方法。基础可依年龄用适当形式呈现，螺旋深化，发现学习引导从现象探索关系，教师提供问题材料和帮助。\n（四）影响。促进60年代课程改革，联结心理研究与学科教学。\n（五）局限。过于理论化可能增加难度和脱离生活，发现需要已有知识与指导，不能要求儿童无支持重建全部学科；结构价值应与实践应用结合。"
+  },
+  {
+    "id": "training-foreign-c14-s4-5",
+    "book": "foreign",
+    "chapter": 14,
+    "section": "第四节 20世纪中后期的现代欧美教育思潮",
+    "topic": "终身教育与学习社会",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第211页；《外教专题班课件》PDF第11,32页",
+    "analysis": "按时代挑战、纵向一生与横向机构、目标及制度条件解释，区分终身教育与单一在职培训。",
+    "knowledgeCardIds": [
+      "foreign-k14-040"
+    ],
+    "stem": "论述终身教育思潮的内涵、目标和原则，分析其对学校教育的启示。",
+    "referenceAnswer": "（一）背景内涵。社会知识职业变化要求持续学习，朗格朗等推动把教育贯穿人的一生，各阶段有机连接，不限于成人补课。\n（二）目标。创造更好生活，推进教育民主，使人学会学习并能不断发展。\n（三）组织。学校家庭社会、正规非正规学习协调，时间内容方法灵活，机会向不同年龄群体开放。\n（四）启示。学校既教知识也培养学习能力，课程衔接实践生活；资源和认证支持转换职业、重返学习。\n（五）评价。扩大教育边界与机会，落实依经费、时间数字资源等保障，不能以终身要求把学习责任全部推给个人或取消学校系统学习。"
+  },
+  {
+    "id": "training-foreign-c9-s4-2",
+    "book": "foreign",
+    "chapter": 9,
+    "section": "第四节 20世纪下半叶的苏联与俄罗斯现代教育制度",
+    "topic": "苏联1958年后知识与劳动的调整",
+    "questionType": "essay",
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·外国教育史》2027版 PDF第93页；《应试解析·外国教育史》2027版 PDF第94页；《应试解析·外国教育史》2027版 PDF第95页；《外教专题班课件》PDF第27,30,34页",
+    "analysis": "本题为针对20世纪下半叶的改编，区别手册原题仅限定二三十年代；按改革问题、措施、结果和协调条件比较，不以跨时代原题填补。",
+    "knowledgeCardIds": [
+      "foreign-k9-015",
+      "foreign-k9-016",
+      "foreign-k9-017",
+      "foreign-k9-018",
+      "foreign-k9-019",
+      "foreign-k9-022"
+    ],
+    "stem": "比较苏联1958年与1966年教育改革的取向，分析后续知识教学与劳动教育协调的探索。",
+    "referenceAnswer": "（一）1958改革。以学校联系生活和生产为方向，延长普及年限，发展劳动综合技术普通中学、青年学校与职教，强调工作经验和实际劳动，试图纠正知识脱离生活。\n（二）1966调整。针对劳动挤占学习、质量下降等问题，重系统知识、科学课程与教学改进，扩大普通中学知识教育。\n（三）后续探索。1977与1984继续调整普通职业教育关系，重劳动技术及质量，尝试避免知识和生产简单互相排斥。\n（四）钟摆成因。一方面重实践的社会需求，另一方面保障基础学术能力，片面目标和落实方式导致反复。\n（五）评价。教育劳动结合需课程、时间与教育任务的科学安排，劳动不等于生产数量，系统知识也不能脱离应用；应兼顾各阶段学生发展。"
+  }
+]

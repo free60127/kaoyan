@@ -1,0 +1,912 @@
+[
+  {
+    "id": "training-psychology-c1-s1-1",
+    "book": "psychology",
+    "chapter": 1,
+    "section": "第一节 心理发展的一般规律与教育",
+    "topic": "心理发展规律与积极自我意识",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k1-002",
+      "psychology-k1-003",
+      "psychology-k1-004",
+      "psychology-k1-006",
+      "psychology-k1-007",
+      "psychology-k1-008"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第8页；《应试解析·教育心理学》2027版 PDF第9页；《应试解析·教育心理学》2027版 PDF第10页；《应试解析·教育心理学》2027版 PDF第11页",
+    "stem": "小宁进入初中后，在抽象推理上比小学明显进步，但面对同伴评价仍敏感。教师因她一次展示失败断言“性格已经定型，以后也不会变”，此后不再安排她参与展示。\n（1）依据认知与人格发展的规律评析教师的判断。\n（2）论述教育与心理发展的关系，提出促进小宁积极自我意识的措施。",
+    "referenceAnswer": "（1）心理发展具有顺序和阶段，又保持连续性；不同方面速度不一，并存在共同性和个体差异。认知进步与情绪敏感可以并存，不能用一个维度推断整体发展。人格包括动机、兴趣、价值观和行为风格，性格只是其中一部分；人格有相对稳定性，也有可变性，受社会环境和活动影响。一次展示失败不能证明人格定型。\n（2）发展水平是有效教育的前提和依据，适合的教育又能促进发展。教师应了解她失败原因、优势和真实感受，避免永久标签；安排难度渐进且可成功的展示机会，让她通过实际体验形成积极自我概念；提供具体、真实的反馈和个别交流；组织支持性合作与同伴分享，营造民主尊重氛围。以多次表现和进步评价，帮助学生认识优势并主动调节，而非剥夺其发展机会。",
+    "analysis": "本节聚焦一般规律和自我意识。材料的认知进步、情绪敏感、失败标签分别对应不平衡、人格可变性及教育作用；措施须以活动体验和民主反馈促进发展，不能把固定性格诊断当结论。"
+  },
+  {
+    "id": "training-psychology-c1-s2-1",
+    "book": "psychology",
+    "chapter": 1,
+    "section": "第二节 认知发展理论与教育",
+    "topic": "皮亚杰认知发展阶段理论与学前儿童教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k1-009",
+      "psychology-k1-010",
+      "psychology-k1-013",
+      "psychology-k1-017",
+      "psychology-k1-018",
+      "psychology-k1-025"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第133页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-02",
+    "analysis": "本节前运算阶段的表象性、自我中心性与认知局限对应第一问；第二问参与家庭社会文化生活应联系主动活动、同伴互动与认知发展的社会条件。答案须由年龄特点推导实物活动、表达和合作等措施，避免把前运算儿童解释成不能学习或仅靠讲授。"
+  },
+  {
+    "id": "training-psychology-c1-s2-2",
+    "book": "psychology",
+    "chapter": 1,
+    "section": "第二节 认知发展理论与教育",
+    "topic": "师生关系及最近发展区",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k1-019",
+      "psychology-k1-020",
+      "psychology-k1-022",
+      "psychology-k1-023",
+      "psychology-k1-024"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第150页",
+    "originalQuestionId": "hb-jiaoyuan-anli-02",
+    "analysis": "本节最近发展区直接对应第一问教学难度的适切性：区分独立水平与有帮助可达水平，用教师递进提问后学生能解题的证据论证。内化和支架说明帮助应逐步撤除。第二问教学方法、第三问师生关系跨教育学原理，原题完整保留，作答需同时分析启发谈话与民主尊重。"
+  },
+  {
+    "id": "training-psychology-c1-s3-1",
+    "book": "psychology",
+    "chapter": 1,
+    "section": "第三节 社会化与人格发展理论与教育",
+    "topic": "艾里克森心理社会发展理论与家庭教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k1-026",
+      "psychology-k1-027",
+      "psychology-k1-028",
+      "psychology-k1-029",
+      "psychology-k1-040"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第129页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-01",
+    "analysis": "本节艾里克森心理社会发展理论对应第二问家庭教育。小学生重点面临勤奋感与自卑感冲突，适当任务、努力反馈与成功体验可增强勤奋；家庭方式还需尊重个体、平等沟通。第一问品德教育跨第八章，应综合榜样、活动、情感体验与规范内化完整回答，不能只列八阶段。"
+  },
+  {
+    "id": "training-psychology-c1-s3-2",
+    "book": "psychology",
+    "chapter": 1,
+    "section": "第三节 社会化与人格发展理论与教育",
+    "topic": "主观题第34题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k1-031",
+      "psychology-k1-032",
+      "psychology-k1-033",
+      "psychology-k1-034",
+      "psychology-k1-035",
+      "psychology-k1-036"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第7页",
+    "originalQuestionId": "dd-34",
+    "analysis": "本节科尔伯格理论对应第一问学生遵纪动机差异。避免惩罚、获取利益偏向前习俗，重视认可和维持规则偏向习俗；不能仅以是否利他判为后习俗，须看其道德理由。第二问动机、第三问罗杰斯跨第二、三章，按完整三问作答，同时区分理论阶段与现实个体判断。"
+  },
+  {
+    "id": "training-psychology-c1-s4-1",
+    "book": "psychology",
+    "chapter": 1,
+    "section": "第四节 心理发展的差异与教育",
+    "topic": "心理差异与教学适应",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k1-043",
+      "psychology-k1-044",
+      "psychology-k1-045",
+      "psychology-k1-048"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第31页；《应试解析·教育心理学》2027版 PDF第32页；《应试解析·教育心理学》2027版 PDF第33页",
+    "stem": "两名学生成绩相近：甲喜欢独立梳理结构，乙在小组讨论和教师提示中表现更好。教师决定让甲永久独学、乙永久讨论，并以“适合他们的类型”为由禁止尝试其他方式。\n（1）运用心理差异与认知方式理论评价此做法。\n（2）提出兼顾匹配与补偿的教学安排，并说明如何评价成效。",
+    "referenceAnswer": "（1）成绩相近不等于认知方式相同。场独立学生较能分析和独立组织材料，场依存学生较依赖外部线索、重视社会互动；这是方式倾向，不能作为智力高低或固定潜能标签。匹配能发挥优势，永久限定却剥夺其他学习经验，扩大差异并使学生刻板化。\n（2）在共同目标下提供独立思考后讨论的任务，甲先形成结构并练习说明、听取意见，乙先借助提示再尝试独立归纳；依据表现逐步降低支架，交替使用匹配和失配策略。教师还需尊重人格差异、提供多样表达和反馈，避免以类型分层定性。通过多种情境下的理解、迁移、合作与自主程度比较评价效果，并据观察调整安排。",
+    "analysis": "本节关键是差异应影响支持方式而非固定学生归类。材料两种偏好支持方式比较，但不足以作心理测验诊断，答案以可调整的倾向分析并结合匹配、补偿。"
+  },
+  {
+    "id": "training-psychology-c2-s1-1",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第一节 学习的一般概述",
+    "topic": "知识传授问题：高级规则习得与认知负荷",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-004"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第186页",
+    "originalQuestionId": "hb-jiaoxin-anli-02",
+    "analysis": "本节加涅学习分类对应组合图形和完整写作的高级规则学习。会单项规则不能保证能根据任务条件组织和组合规则，需要层级先备条件与综合练习。原题同时提供认知负荷解释路径，完整答案中的两套解释均由原题继承；可分别阐述层级分类和工作记忆整合困难，不能删成唯一标准答案。"
+  },
+  {
+    "id": "training-psychology-c2-s1-2",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第一节 学习的一般概述",
+    "topic": "学习的实质与分类应用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-001",
+      "psychology-k2-006",
+      "psychology-k2-007"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第38页；《应试解析·教育心理学》2027版 PDF第39页；《应试解析·教育心理学》2027版 PDF第40页",
+    "stem": "课堂上，学生先记住植物名称，随后学会按特征分类，还反思自己何时应画概念图；另有学生随年龄增长身高增加，或因疲劳临时答错。\n（1）说明哪些变化属于学习，解释学习与成熟、暂时状态变化的区别。\n（2）用加涅学习结果分类分析前三种学习，并辨析有意义学习与机械学习、接受学习与发现学习的关系。",
+    "referenceAnswer": "（1）学习是经验引起的行为或行为潜能较持久的变化，包含新行为获得，也包含既有行为改变。名称、分类方法和策略经验可以形成较持久变化；自然身高增长主要属成熟，疲劳导致临时错误属于状态改变，不能直接作为学习的结果。\n（2）名称知识对应言语信息，依据特征分类属于智慧技能，反思概念图使用属于认知策略；加涅还区分动作技能和态度。奥苏伯尔以学习内容与已有认知结构联系的性质区分有意义与机械学习，以知识获得方式区分接受与发现。两条维度相互独立：接受也能有意义，发现也可能机械，关键在理解联系和学习条件，不能把发现天然等同于有意义。",
+    "analysis": "本节概念和分类共同考查。先用经验、较持久变化限定学习，再依据“学到什么”判断结果类型，最后把性质与获得方式分维度说明。"
+  },
+  {
+    "id": "training-psychology-c2-s2-1",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第二节 行为主义学习理论",
+    "topic": "观察学习理论与正确榜样的树立",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-038",
+      "psychology-k2-039",
+      "psychology-k2-040",
+      "psychology-k2-041",
+      "psychology-k2-042",
+      "psychology-k2-043"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第199页",
+    "originalQuestionId": "hb-jiaoxin-anli-08",
+    "analysis": "本节班杜拉观察学习直接解释网络模仿。注意、保持、动作再现、动机四过程须配合网红吸引力、记忆热梗、模仿表达、点赞回报等证据；替代强化可影响是否表现已习得行为。第二问应从榜样选择、示范、练习、反馈与自我强化设计引导，不能仅说禁止上网。"
+  },
+  {
+    "id": "training-psychology-c2-s2-2",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第二节 行为主义学习理论",
+    "topic": "条件作用与课堂行为改善",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-010",
+      "psychology-k2-012",
+      "psychology-k2-025",
+      "psychology-k2-026",
+      "psychology-k2-028"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第42页；《应试解析·教育心理学》2027版 PDF第47页；《应试解析·教育心理学》2027版 PDF第48页",
+    "stem": "教师常在测验前严厉斥责，学生后来一见试卷就紧张。某生按时完成任务后获得表扬，完成后也可免除额外重复练习；教师另决定取消扰乱课堂者的部分活动机会。\n（1）区分材料中的经典条件作用、正强化、负强化和惩罚。\n（2）提出改善测验情绪和课堂行为的方案，说明使用后果控制应注意的原则。",
+    "referenceAnswer": "（1）试卷与斥责反复配对，试卷逐渐引发紧张，体现刺激间联结的经典条件作用。完成任务后增加表扬，若使该行为增多则为正强化；完成后撤去令人不快的重复练习，若使完成行为增多则为负强化。取消活动机会旨在减少扰乱，属于撤去积极刺激的惩罚，不能把负强化当作惩罚。\n（2）减少威胁性测验配对，安排安全、低压力的成功体验和具体反馈；明确可观察的目标行为，及时强化进步，初期保证反馈清晰，再逐步维持。后果应公平、适当并结合原因了解和替代行为教学。惩罚可能压制表现但不会自动教会适当行为，应避免羞辱；通过观察前后行为频率与学习状态判断效果，不能仅凭老师意图命名强化。",
+    "analysis": "本节条件作用的大节另设题覆盖刺激配对与行为后果。判断强化看行为是否增加、判断惩罚看是否减少；增加或撤去刺激是另一维度，材料中免练习是常见辨析点。"
+  },
+  {
+    "id": "training-psychology-c2-s3-1",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第三节 学习的认知理论",
+    "topic": "知识传授问题：高级规则习得与认知负荷",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-063",
+      "psychology-k2-064",
+      "psychology-k2-065",
+      "psychology-k2-066",
+      "psychology-k2-067"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第186页",
+    "originalQuestionId": "hb-jiaoxin-anli-02",
+    "analysis": "本节认知负荷与信息加工解释单项会做、综合失败。先备规则可能分别掌握，但完整任务同时组织多元素，超出有限工作记忆，需分块、支架、示范与渐进整合。原题还有加涅学习分类的另一答案路径，两套观点和原有OCR提示一并保留；不能声称所有失败都由认知负荷单一造成。"
+  },
+  {
+    "id": "training-psychology-c2-s3-2",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第三节 学习的认知理论",
+    "topic": "发现学习与有意义接受学习",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-051",
+      "psychology-k2-053",
+      "psychology-k2-055",
+      "psychology-k2-057",
+      "psychology-k2-061",
+      "psychology-k2-062"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第62页；《应试解析·教育心理学》2027版 PDF第63页；《应试解析·教育心理学》2027版 PDF第64页；《应试解析·教育心理学》2027版 PDF第65页；《应试解析·教育心理学》2027版 PDF第68页；《应试解析·教育心理学》2027版 PDF第69页",
+    "stem": "教师甲给出三角形面积定义和公式，用已学长方形作比较，再展示例题；教师乙让学生剪拼三角形，提出面积规律并检验。有人说“甲是接受学习，所以一定机械；乙是发现学习，所以一定有意义”。\n（1）运用布鲁纳和奥苏伯尔的学习理论评析上述说法。\n（2）设计帮助基础不同学生理解并迁移面积公式的教学安排。",
+    "referenceAnswer": "（1）布鲁纳强调学科基本结构、认知表征与发现，学生通过操作、假设和检验形成理解；奥苏伯尔强调新知识与原有相关观念建立非任意、实质性联系。有意义学习要求材料有逻辑意义，学生具备相关知识并愿意建立联系。接受与发现是知识获得方式，有意义与机械是认知联系性质，两者不能简单对等。甲借长方形建立关系可能有意义；乙只记活动结论而未理解也可能机械。\n（2）先检查长方形面积和底高理解，以共同结构引入新内容；基础弱者借实物、图示和明确组织者支架，较熟练者自行剪拼并比较不同三角形。共同概括公式、说明“除以二”的关系，用正反情境检验底高选择，最后在生活新图形中应用。教师适时引导，结合解释和迁移证据评价，避免把活动次数等同理解。",
+    "analysis": "本节两个主要认知理论在同一内容中比较。第一问分清学习方式与性质，第二问把表征、先备观念、组织者及结构理解落实为方案。"
+  },
+  {
+    "id": "training-psychology-c2-s4-1",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第四节 建构主义学习理论",
+    "topic": "学习理论与情境性作业、跨学科学习",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-071",
+      "psychology-k2-072",
+      "psychology-k2-073",
+      "psychology-k2-074",
+      "psychology-k2-076",
+      "psychology-k2-077"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第135页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-03",
+    "analysis": "本节建构主义对应真实情境、跨学科综合和学习者主动生成。情境性作业以原有经验为起点，在真实问题、合作交流和多种表征中建构意义；认知灵活性可解释跨情境比较。三问分别概括优点、理论论证、设计一份作业，第三问必须有具体学科、情境、任务和产物，不能只有建构主义口号。"
+  },
+  {
+    "id": "training-psychology-c2-s5-1",
+    "book": "psychology",
+    "chapter": 2,
+    "section": "第五节 学习的人本主义理论",
+    "topic": "主观题第34题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k2-078",
+      "psychology-k2-079",
+      "psychology-k2-080",
+      "psychology-k2-081",
+      "psychology-k2-082",
+      "psychology-k2-084"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第7页",
+    "originalQuestionId": "dd-34",
+    "analysis": "本节人本主义对应第三问的知情统一与自由学习。传统灌输忽视学生情感、需要与个人意义，应构建真诚、接受和移情理解的关系，提供选择、自我评价及有意义任务。第一问道德阶段、第二问动机理论跨章，仍需完整回答；同时区分罗杰斯整体人格意义与奥苏伯尔认知同化意义。"
+  },
+  {
+    "id": "training-psychology-c3-s1-1",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第一节 学习动机的实质及其作用",
+    "topic": "主观题第34题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-001",
+      "psychology-k3-002",
+      "psychology-k3-003",
+      "psychology-k3-004",
+      "psychology-k3-008",
+      "psychology-k3-009"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第7页",
+    "originalQuestionId": "dd-34",
+    "analysis": "本节直接解释第二问动机两极分化及效率。低动机影响启动与坚持，过强动机在复杂任务下可能造成焦虑、失误，适宜强度随任务难度变化；不能简单认为动机越强越好。第一、三问科尔伯格与罗杰斯跨章，按原题完整分问回答。"
+  },
+  {
+    "id": "training-psychology-c3-s1-2",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第一节 学习动机的实质及其作用",
+    "topic": "学习竞赛对学习动机的影响与应用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-002",
+      "psychology-k3-003",
+      "psychology-k3-004",
+      "psychology-k3-008",
+      "psychology-k3-009"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第142页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-05",
+    "analysis": "本节学习竞赛对内外动机和学习效果的影响对应第一问：激励投入、过度紧张、挫败或同伴关系变化需结合材料举例。第二问指定归因、自我效能和自我决定理论，属于本章第二节，仍完整提出可达任务、努力策略反馈、选择与合作支持等设计。"
+  },
+  {
+    "id": "training-psychology-c3-s2-1",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第二节 学习动机的主要理论",
+    "topic": "四名学生学习动机问题分析",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-017",
+      "psychology-k3-019",
+      "psychology-k3-024",
+      "psychology-k3-025",
+      "psychology-k3-030",
+      "psychology-k3-031"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第184页",
+    "originalQuestionId": "hb-jiaoxin-anli-01",
+    "analysis": "本节用成就动机、自我价值、归因与习得性无助分析四名学生。先从任务选择、失败解释及保护自我价值的行为找证据，再指出原因与风险；第二问将策略与各人特点逐一对应。不能仅凭成绩贴人格标签，案例中不同理论可以互补解释，原答案保留。"
+  },
+  {
+    "id": "training-psychology-c3-s2-2",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第二节 学习动机的主要理论",
+    "topic": "学习动机理论与教育评价改革",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-020",
+      "psychology-k3-024",
+      "psychology-k3-026",
+      "psychology-k3-029",
+      "psychology-k3-032",
+      "psychology-k3-033"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第139页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-04",
+    "analysis": "本节评价改革可用归因、自我效能、成就目标等解释：单次结果和排名易固化能力标签、削弱效能、诱发只求表现；过程、增值和综合评价能突出可控策略与成长。第一问先概括材料中的实际评价问题，第二问用理论—机制—改革价值逐项展开。"
+  },
+  {
+    "id": "training-psychology-c3-s2-3",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第二节 学习动机的主要理论",
+    "topic": "学习竞赛对学习动机的影响与应用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-020",
+      "psychology-k3-024",
+      "psychology-k3-026",
+      "psychology-k3-027",
+      "psychology-k3-029",
+      "psychology-k3-035"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第142页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-05",
+    "analysis": "第二问明确指定本节三种理论。归因设计引向努力与策略等可改因素，自我效能设计采用可达任务和真实成功反馈，自我决定设计支持自主、胜任、关系需要。第一问竞赛影响须写积极与消极并举例，不能把取消所有竞赛作为唯一结论。"
+  },
+  {
+    "id": "training-psychology-c3-s2-4",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第二节 学习动机的主要理论",
+    "topic": "主观题第36题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-025",
+      "psychology-k3-030",
+      "psychology-k3-031",
+      "psychology-k3-032",
+      "psychology-k3-033",
+      "psychology-k3-035"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第8页",
+    "originalQuestionId": "dd-36",
+    "analysis": "本节四类自我价值模式、成就目标、无助与基本心理需要对应四名学生表现。分别依据材料的无所谓、反复失败、回避暴露错误、只追求赞许等证据分析；第三问逐人给出支持而非统一奖励。第一问还须评价课堂机会与任务安排，原题完整保留，不把自我价值类型等同能力高低。"
+  },
+  {
+    "id": "training-psychology-c3-s2-5",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第二节 学习动机的主要理论",
+    "topic": "测验效应与考试排名",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-020",
+      "psychology-k3-024",
+      "psychology-k3-026",
+      "psychology-k3-032",
+      "psychology-k3-033",
+      "psychology-k3-035"
+    ],
+    "origin": "source-question",
+    "source": "《教心母题班课件》PDF第3,7,12,13页",
+    "originalQuestionId": "mu-教育心理学-01",
+    "analysis": "第二问考试排名的动机影响对应本节：排名可能引发稳定能力归因、降低自我效能、强化表现目标、损害自主胜任与关系需要。第一问测验效应涉及记忆提取、复述、加工和迁移，是跨第四、六章内容，须完整说明测验促进学习与结果利用可能阻碍学习的不同机制。"
+  },
+  {
+    "id": "training-psychology-c3-s3-1",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第三节 学习动机的培养与激发",
+    "topic": "四名学生学习动机问题分析",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-037",
+      "psychology-k3-038",
+      "psychology-k3-039",
+      "psychology-k3-040",
+      "psychology-k3-041",
+      "psychology-k3-042"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第184页",
+    "originalQuestionId": "hb-jiaoxin-anli-01",
+    "analysis": "第二问直接对应动机培养和激发。针对低价值、失败无助、焦虑和只求显聪明等表现，安排有意义任务、渐进挑战、努力策略反馈、掌握目标与支持性关系；奖励需适度并促进内化，避免强化外部控制。第一问的理论解释另属第二节，完整答案需“证据—理论—针对性措施”对应四人。"
+  },
+  {
+    "id": "training-psychology-c3-s3-2",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第三节 学习动机的培养与激发",
+    "topic": "主观题第36题",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-038",
+      "psychology-k3-039",
+      "psychology-k3-040",
+      "psychology-k3-042"
+    ],
+    "origin": "source-question",
+    "source": "《丹丹中秋国庆卷》PDF第8页",
+    "originalQuestionId": "dd-36",
+    "analysis": "第三问直接训练激发并维护动机。支持任务选择、真实成功体验、策略反馈与积极同伴关系，降低能力标签和过度竞争；区分暂时刺激与持续内在兴趣。第一、二问还需依据课堂材料与相关理论分析四人，不能只给一般措施。"
+  },
+  {
+    "id": "training-psychology-c3-s3-3",
+    "book": "psychology",
+    "chapter": 3,
+    "section": "第三节 学习动机的培养与激发",
+    "topic": "学习竞赛对学习动机的影响与应用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k3-038",
+      "psychology-k3-039",
+      "psychology-k3-040",
+      "psychology-k3-042"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第142页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-05",
+    "analysis": "本节激发方法对应合理组织学习竞赛：任务难度可达、合作与个体进步并重、奖励具有信息性、避免排名羞辱。原题第二问指定三种动机理论，完整作答要说明每项措施如何支持可控归因、自我效能及基本需要。"
+  },
+  {
+    "id": "training-psychology-c4-s1-1",
+    "book": "psychology",
+    "chapter": 4,
+    "section": "第一节 知识及知识建构",
+    "topic": "陈述性知识与程序性知识的掌握",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k4-001",
+      "psychology-k4-002",
+      "psychology-k4-003",
+      "psychology-k4-004",
+      "psychology-k4-008"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第188页",
+    "originalQuestionId": "hb-jiaoxin-anli-03",
+    "analysis": "本节陈述性与程序性知识直接对应能背概念、不能执行实验。先区分“是什么”与“怎么做”，说明知识表征与产生式的条件—行动关系；第二问用示范、条件识别、指导练习、反馈和变式实现程序化。原题同时涉及应用与技能培养，不能把会背步骤等同自动化掌握。"
+  },
+  {
+    "id": "training-psychology-c4-s2-1",
+    "book": "psychology",
+    "chapter": 4,
+    "section": "第二节 知识的理解",
+    "topic": "概念理解与例证设计",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k4-009",
+      "psychology-k4-015",
+      "psychology-k4-016",
+      "psychology-k4-017",
+      "psychology-k4-018",
+      "psychology-k4-020"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第116页；《应试解析·教育心理学》2027版 PDF第120页；《应试解析·教育心理学》2027版 PDF第121页；《应试解析·教育心理学》2027版 PDF第122页",
+    "stem": "讲“鸟”时，教师只举麻雀和燕子，学生据此认为“能飞的动物都是鸟，不能飞的不是鸟”。\n（1）分析概念学习中的问题，并比较概念形成与概念同化的教学程序。\n（2）设计帮助学生准确理解并运用概念的教学方案。",
+    "referenceAnswer": "（1）学生把“会飞”这个非本质属性作为判断标准，既排除不能飞的鸟而概括不足，又把蝙蝠等纳入而过度概括。概念形成从例子比较到规则，再用例子检验；概念同化借已有上位概念引入定义，再分析例子并回到定义，两者需依据学生基础选择。\n（2）明确概念名称、所属类别和关键属性；呈现麻雀等熟悉正例后加入鸵鸟、企鹅等变式，控制体型、颜色和飞行等无关特征；用蝙蝠等接近反例突出关键差别。让学生比较、解释依据，修正原规则，并把鸟与其他动物类别画成概念关系图。最后提供未见例子，要求判断并说明理由，以解释和运用检查理解，不能仅让学生背定义或记几个名字。",
+    "analysis": "本节例证原理是核心：正例支持概括，反例支持辨别，变式排除无关属性。材料同时出现过度与不足概括，两类错误须分别解释并对应纠正。"
+  },
+  {
+    "id": "training-psychology-c4-s3-1",
+    "book": "psychology",
+    "chapter": 4,
+    "section": "第三节 知识的整合与应用",
+    "topic": "迁移能力的培养",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k4-026",
+      "psychology-k4-027",
+      "psychology-k4-031",
+      "psychology-k4-032"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第192页",
+    "originalQuestionId": "hb-jiaoxin-anli-05",
+    "analysis": "本节知识迁移对应场景改变后不会列方程。先说明表面情境不同掩盖相同数量结构、概括与应用条件不足，再分析共同因素、原有知识组织、定势及学习态度；措施用变式、对比、结构概括、多情境应用与反思。保留原题涉及多理论的答案和OCR提示，不改成只有“学生不认真”。"
+  },
+  {
+    "id": "training-psychology-c4-s3-2",
+    "book": "psychology",
+    "chapter": 4,
+    "section": "第三节 知识的整合与应用",
+    "topic": "遗忘影响因素与记忆策略",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k4-021",
+      "psychology-k4-022",
+      "psychology-k4-023",
+      "psychology-k4-024",
+      "psychology-k4-025"
+    ],
+    "origin": "source-question",
+    "source": "《教心母题班课件》PDF第5,9,10,16,17,21,22页",
+    "originalQuestionId": "mu-教育心理学-03",
+    "analysis": "第一问直接对应遗忘影响因素：时间、材料意义、干扰、数量难度及加工联系都需按三则材料找证据；不能只背先快后慢曲线。第二问课改容量与难度的理论论证跨学习理论，第三问古诗建议要落实理解、组织、分散复习、提取和辨别易混处，原题完整保留。"
+  },
+  {
+    "id": "training-psychology-c4-s3-3",
+    "book": "psychology",
+    "chapter": 4,
+    "section": "第三节 知识的整合与应用",
+    "topic": "测验效应与考试排名",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k4-021",
+      "psychology-k4-025",
+      "psychology-k4-026",
+      "psychology-k4-027",
+      "psychology-k4-031"
+    ],
+    "origin": "source-question",
+    "source": "《教心母题班课件》PDF第3,7,12,13页",
+    "originalQuestionId": "mu-教育心理学-01",
+    "analysis": "第一问测验效应对应本节提取、复述、知识联系与迁移：测验提供主动回忆和类似考试的提取情境，能巩固与应用。第二问考试排名对动机的影响跨第三章，应完整分析效能、归因和目标，不能将“测验有益”推出“排名必需”。"
+  },
+  {
+    "id": "training-psychology-c5-s1-1",
+    "book": "psychology",
+    "chapter": 5,
+    "section": "第一节 技能及其作用",
+    "topic": "技能的性质、类型与作用",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k5-001",
+      "psychology-k5-002",
+      "psychology-k5-003",
+      "psychology-k5-004",
+      "psychology-k5-005",
+      "psychology-k5-006"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第131页；《应试解析·教育心理学》2027版 PDF第132页；《应试解析·教育心理学》2027版 PDF第133页",
+    "stem": "学生能背出跳绳步骤却动作不协调，另一学生能熟练心算；教师把两者都称作“背熟知识后自然形成的习惯”。\n（1）界定技能，比较操作技能、心智技能与习惯。\n（2）说明为何背会步骤不能替代技能形成，并提出相应教学安排。",
+    "referenceAnswer": "（1）技能是经练习形成的合乎规则或程序的身体或认知活动方式。操作技能以物质对象为对象，执行外显、结构展开，如跳绳；心智技能以观念为对象，执行内潜、结构简缩，如心算。两者相辅相成，复杂操作也需要认知调节。熟练技能在有目的、有计划练习中形成，习惯常在重复中养成，两者均可自动化，但不能据此等同。\n（2）技能表现为实际活动，知道步骤仅提供定向，不能证明能协调执行。跳绳应示范并练习手脚配合、逐步整合和反馈；心算应理解规则、外显说明运算过程、变式练习并逐步内化。检查要看正确、流畅、迅速、经济及适应新条件的表现，不能以背诵或单纯重复次数代替技能质量。",
+    "analysis": "本节把技能定义、两种类型与习惯放入对照材料。由“会背而不会做”论证活动经验必要，再根据外部动作与内部运算提出不同教学支持。"
+  },
+  {
+    "id": "training-psychology-c5-s2-1",
+    "book": "psychology",
+    "chapter": 5,
+    "section": "第二节 心智技能的形成与培养",
+    "topic": "知识传授问题：高级规则习得与认知负荷",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k5-009",
+      "psychology-k5-013"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第186页",
+    "originalQuestionId": "hb-jiaoxin-anli-02",
+    "analysis": "本节智慧技能层级直接解释会单项规则却不会综合应用。高级规则学习以规则、概念与辨别为条件，但先备条件具备后仍需训练规则选择与组合；可用渐进综合任务、言语解释和变式练习培养。原题另一套认知负荷解释仍保留，作答可明确分别采用分类理论或认知理论。"
+  },
+  {
+    "id": "training-psychology-c5-s2-2",
+    "book": "psychology",
+    "chapter": 5,
+    "section": "第二节 心智技能的形成与培养",
+    "topic": "心智技能的分阶段培养",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k5-010",
+      "psychology-k5-011",
+      "psychology-k5-013"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第135页；《应试解析·教育心理学》2027版 PDF第136页",
+    "stem": "学习两位数乘法时，教师直接要求学生默算。学生常漏乘或忘记进位，教师只让他们重复做题。\n（1）运用加里培林和冯忠良的阶段理论分析教学缺失。\n（2）设计从外部活动到内部运算的培养流程，并说明练习与反馈要求。",
+    "referenceAnswer": "（1）心智技能不会由知识讲解直接变成自动运算。加里培林强调活动定向、物质或物质化活动、有声言语、无声外部言语和内部言语五阶段；冯忠良概括为原型定向、原型操作、原型内化。直接默算跳过程序结构与展开执行，学生未形成稳定原型，单纯重复易固定错误。\n（2）先明确位值、分步乘法和进位要求，用例题说明动作顺序；借位值表或展开算式逐步执行并核查；让学生边算边说各步理由，发现遗漏与进位错误；熟练后逐步减弱外部提示、转为无声言语，再形成简缩内部运算。练习由简单到复杂、正反例对比和变式结合，反馈聚焦错误环节与条件而非只给结果。内化依据正确性和协调程度推进，不能按固定次数强行撤除支架。",
+    "analysis": "本节阶段理论必须用于诊断跳步和设计训练。两个理论视角分别说明，再以位值表、说步骤、逐步简缩贯通；练习不是无条件重复。"
+  },
+  {
+    "id": "training-psychology-c5-s3-1",
+    "book": "psychology",
+    "chapter": 5,
+    "section": "第三节 操作技能的形成与训练",
+    "topic": "操作技能的形成与训练",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k5-017",
+      "psychology-k5-018",
+      "psychology-k5-019",
+      "psychology-k5-020",
+      "psychology-k5-021",
+      "psychology-k5-022"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第137页；《应试解析·教育心理学》2027版 PDF第138页；《应试解析·教育心理学》2027版 PDF第139页",
+    "stem": "初学篮球运球，教师只快速示范一次便让学生连续练习一小时。学生动作僵硬、眼睛始终盯球，后来进步停滞。教师判断“已到能力极限”，停止指导。\n（1）结合操作技能形成阶段分析学生表现及教师判断。\n（2）设计阶段性训练与反馈方案，说明如何应对进步停滞。",
+    "referenceAnswer": "（1）菲茨与波斯纳区分认知、联系、自动化阶段；冯忠良区分定向、模仿、整合、熟练。初学者需要形成动作映象、准确模仿并将动作组合，僵硬和视觉控制强说明整合未充分完成。练习中暂时停滞可能是高原现象，原因包括旧动作结构限制、疲劳或厌倦，不能据此断定能力极限。\n（2）定向阶段明确目标，慢速分解并完整示范，突出身体姿势、触球与手脚协调；模仿阶段进行短时练习，及时纠正动作，防止错误定型；整合阶段结合分解与整体练习，把走动与运球连接；熟练阶段在变化速度和实际情境中练习自我调节。安排合理练习量、休息和分散练习，结合身体与心理练习。初期提供动作过程和结果反馈，后期引导动觉反馈与自评。停滞时检查错误结构、负荷和兴趣，调整难度、节奏与情境，再根据趋势评价。",
+    "analysis": "本节以形成阶段组织方案，必须同时处理示范、练习和反馈。由盯球、僵硬定位控制方式，由长时练习定位疲劳可能；高原只能提出有依据的解释，不能作为永久上限标签。"
+  },
+  {
+    "id": "training-psychology-c6-s1-1",
+    "book": "psychology",
+    "chapter": 6,
+    "section": "第一节 学习策略及其分类",
+    "topic": "学习策略的教授",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k6-001",
+      "psychology-k6-002",
+      "psychology-k6-003"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第194页",
+    "originalQuestionId": "hb-jiaoxin-anli-06",
+    "analysis": "本节学习策略三大类可统整材料：机械背诵和内容联系不足对应认知策略，考试后不检查原因对应元认知，分心、时间和求助不足对应资源管理。第一问先概括事实，第二问再给对应措施，须具体到学科；本题跨本章其他节，不能只列三大类就完成原题。"
+  },
+  {
+    "id": "training-psychology-c6-s2-1",
+    "book": "psychology",
+    "chapter": 6,
+    "section": "第二节 认知策略及其教学",
+    "topic": "学习策略的教授",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k6-004",
+      "psychology-k6-006",
+      "psychology-k6-009",
+      "psychology-k6-010",
+      "psychology-k6-012",
+      "psychology-k6-013"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第194页",
+    "originalQuestionId": "hb-jiaoxin-anli-06",
+    "analysis": "本节认知策略对应学生只机械重复、不建立联系和不组织知识。英语词义联系、历史时间结构及复杂句分析可分别使用精细加工、组织、复述与注意策略，说明如何示范和练习。原题还含错后不反思、环境与求助问题，需补充元认知和资源管理，完整作答。"
+  },
+  {
+    "id": "training-psychology-c6-s2-2",
+    "book": "psychology",
+    "chapter": 6,
+    "section": "第二节 认知策略及其教学",
+    "topic": "遗忘影响因素与记忆策略",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k6-006",
+      "psychology-k6-009",
+      "psychology-k6-010",
+      "psychology-k6-012",
+      "psychology-k6-013",
+      "psychology-k6-014"
+    ],
+    "origin": "source-question",
+    "source": "《教心母题班课件》PDF第5,9,10,16,17,21,22页",
+    "originalQuestionId": "mu-教育心理学-03",
+    "analysis": "第三问古诗学习直接训练认知策略：理解意象与意思进行精细加工，按结构组织内容，及时分散复习、主动提取、比较易混诗句。第一问遗忘因素、第二问课改容量跨第四、二章，需说明材料意义与干扰等机制，再论证策略如何改善，而非给无依据的万能记忆法。"
+  },
+  {
+    "id": "training-psychology-c6-s3-1",
+    "book": "psychology",
+    "chapter": 6,
+    "section": "第三节 元认知策略及其教学",
+    "topic": "学习策略的教授",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k6-015",
+      "psychology-k6-016",
+      "psychology-k6-017",
+      "psychology-k6-018"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第194页",
+    "originalQuestionId": "hb-jiaoxin-anli-06",
+    "analysis": "本节元认知对应考试只看分数而不分析错因、学习中意识不到低效。计划阶段定目标与策略，监控阶段检查理解与时间，调节阶段根据错因改换方法，并通过教师出声思考、反思记录和逐步自主实践教授。原题认知和资源管理问题亦须分别回答，不能将所有方法都叫元认知。"
+  },
+  {
+    "id": "training-psychology-c6-s4-1",
+    "book": "psychology",
+    "chapter": 6,
+    "section": "第四节 资源管理策略及其教学",
+    "topic": "学习策略的教授",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k6-019",
+      "psychology-k6-020",
+      "psychology-k6-021",
+      "psychology-k6-022",
+      "psychology-k6-023",
+      "psychology-k6-024"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第194页",
+    "originalQuestionId": "hb-jiaoxin-anli-06",
+    "analysis": "本节资源管理对应边玩手机边学习、拖延及不主动查书或求助。安排可执行时间计划、减少干扰、维持努力、训练工具性求助；与只问答案的执行性求助区分。原题还要求认知与元认知策略，需按不同问题给出对应策略，避免只说“认真努力”。"
+  },
+  {
+    "id": "training-psychology-c6-s4-2",
+    "book": "psychology",
+    "chapter": 6,
+    "section": "第四节 资源管理策略及其教学",
+    "topic": "资源管理与有效学业求助",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k6-019",
+      "psychology-k6-020",
+      "psychology-k6-021",
+      "psychology-k6-022",
+      "psychology-k6-023",
+      "psychology-k6-024"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第151页；《应试解析·教育心理学》2027版 PDF第152页；《应试解析·教育心理学》2027版 PDF第153页",
+    "stem": "小海计划每晚学习两小时，但常在手机通知中分心；遇难题时只向同学索要完整答案，抄完便继续。\n（1）分析资源管理策略存在的问题，并区分执行性与工具性求助。\n（2）设计改进计划，说明如何逐步提高自主学习。",
+    "referenceAnswer": "（1）时间计划只规定时长，没有任务、优先顺序和检查；环境干扰削弱注意和努力维持；索要可直接抄写的答案属于执行性求助，代替自己的思考。工具性求助寻求解释、提示或关键方法，使自己能继续解决问题。不能将一切求助当作依赖，也不能把不求助等同独立。\n（2）将两小时分成具体任务与休息段，先完成重要或困难任务并记录执行；学习时关闭无关通知、整理材料、选择适合地点。遇难先尝试并标出不懂的步骤，判断是否需要帮助，选择适当对象，提出具体问题；得到提示后独立完成并检验，再总结可迁移的方法。设定可达目标、通过自我反馈保持努力，定期比较完成质量与效率并调整。支持应逐步撤除，使学生从借助解释走向自主完成。",
+    "analysis": "本节不仅安排时间环境，还训练求助过程。问题中的“抄完”是执行性求助证据，改进需写清先尝试、定位、提问、使用帮助与独立检验。"
+  },
+  {
+    "id": "training-psychology-c7-s1-1",
+    "book": "psychology",
+    "chapter": 7,
+    "section": "第一节 智力的基本理论",
+    "topic": "智力理论与多元评价",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k7-002",
+      "psychology-k7-003",
+      "psychology-k7-005",
+      "psychology-k7-006",
+      "psychology-k7-007"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第157页；《应试解析·教育心理学》2027版 PDF第158页；《应试解析·教育心理学》2027版 PDF第159页；《应试解析·教育心理学》2027版 PDF第160页",
+    "stem": "学校只凭一次语文数学测验判断学生“聪明程度”，忽视学生设计作品、合作组织和处理生活问题的能力。\n（1）比较传统因素理论、多元智力与成功智力的主要观点。\n（2）依据这些理论提出教学与评价改进，并说明使用理论的边界。",
+    "referenceAnswer": "（1）传统因素理论以心理测量探索能力结构，斯皮尔曼区分一般与特殊因素，卡特尔区分流体与晶体智力，不能把智力简单等同单次学业分数。加德纳强调特定文化情境中的解决问题与创造产品能力，包括语言、逻辑数学、空间、肢体动觉、音乐、人际、内省、自然观察等智力。斯滕伯格成功智力重视分析、创造和实践能力的协调，以及适应、改变和选择环境。\n（2）在共同基础上提供分析文本、设计作品、协作及真实问题等任务，用作品、观察、讨论和测验形成多样证据；帮助学生认识优势并发展薄弱方面。理论启示是拓展评价和教学路径，不能据一次表现永久分配“某种智力类型”，也不能以有特长为由免除基本学习。教学应创造发展机会，通过持续证据而非标签判断成效。",
+    "analysis": "本节理论比较围绕评价遗漏展开。把一次测验与一般特殊因素、多元表现、成功智力联系，方案需既拓宽证据又避免固定类型。"
+  },
+  {
+    "id": "training-psychology-c7-s2-1",
+    "book": "psychology",
+    "chapter": 7,
+    "section": "第二节 问题解决的实质与过程",
+    "topic": "问题表征与解题过程",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k7-008",
+      "psychology-k7-009",
+      "psychology-k7-010",
+      "psychology-k7-011",
+      "psychology-k7-012",
+      "psychology-k7-013"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第160页；《应试解析·教育心理学》2027版 PDF第161页；《应试解析·教育心理学》2027版 PDF第162页",
+    "stem": "学生遇到题目：“从120米长的跑道起点到终点，每隔10米放一个标志，两端都放，需要多少个？”他直接计算120÷10=12，却未检查两端条件。\n（1）运用问题解决过程分析错误，并写出正确解决过程。\n（2）说明算法式与启发式策略的区别，并提出促进问题表征的教学办法。",
+    "referenceAnswer": "（1）问题有初始状态、目标状态及允许操作。理解时需识别120米、每隔10米和两端都放，理解商12表示间隔数而非标志数，画线段图形成整体表征。寻求解答时确定“间隔数加一”的关系，执行120÷10+1=13，评价时用小规模例子或图检查两端和结果。错误发生在表征和关系选择，不能仅归为计算粗心。\n（2）算法式依规定程序执行可获得解答，启发式根据目标选择可能有价值的操作，如手段—目的分析、逆向反推，但不保证每次成功。教师可要求学生重述条件、画图、区分有效与无关信息、比较相似问题并解释分类，解后检验结果是否满足原条件。策略要依任务选择，画图是表征支持而非万能算法。",
+    "analysis": "本节围绕理解表征—寻求解答—执行—评价四阶段。完整材料提供数值和两端条件，答案有对应运算与检查，避免把通用四阶段照抄而不解决问题。"
+  },
+  {
+    "id": "training-psychology-c7-s3-1",
+    "book": "psychology",
+    "chapter": 7,
+    "section": "第三节 问题解决的训练",
+    "topic": "问题解决能力的培养",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k7-016",
+      "psychology-k7-017",
+      "psychology-k7-018",
+      "psychology-k7-019",
+      "psychology-k7-020"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第190页",
+    "originalQuestionId": "hb-jiaoxin-anli-04",
+    "analysis": "本节训练对应几何新题中的定势、表征、知识组织、情绪与无助障碍。逐项用材料依据解释，再设计变式对比、图形重述、辅助线启发、出声思考与适宜挑战。第二问措施必须与第一问障碍一一联系，不能只增加练习量；原题答案及OCR提示按引用保留。"
+  },
+  {
+    "id": "training-psychology-c7-s4-1",
+    "book": "psychology",
+    "chapter": 7,
+    "section": "第四节 创造性及其培养",
+    "topic": "创造性发展教学",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k7-021",
+      "psychology-k7-022",
+      "psychology-k7-024",
+      "psychology-k7-025",
+      "psychology-k7-027",
+      "psychology-k7-028"
+    ],
+    "origin": "source-question",
+    "source": "《教心母题班课件》PDF第4,8,14,15,19,20页",
+    "originalQuestionId": "mu-教育心理学-02",
+    "analysis": "本节创造性培养对应三个完整任务。第一问按环境、观念与人格、评价、思维训练等途径结合材料；第二问说明基础知识、综合应用与开放问题怎样支持创新；第三问必须给学科、目标、至少两种指定策略及操作步骤，包含发散生成、比较选择与反思。原题来源中的年份不等同333真题，沿用原题提示。"
+  },
+  {
+    "id": "training-psychology-c8-s1-1",
+    "book": "psychology",
+    "chapter": 8,
+    "section": "第一节 社会规范学习",
+    "topic": "社会规范接受的阶段",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k8-001",
+      "psychology-k8-002",
+      "psychology-k8-003",
+      "psychology-k8-004"
+    ],
+    "origin": "adapted",
+    "source": "资料改编：《应试解析·教育心理学》2027版 PDF第173页",
+    "stem": "教师巡视时，学生认真完成值日；教师离开后部分学生停止。后来，一些学生因为认同班长而坚持值日，另一些学生认为维护公共环境是自己的责任，即使无人监督也会主动清理。\n（1）辨析三类行为对应的社会规范接受阶段及条件。\n（2）提出促进规范内化的教育措施，说明为何不能只依靠奖惩。",
+    "referenceAnswer": "（1）为避免检查处罚而值日主要是遵从，行为受外部压力、权威或奖惩制约；因认同班长和群体而坚持，体现认同，依赖对榜样或群体关系的接受；理解公共环境价值并自愿负责，体现内化，规范与个人信念一致，行为较稳定。判断要依据动机与持续表现，同一学生也会随情境变化。\n（2）首先明确规则及合理后果，使基本行为可执行；选择可信榜样、营造参与和互助的班级关系；引导讨论公共环境与他人利益，组织有意义的值日实践、角色体验与反思，让学生自主参与规则制定和评价。奖惩可帮助建立外部约束，却不能替代理解、情感认同和自我调节，应逐步减少外控依赖，观察无人监督及新情境中的行为。",
+    "analysis": "本节三阶段不能仅由行为表面判定。材料均是值日，但压力、榜样认同和价值信念不同；措施按遵从到认同再内化的心理机制设计。"
+  },
+  {
+    "id": "training-psychology-c8-s2-1",
+    "book": "psychology",
+    "chapter": 8,
+    "section": "第二节 态度的学习",
+    "topic": "品德与态度的形成与改变",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k8-005",
+      "psychology-k8-006",
+      "psychology-k8-007",
+      "psychology-k8-008",
+      "psychology-k8-009"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第197页",
+    "originalQuestionId": "hb-jiaoxin-anli-07",
+    "analysis": "本节态度结构、形成条件和改变方法直接对应网红致富故事与读书无用。分析认知片面、情感羡慕和行为抵触如何相连，并结合家庭、同伴、媒介与个人需要；改变态度可用可信说服、讨论、角色体验、活动和一致反馈。必须回应材料中“挣钱等于学习价值”的推理，不能仅训斥。"
+  },
+  {
+    "id": "training-psychology-c8-s3-1",
+    "book": "psychology",
+    "chapter": 8,
+    "section": "第三节 品德的学习",
+    "topic": "艾里克森心理社会发展理论与家庭教育",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k8-011",
+      "psychology-k8-016",
+      "psychology-k8-017",
+      "psychology-k8-018",
+      "psychology-k8-019",
+      "psychology-k8-020"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第129页",
+    "originalQuestionId": "hb-jiaoxin-cailiao-01",
+    "analysis": "第一问家庭品德教育对应本节道德认知、情感和行为的综合培养。尊重沟通发展理解与移情，以身作则提供榜样，实践任务与持续反馈培养行动；须说明三成分相互联系。第二问艾里克森小学生家庭教育跨第一章，应联系勤奋感、自卑感与适当任务完整作答。"
+  },
+  {
+    "id": "training-psychology-c8-s3-2",
+    "book": "psychology",
+    "chapter": 8,
+    "section": "第三节 品德的学习",
+    "topic": "观察学习理论与正确榜样的树立",
+    "questionType": "material",
+    "knowledgeCardIds": [
+      "psychology-k8-015",
+      "psychology-k8-016",
+      "psychology-k8-019",
+      "psychology-k8-020"
+    ],
+    "origin": "source-question",
+    "source": "《高效答题手册》PDF第199页",
+    "originalQuestionId": "hb-jiaoxin-anli-08",
+    "analysis": "本节道德行为与榜样培养对应网络不良模仿。先用观察学习四过程解释习得和表现，再从品德培养设计正面榜样、批判辨析、合作实践与强化，促进认知、情感、行为一致。原题心理机制属于第二章学习理论，应完整论证，不能只让学生背正确规范。"
+  }
+]
