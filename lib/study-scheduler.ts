@@ -1,3 +1,4 @@
+import { canonicalStudySection } from "./study-section-alias";
 /** Transparent interval scheduling. All time and storage are supplied by the caller. */
 export type CardIdentity = { id: string; book: string; chapter: number; section?: string };
 export type StudyScope = { bookId: string; chapters: number[]; section?: string };
@@ -92,7 +93,9 @@ export function normalizeStudyScopes(value: unknown, catalog: readonly CardIdent
   for (const entry of value) {
     if (!isRecord(entry) || typeof entry.bookId !== "string" || !Array.isArray(entry.chapters)) continue;
     if (entry.section !== undefined && (typeof entry.section !== "string" || !entry.section.trim())) continue;
-    const section = typeof entry.section === "string" ? entry.section : undefined;
+    const section = typeof entry.section === "string"
+      ? (entry.chapters.length === 1 ? canonicalStudySection(entry.bookId, Number(entry.chapters[0]), entry.section) : entry.section)
+      : undefined;
     const chapters = [...new Set(entry.chapters.filter((chapter): chapter is number =>
       nonnegativeInt(chapter) && cards.some(card => card.book === entry.bookId && card.chapter === chapter && (section === undefined || card.section === section))
     ))].sort((a, b) => a - b);

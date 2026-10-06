@@ -2,6 +2,7 @@ import { isRestorableView, learningSessionKey, restoreLearningSession, type Book
 import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
 import type { MockPracticeBook } from "./mock-practice-state";
+import { canonicalStudySection } from "./study-section-alias";
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"] as const;
@@ -116,7 +117,8 @@ function chapterFor(book: MockPracticeBook, value: unknown, path: string): numbe
 function location(value: unknown, subject: StudySubject, catalogs: BackupCatalogs, path: string): LearningLocation {
   const row = object(value, path), book = text(row.book, path, 200);
   const chapter = subject === "english" ? integer(row.chapter, 1, 10_000, path) : chapterFor(bookFor(catalogs, subject, book, path), row.chapter, path);
-  const section = text(row.section, path);
+  const rawSection = text(row.section, path);
+  const section = subject === "333" ? canonicalStudySection(book, chapter, rawSection) : rawSection;
   if (subject === "english" ? book !== "" || section !== "" : section !== "" && !bookFor(catalogs, subject, book, path).chapters[chapter - 1].sections.includes(section)) fail(path, "未知小节");
   if (!isRestorableView(subject, row.view)) fail(path, "未知页面");
   if (row.pastMode !== "index" && row.pastMode !== "practice") fail(path);
@@ -136,7 +138,8 @@ function session(value: unknown, catalogs: BackupCatalogs): LearningSession {
     const book = bookFor(catalogs, parts[0], parts[1], "草稿");
     if (kind === "feynman") {
       if (parts.length !== 4) fail("草稿");
-      const chapter = chapterFor(book, parts[2], "草稿"), section = text(parts[3], "草稿");
+      const chapter = chapterFor(book, parts[2], "草稿"), rawSection = text(parts[3], "草稿");
+      const section = parts[0] === "333" ? canonicalStudySection(book.id, chapter, rawSection) : rawSection;
       if (section && !book.chapters[chapter - 1].sections.includes(section)) fail("草稿", "未知小节");
     } else if (parts.length !== 3 || parts[0] !== "825" || !catalogs["825"].questions?.some(question => question.id === parts[2] && question.book === book.id)) fail("真题作答", "未知题目");
     return [key, text(value, "草稿")];
@@ -147,18 +150,23 @@ function session(value: unknown, catalogs: BackupCatalogs): LearningSession {
 }
 function scopes(value: unknown, catalog: BackupCatalog, path: string): StudyScope[] {
   const list = boundedList(value, 10_000, path);
+  const originalKeys = new Set<string>();
   const clean = list.map(entry => {
     const row = object(entry, path), book = catalog.books.find(book => book.id === row.bookId) ?? fail(path, "未知书目");
     const chapters = boundedList(row.chapters, book.chapters.length, path).map(value => chapterFor(book, value, path));
     if (!chapters.length || new Set(chapters).size !== chapters.length) fail(path);
-    const section = row.section === undefined ? undefined : text(row.section, path, 500);
+    const rawSection = row.section === undefined ? undefined : text(row.section, path, 500);
+    const originalKey = JSON.stringify({ bookId: book.id, chapters: [...chapters].sort((a, b) => a - b), ...(rawSection === undefined ? {} : { section: rawSection }) });
+    if (originalKeys.has(originalKey)) fail(path, "重复范围");
+    originalKeys.add(originalKey);
+    const section = rawSection === undefined ? undefined : chapters.length === 1 ? canonicalStudySection(book.id, chapters[0], rawSection) : rawSection;
     if (section !== undefined && (!section.trim() || chapters.some(chapter => !book.chapters[chapter - 1].sections.includes(section)))) fail(path, "未知小节");
     if (chapters.some(chapter => !catalog.cards.some(card => card.book === book.id && card.chapter === chapter && (section === undefined || card.section === section)))) fail(path, "范围没有对应卡片");
     return { bookId: book.id, chapters, ...(section === undefined ? {} : { section }) };
   });
-  if (new Set(clean.map(entry => JSON.stringify({ ...entry, chapters: [...entry.chapters].sort((a, b) => a - b) }))).size !== clean.length) fail(path, "重复范围");
+  // Distinct old/canonical labels can now refer to the same corrected scope.
   const normalized = normalizeStudyScopes(clean, catalog.cards);
-  if (normalized.length !== clean.length) fail(path);
+  if (normalized.length !== new Set(clean.map(entry => JSON.stringify({ ...entry, chapters: [...entry.chapters].sort((a, b) => a - b) }))).size) fail(path);
   return normalized;
 }
 function progress(value: unknown, catalog: BackupCatalog, allowMissingNewScopes = false): BackupProgress {

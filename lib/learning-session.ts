@@ -1,4 +1,5 @@
 import { viewAvailable } from "./subject-capabilities";
+import { canonicalStudySection } from "./study-section-alias";
 export type StudySubject = "333" | "825" | "politics" | "english";
 export type StudyView = "overview" | "chapters" | "cards" | "quiz" | "practice" | "essay" | "mock" | "feynman" | "planner" | "mistakes" | "stats" | "search";
 export type LearningLocation = {
@@ -33,7 +34,8 @@ function readLocation(value: unknown, subject: StudySubject, ids: BookIds): Lear
   return {
     ...base, book: validBook ? value.book as string : base.book,
     chapter: validBook && integer(value.chapter, 1, 10_000) ? value.chapter as number : 1,
-    section: validBook && text(value.section) ? value.section : "",
+    section: validBook && text(value.section)
+      ? (subject === "333" ? canonicalStudySection(value.book as string, value.chapter as number, value.section) : value.section) : "",
     view: views.includes(value.view as StudyView) && !(subject === "politics" && (value.view === "quiz" || value.view === "mock")) ? value.view as StudyView : "overview",
     pastMode: value.pastMode === "index" ? "index" : "practice",
     pastYear: integer(value.pastYear, 1900, 2200) ? value.pastYear as number : base.pastYear,
@@ -47,7 +49,7 @@ export const feynmanDraftKey = (subject: StudySubject, location: Pick<LearningLo
 export const pastAnswerKey = (book: string, questionId: string) => JSON.stringify(["825", book, questionId]);
 function readDrafts(value: unknown, ids: BookIds, kind: "feynman" | "past") {
   if (!record(value)) return {};
-  return Object.fromEntries(Object.entries(value).filter(([key, value]) => {
+  const drafts = Object.fromEntries(Object.entries(value).filter(([key, value]) => {
     if (!text(value)) return false;
     try {
       const parts: unknown = JSON.parse(key);
@@ -55,6 +57,19 @@ function readDrafts(value: unknown, ids: BookIds, kind: "feynman" | "past") {
       return kind === "feynman" ? parts.length === 4 && integer(parts[2], 1, 10_000) && text(parts[3]) : parts.length === 3 && parts[0] === "825" && text(parts[2]) && !!parts[2];
     } catch { return false; }
   })) as Record<string, string>;
+  if (kind === "feynman") for (const [key, draft] of Object.entries(drafts)) {
+    const parts = JSON.parse(key) as [StudySubject, string, number, string];
+    if (parts[0] !== "333") continue;
+    const section = canonicalStudySection(parts[1], parts[2], parts[3]);
+    if (section === parts[3]) continue;
+    const canonicalKey = JSON.stringify([parts[0], parts[1], parts[2], section]);
+    // A newer canonical draft wins; retain the older draft too if both exist.
+    if (!Object.prototype.hasOwnProperty.call(drafts, canonicalKey)) {
+      drafts[canonicalKey] = draft;
+      delete drafts[key];
+    }
+  }
+  return drafts;
 }
 export function restoreLearningSession(raw: string | null, ids: BookIds, legacyRaw: string | null = null): LearningSession {
   const result = createLearningSession(ids);
@@ -80,6 +95,7 @@ export function validateLocation(location: LearningLocation, books: { id: string
   if (!books.length) return location;
   const book = books.find(item => item.id === location.book) || books[0];
   const chapter = book.id === location.book && location.chapter <= book.chapters.length ? location.chapter : 1;
-  const section = book.id === location.book && chapter === location.chapter && book.chapters[chapter - 1]?.sections.includes(location.section) ? location.section : "";
+  const canonical = canonicalStudySection(location.book, location.chapter, location.section);
+  const section = book.id === location.book && chapter === location.chapter && book.chapters[chapter - 1]?.sections.includes(canonical) ? canonical : "";
   return book.id === location.book && chapter === location.chapter && section === location.section ? location : { ...location, book: book.id, chapter, section };
 }

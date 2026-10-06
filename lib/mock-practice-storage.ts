@@ -1,6 +1,7 @@
 import { MAX_MOCK_QUIZ_QUESTIONS, MOCK_QUIZ_TYPES, type MockQuizQuestion, type MockQuizUnit } from "./mock-quiz";
 import { snapshotMockSettings, type MockCounts, type MockPracticeBook, type MockResponse, type MockSession } from "./mock-practice-state";
 import type { MockPaperTemplateId } from "./mock-paper-templates";
+import { canonicalStudySection } from "./study-section-alias";
 
 export const MAX_MOCK_RECORD_CHARS = 1_000_000; // At most 2 MB in UTF-16 local storage.
 export type MockSettings = { counts: MockCounts; selection: Record<string, number[]>; sectionScope?: { bookId: string; chapter: number; name: string }; templateId?: MockPaperTemplateId };
@@ -38,7 +39,8 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
   const findBook = (id: unknown) => books.find((book) => book.id === id) || invalid();
   const parseChapter = (bookId: string, value: unknown) => integer(value, 1, findBook(bookId).chapters.length);
   const parseSection = (bookId: string, chapter: number, value: unknown) => {
-    const section = text(value, 500);
+    const rawSection = text(value, 500);
+    const section = subject === "333" ? canonicalStudySection(bookId, chapter, rawSection) : rawSection;
     if (!findBook(bookId).chapters[chapter - 1].sections.includes(section)) return invalid();
     return section;
   };
@@ -81,8 +83,9 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
     const unit = object(value), book = findBook(unit.bookId), chapterNo = parseChapter(book.id, unit.chapterNo);
     if (unit.bookName !== book.name || unit.chapterName !== book.chapters[chapterNo - 1].title) return invalid();
     const range = ranges.find((range) => range.bookId === book.id && range.chapters.includes(chapterNo));
-    if (!range || range.section !== unit.section) return invalid();
-    return { bookId: book.id, chapterNo, bookName: book.name, chapterName: book.chapters[chapterNo - 1].title, ...(unit.section !== undefined ? { section: parseSection(book.id, chapterNo, unit.section) } : {}) };
+    const section = unit.section === undefined ? undefined : parseSection(book.id, chapterNo, unit.section);
+    if (!range || range.section !== section) return invalid();
+    return { bookId: book.id, chapterNo, bookName: book.name, chapterName: book.chapters[chapterNo - 1].title, ...(section !== undefined ? { section } : {}) };
   };
   const rawResult = object(rawSession.result);
   const questions = list(rawResult.questions, MAX_MOCK_QUIZ_QUESTIONS, (value): MockQuizQuestion => {
