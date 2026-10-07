@@ -141,3 +141,38 @@ test("多标签: 旧标签的滞后写入被 rev 锁拒绝, 新内容不丢", as
     delete globalThis.localStorage;
   }
 });
+
+test("F02: 已有覆盖层时, 不带版本的首次保存必须冲突(双标签并发)", async () => {
+  const personal = await realModule("../lib/personal-cards.ts");
+  const store = new Map();
+  globalThis.localStorage = { getItem: key => store.get(key) ?? null, setItem: (key, value) => store.set(key, value), removeItem: key => store.delete(key) };
+  try {
+    const first = personal.saveOverlay("333", "card-y", { note: { text: "先到的写入", runs: [] } }, "原问题", "原答案", null);
+    assert.equal(first.ok, true);
+    // 另一标签打开编辑器时没有看到覆盖层(基线 null), 保存必须被拒而不是覆盖
+    const late = personal.saveOverlay("333", "card-y", { note: { text: "后到的旧基线写入", runs: [] } }, "原问题", "原答案", null);
+    assert.equal(late.reason, "conflict");
+    assert.equal(personal.readPersonal().overlays["333:card-y"].note.text, "先到的写入");
+  } finally {
+    delete globalThis.localStorage;
+  }
+});
+
+test("F03: 超长内容保存被明确拒绝(不静默丢卡), 合法长度可保存", async () => {
+  const personal = await realModule("../lib/personal-cards.ts");
+  const store = new Map();
+  globalThis.localStorage = { getItem: key => store.get(key) ?? null, setItem: (key, value) => store.set(key, value), removeItem: key => store.delete(key) };
+  try {
+    const overlong = "学习笔记".repeat(5001); // 20004 字
+    const result = personal.addPersonalCard({ subject: "333", book: "principles", chapter: 1, section: "", front: { text: "题面", runs: [] }, back: { text: overlong, runs: [] } });
+    assert.equal(result.ok, false);
+    assert.equal(result.reason, "invalid");
+    assert.match(result.message, /超过 20000 字上限/);
+    assert.equal(personal.readPersonal().cards.length, 0);
+    const ok = personal.addPersonalCard({ subject: "333", book: "principles", chapter: 1, section: "", front: { text: "题面", runs: [] }, back: { text: "答案".repeat(6666), runs: [] } });
+    assert.equal(ok.ok, true);
+    assert.equal(personal.readPersonal().cards.length, 1);
+  } finally {
+    delete globalThis.localStorage;
+  }
+});

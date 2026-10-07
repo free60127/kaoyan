@@ -35,14 +35,14 @@ export function EssayBank({ entries }: { entries: { id: string; book: string; ta
       </div></div>
     <div className="essay-subfilters">{categories.map(cat => <button key={cat} className={category === cat ? "mode-button active" : "mode-button"} onClick={() => setCategory(cat)}>{cat} ({entries.filter(entry => entry.category === cat && (book === "all" || entry.book === book || entry.tags?.includes(book))).length})</button>)}</div>
     <p className="mock-help">题目与参考答案按来源完整保留：{breakdown.map(item => `${item.label} ${item.count} 题`).join("、")}。中外比较类题带跨书标签，会同时出现在相关书目下。先自己组织答案，再展开对照。</p>
-    {warned > 0 && <p className="mock-help">{warned} 题带 OCR 校对标注：原文扫描缺行处已按上下文补全，展开时可见提示。</p>}
+    {warned > 0 && <p className="mock-help">{warned} 题带 OCR 状态标注（逐题不同：待核对 / 已按上下文补全等），展开题目时可见该题的具体说明。</p>}
     <div className="essay-list">
       {filtered.map(entry => <div key={entry.id} className="essay-row">
         <button className="essay-head" onClick={() => toggle(entry.id)}>
           <small>{entry.category} · {BOOK_LABEL[entry.book] || entry.book}{entry.tags?.length ? ` · 相关：${entry.tags.map(tag => BOOK_LABEL[tag] || tag).join("、")}` : ""} · {entry.source}</small>
           <b>{entry.topic || entry.stem.slice(0, 30)}</b>
           <span className="essay-stem">{entry.stem}</span>
-          {entry.ocrWarning && <span className="essay-warn"><TriangleAlert size={13}/> OCR 校对标注：此题文本可能不完整，已按上下文补全</span>}
+          {entry.ocrWarning && <span className="essay-warn"><TriangleAlert size={13}/> {entry.ocrWarning}</span>}
         </button>
         {open[entry.id] && <div className="essay-answer">
           <b>参考答案</b>

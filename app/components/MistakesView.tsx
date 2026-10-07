@@ -38,7 +38,8 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
     return [...bySubject.entries()];
   }, [items, only]);
   const requizSubject = only === "all" ? subject : only;
-  const requizCandidates = useMemo(() => (requiz || choiceRequiz ? selectRequizList(items, requizSubject) : []), [requiz, choiceRequiz, items, requizSubject]);
+  // F08: 候选始终计算——模式状态只决定显示哪个练习, 不能反过来决定入口候选
+  const requizCandidates = useMemo(() => selectRequizList(items, requizSubject), [items, requizSubject]);
   // 闪卡错题: refId 命中闪卡库才能重练; 题库错题: refId 命中选择题库
   const requizList = useMemo(() => requizCandidates.filter(entry => (cards[requizSubject] || []).some(card => card.id === entry.refId)), [requizCandidates, cards, requizSubject]);
   const choiceRequizList = useMemo(() => (

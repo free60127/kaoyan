@@ -143,22 +143,42 @@ export type OverlayPatch = {
   originalText?: string;
 };
 
-export type SaveResult = { ok: true; store: PersonalStore } | { ok: false; reason: "conflict" | "storage"; store: PersonalStore };
+export type SaveResult = { ok: true; store: PersonalStore } | { ok: false; reason: "conflict" | "storage" | "invalid"; message?: string; store: PersonalStore };
+
+const nextQ = (patch: OverlayPatch, existing?: PersonalOverlay) => patch.q === null ? undefined : patch.q !== undefined ? patch.q : existing?.q;
+const nextA = (patch: OverlayPatch, existing?: PersonalOverlay) => patch.a === null ? undefined : patch.a !== undefined ? patch.a : existing?.a;
+const nextNote = (patch: OverlayPatch, existing?: PersonalOverlay) => patch.note === null ? undefined : patch.note !== undefined ? patch.note : existing?.note;
+
+/** 保存前内容校验: 与读取过滤同一套上限, 超长在入口明确报错而不是读回时静默丢卡(F03)。 */
+function validateContents(entries: [string, RichContent | undefined][]): string[] {
+  const errors: string[] = [];
+  for (const [field, content] of entries) {
+    if (!content) continue;
+    if (typeof content.text !== "string" || !content.text.trim()) errors.push(`${field}不能为空`);
+    else if (content.text.length > MAX_TEXT) errors.push(`${field}已有 ${content.text.length} 字，超过 ${MAX_TEXT} 字上限，请删减后再保存`);
+  }
+  return errors;
+}
 
 /** 保存一张教材卡的覆盖层。expectedRev 是调用方读到的版本; 不一致=另一标签页已修改。 */
 export function saveOverlay(subject: PersonalSubject, cardId: string, patch: OverlayPatch, originalFront: string, originalBack: string, expectedRev: number | null): SaveResult {
   const current = readPersonal();
   const key = overlayKey(subject, cardId);
   const existing = current.overlays[key];
-  if (expectedRev !== null && existing && existing.rev !== expectedRev) return { ok: false, reason: "conflict", store: current };
+  // F02: expectedRev === null 只表示"打开编辑器时该卡尚无覆盖层";
+  // 若期间已被(另一标签)创建, 必须冲突, 不能无条件覆盖
+  if (expectedRev === null && existing) return { ok: false, reason: "conflict", store: current };
+  if (expectedRev !== null && (!existing || existing.rev !== expectedRev)) return { ok: false, reason: "conflict", store: current };
+  const invalid = validateContents([["问题", nextQ(patch, existing)], ["答案", nextA(patch, existing)], ["我的补充", nextNote(patch, existing)]]);
+  if (invalid.length) return { ok: false, reason: "invalid", message: invalid.join("；"), store: current };
   const baseHash = contentHash(`${contentHash(originalFront)}|${contentHash(originalBack)}`);
   const next: PersonalOverlay = {
     rev: (existing?.rev || 0) + 1,
     updatedAt: new Date().toISOString(),
     baseHash: existing ? existing.baseHash : baseHash,
-    q: patch.q === null ? undefined : patch.q !== undefined ? patch.q : existing?.q,
-    a: patch.a === null ? undefined : patch.a !== undefined ? patch.a : existing?.a,
-    note: patch.note === null ? undefined : patch.note !== undefined ? patch.note : existing?.note,
+    q: nextQ(patch, existing),
+    a: nextA(patch, existing),
+    note: nextNote(patch, existing),
     bg: patch.bg === null ? undefined : patch.bg !== undefined ? patch.bg : existing?.bg,
     hidden: patch.hidden === undefined ? existing?.hidden : patch.hidden,
   };
@@ -186,7 +206,9 @@ export function newPersonalCardId(now: Date = new Date()): string {
 
 export function addPersonalCard(input: NewPersonalCardInput): SaveResult {
   const current = readPersonal();
-  if (current.cards.length >= MAX_CARDS) return { ok: false, reason: "storage", store: current };
+  if (current.cards.length >= MAX_CARDS) return { ok: false, reason: "storage", message: "个人卡数量已达上限。", store: current };
+  const invalid = validateContents([["问题", input.front], ["答案", input.back], ["我的补充", input.note]]);
+  if (invalid.length) return { ok: false, reason: "invalid", message: invalid.join("；"), store: current };
   const card: PersonalCard = {
     id: newPersonalCardId(),
     subject: input.subject,
@@ -211,6 +233,8 @@ export function updatePersonalCard(id: string, patch: Partial<Omit<PersonalCard,
   const card = current.cards.find(item => item.id === id);
   if (!card) return { ok: false, reason: "conflict", store: current };
   if (card.rev !== expectedRev) return { ok: false, reason: "conflict", store: current };
+  const invalid = validateContents([["问题", patch.front ?? card.front], ["答案", patch.back ?? card.back], ["我的补充", patch.note === undefined ? card.note : patch.note]]);
+  if (invalid.length) return { ok: false, reason: "invalid", message: invalid.join("；"), store: current };
   Object.assign(card, patch, { rev: card.rev + 1 });
   current.seq += 1;
   const written = writeStore(current);

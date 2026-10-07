@@ -27,7 +27,7 @@ import { ChoiceDrill } from "./components/ChoiceDrill";
 import { loadEssayQuestions, type EssayQuestion } from "@/lib/essay-questions";
 import { Overview333, Overview825, OverviewPolitics } from "./components/OverviewPanels";
 import { selectedAnswer } from "@/lib/copy-answer";
-import { createLearningSession, defaultPlannerPrompt, feynmanDraftKey, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type StudySubject, type StudyView } from "@/lib/learning-session";
+import { createLearningSession, defaultPlannerPrompt, feynmanDraftKey, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type LearningSession, type StudySubject, type StudyView } from "@/lib/learning-session";
 import { sidebarViews, subjects, subjectBooks, views } from "@/lib/subject-capabilities";
 import { overlayKey, personalStorageKey, readPersonal, type PersonalStore, type PersonalSubject } from "@/lib/personal-cards";
 import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
@@ -37,7 +37,7 @@ const BackupPanel = lazy(() => import("./components/BackupPanel"));
 type Progress<T> = { "333": T; "825": T; politics: T };
 type Chapter = { title: string; sections: string[] };
 type Book = { id: string; name: string; short: string; tone: string; chapters: Chapter[] };
-type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
+type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[]; note?: string };
 // 科目/页面能力统一来自 lib/subject-capabilities(导航过滤、资料加载、备份校验共用)。
 const subjectBookIds = subjectBooks;
 const books333Model: Book[] = books333.map((book) => ({ id: book.id, name: book.name, short: book.short, tone: book.tone, chapters: book.chapters.map((title, index) => ({ title, sections: outlines[book.id]?.[index] || [] })) }));
@@ -57,14 +57,45 @@ function withSectionLabels(cards: Card[], base: Book[]): { cards: Card[]; books:
 }
 const base333 = withSectionLabels(cards333BaseModel, books333Model);
 const emptyCards: Card[] = [];
+// F01: 学习会话按"路径"合并而不是整对象覆盖——双标签分别写不同科目/草稿时互不丢失。
+// 路径粒度: 当前科目、每科目位置、每条费曼/真题草稿、每科目计划要求。
+function sessionPaths(session: LearningSession): Map<string, string> {
+  const map = new Map<string, string>([["subject", session.subject]]);
+  for (const [subject, location] of Object.entries(session.locations)) map.set("loc:" + subject, JSON.stringify(location));
+  for (const [key, value] of Object.entries(session.feynmanDrafts)) map.set("fd:" + key, String(value));
+  for (const [key, value] of Object.entries(session.pastAnswers)) map.set("pa:" + key, String(value));
+  for (const [key, value] of Object.entries(session.plannerPrompts)) map.set("pp:" + key, String(value));
+  return map;
+}
+function changedSessionPaths(before: LearningSession | null, after: LearningSession): Set<string> {
+  if (!before) return new Set(sessionPaths(after).keys());
+  const beforePaths = sessionPaths(before), afterPaths = sessionPaths(after);
+  const dirty = new Set<string>();
+  for (const [path, value] of afterPaths) if (beforePaths.get(path) !== value) dirty.add(path);
+  for (const path of beforePaths.keys()) if (!afterPaths.has(path)) dirty.add(path);
+  return dirty;
+}
+function mergeSession(local: LearningSession, remote: LearningSession, dirty: Set<string>): LearningSession {
+  const merged: LearningSession = JSON.parse(JSON.stringify(remote));
+  for (const [path, value] of sessionPaths(local)) {
+    if (!dirty.has(path)) continue; // 本标签未动过的路径以远端为准
+    if (path === "subject") merged.subject = local.subject;
+    else if (path.startsWith("loc:")) merged.locations[path.slice(4) as StudySubject] = JSON.parse(value);
+    else if (path.startsWith("fd:")) merged.feynmanDrafts[path.slice(3)] = value;
+    else if (path.startsWith("pa:")) merged.pastAnswers[path.slice(3)] = value;
+    else if (path.startsWith("pp:")) merged.plannerPrompts[path.slice(3) as StudySubject] = value;
+  }
+  return merged;
+}
 // 个人编辑层: 教材卡的修改叠加为有效内容(原卡 ID 不变), 个人卡并入目录; 隐藏可恢复
 function applyPersonal(cards: Card[], subject: PersonalSubject, personal: PersonalStore): Card[] {
   const kept = cards.filter(card => !personal.overlays[overlayKey(subject, card.id)]?.hidden).map(card => {
     const overlay = personal.overlays[overlayKey(subject, card.id)];
-    if (!overlay?.q && !overlay?.a) return card;
-    return { ...card, front: overlay.q ? overlay.q.text : card.front, back: overlay.a ? overlay.a.text : card.back };
+    if (!overlay?.q && !overlay?.a && !overlay?.note) return card;
+    return { ...card, front: overlay.q ? overlay.q.text : card.front, back: overlay.a ? overlay.a.text : card.back, note: overlay.note?.text || undefined };
   });
-  const extra = personal.cards.filter(card => card.subject === subject && !card.hidden).map(card => ({ id: card.id, book: card.book, chapter: card.chapter, ...(card.section ? { section: card.section } : {}), front: card.front.text, back: card.back.text, source: "个人补充卡" }) as Card);
+  // F07: 个人卡的补充进合并卡(note 字段), 搜索与 AI 与展示同源
+  const extra = personal.cards.filter(card => card.subject === subject && !card.hidden).map(card => ({ id: card.id, book: card.book, chapter: card.chapter, ...(card.section ? { section: card.section } : {}), front: card.front.text, back: card.back.text, note: card.note?.text || undefined, source: "个人补充卡" }) as Card);
   return [...kept, ...extra];
 }
 const total333 = books333.reduce((sum, book) => sum + book.chapters.length, 0);
@@ -136,10 +167,10 @@ export default function Home() {
   const cards825Merged = useMemo(() => data825 ? applyPersonal(data825.cards as unknown as Card[], "825", personal) : emptyCards, [data825, personal]);
   const books333WithSections = useMemo(() => knowledge333 ? withSectionLabels(cards333Merged, books333Model).books : base333.books, [knowledge333, cards333Merged]);
   // AI 有效卡库: 费曼/计划/模拟卷读取合并后的内容(含个人修改与补充), 而非内置旧资料
-  const noteOf = (subjectKey: PersonalSubject) => (cardId: string) => personal.overlays[overlayKey(subjectKey, cardId)]?.note?.text;
-  useEffect(() => { setEffectiveCards("333", toEffectiveCards(cards333Merged, noteOf("333"))); }, [cards333Merged, personal]);
-  useEffect(() => { setEffectiveCards("politics", toEffectiveCards(cardsPoliticsMerged, noteOf("politics"))); }, [cardsPoliticsMerged, personal]);
-  useEffect(() => { if (data825) setEffectiveCards("825", toEffectiveCards(cards825Merged, noteOf("825"))); }, [cards825Merged, personal, data825]);
+  const mergedNoteOf = (cards: Card[]) => { const map = new Map(cards.filter(card => card.note).map(card => [card.id, card.note as string])); return (cardId: string) => map.get(cardId); };
+  useEffect(() => { setEffectiveCards("333", toEffectiveCards(cards333Merged, mergedNoteOf(cards333Merged))); }, [cards333Merged]);
+  useEffect(() => { setEffectiveCards("politics", toEffectiveCards(cardsPoliticsMerged, mergedNoteOf(cardsPoliticsMerged))); }, [cardsPoliticsMerged]);
+  useEffect(() => { if (data825) setEffectiveCards("825", toEffectiveCards(cards825Merged, mergedNoteOf(cards825Merged))); }, [cards825Merged, data825]);
   // 编辑器"查看/恢复原文"用基库文本(合并卡上已是应用覆盖层后的内容)
   const baseById = useMemo(() => {
     const map = new Map<string, { front: string; back: string }>();
@@ -223,6 +254,7 @@ export default function Home() {
   }
   const requestId = useRef(0), requestController = useRef<AbortController | null>(null);
   const subjectRef = useRef(subject);
+  const lastSavedSession = useRef<LearningSession | null>(null);
   const quizzes = useRef<Record<string, { quizIndex: number; choice: number | null; score: { right: number; total: number } }>>({});
   function cancelRequest() {
     requestId.current += 1; requestController.current?.abort(); requestController.current = null; setLoading(false);
@@ -244,6 +276,7 @@ export default function Home() {
     try {
       const restored = restoreLearningSession(localStorage.getItem(learningSessionKey), subjectBookIds, localStorage.getItem("yantu-last-place"));
       subjectRef.current = restored.subject;
+      lastSavedSession.current = restored;
       setSession(restored);
     } catch { setSessionStorageError("浏览器未能读取学习位置和草稿，请允许本地存储。"); }
     try { setKey(sessionStorage.getItem("yantu-key") || ""); } catch { setKeyStorageError("浏览器未能读取已保存的密钥，请允许会话存储后重新设置。"); }
@@ -251,9 +284,35 @@ export default function Home() {
   }, []);
   useEffect(() => {
     if (!progressReady) return;
-    try { localStorage.setItem(learningSessionKey, JSON.stringify(session)); setSessionStorageError(""); }
+    try {
+      const raw = localStorage.getItem(learningSessionKey);
+      const remote = raw ? restoreLearningSession(raw, subjectBookIds) : null;
+      const dirty = changedSessionPaths(lastSavedSession.current, session);
+      const merged = remote ? mergeSession(session, remote, dirty) : session;
+      localStorage.setItem(learningSessionKey, JSON.stringify(merged));
+      lastSavedSession.current = merged;
+      setSessionStorageError("");
+      // 远端(另一标签)的非冲突更新并入本地内存, 后续本地保存不会覆盖它们
+      if (JSON.stringify(merged) !== JSON.stringify(session)) setSession(merged);
+    }
     catch { setSessionStorageError("浏览器未能保存学习位置和草稿；刷新前请复制需要保留的文字。"); }
   }, [session, progressReady]);
+  // 跨标签同步: 另一标签写入时, 保留本标签未保存的修改, 合并远端其余字段
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== learningSessionKey && event.key !== null) return;
+      let remote: LearningSession | null = null;
+      try { remote = event.newValue ? restoreLearningSession(event.newValue, subjectBookIds) : null; } catch { return; }
+      setSession(previous => {
+        const dirty = changedSessionPaths(lastSavedSession.current, previous);
+        const merged = remote ? mergeSession(previous, remote, dirty) : previous;
+        lastSavedSession.current = merged;
+        return JSON.stringify(merged) === JSON.stringify(previous) ? previous : merged;
+      });
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
   useEffect(() => () => { requestId.current += 1; requestController.current?.abort(); }, []);
   useEffect(() => {
     if (!menuOpen) return;
@@ -499,7 +558,7 @@ export default function Home() {
     if (view !== "search" || !knowledge333 || !dataPolitics || !data825) return [];
     // 书名与当前科目解耦: 各科目用各自的目录, 避免 825 卡显示 linguistics/literature 内部 ID
     const books825: Book[] = (data825?.books || []).map((item) => ({ id: item.id, name: item.name, short: item.id === "linguistics" ? "语言" : "文学", tone: "#4976b6", chapters: [] }));
-    const toEntry = (subjectId: PersonalSubject, subjectName: string, bookList: Book[], card: Card): SearchEntry => ({ subject: subjectId, subjectName, bookId: card.book, bookName: bookList.find((item) => item.id === card.book)?.name || card.book, chapter: card.chapter, section: card.section || "", id: card.id, front: card.front, extra: card.id.startsWith("mine-") ? "个人卡" : personal.overlays[overlayKey(subjectId, card.id)]?.note?.text });
+    const toEntry = (subjectId: PersonalSubject, subjectName: string, bookList: Book[], card: Card): SearchEntry => ({ subject: subjectId, subjectName, bookId: card.book, bookName: bookList.find((item) => item.id === card.book)?.name || card.book, chapter: card.chapter, section: card.section || "", id: card.id, front: card.front, extra: card.note || personal.overlays[overlayKey(subjectId, card.id)]?.note?.text });
     return [
       ...cards333Merged.map((card) => toEntry("333", "333 教育综合", books333WithSections, card)),
       ...cardsPoliticsMerged.map((card) => toEntry("politics", "政治", politicsModels.books, card)),
@@ -581,10 +640,10 @@ export default function Home() {
           {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject} subject={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} originalById={originalById} onRated={handleRated} onUndoRating={undoLastRating}/></>}
           {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{wrongOnly ? `只练错题：${wrongPool.length} 道` : useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button></div>{wrongOnly && !wrongPool.length && <div className="empty">当前章节没有已记录的错题。<button className="secondary" onClick={() => setWrongOnly(false)}>练全部真题</button></div>}
           {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
-          {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView subject="politics" subjectName="政治" books={books} cards={politicsModels.cards} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
+          {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView subject="politics" subjectName="政治" books={books} cards={cardsPoliticsMerged} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "手册、丹丹1000题、阶段测试与丹丹卷的主观题：材料、设问与分点参考答案按来源完整保留；先自己作答再展开对照。")}{essayError && <div className="empty" role="alert">{essayError}，题目列表暂时无法显示；闪卡与练习不受影响。<button className="secondary" onClick={() => { setEssayError(""); setEssayLoadAttempt((attempt) => attempt + 1); setEssayQuestions(null); }}>重新加载</button></div>}<EssayBank entries={(essayQuestions || []).map(q => ({ id: q.id, book: q.book || "principles", tags: q.tags, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
           {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill storage={localStorageStore}/></>}
-          {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView subject="825" subjectName="825 英语专业基础" books={books} cards={(data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
+          {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView subject="825" subjectName="825 英语专业基础" books={books} cards={cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
           {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "每日评分、练习与连续学习天数；数据保存在本浏览器，可用“备份与导出”迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)}/></>)}
           {view === "search" && <>{heading("GLOBAL SEARCH", "搜索全部闪卡", "跨科目搜索 3600+ 张闪卡，点击结果直达对应章节与卡片。")}{!searchEntries.length ? <div className="panel empty">正在汇总三科卡片索引…</div> : <SearchView entries={searchEntries} onJump={(entry) => jumpToCard(entry.id)}/>}</>}
