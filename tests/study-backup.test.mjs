@@ -142,7 +142,8 @@ test("document includes original problems, chapter labels, dates, every option a
   for (const subject of ["333", "825", "politics"]) {
     const id = Object.keys(progress(subject).cards)[0], card = catalogs[subject].cards.find(card => card.id === id);
     assert.ok(text.includes(card.front));
-    assert.ok(text.includes(card.back));
+    // 备份文档会剥离教材重点标记(⟦k|…⟧)后再输出
+    assert.ok(text.includes(card.back.replace(/⟦[gbrys]\|([^⟧]*)⟧/g, "$1")));
   }
   for (const value of ["2027-10-04T12:00:00.000Z", "已完成", "新学范围", "333复述草稿\n第二行", "完整真题答复\n继续论证", "非历年真题", "选项甲", "选项乙", "选项丙", "选项丁", "我的作答：C", "参考答案：B", "我的完整作答\n结论", "完整参考答案\n论证", "完整选择解析", "完整考点依据"]) assert.ok(text.includes(value), value);
   assert.ok(text.includes("目标初试日期：2028-02-29（手动设置）"));
