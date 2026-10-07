@@ -2,11 +2,15 @@ import { isRestorableView, learningSessionKey, restoreLearningSession, type Book
 import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
 import type { MockPracticeBook } from "./mock-practice-state";
-import { stripHighlightMarkers } from "./highlight-markers";
+import { parseHighlightMarkers, stripHighlightMarkers } from "./highlight-markers";
+import { renderRichSegments } from "./rich-text";
+import { parsePersonalStore, personalStorageKey, type PersonalStore } from "./personal-cards";
+import type { RichContent } from "./rich-text";
 import { examTargetKey, validateExamTarget, type ExamTargetRecord } from "./exam-target";
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
-export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", examTargetKey] as const;
+// 个人编辑层放最前: 导入时先恢复个人卡, 再恢复依赖它的复习记录
+export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", examTargetKey] as const;
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
@@ -15,6 +19,7 @@ export type BackupDayStat = { date: string; ratings: number; again: number; newC
 export type BackupActivity = { t: string; kind: string; subject: string; label: string; detail: string };
 export type BackupRecordMap = {
   "yantu-exam-target-v1": ExamTargetRecord;
+  "yantu-personal-v1": PersonalStore;
   "yantu-learning-session-v1": LearningSession;
   "yantu-srs-v1-333": BackupProgress;
   "yantu-srs-v1-825": BackupProgress;
@@ -41,7 +46,7 @@ export type BackupCatalog = { books: MockPracticeBook[]; cards: BackupCard[]; qu
 export type BackupCatalogs = Record<BackupSubject, BackupCatalog>;
 export type BackupStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 export type BackupSummary = Record<StudySubject, { studiedCards: number; completedChapters: number; mockQuestions: number; drafts: number; mistakes: number; quizAnswers: number }>;
-export type BackupDocumentBlock = { type: "heading" | "paragraph"; text: string };
+export type BackupDocumentBlock = { type: "heading" | "paragraph"; text: string; color?: string; hl?: string };
 export type BackupDocument = { title: string; blocks: BackupDocumentBlock[] };
 
 const subjects: BackupSubject[] = ["333", "825", "politics"];
@@ -221,6 +226,89 @@ function activities(value: unknown): BackupActivity[] {
     return { t: timestamp(row.t, "活动时间"), kind, subject: text(row.subject, "活动科目", 20), label: text(row.label, "活动内容"), detail: text(row.detail, "活动明细") };
   });
 }
+
+function richContent(value: unknown, path: string): RichContent {
+  const row = object(value, path);
+  const content = text(row.text, path, 20_000);
+  const runs = boundedList(row.runs === undefined ? [] : row.runs, 400, path).map(entry => {
+    const run = object(entry, path);
+    const kind = text(run.kind, path, 10);
+    if (!["color", "hl", "b", "u"].includes(kind)) fail(path, "样式类型无效");
+    const start = integer(run.start, 0, content.length, path), end = integer(run.end, 0, content.length, path);
+    if (end <= start) fail(path, "样式区间无效");
+    if (run.value === undefined) {
+      if (kind === "color" || kind === "hl") fail(path, "缺少颜色值");
+      return { start, end, kind: kind as "b" | "u" };
+    }
+    const value = text(run.value, path, 7);
+    if (!/^#[0-9a-fA-F]{6}$/.test(value)) fail(path, "颜色值无效");
+    return { start, end, kind: kind as "color" | "hl", value };
+  });
+  return { text: content, runs };
+}
+
+function personalLayer(value: unknown, catalogs: BackupCatalogs): PersonalStore {
+  const row = object(value, "个人编辑层");
+  if (row.version !== 1) fail("个人编辑层", "版本不兼容");
+  integer(row.seq, 0, 1_000_000_000, "个人编辑层版本");
+  const store = parsePersonalStore(JSON.stringify({ version: 1, seq: row.seq, overlays: {}, cards: [] }));
+  const overlays = object(row.overlays, "个人修改");
+  if (Object.keys(overlays).length > 5_000) fail("个人修改", "数量超限");
+  for (const [key, entry] of Object.entries(overlays)) {
+    if (!key || key.length > 260 || !key.includes(":")) fail("个人修改", "索引无效");
+    const item = object(entry, `个人修改 ${key}`);
+    const overlay: PersonalStore["overlays"][string] = {
+      rev: integer(item.rev, 1, 1_000_000, `个人修改 ${key}`),
+      updatedAt: timestamp(item.updatedAt, `个人修改 ${key}`),
+      baseHash: text(item.baseHash, `个人修改 ${key}`, 64),
+    };
+    if (item.q !== undefined) overlay.q = richContent(item.q, `个人修改 ${key} 问题`);
+    if (item.a !== undefined) overlay.a = richContent(item.a, `个人修改 ${key} 答案`);
+    if (item.note !== undefined) overlay.note = richContent(item.note, `个人修改 ${key} 补充`);
+    if (item.bg !== undefined) {
+      const bg = text(item.bg, `个人修改 ${key}`, 7);
+      if (!/^#[0-9a-fA-F]{6}$/.test(bg)) fail(`个人修改 ${key}`, "背景色无效");
+      overlay.bg = bg;
+    }
+    if (item.hidden !== undefined) {
+      if (typeof item.hidden !== "boolean") fail(`个人修改 ${key}`, "隐藏标记无效");
+      overlay.hidden = item.hidden === true;
+    }
+    if (overlay.q || overlay.a || overlay.note || overlay.bg || overlay.hidden) store.overlays[key] = overlay;
+  }
+  for (const entry of boundedList(row.cards === undefined ? [] : row.cards, 2_000, "个人卡")) {
+    const item = object(entry, "个人卡");
+    const id = text(item.id, "个人卡", 80);
+    if (!id.startsWith("mine-")) fail("个人卡", "标识无效");
+    const subject = text(item.subject, "个人卡", 20);
+    if (!["333", "825", "politics"].includes(subject)) fail("个人卡", "科目无效");
+    const book = bookFor(catalogs, subject as BackupSubject, item.book, "个人卡");
+    const chapter = chapterFor(book, item.chapter, "个人卡");
+    const section = text(item.section, "个人卡");
+    if (section && !book.chapters[chapter - 1].sections.includes(section)) fail("个人卡", "未知小节");
+    // safePayload 禁止 undefined 值字段: 可选字段一律条件赋值
+    const cleanCard: PersonalStore["cards"][number] = {
+      id,
+      subject: subject as PersonalStore["cards"][number]["subject"],
+      book: book.id,
+      chapter,
+      section,
+      front: richContent(item.front, "个人卡 问题"),
+      back: richContent(item.back, "个人卡 答案"),
+      createdAt: timestamp(item.createdAt, "个人卡"),
+      rev: integer(item.rev, 1, 1_000_000, "个人卡"),
+    };
+    if (item.note !== undefined) cleanCard.note = richContent(item.note, "个人卡 补充");
+    if (item.bg !== undefined) {
+      const bg = text(item.bg, "个人卡", 7);
+      if (!/^#[0-9a-fA-F]{6}$/.test(bg)) fail("个人卡", "背景色无效");
+      cleanCard.bg = bg;
+    }
+    if (item.hidden === true) cleanCard.hidden = true;
+    store.cards.push(cleanCard);
+  }
+  return store;
+}
 function dayStats(value: unknown): Record<string, BackupDayStat> {
   return Object.fromEntries(Object.entries(object(value, "学习统计")).filter(([date]) => /^\d{4}-\d{2}-\d{2}$/.test(date)).map(([date, entry]) => {
     const row = object(entry, `学习统计 ${date}`);
@@ -240,6 +328,7 @@ function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCata
     // Backup records retain supported fields only, including when removing credentials.
     try { return validateExamTarget({ version: row.version, date: row.date }); } catch { return fail("考试日期", "日期或版本无效"); }
   }
+  if (key === personalStorageKey) return personalLayer(value, catalogs);
   if (key === learningSessionKey) return session(value, catalogs);
   if (key === "yantu-mistakes-v1") return mistakes(value);
   if (key === "yantu-mcq-excluded-v1") return boundedList(value, 20_000, "排除标记").map(id => text(id, "排除标记", 200));
@@ -253,20 +342,26 @@ function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCata
   return validateMockSavedRecord(value, subject as "333" | "825", catalogs[subject].books);
 }
 
-/** Called on demand. The 825/politics JSON catalogs remain lazy imports. */
+/** Called on demand. The 825/politics JSON catalogs remain lazy imports.
+ *  个人卡并入目录: 复习范围/位置校验需要它们存在, 小节目录也由卡标签派生。 */
 export async function loadBackupCatalogs(): Promise<BackupCatalogs> {
   const [data333, outlines, module825, modulePolitics] = await Promise.all([import("./study-data"), import("./outlines"), import("./825/study-data"), import("./politics/study-data")]);
   const [data825, dataPolitics, knowledge333] = await Promise.all([module825.load825StudyData(), modulePolitics.loadPoliticsStudyData(), data333.loadKnowledgeCards()]);
-  const cards333 = [...data333.cards, ...knowledge333].map(card => ({ ...card, ...(/^〔(.+?)〕/.exec(card.front)?.[1] ? { section: /^〔(.+?)〕/.exec(card.front)![1] } : {}) }));
+  const personal = parsePersonalStore(typeof localStorage === "undefined" ? null : localStorage.getItem(personalStorageKey));
+  const toBackupCard = (card: PersonalStore["cards"][number]): BackupCard => ({ id: card.id, book: card.book, chapter: card.chapter, ...(card.section ? { section: card.section } : {}), front: card.front.text, back: card.back.text, source: "个人补充卡" });
+  const personalBy = (subject: PersonalStore["cards"][number]["subject"]) => personal.cards.filter(card => !card.hidden && card.subject === subject).map(toBackupCard);
+  const cards333 = [...data333.cards, ...knowledge333, ...personalBy("333")].map(card => ({ ...card, ...(/^〔(.+?)〕/.exec(card.front)?.[1] ? { section: /^〔(.+?)〕/.exec(card.front)![1] } : {}) }));
+  const cardsPolitics = [...dataPolitics.cards, ...personalBy("politics")];
+  const cards825 = [...data825.cards, ...personalBy("825")];
   const books333 = data333.books.map(book => ({ id: book.id, name: book.name, chapters: book.chapters.map((title, index) => ({ title, sections: outlines.outlines[book.id]?.[index] || [] })) }));
   const booksPolitics = dataPolitics.books.map(book => ({ id: book.id, name: book.name, chapters: book.chapters.map(title => ({ title, sections: [] as string[] })) }));
-  for (const [books, cards] of [[books333, cards333], [booksPolitics, dataPolitics.cards]] as [MockPracticeBook[], BackupCard[]][]) {
+  for (const [books, cards] of [[books333, cards333], [booksPolitics, cardsPolitics], [data825.books, cards825]] as [MockPracticeBook[], BackupCard[]][]) {
     for (const book of books) book.chapters.forEach((chapter, index) => {
       const labels = [...new Set(cards.filter(card => card.book === book.id && card.chapter === index + 1 && card.section).map(card => card.section!))];
       if (labels.length) chapter.sections = labels;
     });
   }
-  return { "333": { books: books333, cards: cards333 }, "825": data825, politics: { books: booksPolitics, cards: dataPolitics.cards } };
+  return { "333": { books: books333, cards: cards333 }, "825": { ...data825, cards: cards825 }, politics: { books: booksPolitics, cards: cardsPolitics } };
 }
 
 export function validateStudyBackup(input: unknown, catalogs: BackupCatalogs): StudyBackup {
@@ -375,7 +470,7 @@ export function applyStudyBackup(storage: BackupStorage, input: unknown, catalog
 /** Text only: the PDF layer owns pagination, fonts and backup embedding. */
 export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs): BackupDocument {
   const backup = validateStudyBackup(input, catalogs), blocks: BackupDocumentBlock[] = [];
-  const add = (text: string, type: BackupDocumentBlock["type"] = "paragraph") => blocks.push({ type, text });
+  const add = (text: string, type: BackupDocumentBlock["type"] = "paragraph", style?: { color?: string; hl?: string }) => blocks.push(style ? { type, text, ...style } : { type, text });
   const describe = (subject: BackupSubject, bookId: string, chapters: number[], section?: string) => {
     const book = bookFor(catalogs, subject, bookId, "文档");
     return `《${book.name}》${chapters.map(chapter => `第 ${chapter} 章 ${book.chapters[chapter - 1].title}`).join("、")}${section ? ` / ${section}` : ""}`;
@@ -416,6 +511,41 @@ export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs
       add(`825 真题作答\n题目：${question.stem}\n我的作答：${value}\n参考答案：${question.referenceAnswer || "资料未提供"}\n解析：${question.analysis || "资料未提供"}\n来源：${question.source}${question.answerSource ? `\n答案来源：${question.answerSource}` : ""}`);
     }
     for (const [subject, value] of Object.entries(saved.plannerPrompts)) add(`${subject} 学习计划提示草稿\n${value}`);
+  }
+  const personal = backup.records[personalStorageKey];
+  if (personal && (Object.keys(personal.overlays).length || personal.cards.length)) {
+    add("个人编辑与补充", "heading");
+    add("以下为个人修改、补充与新建卡；「原文」指教材内置内容，样式以颜色近似还原。");
+    const TEXTBOOK_COLOR: Record<string, { color?: string; hl?: string }> = { hl_g: { color: "#0c8a4d" }, hl_b: { color: "#1a66c8" }, hl_r: { color: "#cf3b2e" }, hl_y: { hl: "#ffe98a" }, hl_s: {} };
+    const styledBlocks = (label: string, content: RichContent) => {
+      for (const segment of renderRichSegments(content.text, content.runs)) {
+        if (!segment.text.trim()) continue;
+        const textbook = segment.textbook ? TEXTBOOK_COLOR[`hl_${segment.textbook}`] || {} : {};
+        add(`${label}：${segment.text}`, "paragraph", { ...(segment.color ? { color: segment.color } : {}), ...(segment.hl ? { hl: segment.hl } : {}), ...textbook });
+      }
+    };
+    for (const subject of subjects) {
+      const bookOf = (card: { book: string; chapter: number; section?: string }) => {
+        const found = catalogs[subject].cards.find(item => item.id === card.book) || catalogs[subject].books.find(item => item.id === card.book);
+        return found ? describe(subject, card.book, [card.chapter], card.section) : `书目 ${card.book} 第 ${card.chapter} 章`;
+      };
+      for (const [key, overlay] of Object.entries(personal.overlays).filter(([key]) => key.startsWith(`${subject}:`))) {
+        const cardId = key.slice(subject.length + 1);
+        const card = catalogs[subject].cards.find(item => item.id === cardId);
+        add(`修改 · ${card ? `${describe(subject, card.book, [card.chapter], card.section)}\n原文问题：${card.front}\n原文答案：${stripHighlightMarkers(card.back)}` : `卡片 ${cardId}`}${overlay.hidden ? "（已隐藏）" : ""}`);
+        if (overlay.q) styledBlocks("修改后问题", overlay.q);
+        if (overlay.a) styledBlocks("修改后答案", overlay.a);
+        if (overlay.note) styledBlocks("我的补充", overlay.note);
+        if (overlay.bg) add(`整卡背景：${overlay.bg}`);
+      }
+      for (const card of personal.cards.filter(card => card.subject === subject)) {
+        add(`个人卡 · ${bookOf(card)}${card.hidden ? "（已隐藏）" : ""}`);
+        styledBlocks("问题", card.front);
+        styledBlocks("答案", card.back);
+        if (card.note) styledBlocks("补充", card.note);
+        if (card.bg) add(`整卡背景：${card.bg}`);
+      }
+    }
   }
   for (const subject of ["333", "825"] as const) {
     const record = backup.records[mockKey(subject)];

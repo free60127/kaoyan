@@ -99,3 +99,42 @@
 .kind-practice { background: #e9f5ef; color: #2d7a4f; }
 .mark-review-row { padding: 4px 0; }
 .essay-subfilters { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 2px; }
+
+/* ===== 个人编辑层: 富文本渲染/编辑器/隐藏管理 ===== */
+.rich-seg.hl-g { color: #0c8a4d; }
+.rich-seg.hl-b { color: #1a66c8; }
+.rich-seg.hl-r { color: #cf3b2e; }
+.rich-seg.hl-y { background: linear-gradient(transparent 30%, #ffe98a 30%, #ffe98a 92%, transparent 92%); padding: 0 1px; }
+.flash-card strong span.rich-seg, .flash-card span.personal-note span.rich-seg { font-size: inherit; line-height: inherit; font-weight: inherit; }
+.flash-card .rich-b { font-weight: 800; }
+.flash-card .rich-u { text-decoration: underline; text-underline-offset: 4px; }
+.flash-card span.personal-note { display: block; font-size: 15px; color: #1e4034; border-top: 1px dashed #c9d8ce; margin-top: 14px; padding-top: 10px; white-space: pre-line; }
+.flash-card span.personal-note b { display: block; font-size: 12px; color: #3c8065; margin-bottom: 4px; }
+.personal-tag { font-style: normal; margin-left: 8px; font-size: 11px; color: #3c8065; background: #e9f5ee; border-radius: 5px; padding: 1px 6px; }
+.card-edit-row { display: flex; gap: 16px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+.card-hidden-manager { margin-top: 18px; }
+.card-hidden-manager summary { cursor: pointer; color: #4b6d5e; font-weight: 600; }
+.card-hidden-manager summary small { color: #8ba094; margin-left: 8px; font-weight: 400; }
+.card-hidden-manager > div { margin-top: 10px; display: grid; gap: 8px; }
+.card-editor .card-edit-field { display: grid; gap: 5px; margin: 10px 0; font-size: 0.85rem; color: #42655a; font-weight: 600; }
+.card-editor textarea { width: 100%; resize: vertical; border: 1px solid #d7e4db; border-radius: 10px; padding: 12px; font: inherit; font-size: 14px; line-height: 1.7; color: #294d3b; outline: none; background: white; }
+.card-editor textarea:focus { border-color: #62a584; }
+.card-edit-toolbar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 12px 0 2px; }
+.card-edit-toolbar-label { font-size: 11px; color: #8ba094; margin: 0 2px 0 8px; }
+.rich-swatch { width: 22px; height: 22px; border-radius: 6px; border: 1px solid #cdd9d0; cursor: pointer; padding: 0; }
+.rich-swatch.active-ring { outline: 2px solid #287469; outline-offset: 1px; }
+.card-edit-original { background: #f4f8f5; border: 1px solid #dfe9e2; border-radius: 10px; padding: 12px 14px; margin: 10px 0; }
+.card-edit-original p { margin: 6px 0; line-height: 1.75; white-space: pre-line; }
+.card-edit-original small { display: inline-block; color: #7f958a; margin-right: 8px; font-weight: 700; }
+.card-edit-status { color: #2f7b54; font-size: 0.85rem; min-height: 1.2em; }
+.card-edit-preview { margin: 8px 0; }
+.card-edit-preview > small { color: #8ba094; }
+.card-edit-preview-card { background: white; border: 1px solid #dce8df; border-radius: 12px; padding: 16px 18px; margin-top: 6px; }
+.card-edit-preview-card strong { display: block; font-size: 16px; line-height: 1.6; margin-bottom: 8px; white-space: pre-line; }
+.card-edit-preview-answer { font-size: 14px; line-height: 1.75; white-space: pre-line; }
+.card-edit-preview-note { border-top: 1px dashed #c9d8ce; margin-top: 8px; padding-top: 8px; font-size: 13px; color: #35594a; white-space: pre-line; }
+.card-edit-preview-note b { display: block; color: #3c8065; font-size: 12px; margin-bottom: 3px; }
+.card-edit-reset { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #6b8478; }
+.card-edit-actions-head { display: flex; gap: 12px; align-items: center; }
+.mock-check.mock-notes { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #6b8478; margin: 8px 0; }
+.search-extra { margin-left: 8px; color: #3c8065; background: #e9f5ee; border-radius: 5px; padding: 1px 6px; font-size: 11px; }

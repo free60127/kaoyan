@@ -29,6 +29,8 @@ import { Overview333, Overview825, OverviewPolitics } from "./components/Overvie
 import { selectedAnswer } from "@/lib/copy-answer";
 import { createLearningSession, defaultPlannerPrompt, feynmanDraftKey, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type StudySubject, type StudyView } from "@/lib/learning-session";
 import { sidebarViews, subjects, subjectBooks, views } from "@/lib/subject-capabilities";
+import { overlayKey, personalStorageKey, readPersonal, type PersonalStore, type PersonalSubject } from "@/lib/personal-cards";
+import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
 
 type View = StudyView;
 const BackupPanel = lazy(() => import("./components/BackupPanel"));
@@ -55,6 +57,16 @@ function withSectionLabels(cards: Card[], base: Book[]): { cards: Card[]; books:
 }
 const base333 = withSectionLabels(cards333BaseModel, books333Model);
 const emptyCards: Card[] = [];
+// 个人编辑层: 教材卡的修改叠加为有效内容(原卡 ID 不变), 个人卡并入目录; 隐藏可恢复
+function applyPersonal(cards: Card[], subject: PersonalSubject, personal: PersonalStore): Card[] {
+  const kept = cards.filter(card => !personal.overlays[overlayKey(subject, card.id)]?.hidden).map(card => {
+    const overlay = personal.overlays[overlayKey(subject, card.id)];
+    if (!overlay?.q && !overlay?.a) return card;
+    return { ...card, front: overlay.q ? overlay.q.text : card.front, back: overlay.a ? overlay.a.text : card.back };
+  });
+  const extra = personal.cards.filter(card => card.subject === subject && !card.hidden).map(card => ({ id: card.id, book: card.book, chapter: card.chapter, ...(card.section ? { section: card.section } : {}), front: card.front.text, back: card.back.text, source: "个人补充卡" }) as Card);
+  return [...kept, ...extra];
+}
 const total333 = books333.reduce((sum, book) => sum + book.chapters.length, 0);
 // 政治五本书的小节目录同样取自卡的〔考点/要点〕标签（section 字段即标签）。
 function buildPoliticsModels(data: StudyDataPolitics | null) {
@@ -109,7 +121,33 @@ export default function Home() {
   }, []);
   const politicsModels = useMemo(() => buildPoliticsModels(dataPolitics), [dataPolitics]);
   const cards333Model = useMemo(() => knowledge333 ? [...base333.cards, ...knowledge333] : base333.cards, [knowledge333]);
-  const books333WithSections = useMemo(() => knowledge333 ? withSectionLabels(cards333Model, books333Model).books : base333.books, [knowledge333, cards333Model]);
+  // 个人层: 订阅存储变化; 合并卡库 = 教材卡(叠加修改) + 个人卡(隐藏的剔除)
+  const [personal, setPersonal] = useState<PersonalStore>(() => readPersonal());
+  useEffect(() => {
+    const sync = () => setPersonal(readPersonal());
+    window.addEventListener("yantu-personal-changed", sync);
+    const onStorage = (event: StorageEvent) => { if (!event.key || event.key === personalStorageKey) sync(); };
+    window.addEventListener("storage", onStorage);
+    return () => { window.removeEventListener("yantu-personal-changed", sync); window.removeEventListener("storage", onStorage); };
+  }, []);
+  const cards333Merged = useMemo(() => applyPersonal(cards333Model, "333", personal), [cards333Model, personal]);
+  const cardsPoliticsMerged = useMemo(() => applyPersonal(politicsModels.cards, "politics", personal), [politicsModels, personal]);
+  const cards825Merged = useMemo(() => data825 ? applyPersonal(data825.cards as unknown as Card[], "825", personal) : emptyCards, [data825, personal]);
+  const books333WithSections = useMemo(() => knowledge333 ? withSectionLabels(cards333Merged, books333Model).books : base333.books, [knowledge333, cards333Merged]);
+  // AI 有效卡库: 费曼/计划/模拟卷读取合并后的内容(含个人修改与补充), 而非内置旧资料
+  const noteOf = (subjectKey: PersonalSubject) => (cardId: string) => personal.overlays[overlayKey(subjectKey, cardId)]?.note?.text;
+  useEffect(() => { setEffectiveCards("333", toEffectiveCards(cards333Merged, noteOf("333"))); }, [cards333Merged, personal]);
+  useEffect(() => { setEffectiveCards("politics", toEffectiveCards(cardsPoliticsMerged, noteOf("politics"))); }, [cardsPoliticsMerged, personal]);
+  useEffect(() => { if (data825) setEffectiveCards("825", toEffectiveCards(cards825Merged, noteOf("825"))); }, [cards825Merged, personal, data825]);
+  // 编辑器"查看/恢复原文"用基库文本(合并卡上已是应用覆盖层后的内容)
+  const baseById = useMemo(() => {
+    const map = new Map<string, { front: string; back: string }>();
+    for (const card of cards333Model) map.set(card.id, { front: card.front, back: card.back });
+    for (const card of politicsModels.cards) map.set(card.id, { front: card.front, back: card.back });
+    for (const card of data825?.cards || []) map.set(card.id, { front: card.front, back: card.back });
+    return map;
+  }, [cards333Model, politicsModels, data825]);
+  const originalById = useCallback((cardId: string) => baseById.get(cardId), [baseById]);
   const [quizIndex, setQuizIndex] = useState(0);
   const [wrongOnly, setWrongOnly] = useState(false);
   // 持久化错题本中的真题错题 + 本次会话新增, 合并为"只练错题"范围
@@ -270,12 +308,12 @@ export default function Home() {
     cancelRequest(); setFeedback(""); setReply("");
     setSession(previous => previous.subject === subject ? { ...previous, locations: { ...previous.locations, [subject]: normalized } } : previous);
   }, [subject, book, chapter, section, data825, dataPolitics, knowledge333, progressReady]);
-  const allCards: Card[] = subject === "825" ? (data825?.cards || []) : subject === "politics" ? politicsModels.cards : subject === "333" ? cards333Model : [];
+  const allCards: Card[] = subject === "825" ? cards825Merged : subject === "politics" ? cardsPoliticsMerged : subject === "333" ? cards333Merged : [];
   const chapterCards = allCards.filter((item) => item.book === book && item.chapter === chapter);
   const cardsInScope = section ? chapterCards.filter((item) => item.section === section) : chapterCards;
-  const review333 = useStudyReview("333", cards333Model, knowledge333 !== null);
-  const review825 = useStudyReview("825", data825?.cards || emptyCards, data825 !== null);
-  const reviewPolitics = useStudyReview("politics", politicsModels.cards, dataPolitics !== null);
+  const review333 = useStudyReview("333", cards333Merged, knowledge333 !== null);
+  const review825 = useStudyReview("825", cards825Merged, data825 !== null);
+  const reviewPolitics = useStudyReview("politics", cardsPoliticsMerged, dataPolitics !== null);
   const review = subject === "825" ? review825 : subject === "politics" ? reviewPolitics : review333;
   const backupBlockedReason = sessionStorageError || doneStorageError || review333.storageError || review825.storageError || reviewPolitics.storageError || Object.values(mockStatus).some(status => status.error)
     ? "当前有学习记录尚未成功保存，请先解决本地保存错误；导出与导入暂不可用，避免丢失当前修改。"
@@ -447,10 +485,10 @@ export default function Home() {
     setMarked825(previous => new Set(previous).add(questionId));
   }
   function jumpToCard(cardId: string) {
-    const all: Card[] = [...cards333Model, ...politicsModels.cards, ...(data825?.cards || [])];
+    const all: Card[] = [...cards333Merged, ...cardsPoliticsMerged, ...cards825Merged];
     const target = all.find((card) => card.id === cardId);
     if (!target) return;
-    const targetSubject = cards333Model.includes(target) ? "333" : politicsModels.cards.includes(target) ? "politics" : "825";
+    const targetSubject = cards333Merged.includes(target) ? "333" : cardsPoliticsMerged.includes(target) ? "politics" : "825";
     if (targetSubject !== subject) switchSubject(targetSubject);
     updateLocation({ book: target.book, chapter: target.chapter, section: "", view: "cards" });
     setJumpCard(cardId);
@@ -458,13 +496,13 @@ export default function Home() {
   }
   const searchEntries = useMemo<SearchEntry[]>(() => {
     if (view !== "search" || !knowledge333 || !dataPolitics || !data825) return [];
-    const toEntry = (subjectId: string, subjectName: string, bookList: Book[], card: Card): SearchEntry => ({ subject: subjectId, subjectName, bookId: card.book, bookName: bookList.find((item) => item.id === card.book)?.name || card.book, chapter: card.chapter, section: card.section || "", id: card.id, front: card.front });
+    const toEntry = (subjectId: PersonalSubject, subjectName: string, bookList: Book[], card: Card): SearchEntry => ({ subject: subjectId, subjectName, bookId: card.book, bookName: bookList.find((item) => item.id === card.book)?.name || card.book, chapter: card.chapter, section: card.section || "", id: card.id, front: card.front, extra: card.id.startsWith("mine-") ? "个人卡" : personal.overlays[overlayKey(subjectId, card.id)]?.note?.text });
     return [
-      ...cards333Model.map((card) => toEntry("333", "333 教育综合", books333WithSections, card)),
-      ...politicsModels.cards.map((card) => toEntry("politics", "政治", politicsModels.books, card)),
-      ...(data825.cards as unknown as Card[]).map((card) => toEntry("825", "825 英语专业基础", books, card)),
+      ...cards333Merged.map((card) => toEntry("333", "333 教育综合", books333WithSections, card)),
+      ...cardsPoliticsMerged.map((card) => toEntry("politics", "政治", politicsModels.books, card)),
+      ...cards825Merged.map((card) => toEntry("825", "825 英语专业基础", books, card)),
     ];
-  }, [view, knowledge333, dataPolitics, data825, cards333Model, politicsModels]);
+  }, [view, knowledge333, dataPolitics, data825, cards333Merged, cardsPoliticsMerged, cards825Merged, personal]);
   async function ask(mode: "plan" | "feedback") {
     if (!review.ready) return;
     if (!key.trim()) { setKeyOpen(true); return; }
@@ -537,14 +575,14 @@ export default function Home() {
           {view === "overview" && subject === "825" && <Overview825 {...overviewProps}/>}
           {view === "overview" && subject === "politics" && <OverviewPolitics {...overviewProps}/>}
           {view === "chapters" && <>{heading("BOOK BY BOOK", "从章节开始，形成自己的知识地图", subject === "825" ? "查看原书章节与小节；历年真题已按章节归档为真题卡，选择小节即含对应真题。真题练习按书目和年份筛选。" : subject === "politics" ? "查看五科教材章节与考点小节；选择考点后背诵对应闪卡，或用费曼复述讲出来。" : "选书、选章；完成学习后标记进度，并进入闪卡或真题。")}<div className="book-tabs">{books.map((item) => <button key={item.id} className={book === item.id ? "active" : ""} onClick={() => chooseChapter(item.id, 1)}><i style={{ background: item.tone }}/>{item.name}</button>)}</div><div className="chapter-layout"><section className="panel chapter-list"><span className="eyebrow">{activeBook?.chapters.length || 0} CHAPTERS</span><h2>{activeBook?.name}</h2>{activeBook?.chapters.map((item, index) => <button key={item.title} className={chapter === index + 1 ? "chapter-row active" : "chapter-row"} onClick={() => chooseChapter(book, index + 1)}><span>{String(index + 1).padStart(2, "0")}</span><b>{item.title}</b>{done[book + "-" + (index + 1)] ? <Check size={17}/> : <ChevronRight size={17}/>}</button>)}</section><section className="panel chapter-detail"><span className="eyebrow">{activeBook?.name} / 第 {chapter} 章</span><h2>{chapterName}</h2>{subject === "825" ? <p>选择小节查看笔记闪卡与历年真题卡；真题已按章节归档，也可在真题练习按书目与年份筛选。</p> : subject === "politics" ? <p>本章考点小节来自闪卡标签；先背考点，再用费曼复述串讲本章。</p> : <p>先浏览教材，再用闪卡主动回忆，最后用真题检验；复述反馈会结合当前章节。</p>}<div className="detail-count"><div><b>{chapterCards.length}</b><small>{subject === "333" ? "已校对闪卡" : "考点闪卡"}</small></div><div><b>{subject === "politics" ? (chapterInfo?.sections.length || 0) : subject === "825" ? "书目 / 年份" : chapterQuestions.length}</b><small>{subject === "politics" ? "考点小节" : subject === "825" ? "真题筛选" : "匹配真题"}</small></div></div>{(chapterInfo?.sections || []).length > 0 && <div className="section-outline"><strong>{subject === "825" ? "本章小节" : subject === "politics" ? "本章考点" : "本章目录"}</strong>{chapterInfo?.sections.map((item, index) => <button key={item} onClick={() => { chooseSection(item); setView("cards"); }}><span>{String(index + 1).padStart(2, "0")}</span>{item}<ChevronRight size={15}/></button>)}</div>}{subject === "333" && !chapterCards.length && <p className="notice">该章尚无人工核对闪卡。可先阅读原书，再进行费曼复述。</p>}<div className="detail-buttons"><button className="primary" onClick={() => setView("cards")}>背诵闪卡</button><button className="secondary" onClick={() => setView("feynman")}>口述本章</button></div><button className="mark-done" onClick={() => setDoneBySubject((previous) => ({ ...previous, [progressSubject]: { ...previous[progressSubject], [book + "-" + chapter]: !done[book + "-" + chapter] } }))}><Check size={16}/>{done[book + "-" + chapter] ? "已完成 · 点击撤销" : "标记本章已学习"}</button></section></div></>}
-          {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject} subject={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} onRated={handleRated} onUndoRating={undoLastRating}/></>}
+          {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject} subject={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} originalById={originalById} onRated={handleRated} onUndoRating={undoLastRating}/></>}
           {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{wrongOnly ? `只练错题：${wrongPool.length} 道` : useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button></div>{wrongOnly && !wrongPool.length && <div className="empty">当前章节没有已记录的错题。<button className="secondary" onClick={() => setWrongOnly(false)}>练全部真题</button></div>}
           {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
           {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView subject="politics" subjectName="政治" books={books} cards={politicsModels.cards} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "手册、丹丹1000题、阶段测试与丹丹卷的主观题：材料、设问与分点参考答案按来源完整保留；先自己作答再展开对照。")}<EssayBank entries={(essayQuestions || []).map(q => ({ id: q.id, book: q.book || "principles", tags: q.tags, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
           {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill storage={localStorageStore}/></>}
           {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView subject="825" subjectName="825 英语专业基础" books={books} cards={(data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
-          {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Model, politics: politicsModels.cards, "825": (data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
+          {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
           {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "每日评分、练习与连续学习天数；数据保存在本浏览器，可用“备份与导出”迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)}/></>)}
           {view === "search" && <>{heading("GLOBAL SEARCH", "搜索全部闪卡", "跨科目搜索 3600+ 张闪卡，点击结果直达对应章节与卡片。")}{!searchEntries.length ? <div className="panel empty">正在汇总三科卡片索引…</div> : <SearchView entries={searchEntries} onJump={(entry) => jumpToCard(entry.id)}/>}</>}
           {view === "quiz" && subject === "825" && <>{heading("PAST PAPERS", "825 真题 · 开放题练习与索引", "按书目和年份筛选；真题已按章节归档（章节学习中可看本章真题卡），可文字作答并查看参考答案，不自动判分。")}<div className="past-filters"><label>书目<select value={book} onChange={(event) => { chooseChapter(event.target.value, 1, "quiz"); setPastYear(2026); }}><option value="linguistics">语言学</option><option value="literature">英美文学</option></select></label><label>年份<select value={activeYear || ""} onChange={(event) => { setPastYear(Number(event.target.value)); setPastIndex(0); setPastRevealed(false); }} disabled={!years.length}>{years.map((year) => <option key={year} value={year}>{year} 年</option>)}</select></label><button className={pastMode === "practice" ? "mode-button active" : "mode-button"} onClick={() => { setPastMode("practice"); setPastIndex(0); setPastRevealed(false); }}>可练习题 ({yearQuestions.filter((item) => item.practiceReady).length})</button><button className={pastMode === "index" ? "mode-button active" : "mode-button"} onClick={() => { setPastMode("index"); setPastIndex(0); setPastRevealed(false); }}>索引浏览 ({yearQuestions.filter((item) => !item.practiceReady).length})</button><button className={markedOnly825 ? "mode-button active" : "mode-button"} disabled={marked825.size === 0} onClick={() => { setMarkedOnly825(value => !value); setPastIndex(0); setPastRevealed(false); }}>只看标记题 ({marked825.size})</button></div><section className="panel quiz-card"><div className="past-question-heading"><div className="quiz-top"><span>{pastMode === "practice" ? "可练习真题" : "仅索引浏览"}</span><small>{pastPool.length ? "第 " + (pastPosition + 1) + " / " + pastPool.length + " 条" : "当前年份没有该类记录"}</small></div></div>{pastQuestion ? <><div className="question-meta"><span>{pastQuestion.year} 年</span><span>{questionType[pastQuestion.type] || "其他题型"} ({pastQuestion.type})</span><span>{statusLabel[pastQuestion.status]}</span></div><h2>{pastQuestion.stem}</h2>{pastMode === "practice" ? <><p className="not-scored">文字作答练习 · 不自动判分</p><label className="answer-label" htmlFor="past-answer">我的作答</label><textarea id="past-answer" ref={pastAnswerRef} className="past-answer" value={pastAnswer} onChange={(event) => setPastAnswer(event.target.value)} placeholder="组织答案；完成后可查看资料中的参考答案。"/><CopyAnswerButton text={pastAnswer} answerRef={pastAnswerRef}/><button className="primary reveal-button" onClick={() => setPastRevealed((value) => !value)}>{pastRevealed ? "收起参考信息" : "查看参考答案与解析"}</button>{pastRevealed && <div className="explanation past-explanation">{pastQuestion.referenceAnswer ? <><b>参考答案 · 非官方资料，仅供对照</b><p>{pastQuestion.referenceAnswer}</p></> : <><b>该题没有参考答案</b><p>当前资料没有可用参考答案；系统不会对你的文字作答评分。</p></>}{pastQuestion.analysis ? <><strong>解析</strong><p>{pastQuestion.analysis}</p></> : <p>当前记录没有单独的解析文本。</p>}{pastQuestion.answerSource && <small>答案来源：{pastQuestion.answerSource}</small>}</div>}</> : <div className="limitation-box"><b>索引浏览 · 不进入练习</b><p>{pastQuestion.limitation || "该记录未通过可练习校验，仅供目录和出处浏览。"}</p></div>}<div className="source-details"><p><b>来源状态：</b>{statusLabel[pastQuestion.status]}</p><p><b>原题来源：</b>{pastQuestion.source}</p><p><b>原 PDF：</b>{pastQuestion.sourceFile} · 第 {pastQuestion.sourcePage} 页</p></div><div className="mark-review-row"><button className={marked825.has(pastQuestion.id) ? "mode-button active" : "mode-button"} onClick={() => toggleMark825(pastQuestion.id)}>{marked825.has(pastQuestion.id) ? "已标记待复习 · 点击取消" : "标记待复习"}</button></div><div className="quiz-footer"><span>按书目和年份整理 · 真题已按章节归档，可在章节学习查看本章真题卡</span><button className="secondary" disabled={pastPosition === 0 || !pastPool.length} onClick={() => { setPastIndex((index) => Math.max(0, index % pastPool.length - 1)); setPastRevealed(false); }}>上一题</button><button className="primary" disabled={pastPool.length < 2} onClick={() => { setPastIndex((index) => (index + 1) % pastPool.length); setPastRevealed(false); }}>下一题</button></div></> : <div className="empty">当前年份没有记录，请切换年份或书目。</div>}</section></>}

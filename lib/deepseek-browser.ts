@@ -1,8 +1,9 @@
-import { cards, loadKnowledgeCards, type Card as Card333, type Question } from "./study-data";
+import { cards, type Question } from "./study-data";
 import { load825StudyData, type Card825 } from "./825/study-data";
 import { loadPoliticsStudyData } from "./politics/study-data";
 import { requestDeepSeek } from "./mock-quiz";
 import { stripHighlightMarkers } from "./highlight-markers";
+import { getEffectiveCards, loadEffective333Fallback, type EffectiveCard } from "./effective-catalog";
 export { generateMockQuiz, validateMockQuizConfig, MAX_MOCK_QUIZ_QUESTIONS, MOCK_QUIZ_TYPES, MOCK_QUIZ_TYPE_LABELS } from "./mock-quiz";
 export type { MockQuizType, MockQuizConfig, MockQuizContext, MockQuizRange, MockQuizOptions, MockQuizQuestion, MockQuizResult, MockQuizUnit } from "./mock-quiz";
 
@@ -15,7 +16,7 @@ const FACT_LIMIT = 3800;
 export const cleanApiKey = (value: string) => value.replace(/[\s\u200b-\u200f\uFEFF"'“”‘’]+/g, "");
 const trimText = (value: string, max: number) => value.length > max ? value.slice(0, max) + "…" : value;
 
-function chooseCards(rows: { front: string; back: string; section?: string }[], mode: Mode, section?: string) {
+function chooseCards(rows: { front: string; back: string; section?: string; note?: string }[], mode: Mode, section?: string) {
   const sectionRows = section ? rows.filter((row) => row.section === section) : rows;
   const candidates = section ? sectionRows : rows;
   const maxCards = mode === "plan" ? 4 : mode === "quiz" ? 7 : 6;
@@ -23,7 +24,10 @@ function chooseCards(rows: { front: string; back: string; section?: string }[], 
   const picked: { front: string; back: string }[] = [];
   for (const card of candidates) {
     if (picked.length >= maxCards || used >= FACT_LIMIT) break;
-    const front = trimText(card.front, 320), back = trimText(stripHighlightMarkers(card.back), 420);
+    const front = trimText(stripHighlightMarkers(card.front), 320);
+    const baseBack = trimText(stripHighlightMarkers(card.back), 420);
+    // 个人补充以明确标注附在教材内容后, 不冒充教材原文
+    const back = card.note ? trimText(`${baseBack}\n【个人补充】${stripHighlightMarkers(card.note)}`, 640) : baseBack;
     const cost = front.length + back.length;
     if (used + cost > FACT_LIMIT) break;
     picked.push({ front, back }); used += cost;
@@ -47,7 +51,8 @@ export async function askDeepSeek(key: string, mode: Mode, prompt: string, ctx: 
   if (is825) {
     const data = await load825StudyData();
     currentBook = data.books.find((item) => item.id === ctx.bookId)?.name || currentBook;
-    const relevantCards = data.cards.filter((item) => item.book === ctx.bookId && (!ctx.chapterNo || item.chapter === ctx.chapterNo)) as Card825[];
+    const sourceCards = getEffectiveCards("825") ?? data.cards;
+    const relevantCards = sourceCards.filter((item) => item.book === ctx.bookId && (!ctx.chapterNo || item.chapter === ctx.chapterNo)) as Card825[];
     notes = chooseCards(relevantCards, mode, ctx.section);
     if (mode === "quiz") {
       if (!notes.length) throw new Error("当前书目和小节没有可供命题的笔记知识点。");
@@ -56,13 +61,14 @@ export async function askDeepSeek(key: string, mode: Mode, prompt: string, ctx: 
   } else if (isPolitics) {
     const data = await loadPoliticsStudyData();
     currentBook = data.books.find((item) => item.id === ctx.bookId)?.name || currentBook;
-    const relevantCards = data.cards.filter((item) => item.book === ctx.bookId && item.chapter === ctx.chapterNo);
-    notes = chooseCards(relevantCards, mode, ctx.section);
+    const sourceCards = getEffectiveCards("politics") ?? data.cards;
+    const relevantCards = sourceCards.filter((item) => item.book === ctx.bookId && item.chapter === ctx.chapterNo);
+    notes = chooseCards(relevantCards.map((item) => ({ ...item, section: (item as { section?: string }).section ?? item.front.match(/^〔([^〕]+)〕/)?.[1] })), mode, ctx.section);
   } else {
-    const knowledge = await loadKnowledgeCards() as unknown as Card333[];
-    const catalog333 = [...cards, ...knowledge];
+    // AI 读合并后的有效卡库(含个人修改/补充); 未设置时回退内置资料
+    const catalog333: EffectiveCard[] = getEffectiveCards("333") ?? [...cards, ...(await loadEffective333Fallback())];
     const relevantCards = catalog333.filter((item) => item.book === ctx.bookId && item.chapter === ctx.chapterNo && !item.id.startsWith("outline-"));
-    notes = chooseCards(relevantCards.map((item) => ({ ...item, section: item.front.match(/^〔([^〕]+)〕/)?.[1] })), mode, ctx.section);
+    notes = chooseCards(relevantCards.map((item) => ({ ...item, section: item.section ?? item.front.match(/^〔([^〕]+)〕/)?.[1] })), mode, ctx.section);
     if (mode === "quiz" && !notes.length) throw new Error("当前章节和小节没有可供命题的笔记知识点。");
   }
 

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 
-export type SearchEntry = { subject: string; subjectName: string; bookId: string; bookName: string; chapter: number; section: string; id: string; front: string };
+export type SearchEntry = { subject: string; subjectName: string; bookId: string; bookName: string; chapter: number; section: string; id: string; front: string; /** 个人卡标记/我的补充: 也参与匹配并展示 */ extra?: string };
 
 export function SearchView({ entries, onJump }: { entries: SearchEntry[]; onJump: (entry: SearchEntry) => void }) {
   const [query, setQuery] = useState("");
@@ -9,7 +9,7 @@ export function SearchView({ entries, onJump }: { entries: SearchEntry[]; onJump
   const results = useMemo(() => {
     if (normalized.length < 2) return [];
     return entries
-      .filter((entry) => entry.front.toLowerCase().includes(normalized))
+      .filter((entry) => entry.front.toLowerCase().includes(normalized) || (entry.extra || "").toLowerCase().includes(normalized))
       .slice(0, 40);
   }, [entries, normalized]);
   return <section className="panel search-panel">
@@ -20,7 +20,7 @@ export function SearchView({ entries, onJump }: { entries: SearchEntry[]; onJump
     <div className="search-results">
       {results.map((entry) => <button key={entry.subject + entry.id} className="search-row" onClick={() => onJump(entry)}>
         <small>{entry.subjectName} · {entry.bookName} · 第 {entry.chapter} 章{entry.section ? " · " + entry.section : ""}</small>
-        <b>{entry.front}</b>
+        <b>{entry.front}</b>{entry.extra && entry.extra.length <= 4 && <small className="search-extra">{entry.extra}</small>}
       </button>)}
     </div>
   </section>;

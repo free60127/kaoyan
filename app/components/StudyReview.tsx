@@ -2,17 +2,10 @@ import { useEffect, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
 import { type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
-import { parseHighlightMarkers } from "../../lib/highlight-markers";
-
-/** 教材重点标记 ⟦k|…⟧ -> 带色 span; 无标记文本必须是裸字符串——
- *  .flash-card span 是来源行样式(12px 灰), 包 span 会把正文变小变灰。 */
-function renderMarked(text: string): ReactNode {
-  const segments = parseHighlightMarkers(text);
-  if (segments.length === 1 && segments[0].kind === "text") return segments[0].text;
-  return segments.map((segment, index) => segment.kind === "text"
-    ? segment.text
-    : <span key={index} className={"hl-" + segment.kind}>{segment.text}</span>);
-}
+import { overlayKey, personalStorageKey, readPersonal, setPersonalCardHidden, saveOverlay, type PersonalStore, type PersonalSubject } from "../../lib/personal-cards";
+import type { RichRun } from "../../lib/rich-text";
+import { RichTextView } from "./RichTextView";
+import { CardEditor } from "./CardEditor";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
@@ -53,7 +46,7 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
 
-export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string }) {
+export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, originalById }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
   const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
@@ -72,6 +65,35 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
   const visibleCardKey = JSON.stringify([mode, locationKey, card?.id]);
   const flipped = revealedCard === visibleCardKey;
   const cardsReady = browseCards.length > 0;
+  // 个人编辑层: 订阅存储变化, 展示时叠加样式/补充/背景; 编辑器由此处打开(在闪卡按钮之外)
+  const [personal, setPersonal] = useState<PersonalStore>(() => readPersonal());
+  useEffect(() => {
+    const sync = () => setPersonal(readPersonal());
+    window.addEventListener("yantu-personal-changed", sync);
+    const onStorage = (event: StorageEvent) => { if (!event.key || event.key === personalStorageKey) sync(); };
+    window.addEventListener("storage", onStorage);
+    return () => { window.removeEventListener("yantu-personal-changed", sync); window.removeEventListener("storage", onStorage); };
+  }, []);
+  const [editor, setEditor] = useState<null | { mode: "edit"; cardId: string } | { mode: "create" }>(null);
+  const personalInfo = (cardId: string): { qRuns?: RichRun[]; aRuns?: RichRun[]; note?: { text: string; runs: RichRun[] }; bg?: string } => {
+    const overlay = personal.overlays[overlayKey(subject, cardId)];
+    if (overlay) return { qRuns: overlay.q?.runs, aRuns: overlay.a?.runs, note: overlay.note, bg: overlay.bg };
+    const mine = personal.cards.find(item => item.id === cardId);
+    if (mine) return { qRuns: mine.front.runs, aRuns: mine.back.runs, note: mine.note, bg: mine.bg };
+    return {};
+  };
+  const display = card ? personalInfo(card.id) : {};
+  // 编辑目标: 个人卡/教材卡(原文从基库取, 合并卡上的已是应用覆盖层后的内容)
+  const editorTarget = !editor ? null : (() => {
+    if (editor.mode === "create") return { kind: "new" as const, book: bookId, chapter, section };
+    if (editor.cardId.startsWith("mine-")) {
+      const mine = personal.cards.find(item => item.id === editor.cardId);
+      return mine ? { kind: "personal" as const, card: mine } : null;
+    }
+    const merged = cards.find(item => item.id === editor.cardId);
+    const original = originalById?.(editor.cardId) ?? (merged && !personal.overlays[overlayKey(subject, editor.cardId)] ? { front: merged.front, back: merged.back } : undefined);
+    return original ? { kind: "textbook" as const, cardId: editor.cardId, originalFront: original.front, originalBack: original.back } : null;
+  })();
   // 固定"正在学习"的卡: 显示中的卡自动成为固定卡, 到期插入不会改变它
   useEffect(() => {
     if (mode === "browse" || !card) return;
@@ -105,9 +127,10 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     setPinned(null);
     setRevealedCard(null);
   }
-  // 键盘: 空格/回车翻面, 1-4 评分, 浏览模式 ←/→
+  // 键盘: 空格/回车翻面, 1-4 评分, 浏览模式 ←/→; 编辑器打开时完全暂停
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (editor) return;
       // 焦点在可交互元素上时让原生行为生效(如按钮的 Enter/空格点击), 组合键与按住重复也跳过
       if (event.ctrlKey || event.altKey || event.metaKey || event.repeat) return;
       const target = event.target as HTMLElement | null;
@@ -138,9 +161,21 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}
     <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>今日已学新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small></>}</div>
     {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { if (onUndoRating) onUndoRating(); else review.undoLastRating(); }}>撤销本次评分</button></p>}
-    {!review.ready ? <div className="panel empty">正在读取学习记录…</div> : card ? <div className="flash-area">
-      <div className="flash-top"><span>{books.find(book => book.id === card.book)?.name} · 第 {card.chapter} 章{card.section ? " · " + card.section : ""}</span><span>{mode !== "browse" && head ? `${head.kind === "new" ? "新卡" : head.kind === "learning" ? "短间隔回顾" : "到期复习"} · ${mode === "all" ? "全部队列" : "当前范围"}剩余 ${queue.items.length} 张` : `${browseIndex + 1} / ${browseCards.length}`}</span></div>
-      <button className="flash-card" onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? renderMarked(card.back) : card.front}</strong><span>{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>
+    {!review.ready ? <div className="panel empty">正在读取学习记录…</div>
+    : editor && editorTarget ? <CardEditor
+      subject={subject as PersonalSubject}
+      subjectName={books.find(book => book.id === bookId)?.name || subject}
+      books={books}
+      target={editorTarget}
+      overlay={editor.mode === "edit" ? personal.overlays[overlayKey(subject, editor.cardId)] : undefined}
+      onDone={() => setEditor(null)}
+      onAddScope={scope => review.selectScopes([...review.newScopes, scope])}
+      onResetCard={cardId => review.resetCard(cardId)}
+    />
+    : card ? <div className="flash-area">
+      <div className="flash-top"><span>{books.find(book => book.id === card.book)?.name} · 第 {card.chapter} 章{card.section ? " · " + card.section : ""}{card.id.startsWith("mine-") && <em className="personal-tag">个人补充卡</em>}</span><span>{mode !== "browse" && head ? `${head.kind === "new" ? "新卡" : head.kind === "learning" ? "短间隔回顾" : "到期复习"} · ${mode === "all" ? "全部队列" : "当前范围"}剩余 ${queue.items.length} 张` : `${browseIndex + 1} / ${browseCards.length}`}</span></div>
+      <button className="flash-card" style={display.bg ? { backgroundColor: display.bg } : undefined} onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? <RichTextView text={card.back} runs={display.aRuns || []}/> : <RichTextView text={card.front} runs={display.qRuns || []} renderTextbook={false}/>}</strong>{flipped && display.note && <span className="personal-note"><b>我的补充</b><RichTextView text={display.note.text} runs={display.note.runs}/></span>}<span>{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>
+      <div className="card-edit-row"><button className="text-button" onClick={() => setEditor({ mode: "edit", cardId: card.id })}>编辑这张卡 / 添加我的补充</button><button className="text-button" onClick={() => setEditor({ mode: "create" })}>新建个人卡</button></div>
       <div className="rate-actions study-rate-actions">{!flipped ? <button className="primary" onClick={() => setRevealedCard(visibleCardKey)}>显示答案 <small className="kbd-hint">空格</small></button> : mode !== "browse" ? ratings.map(({ grade, label }, index) => {
         const preview = review.preview(card.id, grade);
         return <button key={grade} onClick={() => rate(grade)}>{label}<small className="kbd-hint">{index + 1}</small><span>{formatStudyDue(preview.dueAt)}</span></button>;
@@ -153,5 +188,24 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
       {queue.nextDueAt && <p>{mode === "scope" ? "当前范围下次到期" : "下次到期"}：{formatStudyDue(queue.nextDueAt)} · 到时自动进入队列</p>}
       {queue.remainingNewLimit === 0 && <p>全部范围共享的今日新卡额度已用完。可以调整每日上限，或明天继续。</p>}
     </>}</div>}
+    {!editor && <HiddenCardsManager subject={subject} personal={personal} onRestoreOverlay={cardId => {
+      const overlay = personal.overlays[overlayKey(subject, cardId)];
+      if (!overlay) return;
+      saveOverlay(subject as PersonalSubject, cardId, { hidden: false }, "", "", overlay.rev);
+    }} onRestoreCard={cardId => setPersonalCardHidden(cardId, false)}/>}
   </>;
+}
+
+/** 可恢复隐藏的管理入口: 隐藏不清除学习记录, 随时恢复显示。 */
+function HiddenCardsManager({ subject, personal, onRestoreOverlay, onRestoreCard }: { subject: string; personal: PersonalStore; onRestoreOverlay: (cardId: string) => void; onRestoreCard: (cardId: string) => void }) {
+  const overlayEntries = Object.entries(personal.overlays).filter(([key, overlay]) => key.startsWith(subject + ":") && overlay.hidden);
+  const hiddenPersonal = personal.cards.filter(card => card.subject === subject && card.hidden);
+  if (!overlayEntries.length && !hiddenPersonal.length) return null;
+  return <details className="panel card-hidden-manager">
+    <summary>已隐藏的卡（{overlayEntries.length + hiddenPersonal.length}）<small>隐藏只是不进入学习与浏览，学习记录保留。</small></summary>
+    <div>{overlayEntries.map(([key]) => {
+      const cardId = key.slice(subject.length + 1);
+      return <div key={key} className="mistake-row"><div className="mistake-info"><b>{cardId}</b></div><button className="secondary" onClick={() => onRestoreOverlay(cardId)}>恢复显示</button></div>;
+    })}{hiddenPersonal.map(card => <div key={card.id} className="mistake-row"><div className="mistake-info"><b>{card.front.text.slice(0, 60)}</b></div><button className="secondary" onClick={() => onRestoreCard(card.id)}>恢复显示</button></div>)}</div>
+  </details>;
 }

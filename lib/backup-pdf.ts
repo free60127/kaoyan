@@ -113,6 +113,21 @@ export async function exportStudyBackupPdf(
     return error("中文字体无效，无法导出");
   }
   const supported = new Set(font.getCharacterSet()), widths = new Map<string, number>();
+  const HEX_RGB = /^#([0-9a-fA-F]{6})$/;
+  const styledColor = (hex: string | undefined): ReturnType<typeof rgb> | null => {
+    if (!hex || !HEX_RGB.test(hex)) return null;
+    const value = parseInt(hex.slice(1), 16);
+    return rgb(((value >> 16) & 255) / 255, ((value >> 8) & 255) / 255, (value & 255) / 255);
+  };
+  const widthOf = (value: string, size: number) => {
+    let total = 0;
+    for (const character of value) {
+      let unit = widths.get(character);
+      if (unit === undefined) { unit = font.widthOfTextAtSize(character, 1); widths.set(character, unit); }
+      total += unit * size;
+    }
+    return total;
+  };
   pdf.setTitle(document.title); pdf.setAuthor("研途");
   pdf.setSubject("学习记录与模拟卷备份（含可恢复数据）");
   pdf.setCreator("Yantu study backup");
@@ -127,14 +142,21 @@ export async function exportStudyBackupPdf(
       page.drawText(document.title, { x: MARGIN, y: PAGE_HEIGHT - 30, size: 8, font, color: MUTED });
     }
   };
-  const drawBlock = (text: string, size: number, lineHeight: number, heading = false) => {
+  const drawBlock = (text: string, size: number, lineHeight: number, heading = false, style?: { color?: string; hl?: string }) => {
     const lines = wrap(printable(text, supported), font, size, widths);
     // Avoid leaving a heading alone at the foot of a page.
     if (heading && y - lineHeight * Math.min(lines.length + 1, 3) < MARGIN) newPage();
+    const textColor = (!heading && styledColor(style?.color)) || null;
+    const highlight = styledColor(style?.hl);
     for (const line of lines) {
       if (y - lineHeight < MARGIN) newPage();
       y -= lineHeight;
-      if (line) page.drawText(line, { x: MARGIN, y, size, font, color: heading ? ACCENT : INK });
+      if (!line) continue;
+      if (highlight) {
+        // 底纹: 文字行背后的浅色矩形, 高度略小于行距
+        page.drawRectangle({ x: MARGIN - 2, y: y - size * 0.3, width: Math.min(widthOf(line, size) + 6, CONTENT_WIDTH + 4), height: size * 1.25, color: highlight });
+      }
+      page.drawText(line, { x: MARGIN, y, size, font, color: textColor || (heading ? ACCENT : INK) });
     }
     y -= heading ? 9 : 7;
   };
@@ -144,7 +166,7 @@ export async function exportStudyBackupPdf(
   drawBlock("字体未支持的字符会显示为 [U+码点]；恢复数据保留原始文字。", 9, 15);
   for (const block of document.blocks) {
     if (block.type === "heading") { y -= 7; drawBlock(block.text, 14, 21, true); }
-    else drawBlock(block.text, 10, 16);
+    else drawBlock(block.text, 10, 16, false, block.color || block.hl ? { color: block.color, hl: block.hl } : undefined);
   }
   const count = pdf.getPageCount();
   pdf.getPages().forEach((current, index) => {

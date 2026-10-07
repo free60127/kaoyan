@@ -1,6 +1,8 @@
 import { books, cards, loadKnowledgeCards, questions } from "./study-data";
 import { load825StudyData } from "./825/study-data";
 import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "./mock-paper-templates";
+import { getEffectiveCards, type EffectiveCard } from "./effective-catalog";
+import { stripHighlightMarkers } from "./highlight-markers";
 
 export const MAX_MOCK_QUIZ_QUESTIONS = 60;
 export const MOCK_QUIZ_TYPES = ["single-choice", "definition", "short-answer", "essay", "material-analysis"] as const;
@@ -10,7 +12,7 @@ export const MOCK_QUIZ_TYPE_LABELS: Record<MockQuizType, string> = {
 };
 export type MockQuizConfig = Record<MockQuizType, number>;
 export type MockQuizRange = { bookId: string; chapters?: number[]; section?: string };
-export type MockQuizContext = { subject: "333" | "825"; ranges?: MockQuizRange[]; bookId?: string; chapterNo?: number; book?: string; chapter?: string; section?: string };
+export type MockQuizContext = { subject: "333" | "825"; ranges?: MockQuizRange[]; bookId?: string; chapterNo?: number; book?: string; chapter?: string; section?: string; /** 命题素材是否包含"我的补充"(默认不包含, 补充不冒充教材内容) */ includePersonalNotes?: boolean };
 export type MockQuizOptions = { signal?: AbortSignal; timeoutMs?: number; onProgress?: (done: number, total: number) => void; templateId?: MockPaperTemplateId };
 const MOCK_SOURCE = "AI 模拟题 · 基于当前笔记与同书真题风格生成，非历年真题；参考答案仅供练习";
 export type MockQuizUnit = { bookId: string; chapterNo: number; bookName: string; chapterName: string; section?: string };
@@ -190,8 +192,9 @@ async function getReferences(ctx: MockQuizContext) {
   if (!Array.isArray(ranges) || !ranges.length) throw new Error("请选择至少一个书目或章节范围。");
   const is825 = ctx.subject === "825";
   const data = is825 ? await load825StudyData() : null;
-  const knowledge333 = is825 ? [] : await loadKnowledgeCards();
-  const availableCards = data ? data.cards : [...cards, ...knowledge333];
+  const override = getEffectiveCards(ctx.subject);
+  const knowledge333 = override ?? (is825 ? [] : await loadKnowledgeCards());
+  const availableCards: readonly (EffectiveCard | { id: string; book: string; chapter: number; front: string; back: string; section?: string })[] = override ?? (data ? data.cards : [...cards, ...knowledge333]);
   const bookData = data ? data.books : books;
   const result: { unit: MockQuizUnit; notes: { id: string; front: string; back: string }[]; style: { type: string; stem: string; referenceAnswer?: string }[] }[] = [];
   const unitKeys = new Set<string>();
@@ -217,7 +220,14 @@ async function getReferences(ctx: MockQuizContext) {
         const cardSection = "section" in card && typeof card.section === "string" ? card.section : card.front.match(/^〔([^〕]+)〕/)?.[1];
         return cardSection?.trim() === section;
       });
-      const notes = relevantCards.filter((card) => nonempty(card.front) && nonempty(card.back) && card.front.length + card.back.length <= 6000).map(({ id, front, back }) => ({ id, front, back }));
+      const notes = relevantCards.filter((card) => nonempty(card.front) && nonempty(card.back) && card.front.length + card.back.length <= 6000).map((card) => {
+        const note = ctx.includePersonalNotes ? (card as EffectiveCard).note : undefined;
+        return {
+          id: card.id,
+          front: stripHighlightMarkers(card.front),
+          back: stripHighlightMarkers(card.back) + (note ? `\n【个人补充】${stripHighlightMarkers(note)}` : ""),
+        };
+      });
       if (!notes.length) continue;
       // 风格样例优先取有参考答案的完整真题(给主观题提供材料/设问/要点范例), 每题答案截断防超长
       const style = data

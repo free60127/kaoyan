@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { applyRating, buildStudyQueue, createEmptyProgress, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { applyRating, buildStudyQueue, createEmptyProgress, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, resetCardProgress, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
@@ -149,6 +149,10 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
         return { ...latest, progress: undoRating(latest.progress, undo) };
       });
     },
+    /** 重新作为新卡学习: 用户主动清除此卡的复习状态与当日准入(如把题目改成全新知识点)。 */
+    resetCard(cardId: string) {
+      return mutate(latest => ({ ...latest, progress: resetCardProgress(latest.progress, cardId, clock()) }));
+    },
   };
 }
 
@@ -215,6 +219,7 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
       setLastRating(null);
       return !!next;
     },
+    resetCard(cardId: string) { activeSync()?.resetCard(cardId); },
     canUndo: !!bound && !!undoRef.current,
     preview(cardId: string, grade: Rating) { return previewSchedule(current.progress.cards[cardId], grade, now); },
   };

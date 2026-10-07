@@ -19,6 +19,7 @@ const recordLabels: Record<BackupStorageKey, string> = {
   "yantu-activity-v1-825": "825 今日活动明细",
   "yantu-activity-v1-politics": "政治今日活动明细",
   "yantu-mcq-excluded-v1": "人工不适合选择题排除标记",
+  "yantu-personal-v1": "个人编辑层（修改、我的补充、个人卡与样式）",
 };
 const subjects = { "333": "333 教育综合", "825": "825 英语专业基础", politics: "政治", english: "英语二" };
 const sizeLabel = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;

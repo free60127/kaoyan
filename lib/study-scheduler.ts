@@ -320,3 +320,15 @@ export function undoRating(progress: StudyProgress, undo: RatingUndo): StudyProg
   const next: StudyProgress = { ...progress, cards, daily: undo.daily };
   return next;
 }
+
+/** 重新作为新卡学习: 清除该卡的复习状态与当日准入(用户主动触发, 如把题目改成了全新知识点)。
+ *  范围与每日上限不动; 卡片回到"从未学过"状态, 在学习范围内按新卡排期。 */
+export function resetCardProgress(progress: StudyProgress, cardId: string, now: StudyTime): StudyProgress {
+  if (!progress.cards[cardId] && !progress.daily.admitted.includes(cardId)) return progress;
+  const cards = { ...progress.cards };
+  delete cards[cardId];
+  const daily = progress.daily.date === localStudyDate(now)
+    ? { date: progress.daily.date, admitted: progress.daily.admitted.filter(id => id !== cardId) }
+    : progress.daily;
+  return { ...progress, cards, daily };
+}
