@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
-import { localStudyDate, type Rating, type StudyScope } from "../../lib/study-scheduler";
+import { type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
@@ -26,8 +26,9 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
     review.selectScopes(selected(bookId, chapter) ? rest : [...rest, { bookId, chapters: [chapter] }]);
   }
   const currentAvailable = cards.some(card => card.book === current.bookId && current.chapters.includes(card.chapter) && (!current.section || current.section === card.section));
+  if (!review.ready) return <div className="panel study-scopes" role="status">正在读取学习范围与记录…</div>;
   return <details className="panel study-scopes" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}><summary>设置学习范围与每日新卡上限 <small>{review.newScopes.length ? "已选新学范围 · 上限 " + review.progress.dailyNewLimit + " 张" : "尚未选择新学范围"}</small></summary>
-    <div className="study-scope-heading"><div><h2>今日新学范围</h2><p>勾选想学的章，可跨书选择。新学范围加入持续复习；以后换章，之前已学的到期卡仍会出现。</p></div><label className="study-limit">每日新卡上限<input type="number" min="0" max="200" step="1" value={limitDraft} disabled={!review.ready} onChange={event => { const value = event.target.value; setLimitDraft(value); if (value !== "" && Number.isInteger(Number(value)) && Number(value) >= 0 && Number(value) <= 200) review.setDailyNewLimit(Number(value)); }} onBlur={() => setLimitDraft(String(review.progress.dailyNewLimit))}/><small>0–200 张 · 已学 {review.progress.daily.date === localStudyDate(review.now) ? review.progress.daily.admitted.length : 0} 张新卡</small></label></div>
+    <div className="study-scope-heading"><div><h2>今日新学范围</h2><p>勾选想学的章，可跨书选择。新学范围加入持续复习；以后换章，之前已学的到期卡仍会出现。</p></div><label className="study-limit">每日新卡上限<input type="number" min="0" max="200" step="1" value={limitDraft} disabled={!review.ready} onChange={event => { const value = event.target.value; setLimitDraft(value); if (value !== "" && Number.isInteger(Number(value)) && Number(value) >= 0 && Number(value) <= 200) review.setDailyNewLimit(Number(value)); }} onBlur={() => setLimitDraft(String(review.progress.dailyNewLimit))}/><small>0–200 张 · 今日已学新卡 {review.studiedToday} 张</small></label></div>
     {showCurrent && <button className="secondary" disabled={!review.ready || !currentAvailable} onClick={() => review.selectScopes([...review.newScopes, current])}>把当前{current.section ? "小节" : "章"}加入学习</button>}
     <div className="study-selection" aria-label="已选新学范围">{review.newScopes.length ? review.newScopes.map(scope => <span key={scopeKey(scope)}>{scopeLabel(scope, books)}<button aria-label={"取消今日新学：" + scopeLabel(scope, books)} onClick={() => review.selectScopes(review.newScopes.filter(item => scopeKey(item) !== scopeKey(scope)))}>×</button></span>) : <p>还没有选择新学范围。先勾选一章，或把当前章 / 小节加入学习。</p>}</div>
     <details className="study-range-picker"><summary>按书目和章节选择新学范围</summary><div className="study-range-books">{books.map(book => {
@@ -88,7 +89,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
   }, [jumpCardId]);
   function rate(grade: Rating) {
     if (!card || !flipped || mode === "browse") return;
-    review.rateCard(card.id, grade, mode === "scope" ? currentScope : undefined);
+    if (!review.rateCard(card.id, grade, mode === "scope" ? currentScope : undefined)) return;
     onRated?.(card, grade, wasNew);
     setPinned(null);
     setRevealedCard(null);
@@ -124,8 +125,8 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     {mode !== "all" && <div className="study-location"><strong>{mode === "scope" ? "当前复习范围" : "当前浏览位置"}</strong>{picker}</div>}
     <StudyReviewScopes books={books} cards={cards} review={review} current={currentScope} showCurrent={mode !== "all"}/>
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}
-    <div className="study-queue-summary">{mode !== "browse" ? <><span>已学到期 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>今日新学 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small></>}</div>
-    {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { review.undoLastRating(); onUndoRating?.(); }}>撤销本次评分</button></p>}
+    <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>今日已学新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small></>}</div>
+    {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { if (onUndoRating) onUndoRating(); else review.undoLastRating(); }}>撤销本次评分</button></p>}
     {!review.ready ? <div className="panel empty">正在读取学习记录…</div> : card ? <div className="flash-area">
       <div className="flash-top"><span>{books.find(book => book.id === card.book)?.name} · 第 {card.chapter} 章{card.section ? " · " + card.section : ""}</span><span>{mode !== "browse" && head ? `${head.kind === "new" ? "新卡" : head.kind === "learning" ? "短间隔回顾" : "到期复习"} · ${mode === "all" ? "全部队列" : "当前范围"}剩余 ${queue.items.length} 张` : `${browseIndex + 1} / ${browseCards.length}`}</span></div>
       <button className="flash-card" onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? card.back : card.front}</strong><span>{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>
@@ -137,6 +138,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     </div> : <div className="panel empty study-queue-empty">{mode === "browse" ? "当前章 / 小节暂无闪卡，请切换浏览位置。" : <>
       <b>{mode === "scope" ? "当前章 / 小节暂无待复习卡" : review.progress.scopes.length ? "全部学习范围当前队列已完成" : "先选择今天想学的范围"}</b>
       {mode === "scope" ? <><p>可把当前章 / 小节加入上方今日新学范围，或切换到全部学习范围复习。切换位置不会自动加入学习。</p><p>当前范围只显示已进入今日队列的卡；新卡额度与其他范围共享。已学卡到期时会自动刷新。</p><button className="secondary" onClick={() => setMode("all")}>全部学习范围复习{review.queue.items.length ? `（${review.queue.items.length} 张）` : ""}</button></> : <p>{review.progress.scopes.length ? "已学卡会按评分时间再次进入队列；今日新卡来自上方所选范围。" : "上方可按书目勾选章节，或切回当前章复习并加入当前章 / 小节。"}</p>}
+      <p>{mode === "scope" ? "当前范围" : "本科目"}今日已学新卡 {mode === "all" ? review.studiedToday : scopedQueue.studiedToday} 张，累计已学 {cards.filter(item => (mode === "all" || cardMatchesStudyScope(item, currentScope)) && review.progress.cards[item.id]).length} 张。学习记录已保留，未到期的卡暂不进入复习队列。</p>
       {queue.nextDueAt && <p>{mode === "scope" ? "当前范围下次到期" : "下次到期"}：{formatStudyDue(queue.nextDueAt)} · 到时自动进入队列</p>}
       {queue.remainingNewLimit === 0 && <p>全部范围共享的今日新卡额度已用完。可以调整每日上限，或明天继续。</p>}
     </>}</div>}
