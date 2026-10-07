@@ -2,9 +2,10 @@ import { isRestorableView, learningSessionKey, restoreLearningSession, type Book
 import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
 import type { MockPracticeBook } from "./mock-practice-state";
+import { examTargetKey, validateExamTarget, type ExamTargetRecord } from "./exam-target";
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
-export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"] as const;
+export const BACKUP_STORAGE_KEYS = [learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", examTargetKey] as const;
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
@@ -12,6 +13,7 @@ export type BackupMistake = { id: string; subject: string; kind: string; refId: 
 export type BackupDayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number };
 export type BackupActivity = { t: string; kind: string; subject: string; label: string; detail: string };
 export type BackupRecordMap = {
+  "yantu-exam-target-v1": ExamTargetRecord;
   "yantu-learning-session-v1": LearningSession;
   "yantu-srs-v1-333": BackupProgress;
   "yantu-srs-v1-825": BackupProgress;
@@ -232,6 +234,11 @@ function dayStats(value: unknown): Record<string, BackupDayStat> {
   }));
 }
 function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCatalogs, collecting = false): BackupRecordMap[BackupStorageKey] {
+  if (key === examTargetKey) {
+    const row = object(value, "考试日期");
+    // Backup records retain supported fields only, including when removing credentials.
+    try { return validateExamTarget({ version: row.version, date: row.date }); } catch { return fail("考试日期", "日期或版本无效"); }
+  }
   if (key === learningSessionKey) return session(value, catalogs);
   if (key === "yantu-mistakes-v1") return mistakes(value);
   if (key === "yantu-mcq-excluded-v1") return boundedList(value, 20_000, "排除标记").map(id => text(id, "排除标记", 200));
@@ -373,6 +380,8 @@ export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs
     return `《${book.name}》${chapters.map(chapter => `第 ${chapter} 章 ${book.chapters[chapter - 1].title}`).join("、")}${section ? ` / ${section}` : ""}`;
   };
   add(`导出时间：${backup.createdAt}`);
+  const examTarget = backup.records[examTargetKey];
+  if (examTarget) add(`目标初试日期：${examTarget.date}（手动设置）`);
   for (const subject of subjects) {
     add(subject === "politics" ? "政治" : `${subject} 学习记录`, "heading");
     const progress = backup.records[srsKey(subject)];

@@ -25,6 +25,7 @@ const catalogs = await loadBackupCatalogs();
 const fontBytes = new Uint8Array(await readFile(new URL("../public/fonts/yantu-pdf/YantuPdfSC-Regular.ttf", import.meta.url)));
 const clone = value => JSON.parse(JSON.stringify(value));
 const backup = { format: "yantu-study-backup", version: 1, createdAt: "2026-09-30T12:00:00.000Z", records: {} };
+backup.records["yantu-exam-target-v1"] = { version: 1, date: "2028-02-29" };
 for (const subject of ["333", "825", "politics"]) {
   const card = catalogs[subject].cards.find(card => card.section) || catalogs[subject].cards[0];
   const range = { bookId: card.book, chapters: [card.chapter], ...(card.section ? { section: card.section } : {}) };
@@ -137,6 +138,7 @@ test("multi-page Chinese searchable text retains full long answers, all options,
   assert.ok(pdf.getPageCount() < MAX_BACKUP_PDF_PAGES);
   for (const page of pdf.getPages()) { assert.equal(page.getWidth(), 595.28); assert.equal(page.getHeight(), 841.89); }
   const text = searchableText(pdf), joined = compact(text);
+  assert.ok(joined.includes(compact("目标初试日期：2028-02-29（手动设置）")));
   assert.doesNotMatch(text, /^[、。，：；？！》）〕】〉」』”’]/mu, "sample must not wrap closing CJK punctuation onto an otherwise empty line");
   assert.doesNotMatch(text, /[《（〔【〈「『“‘]$/mu, "sample must not leave opening CJK punctuation at the end of a line");
   for (const value of ["研途学习记录与模拟卷备份", "政治", "2027-10-04T12:00:00.000Z", "333模拟选择题完整题干", "825模拟论述题完整题干", "选项甲完整内容", "选项乙完整内容", "选项丙完整内容", "选项丁完整内容", "我的作答：C", "参考答案：B", "完整选择解析", "完整参考答案", "完整考点依据", "AI 模拟题来源", "〔理解〕、“概念”；", "[U+1F9E0]", "FINAL_ANSWER_END"]) assert.ok(joined.includes(compact(value)), value);

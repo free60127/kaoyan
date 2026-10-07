@@ -9,6 +9,7 @@ const { collectStudyBackup: collect, validateStudyBackup: validate, applyStudyBa
 const catalogs = await loadBackupCatalogs();
 const now = new Date("2026-09-30T12:00:00.000Z");
 const sessionKey = "yantu-learning-session-v1";
+const examKey = "yantu-exam-target-v1";
 const srsKey = subject => `yantu-srs-v1-${subject}`;
 const doneKey = subject => subject === "333" ? "yantu-done" : `yantu-done-${subject}`;
 const mockKey = subject => `kaoyan.mock-practice.v1.${subject}`;
@@ -45,6 +46,7 @@ function mock(subject) {
 }
 function fullStorage() {
   const values = { [sessionKey]: JSON.stringify(learning()), "unrelated": "keep", "yantu-key": "never read" };
+  values[examKey] = JSON.stringify({ version: 1, date: "2028-02-29" });
   values["yantu-mistakes-v1"] = JSON.stringify([{ id: "333:card:x1", subject: "333", kind: "card", refId: "x1", label: "题面", wrongCount: 2, lastAt: now.toISOString() }]);
   values["yantu-mcq-excluded-v1"] = JSON.stringify(["principles-k1-001"]);
   for (const subject of ["333", "825", "politics"]) values[`yantu-activity-v1-${subject}`] = JSON.stringify([{ t: now.toISOString(), kind: "rating", subject, label: "题面", detail: "记住了" }]);
@@ -111,6 +113,29 @@ test("all eighteen keys round trip realistic three-subject records, future dates
   assert.equal(result.summary["333"].quizAnswers, 4); // fullStorage 的 stats 样本
   assert.deepEqual(result.summary["english"], { studiedCards: 0, completedChapters: 0, mockQuestions: 0, drafts: 1, mistakes: 0, quizAnswers: 0 });
   assert.equal(result.summary.english.drafts, 1);
+  assert.deepEqual(backup.records[examKey], { version: 1, date: "2028-02-29" });
+});
+test("legacy backups omit the exam target and preserve an existing target on import", () => {
+  const old = backupWith(sessionKey, learning());
+  assert.equal(Object.hasOwn(validate(old, catalogs).records, examKey), false);
+  const target = memory({ [examKey]: JSON.stringify({ version: 1, date: "2027-12-01" }) });
+  const result = apply(target, old, catalogs);
+  assert.equal(result.keys.includes(examKey), false);
+  assert.equal(JSON.parse(target.values.get(examKey)).date, "2027-12-01");
+  const empty = collect(memory(), catalogs, now);
+  assert.equal(Object.hasOwn(empty.records, examKey), false);
+});
+test("exam target rejects impossible dates, invalid years and versions before writing", () => {
+  for (const value of [null, "2027-12-01", { version: 1, date: "2027-02-29" }, { version: 1, date: "2100-02-29" }, { version: 1, date: "0000-01-01" }, { version: 1, date: "10000-01-01" }, { version: 2, date: "2027-12-01" }]) {
+    const target = memory();
+    assert.throws(() => apply(target, backupWith(examKey, value), catalogs), /考试日期/);
+    assert.deepEqual(target.writes, []);
+  }
+  const raw = JSON.stringify({ version: 1, date: "2027-04-31" }), source = memory({ [examKey]: raw });
+  assert.throws(() => collect(source, catalogs, now), /考试日期/);
+  assert.equal(source.values.get(examKey), raw);
+  assert.deepEqual(source.writes, []);
+  assert.deepEqual(validate(backupWith(examKey, { version: 1, date: "2028-02-29", apiKey: "private" }), catalogs).records[examKey], { version: 1, date: "2028-02-29" });
 });
 test("document includes original problems, chapter labels, dates, every option and complete answers", () => {
   const backup = collect(fullStorage(), catalogs, now), result = document(backup, catalogs), text = result.blocks.map(block => block.text).join("\n");
@@ -120,6 +145,7 @@ test("document includes original problems, chapter labels, dates, every option a
     assert.ok(text.includes(card.back));
   }
   for (const value of ["2027-10-04T12:00:00.000Z", "已完成", "新学范围", "333复述草稿\n第二行", "完整真题答复\n继续论证", "非历年真题", "选项甲", "选项乙", "选项丙", "选项丁", "我的作答：C", "参考答案：B", "我的完整作答\n结论", "完整参考答案\n论证", "完整选择解析", "完整考点依据"]) assert.ok(text.includes(value), value);
+  assert.ok(text.includes("目标初试日期：2028-02-29（手动设置）"));
 });
 test("legacy reviews and last-place migrate without losing future dues or changing source storage", () => {
   const values = {}, originals = {};
