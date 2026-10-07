@@ -2,6 +2,7 @@ import { isRestorableView, learningSessionKey, restoreLearningSession, type Book
 import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
 import type { MockPracticeBook } from "./mock-practice-state";
+import { stripHighlightMarkers } from "./highlight-markers";
 import { examTargetKey, validateExamTarget, type ExamTargetRecord } from "./exam-target";
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
@@ -390,7 +391,7 @@ export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs
       for (const [label, ranges] of [["复习范围", progress.scopes], ["新学范围", progress.newScopes]] as const) for (const range of ranges) add(`${label}：${describe(subject, range.bookId, range.chapters, range.section)}`);
       for (const [id, review] of Object.entries(progress.cards)) {
         const card = catalogs[subject].cards.find(card => card.id === id);
-        add(`${card ? `${describe(subject, card.book, [card.chapter], card.section)}\n问题：${card.front}\n参考内容：${card.back}` : `卡片 ${id}（当前题库已移除，保留历史记录）`}\n下次复习：${review.dueAt}；阶段：${review.stage}；复习次数：${review.reps}；遗忘次数：${review.lapses}\n间隔天数：${review.intervalDays}；难度系数：${review.ease}\n首次学习：${review.firstStudiedAt}；上次复习：${review.lastReviewedAt}${card ? `\n来源：${card.source}` : ""}`);
+        add(`${card ? `${describe(subject, card.book, [card.chapter], card.section)}\n问题：${card.front}\n参考内容：${stripHighlightMarkers(card.back)}` : `卡片 ${id}（当前题库已移除，保留历史记录）`}\n下次复习：${review.dueAt}；阶段：${review.stage}；复习次数：${review.reps}；遗忘次数：${review.lapses}\n间隔天数：${review.intervalDays}；难度系数：${review.ease}\n首次学习：${review.firstStudiedAt}；上次复习：${review.lastReviewedAt}${card ? `\n来源：${card.source}` : ""}`);
       }
     }
     for (const [key, done] of Object.entries(backup.records[doneKey(subject)] || {})) {

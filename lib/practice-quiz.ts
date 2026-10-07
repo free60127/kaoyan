@@ -8,6 +8,8 @@ export type PracticeQuestion = { cardId: string; stem: string; hint: string; opt
 
 const LABEL = /^〔.+?〕\s*/;
 const PIN_LINE = /^📌.*$/gm;
+/** 卡背可能带教材重点标记(⟦g|…⟧), 生成选项前还原为纯文字。 */
+const MARKER = /⟦[gbrys]\|([^⟧]*)⟧/g;
 
 export function mulberry32(seed: number) {
   let state = seed >>> 0;
@@ -23,7 +25,7 @@ export function mulberry32(seed: number) {
  *  判断式卡片(如“不对。原因是…”)的首句太短, 单独用作选项没有区分度。
  *  英文按句号/问号/叹号切句; 超长截断在词边界完成, 不产生"半个单词"的选项。 */
 export function firstAnswerClause(back: string, max = 110): string {
-  const cleaned = back.replace(PIN_LINE, "").trim();
+  const cleaned = back.replace(MARKER, "$1").replace(PIN_LINE, "").trim();
   const hasCjk = /[\u4e00-\u9fff]/.test(cleaned);
   const min = hasCjk ? 12 : 30;
   const parts = hasCjk ? cleaned.split(/(?<=[。；;\n])/) : cleaned.split(/(?<=[.!?])\s+/);
@@ -67,7 +69,7 @@ export function isMcqSuitable(front: string): boolean {
 
 /** 判断题/选择题整卷的答案串(如 "T F T F F")不是可用的选项文本。 */
 export function looksLikeAnswerKey(text: string): boolean {
-  const cleaned = text.replace(PIN_LINE, "").trim();
+  const cleaned = text.replace(MARKER, "$1").replace(PIN_LINE, "").trim();
   return cleaned.length >= 4 && /^(?:[TtFf][\s,，、.·]*){4,}$/.test(cleaned) && /[Tt][\s,，、.·]*[Ff]|[Ff][\s,，、.·]*[Tt]/.test(cleaned);
 }
 

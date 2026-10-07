@@ -408,7 +408,7 @@
    "chapter": 1,
    "section": "Design features 概述",
    "front": "What are design features? Name the eight design features of human language.",
-   "back": "Design features are features that distinguish our human languages from other animal communication systems. There are eight design features of human language: creativity, duality, arbitrariness, displacement, cultural transmission, interchangeability, reflexivity and adaptability. Some animal communication systems possess, to a very limited degree, one or another of these features except creativity and duality, but none is found to have all the features.\n——\nDesign features 即区分人类语言与其他动物交际系统的特征；有些动物信号系统只有限地具备个别特征（creativity、duality 除外），但没有证据表明它们同时具备全部特征。",
+   "back": "Design features are features that distinguish our human languages from other animal communication systems. There are eight design features of human language: creativity, duality, arbitrariness, displacement, cultural transmission, interchangeability, ⟦s|reflexivity⟧ and adaptability. Some animal communication systems possess, to a very limited degree, one or another of these features except creativity and duality, but none is found to have all the features.\n——\nDesign features 即区分人类语言与其他动物交际系统的特征；有些动物信号系统只有限地具备个别特征（creativity、duality 除外），但没有证据表明它们同时具备全部特征。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第3、6页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePages": [
@@ -436,7 +436,7 @@
    "chapter": 1,
    "section": "Duality",
    "front": "What is duality as a design feature of language?",
-   "back": "Duality means that language contains two subsystems: sound and meaning. Meanings are conveyed by certain speech sounds or sequences of speech sounds; when a certain speech sound corresponds to a certain meaning, a unit of language arises. Human languages are discrete, while animal communication systems are non-discrete.\n——\n语言包含声音与意义两个相互关联的子系统，语音与意义建立对应后形成语言单位；人类语言是可分离（discrete）的单位系统，动物交际系统则是非离散的。",
+   "back": "Duality means that language contains two subsystems: sound and meaning. Meanings are conveyed by certain speech sounds or sequences of speech sounds; when a certain speech sound corresponds to a certain meaning, a unit of language arises. Human languages are discrete, while animal communication systems are ⟦s|non-discrete⟧.\n——\n语言包含声音与意义两个相互关联的子系统，语音与意义建立对应后形成语言单位；人类语言是可分离（discrete）的单位系统，动物交际系统则是非离散的。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第4页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePage": 4
@@ -469,7 +469,7 @@
    "chapter": 1,
    "section": "Arbitrariness",
    "front": "According to Saussure, what is the linguistic sign composed of? Is the signified identical with the referent?",
-   "back": "According to Saussure, the linguistic sign is composed of signifier (sound image) and signified (concept). The signified is a concept, and it should be distinguished from the external object, i.e. the referent.\n——\n语言符号由能指（signifier，声音意象）与所指（signified，概念）构成；所指是概念，应与外部对象或 referent 区分。",
+   "back": "According to Saussure, the linguistic sign is composed of signifier (sound image) and ⟦s|signified (concept⟧). The signified is a concept, and it should be distinguished from the external object, i.e. the referent.\n——\n语言符号由能指（signifier，声音意象）与所指（signified，概念）构成；所指是概念，应与外部对象或 referent 区分。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第4页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePage": 4
@@ -516,7 +516,7 @@
    "chapter": 1,
    "section": "Reflexivity",
    "front": "What is reflexivity? How is it related to metalanguage?",
-   "back": "Human language can be used to talk about itself; this self-referring property is called reflexivity. The language used to talk about language is called metalanguage. When linguists write grammars or lexicographers compile dictionaries, and when we teach language as a subject, metalanguage must be used.\n——\n人能用语言谈论语言本身，这种自我指涉能力称 reflexivity；用来描述语言的语言称 metalanguage。语法编写、词典编纂和语言教学都需要元语言。",
+   "back": "Human language can be used to talk about itself; this self-referring property is called ⟦s|reflexivity⟧. The language used to talk about ⟦s|language is called metalanguage⟧. When linguists write grammars or lexicographers compile dictionaries, and when we teach language as a subject, metalanguage must be used.\n——\n人能用语言谈论语言本身，这种自我指涉能力称 reflexivity；用来描述语言的语言称 metalanguage。语法编写、词典编纂和语言教学都需要元语言。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第6页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePage": 6
@@ -538,7 +538,7 @@
    "chapter": 1,
    "section": "语言的具体功能与元功能",
    "front": "How do the specific functions of language differ from its metafunctions?",
-   "back": "Function refers to the roles language plays in our daily life or in societies. The specific roles language plays fulfill an individual's purpose of communication, namely, speech function; the general roles language plays are termed metafunctions. A metafunction is a more abstract term, which is capable of describing innumerable specific functions, and according to M.A.K. Halliday, language plays three metafunctions simultaneously.\n——\nSpecific functions 指语言在具体交际目的中的作用；metafunctions 是较抽象的总体功能，可涵盖许多具体作用。Halliday 认为三种元功能同时运作。",
+   "back": "Function refers to the roles language plays in our daily life or in societies. The specific roles language plays fulfill an individual's purpose of communication, namely, speech function; ⟦y|the general roles⟧ language plays are termed metafunctions. A metafunction is a more abstract term, which is capable of describing innumerable specific functions, and according to M.A.K. Halliday, language plays three metafunctions simultaneously.\n——\nSpecific functions 指语言在具体交际目的中的作用；metafunctions 是较抽象的总体功能，可涵盖许多具体作用。Halliday 认为三种元功能同时运作。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第7页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePage": 7
@@ -659,7 +659,7 @@
    "chapter": 1,
    "section": "形态类型：synthetic 与 agglutinating languages",
    "front": "How do synthetic (inflecting) languages differ from agglutinating languages morphologically?",
-   "back": "In synthetic (inflecting) languages, grammatical relationships are expressed by changing the internal structure of the words, typically by changing the inflectional endings, as in English, Latin and Greek. In agglutinating languages, words are built out of a long sequence of units, with each unit expressing a particular grammatical meaning, as in Japanese and Turkish.\n——\nSynthetic（inflecting）语言通过词内部变化（常见为词尾屈折）表达语法关系，如 English、Latin、Greek；agglutinating 语言把多个较清楚的形式单位串接起来，每个单位通常承担特定语法意义，如 Japanese、Turkish。",
+   "back": "In synthetic (inflecting) languages, grammatical relationships are expressed by changing the internal structure of the words, typically by changing the inflectional endings, as in English, Latin and Greek. In agglutinating languages, words are built out of a long sequence of units, with each unit expressing a particular grammatical meaning, as in Japanese and Turkish.\n——\nSynthetic（inflecting）语言通过词内部变化（常见为词尾屈折）表达语法关系，如 English、⟦s|Latin、Greek⟧；agglutinating 语言把多个较清楚的形式单位串接起来，每个单位通常承担特定语法意义，如 Japanese、Turkish。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第8页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePage": 8
@@ -692,7 +692,7 @@
    "chapter": 1,
    "section": "语言起源的解释",
    "front": "How do religious and scientific interpretations of the origin of language differ?",
-   "back": "Religious interpretations hold that language was God's gift to mankind. Scientific interpretations hold that language is a product of evolutionary development of the human species and originated in the process of labor. The fundamental difference between a religious belief and a scientific theory is whether it is verifiable.\n——\n宗教解释把语言看作上帝赐予人类的礼物；科学解释把语言视为人类演化的产物，并在劳动等社会活动中形成。关键区分是能否通过证据验证。",
+   "back": "Religious interpretations hold that language was God's gift to mankind. Scientific interpretations hold that language is a product of evolutionary development of the human species and originated in the process of labor. The fundamental difference between a religious belief and a scientific theory is whether it is ⟦s|verifiable⟧.\n——\n宗教解释把语言看作上帝赐予人类的礼物；科学解释把语言视为人类演化的产物，并在劳动等社会活动中形成。关键区分是能否通过证据验证。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第9页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePage": 9
@@ -775,7 +775,7 @@
    "chapter": 1,
    "section": "跨学科语言学分支",
    "front": "What is the difference between intra-disciplinary and inter-disciplinary branches of linguistics?",
-   "back": "The intra-disciplinary branch focuses on one aspect of language, while the inter-disciplinary branch deals with the relation between language and what is inherently related to it, such as society, mind and culture.\n——\n前者围绕语言系统的某个组成方面划分研究领域；后者考察语言与社会、心智、文化等内在相关方面的联系。",
+   "back": "The intra-disciplinary branch focuses on one aspect of language, while the inter-disciplinary ⟦s|branch deals with the relation between language and what is inherently related to it⟧, such as society, mind and culture.\n——\n前者围绕语言系统的某个组成方面划分研究领域；后者考察语言与社会、心智、文化等内在相关方面的联系。",
    "source": "《27版高分笔记·语言学》01 语言学Chapter1.pdf PDF第10、11页",
    "sourceFile": "01 语言学Chapter1.pdf",
    "sourcePages": [
@@ -979,7 +979,7 @@
    "chapter": 2,
    "section": "语音特征与描述维度",
    "front": "What phonetic features do we analyze speech sounds into?",
-   "back": "We usually analyze speech sounds into their composing elements, or phonetic features. They include places of articulation, manners of articulation, voicing, position of the tongue, height of the tongue, lip-rounding and tensity.\n要点：辅音三方面 place · manner · voicing；元音四方面 tongue position · tongue height · lip-rounding · tensity\n——\n辅音可看发音部位、发音方式和清浊；元音可看舌位、舌高、唇形圆展及紧张度。",
+   "back": "We usually analyze speech sounds into their composing elements, or phonetic features. They include places of articulation, manners of articulation, voicing, position of the ⟦s|tongue, height of the tongue, lip-rounding and tensity⟧.\n要点：辅音三方面 place · manner · voicing；元音四方面 tongue position · tongue height · lip-rounding · tensity\n——\n辅音可看发音部位、发音方式和清浊；元音可看舌位、舌高、唇形圆展及紧张度。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第4页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 4
@@ -1056,7 +1056,7 @@
    "chapter": 2,
    "section": "Nasal、liquid、glide 与 flap",
    "front": "How are nasals, liquids and glides distinguished in manner of articulation?",
-   "back": "Nasals are sounds produced when the velum is lowered to allow the air stream to pass through the nasal passages. Liquids are sounds produced with air escaping along the sides of the tongue or between the tip of the tongue and the alveolar ridge. Glides are marginal consonants: the airflow obstruction is very slight, although the articulators involved move to a certain position.\n——\nNasal 降低软腭使气流进入鼻腔；liquid 让气流沿舌侧或舌尖与齿龈脊之间通过；glide 属边缘辅音，气流阻碍很小，发音器官移向某一目标位置。",
+   "back": "Nasals are sounds produced when the velum is lowered to allow the air stream to pass through the nasal passages. Liquids are sounds produced with air escaping along the sides of the tongue or between the ⟦s|tip of the tongue and the alveolar ridge⟧. Glides are marginal consonants: the airflow obstruction is very slight, although the articulators involved move to a certain position.\n——\nNasal 降低软腭使气流进入鼻腔；liquid 让气流沿舌侧或舌尖与齿龈脊之间通过；glide 属边缘辅音，气流阻碍很小，发音器官移向某一目标位置。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第6页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 6
@@ -1122,7 +1122,7 @@
    "chapter": 2,
    "section": "元音舌位图与特征",
    "front": "How is the English vowel chart organized in terms of tongue position and height?",
-   "back": "The chart of simple vowels is organized with the horizontal axis as front, central and back, and the vertical axis as high (close), mid (semiclose) and low (open), showing the basic positions of simple vowels.\n——\n横向按 front、central、back 排列，纵向按 high/close、mid/semiclose、low/open 排列，展示单元音（simple vowels）的基本舌位。",
+   "back": "The chart of simple vowels is organized with the horizontal axis as front, central and back, and the vertical axis as ⟦s|high (close⟧), ⟦s|mid (semiclose⟧) and low (⟦s|open⟧), showing the basic positions of simple vowels.\n——\n横向按 front、central、back 排列，纵向按 high/close、mid/semiclose、low/open 排列，展示单元音（simple vowels）的基本舌位。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第6页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 6
@@ -1133,7 +1133,7 @@
    "chapter": 2,
    "section": "元音舌位图与特征",
    "front": "Which back vowels are rounded, and which vowels are tense?",
-   "back": "All the back vowels except [ɑː] are rounded. Long vowels and diphthongs are tense.\n——\n除 [ɑː] 以外的后元音都是圆唇元音；长元音和双元音是紧元音（tense）。",
+   "back": "All the back vowels except [ɑː] are rounded. ⟦s|Long vowels and diphthongs are tense⟧.\n——\n除 [ɑː] 以外的后元音都是圆唇元音；长元音和双元音是紧元音（tense）。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第7页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 7
@@ -1144,7 +1144,7 @@
    "chapter": 2,
    "section": "Phonetic features 的类别",
    "front": "What are the four widely accepted categories of phonetic features?",
-   "back": "The widely accepted four categories of phonetic features are major class features, laryngeal features, manner features and place features.\n要点：major class（大类）· laryngeal（喉部）· manner（方式）· place（部位）\n——\n语音特征四大类：大类特征、喉部特征、发音方式特征和发音部位特征。",
+   "back": "The widely accepted four categories of phonetic ⟦s|features⟧ are major class features, laryngeal features, manner features and place features.\n要点：major class（大类）· laryngeal（喉部）· manner（方式）· place（部位）\n——\n语音特征四大类：大类特征、喉部特征、发音方式特征和发音部位特征。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第7页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 7
@@ -1155,7 +1155,7 @@
    "chapter": 2,
    "section": "Phonetic features 的类别",
    "front": "What do major class features distinguish, and which features do they include?",
-   "back": "Major class features are used to distinguish vowels from consonants and sonorants from obstruents, including [+consonantal], [+sonorant] and [+syllabic]. They can specify segments across the consonant-vowel boundary.\n——\n大类特征用于区分元音与辅音、响音（sonorants）与阻音（obstruents），包括 [+consonantal]、[+sonorant]、[+syllabic]，并可跨越辅音与元音的界限标示音段。",
+   "back": "Major class ⟦s|features⟧ are used to distinguish vowels from consonants and sonorants from obstruents, including [+consonantal], [+sonorant] and [+syllabic]. They can specify segments across the consonant-vowel boundary.\n——\n大类特征用于区分元音与辅音、响音（sonorants）与阻音（obstruents），包括 [+consonantal]、[+sonorant]、[+syllabic]，并可跨越辅音与元音的界限标示音段。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第7页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 7
@@ -1188,7 +1188,7 @@
    "chapter": 2,
    "section": "Natural classes",
    "front": "What is a natural class? Give an example.",
-   "back": "Classes of sounds that share a feature or features are called natural classes. For example, the set [b], [z], [dʒ], [ʒ] belong to the class [+voiced].\n——\n共享一个或多个语音特征的音构成的音类叫 natural class，如 [b]、[z]、[dʒ]、[ʒ] 同属 [+voiced]；自然类由共同特征划定，而不是由词义划定。",
+   "back": "Classes of sounds that share a feature or ⟦s|features⟧ are called natural classes. For example, the set [b], [z], [dʒ], [ʒ] belong to the class [+voiced].\n——\n共享一个或多个语音特征的音构成的音类叫 natural class，如 [b]、[z]、[dʒ]、[ʒ] 同属 [+voiced]；自然类由共同特征划定，而不是由词义划定。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第7页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 7
@@ -1298,7 +1298,7 @@
    "chapter": 3,
    "section": "Complementary distribution",
    "front": "What is complementary distribution, and how are such sounds usually analyzed?",
-   "back": "Sounds that are not found in the same environment are said to be in complementary distribution. If segments are in complementary distribution (do not appear in the same environment) and share a number of features, they are allophones of the same phoneme. For example, in spin and pin, the unaspirated voiceless bilabial stop and the aspirated voiceless bilabial stop are in complementary distribution.\n——\n两音不会出现在同一语音环境，即为互补分布；若它们还共享多项特征，通常分析为同一 phoneme 的 allophones，如 pin 与 spin 中不送气与送气的清双唇塞音。",
+   "back": "Sounds that are not found in the same environment are said to be in ⟦y|complementary distribution⟧. If segments are in complementary distribution (do not appear in the same environment) and share a number of features, they are allophones of the same phoneme. For example, in spin and pin, the unaspirated voiceless bilabial stop and the aspirated voiceless bilabial stop are in complementary distribution.\n——\n两音不会出现在同一语音环境，即为互补分布；若它们还共享多项特征，通常分析为同一 phoneme 的 allophones，如 pin 与 spin 中不送气与送气的清双唇塞音。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第10、11页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePages": [
@@ -1381,7 +1381,7 @@
    "chapter": 3,
    "section": "Flapping rule",
    "front": "What is the English flapping rule? Give the example words.",
-   "back": "By the flapping rule, an alveolar stop /t/ or /d/ is realized as a flap when it occurs after a stressed vowel and before an unstressed vowel: [+alveolar +stop] → [flap] / [-consonantal +stressed] __ [-consonantal -stressed]. E.g. water, butter, writer, rider (not write, ride, what).\n——\nFlapping 规则：alveolar stop [t]、[d] 在重读元音之后、非重读元音之前实现为闪音；例词 water、butter、writer、rider（write、ride、what 不适用）。",
+   "back": "By the flapping rule, an alveolar stop /t/ or /d/ is realized as a flap when it occurs after a stressed vowel and before an ⟦s|unstressed vowel⟧: [+alveolar +stop] → [flap] / [-consonantal +stressed] __ [-consonantal -stressed]. E.g. water, butter, writer, rider (not write, ride, what).\n——\nFlapping 规则：alveolar stop [t]、[d] 在重读元音之后、非重读元音之前实现为闪音；例词 water、butter、writer、rider（write、ride、what 不适用）。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第12页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 12
@@ -1403,7 +1403,7 @@
    "chapter": 3,
    "section": "非重读元音弱化",
    "front": "What happens to English vowels when they are unstressed?",
-   "back": "In English, all vowels may be changed into a schwa (/ə/) when they are unstressed; unstressed vowels are thus reduced, e.g. analyze/analysis, phone/phonetic.\n——\n非重读时英语元音可弱化为 schwa /ə/；如 analyze/analysis、phone/phonetic，重音移动常伴随元音弱化。",
+   "back": "In English, all vowels may be changed into a schwa (/ə/) when they are unstressed; ⟦s|unstressed vowel⟧s are thus reduced, e.g. analyze/analysis, phone/phonetic.\n——\n非重读时英语元音可弱化为 schwa /ə/；如 analyze/analysis、phone/phonetic，重音移动常伴随元音弱化。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第12页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 12
@@ -1480,7 +1480,7 @@
    "chapter": 3,
    "section": "Intonation",
    "front": "What is intonation? What are the three basic patterns of intonation in English?",
-   "back": "Intonation is the variation of pitch to distinguish utterance meaning; the same sentence uttered with different intonation may express different attitudes of the speaker. English is an intonation language. The three basic patterns of intonation in English are fall, rise and fall-rise. Low or falling pitch suggests assertion and finality, while higher pitch suggests non-finality and uncertainty.\n——\nIntonation 用音高变化区别话语意义、表达说话者态度；英语是语调语言。三种基本调型：降调（fall）、升调（rise）、降升调（fall-rise）。低/降调表示陈述与终结，较高音高表示未结束或不确定。",
+   "back": "⟦y|Intonation⟧ is the variation of pitch to distinguish utterance meaning; the same sentence uttered with different intonation may express different attitudes of the speaker. English is an intonation language. The three basic patterns of intonation in English are fall, rise and fall-rise. Low or falling pitch suggests assertion and finality, while higher pitch suggests non-finality and uncertainty.\n——\nIntonation 用音高变化区别话语意义、表达说话者态度；英语是语调语言。三种基本调型：降调（fall）、升调（rise）、降升调（fall-rise）。低/降调表示陈述与终结，较高音高表示未结束或不确定。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第14页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 14
@@ -1491,7 +1491,7 @@
    "chapter": 3,
    "section": "Intonation",
    "front": "What intonation do yes/no questions, wh-questions and tag questions typically take?",
-   "back": "Specific syntactic patterns may receive specific intonational realizations: yes/no questions take rising intonation; wh-questions take falling intonation; positive tag questions take rising intonation on the tag, while negative tag questions take falling intonation on the tag.\n——\nYes/no 问句常用升调；wh-问句常用降调；肯定反意问句的 tag 常用升调，否定 tag 常用降调。这是概括性倾向，应结合具体语境理解。",
+   "back": "Specific syntactic patterns may receive specific ⟦y|intonation⟧al realizations: yes/no questions take rising intonation; wh-questions take falling intonation; positive tag questions take rising intonation on the tag, while negative tag questions take falling intonation on the tag.\n——\nYes/no 问句常用升调；wh-问句常用降调；肯定反意问句的 tag 常用升调，否定 tag 常用降调。这是概括性倾向，应结合具体语境理解。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第14页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 14
@@ -1502,7 +1502,7 @@
    "chapter": 3,
    "section": "Tone",
    "front": "How does tone differ from intonation? Illustrate with the four tones of Mandarin Chinese.",
-   "back": "Tone is the variation of pitch to distinguish words: the same sequence of segments can be different words if uttered with different tones. Intonation is the variation of pitch to distinguish utterance meaning. Chinese is a typical tone language. The four tones in Mandarin Chinese are level, rise, fall-rise and fall, e.g. 妈, 麻, 马, 骂.\n——\nTone 以音高区别词汇意义；intonation 以音高变化区别话语意义或表达态度。汉语是典型声调语言，普通话四声为 level、rise、fall-rise、fall，例：妈、麻、马、骂。",
+   "back": "Tone is the variation of pitch to distinguish words: the same sequence of segments can be different words if uttered with different tones. ⟦y|Intonation⟧ is the variation of pitch to distinguish utterance meaning. Chinese is a typical tone language. The four tones in Mandarin Chinese are level, rise, fall-rise and fall, e.g. 妈, 麻, 马, 骂.\n——\nTone 以音高区别词汇意义；intonation 以音高变化区别话语意义或表达态度。汉语是典型声调语言，普通话四声为 level、rise、fall-rise、fall，例：妈、麻、马、骂。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第14页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 14
@@ -1513,7 +1513,7 @@
    "chapter": 3,
    "section": "Stress 与 intonation 的功能",
    "front": "What are the two main functions of stress and intonation in English?",
-   "back": "Intonation and stress generally occur simultaneously in utterance. This simultaneous functioning serves to highlight the information focus, or to eliminate ambiguity. When the intonation contour falls on a syllable, the nucleus is stressed, the vowel is naturally lengthened a bit, and there is a little pause after the syllable.\n——\n两大功能：突出信息焦点（information focus）、消除短语或句子的歧义。语调曲线落在某音节时：核心重读、元音自然拉长、该音节后有短暂停顿。",
+   "back": "⟦y|Intonation⟧ and stress generally occur simultaneously in utterance. This simultaneous functioning serves to highlight the information focus, or to eliminate ⟦s|ambiguity⟧. When the intonation contour falls on a syllable, the nucleus is stressed, the vowel is naturally lengthened a bit, and there is a little pause after the syllable.\n——\n两大功能：突出信息焦点（information focus）、消除短语或句子的歧义。语调曲线落在某音节时：核心重读、元音自然拉长、该音节后有短暂停顿。",
    "source": "《27版高分笔记·语言学》02语言学Chapter2.3.pdf PDF第14页",
    "sourceFile": "02语言学Chapter2.3.pdf",
    "sourcePage": 14
@@ -1546,7 +1546,7 @@
    "chapter": 4,
    "section": "Morphology 的定义",
    "front": "What is morphology? Give the definition.",
-   "back": "Morphology is defined as the study of the internal structure of words: it deals with the forms of lexemes (inflection) and with the ways in which lexemes are formed (word formation).\n要点：internal structure of words · inflection（屈折形式）· word formation（构词法）。\n——\n它研究词的内部构造，包括 lexeme 的屈折形式和 lexeme 通过哪些方式形成新词。原句可整句背默。",
+   "back": "Morphology is defined as the study of the internal structure of words: it deals with the forms of lexemes (inflection) and with the ways in which lexemes are formed (word ⟦s|formation⟧).\n要点：internal structure of words · inflection（屈折形式）· word formation（构词法）。\n——\n它研究词的内部构造，包括 lexeme 的屈折形式和 lexeme 通过哪些方式形成新词。原句可整句背默。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第2页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 2
@@ -1659,7 +1659,7 @@
    "chapter": 4,
    "section": "Stem",
    "front": "What is a stem?",
-   "back": "A stem may be any base to which a grammatical affix may be added. The stem of a word is the word form minus its inflectional affixes.\n——\nStem 是可再接受语法屈折词缀的形式；在具体词形中，去掉 inflectional affixes 后可得到 stem。",
+   "back": "A stem may be any base to which a grammatical affix may be added. The stem of a ⟦s|word is the word form minus its inflectional affixes⟧.\n——\nStem 是可再接受语法屈折词缀的形式；在具体词形中，去掉 inflectional affixes 后可得到 stem。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第4页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 4
@@ -1681,7 +1681,7 @@
    "chapter": 4,
    "section": "Free 与 bound morphemes",
    "front": "What criterion distinguishes a free morpheme from a bound morpheme?",
-   "back": "The distinction between a free morpheme and a bound morpheme is whether it can be used independently in speech or writing. Free morphemes constitute words by themselves, e.g. write; bound morphemes are never used independently and are always attached to free morphemes to form new words, e.g. de-, -ly.\n——\n判断标准是该 morpheme 能否独立用于口语或书面表达。Free morpheme 可独立出现；bound morpheme 不能独立使用，须附着在其他形式上（如 de-、-ly）。（2016 年考过辨析。）",
+   "back": "The distinction between a free morpheme and a bound morpheme is whether it ⟦s|can be used independently in speech or writing⟧. Free morphemes constitute words by themselves, e.g. write; bound morphemes are never used independently and are always attached to free morphemes to form new words, e.g. de-, -ly.\n——\n判断标准是该 morpheme 能否独立用于口语或书面表达。Free morpheme 可独立出现；bound morpheme 不能独立使用，须附着在其他形式上（如 de-、-ly）。（2016 年考过辨析。）",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第4页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 4
@@ -1714,7 +1714,7 @@
    "chapter": 4,
    "section": "Derivational morphemes",
    "front": "What are derivational morphemes, derivation and derivatives?",
-   "back": "Derivational affixes are bound morphemes added to existing forms to construct new words. The process of putting affixes to existing forms to create new words is called derivation. Words thus formed are called derivatives.\n——\nDerivational morphemes 是加到现有形式上的 bound affixes，用来造新词；添加这类词缀形成新词的过程称 derivation，结果称 derivative。（2024 年考过 derivation 名词解释。）",
+   "back": "⟦s|Derivation⟧al affixes are bound morphemes added to existing forms to construct new words. The process of putting affixes to existing forms to create new words is called derivation. Words thus formed are called derivatives.\n——\nDerivational morphemes 是加到现有形式上的 bound affixes，用来造新词；添加这类词缀形成新词的过程称 derivation，结果称 derivative。（2024 年考过 derivation 名词解释。）",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第5页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 5
@@ -1725,7 +1725,7 @@
    "chapter": 4,
    "section": "Inflection 与 derivation 的区别",
    "front": "How do inflectional and derivational morphemes differ?",
-   "back": "We use derivational morphemes to make new words or to make words of a different grammatical category from the stem; a derivational morpheme can change the grammatical category, the meaning, or both of a word. Inflectional morphemes do not produce new words but indicate aspects of the grammatical category of a word, and never change the grammatical category of a word. Derivational morphemes create lexemes, while inflectional ones create forms of lexemes.\n——\nDerivation 建立新 lexeme，可改变词义或词类；inflection 表语法词形，不改变词类。附加区别：inflection 完全能产、在 derivation 之外、英语中总为后缀；derivation 常变词类、常语义不透明、能产受限、不限后缀。可出大题，记熟。",
+   "back": "We use ⟦s|derivation⟧al morphemes to make new words or to make words of a different grammatical category from the stem; a derivational morpheme can change the grammatical category, the meaning, or both of a word. Inflectional morphemes do not produce new words but indicate aspects of the grammatical category of a word, and never change the grammatical category of a word. Derivational morphemes create lexemes, while inflectional ones create forms of lexemes.\n——\nDerivation 建立新 lexeme，可改变词义或词类；inflection 表语法词形，不改变词类。附加区别：inflection 完全能产、在 derivation 之外、英语中总为后缀；derivation 常变词类、常语义不透明、能产受限、不限后缀。可出大题，记熟。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第5页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 5
@@ -1747,7 +1747,7 @@
    "chapter": 4,
    "section": "Compounding 的结构与重音",
    "front": "What is compounding, and what are its word-class and stress patterns?",
-   "back": "Compounding is the combination of free morphemes, such as bookshelf, greenhouse. Most English compounds combine words from two of the three classes: nouns, verbs and adjectives. In compounds the rightmost morpheme determines the part of speech of the word, while the leftmost morpheme takes the primary stress, e.g. greenhouse.\n要点：左重音，右词性。\n——\nCompounding 将两个或更多自由 morphemes 组合成词；右侧成分决定词类，主要重音落在左侧成分。greenhouse 可兼作两方面的例子。",
+   "back": "Compounding is the combination of free morphemes, such as bookshelf, greenhouse. Most English compounds combine words from two of the three ⟦s|classes: nouns, verbs and adjectives⟧. In compounds the rightmost morpheme determines the part of speech of the word, while the leftmost morpheme takes the primary stress, e.g. greenhouse.\n要点：左重音，右词性。\n——\nCompounding 将两个或更多自由 morphemes 组合成词；右侧成分决定词类，主要重音落在左侧成分。greenhouse 可兼作两方面的例子。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第6页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 6
@@ -1769,7 +1769,7 @@
    "chapter": 4,
    "section": "Conversion",
    "front": "What is conversion, and which words does it usually affect?",
-   "back": "Conversion is a process that puts an existing word of one class into another class. It is usually found in words containing one morpheme, e.g. butter to butter the bread; some compounds are also converted, such as machinegun and grandstand.\n——\nConversion 是让现有词从一个词类转到另一个词类而不另加词缀的过程；常发生于单 morpheme 词，也可作用于部分复合词（machinegun、grandstand）。",
+   "back": "⟦y|Conversion⟧ is a process that puts an existing word of one class into another class. It is usually found in words containing one morpheme, e.g. butter to butter the bread; some compounds are also converted, such as machinegun and grandstand.\n——\nConversion 是让现有词从一个词类转到另一个词类而不另加词缀的过程；常发生于单 morpheme 词，也可作用于部分复合词（machinegun、grandstand）。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第7页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 7
@@ -1791,7 +1791,7 @@
    "chapter": 4,
    "section": "Blending",
    "front": "How does blending differ from ordinary compounding?",
-   "back": "Blending forms words by putting together parts of two source words, e.g. smog (smoke and fog). Some words are formed by a process that is partly blending and partly compounding, e.g. workaholic.\n——\nBlending 把两个来源词的部分形式拼接成一个新词（smoke+fog→smog）；有些词兼有 blending 和 compounding 的特征，如 workaholic。",
+   "back": "Blending forms words by putting together parts of two source words, e.g. smog (smoke and fog). ⟦s|Some words are formed by a process that is partly blending and partly compounding, e.g⟧. workaholic.\n——\nBlending 把两个来源词的部分形式拼接成一个新词（smoke+fog→smog）；有些词兼有 blending 和 compounding 的特征，如 workaholic。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第7页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 7
@@ -1802,7 +1802,7 @@
    "chapter": 4,
    "section": "Backformation",
    "front": "How does back-formation create new words?",
-   "back": "Back-formation is a process that creates a new word by dropping a real or supposed suffix. In English, edit was originally backformed from editor, and peddle from peddler.\n——\n从已有词中去掉真实或被误认为词缀的部分，反向造出较短新词；如 editor 产生 edit、peddler 产生 peddle。",
+   "back": "Back-formation is ⟦s|a process that creates a new word by dropping a real or supposed suffix. In English, edit⟧ was originally backformed from editor, and peddle from peddler.\n——\n从已有词中去掉真实或被误认为词缀的部分，反向造出较短新词；如 editor 产生 edit、peddler 产生 peddle。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第7页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 7
@@ -1835,7 +1835,7 @@
    "chapter": 4,
    "section": "Coinage",
    "front": "What is coinage?",
-   "back": "Coinage is a process of inventing words not based on existing morphemes. This way of word formation is especially common in cases where industry requires a word for a new product, e.g. Kodak, Coca-Cola.\n——\nCoinage 是不直接由已有 morphemes 构成、为新事物创造名称的过程；在产业需要为新产品命名时尤其常见，如 Kodak、Coca-Cola。",
+   "back": "⟦y|Coinage⟧ is a process of inventing words not based on existing morphemes. This way of word formation is especially common in cases where industry requires a word for a new product, e.g. Kodak, Coca-Cola.\n——\nCoinage 是不直接由已有 morphemes 构成、为新事物创造名称的过程；在产业需要为新产品命名时尤其常见，如 Kodak、Coca-Cola。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第8页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 8
@@ -1904,7 +1904,7 @@
    "chapter": 5,
    "section": "Traditional grammar 的局限",
    "front": "What are the weaknesses of traditional grammar?",
-   "back": "It is prescriptive in nature, attempting to lay down rules for speakers of a language; it is inadequate in describing other languages; and it lacks a theoretical framework and thus fails to account for the nature of language. Fundamentally, this approach to the analysis of sentence structure is notional in nature: it classifies words and parts of sentences mainly according to meaning.\n——\n它带有规定性，倾向于规定使用者应遵循的规则；不容易充分描述其他语言；缺少能解释语言本质的理论框架。其句法分析本质上偏 notional，主要按意义分类。（常考填空：notional。）",
+   "back": "It is prescriptive in nature, attempting to lay down rules for speakers of a language; it is inadequate in describing other languages; and ⟦s|it lacks a theoretical framework and thus fails to account for the nature of l⟧anguage. Fundamentally, this approach to the analysis of sentence structure is notional in nature: it classifies words and parts of sentences mainly according to meaning.\n——\n它带有规定性，倾向于规定使用者应遵循的规则；不容易充分描述其他语言；缺少能解释语言本质的理论框架。其句法分析本质上偏 notional，主要按意义分类。（常考填空：notional。）",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第11页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 11
@@ -1926,7 +1926,7 @@
    "chapter": 5,
    "section": "Immediate constituent analysis",
    "front": "How does immediate constituent analysis analyze a sentence, and what is its main contribution?",
-   "back": "A sentence is seen as a constituent structure: it can be cut into sections, each section being an immediate constituent, which can be further cut into smaller constituents; this on-going cutting is termed immediate constituent analysis. It adds a new dimension to sentence analysis: sentence structure is analyzed not only horizontally but also vertically, so it accounts for the linearity and the hierarchy of sentence structure, and structural ambiguity becomes clear.\n——\n它把句子逐层切分为直接成分再继续分析内部结构；与传统自下而上的汇总不同，这种分析兼顾横向线性顺序与纵向层级结构，因此更容易显示结构歧义。",
+   "back": "A sentence is seen as a constituent structure: it can be cut into sections, each section being an immediate constituent, which can be further cut into smaller constituents; this on-going cutting is termed ⟦y|immediate constituent analysis⟧. It adds a new dimension to sentence analysis: sentence structure is analyzed not only horizontally but also vertically, so it accounts for the linearity and the hierarchy of sentence structure, and structural ambiguity becomes clear.\n——\n它把句子逐层切分为直接成分再继续分析内部结构；与传统自下而上的汇总不同，这种分析兼顾横向线性顺序与纵向层级结构，因此更容易显示结构歧义。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第12页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 12
@@ -1937,7 +1937,7 @@
    "chapter": 5,
    "section": "Immediate constituent analysis",
    "front": "What are the limitations of immediate constituent analysis?",
-   "back": "Practically, it is not comparable to traditional grammar in achievement, in that no pedagogic grammar of a language has been written following this approach. Theoretically, no breakthrough is made in understanding the nature of language. Methodologically, immediate constituent analysis, with all its merits, has met challenges from new linguistic data which it fails to account for.\n——\n实践上：没有形成与传统分析相当的教学语法成果；理论上：对语言本质的理解没有突破；方法上：难以充分解释部分新的语言材料。三个层面分别记忆。",
+   "back": "Practically, it is not comparable to traditional grammar in achievement, in that no pedagogic grammar of a language has been written following this approach. Theoretically, no breakthrough is made in understanding the nature of language. Methodologically, ⟦y|immediate constituent analysis⟧, with all its merits, has met challenges from new linguistic data which it fails to account for.\n——\n实践上：没有形成与传统分析相当的教学语法成果；理论上：对语言本质的理解没有突破；方法上：难以充分解释部分新的语言材料。三个层面分别记忆。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第12页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 12
@@ -1973,7 +1973,7 @@
    "chapter": 5,
    "section": "Syntactic categories",
    "front": "What is a syntactic category? Give examples.",
-   "back": "A syntactic category is a class of expressions that substitute for one another without loss of grammaticality. In the sentence A naughty boy broke the window, a naughty boy can be replaced by he, a man, John, the man who has just left, and so on; all these belong to the same syntactic category called Noun Phrase (NP). Other syntactic categories are VP, S, Det, Adj, Pro, V, Aux, PP, Adv.\n——\n一类可在相同结构位置互相替换而不破坏 grammaticality 的表达；A naughty boy、he、a man、John 等在相应语境中都充当 NP。",
+   "back": "A syntactic category is a class of expressions that substitute for one another without loss of grammaticality. In the sentence A naughty boy broke the window, a naughty boy can be replaced by he, a man, John, the man who has just left, and so on; all these belong to the same syntactic category called Noun Phrase (NP). Other ⟦s|syntactic categories⟧ are VP, S, Det, Adj, Pro, V, Aux, PP, Adv.\n——\n一类可在相同结构位置互相替换而不破坏 grammaticality 的表达；A naughty boy、he、a man、John 等在相应语境中都充当 NP。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第13页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 13
@@ -1984,7 +1984,7 @@
    "chapter": 5,
    "section": "Phrase structure rules",
    "front": "What do phrase structure rules specify, and how are brackets and braces read?",
-   "back": "Phrase structure rules are rules that specify the constituents of syntactic categories. The syntactic categories on the right of the arrow are the immediate constituents of the category on the left. The constituents within round brackets are optional; the constituents within brace brackets are alternatives. If constituents co-occur, they appear in the order as specified by the rules, e.g. V NP PP.\n——\n这些规则说明句法范畴由哪些成分构成：箭头右侧是左侧范畴的直接成分；圆括号内为可选成分，花括号内为备选成分；共现成分按规则书写顺序排列。",
+   "back": "Phrase structure rules are rules that specify the constituents of ⟦s|syntactic categories⟧. The syntactic categories on the right of the arrow are the immediate constituents of the category on the left. The constituents within round brackets are optional; the constituents within brace brackets are alternatives. If constituents co-occur, they appear in the order as specified by the rules, e.g. V NP PP.\n——\n这些规则说明句法范畴由哪些成分构成：箭头右侧是左侧范畴的直接成分；圆括号内为可选成分，花括号内为备选成分；共现成分按规则书写顺序排列。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第13页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 13
@@ -1995,7 +1995,7 @@
    "chapter": 5,
    "section": "Tree diagrams",
    "front": "What extra information does a tree diagram convey beyond a string of words?",
-   "back": "A tree diagram is a formal representation of sentence structure with syntactic categories provided; it is also referred to as a phrase marker or a constituent structure tree. It shows the linear structure of the sentence (word order), the hierarchical structure (what category is above what other category), and the lexical category of each word. A tree diagram without syntactic categories fails to reveal ambiguous structures in some cases, e.g. They can fish.\n——\n它以句法范畴标注句子的线性次序、层级结构和每个词的词汇类别，也可显示同一词串的不同结构分析；亦称 phrase marker 或 constituent structure tree。",
+   "back": "A tree diagram is a formal representation of sentence structure with ⟦s|syntactic categories⟧ provided; it is also referred to as a phrase marker or a constituent structure tree. It shows the linear structure of the sentence (word order), the hierarchical structure (what category is above what other category), and the lexical category of each word. A tree diagram without syntactic categories fails to reveal ambiguous structures in some cases, e.g. They can fish.\n——\n它以句法范畴标注句子的线性次序、层级结构和每个词的词汇类别，也可显示同一词串的不同结构分析；亦称 phrase marker 或 constituent structure tree。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第13、14页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePages": [
@@ -2144,7 +2144,7 @@
    "chapter": 5,
    "section": "Relational process",
    "front": "What are the two types of relational process?",
-   "back": "Relational processes are linguistic processes that represent a relation being set up between two separate entities: something is said to be (or to have) something else or to be of some qualities. (i) Attributive: Tom is smart. (ii) Identifying: Tom is the leader. In representing possessive relations, the verb have is attributive (Tom has a car) while the verb be is identifying (The car is Tom's).\n——\n它建立两个实体间的关系：attributive 赋予属性（Tom is smart），identifying 说明某实体是谁或是什么（Tom is the leader）；所有关系中 have 为 attributive，be 为 identifying。",
+   "back": "Relational processes are linguistic processes that represent a relation being set up between two separate entities: something is said to be (or to have) something else or to be of some qualities. (i) Attributive: Tom is smart. (ii) ⟦s|Identifying⟧: Tom is the leader. In representing possessive relations, the verb have is attributive (Tom has a car) while the verb be is identifying (The car is Tom's).\n——\n它建立两个实体间的关系：attributive 赋予属性（Tom is smart），identifying 说明某实体是谁或是什么（Tom is the leader）；所有关系中 have 为 attributive，be 为 identifying。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第17页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 17
@@ -2166,7 +2166,7 @@
    "chapter": 5,
    "section": "Verbal process",
    "front": "What participants does a verbal process involve?",
-   "back": "Verbal processes are between material processes and mental processes: saying something is both a physical action and a mental activity. Its participants are the sayer (human or something personified), the receiver (human) and the verbiage (the message).\n——\n它把说话理解为兼具身体动作与心理活动的过程；参与者有 sayer（发出言语者）、receiver（接收者）和 verbiage（所说的信息）。",
+   "back": "V⟦s|erbal process⟧es are between material processes and mental processes: saying something is both a physical action and a mental activity. Its participants are the sayer (human or something personified), the receiver (human) and the verbiage (the message).\n——\n它把说话理解为兼具身体动作与心理活动的过程；参与者有 sayer（发出言语者）、receiver（接收者）和 verbiage（所说的信息）。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第18页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 18
@@ -2177,7 +2177,7 @@
    "chapter": 5,
    "section": "Behavioral process",
    "front": "How do behavioral processes relate to mental processes?",
-   "back": "Behavioral processes are between mental processes and material processes. They are close to mental processes but reflect an active conscious process; verbs representing behavioral processes can be used in progressive forms while verbs expressing mental processes cannot. They have only one participant, the behaver; in some cases there is a quasi-participant called Range, which adds specification to the process. E.g. listen is behavioral while hear is mental.\n——\n它处于心理过程和物质过程之间，反映有意识的行为；主要参与者是 behaver，有时带 range。对比：listen 为 behavioral、hear 为 mental，前者可用进行体。",
+   "back": "⟦s|Behavioral process⟧es are between mental processes and material processes. They are close to mental processes but reflect an active conscious process; verbs representing behavioral processes can be used in progressive forms while verbs expressing mental processes cannot. They have only one participant, the behaver; in some cases there is a quasi-participant called Range, which adds specification to the process. E.g. listen is behavioral while hear is mental.\n——\n它处于心理过程和物质过程之间，反映有意识的行为；主要参与者是 behaver，有时带 range。对比：listen 为 behavioral、hear 为 mental，前者可用进行体。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第18页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 18
@@ -2188,7 +2188,7 @@
    "chapter": 5,
    "section": "Existential process",
    "front": "What does an existential process express, and what is its participant called?",
-   "back": "Existential processes express the mere existence of an entity, typically in the there be pattern. There is only one participant in such syntactic structures, called the existent.\n——\n它只表示某实体的存在，常见 there be 句式；结构中唯一参与者称 existent。",
+   "back": "⟦s|Existential process⟧es express the mere existence of an entity, typically in the there be pattern. There is only one participant in such syntactic structures, called the existent.\n——\n它只表示某实体的存在，常见 there be 句式；结构中唯一参与者称 existent。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第18页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 18
@@ -2199,7 +2199,7 @@
    "chapter": 5,
    "section": "Mood 与互动",
    "front": "How does mood realize the interaction between speaker and hearer?",
-   "back": "The unique contribution by systemic-functional grammar is the observation that only a particular element of syntactic structure, called mood, realizes the interaction between the speaker (writer) and hearer (reader). In this communicative interaction, only the subject and the auxiliary are manipulated back and forth, while the remainder of the structure, called the residue, is not affected.\n——\nMood 是承担说话者与听话者互动的句法部分；互动中只有 subject 与辅助词前后移动，其余部分称 residue。",
+   "back": "The unique contribution by systemic-functional grammar is the observation that only a particular element of syntactic structure, called mood, realizes the interaction between the speaker (writer) and hearer (reader). In this communicative interaction, only the subject and the auxiliary are manipulated back and forth, while the remainder of the structure, called the ⟦s|residue⟧, is not affected.\n——\nMood 是承担说话者与听话者互动的句法部分；互动中只有 subject 与辅助词前后移动，其余部分称 residue。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第19页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 19
@@ -2249,7 +2249,7 @@
    "chapter": 5,
    "section": "Mood 与互动",
    "front": "Does finite polarity always coincide with the negative meaning of a sentence?",
-   "back": "No. Any finite expresses polarity because it is either positive or negative. However, polarity may be expressed by never, hardly, etc., which are not finite; in this case, the finite is grammatically positive, but the meaning is negative.\n——\n不一定。Finite 有语法上的肯定或否定形式；never、hardly 等非 finite 词也能表达否定意义。因此句子语义为否定时，finite 本身仍可能是语法肯定形式。（可出判断题。）",
+   "back": "No. Any finite expresses polarity because it is either positive or negative. However, polarity may be expressed by never, hardly, etc., which are not finite; in this case, the finite is ⟦s|grammatically positive, but the meaning is negative⟧.\n——\n不一定。Finite 有语法上的肯定或否定形式；never、hardly 等非 finite 词也能表达否定意义。因此句子语义为否定时，finite 本身仍可能是语法肯定形式。（可出判断题。）",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第20页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 20
@@ -2271,7 +2271,7 @@
    "chapter": 5,
    "section": "Theme 与 rheme",
    "front": "What are theme and rheme in a clause?",
-   "back": "The constituent that stands for the starting point for the message is termed the theme; all the rest of the sentence is labeled the rheme. The theme may or may not be the subject of the sentence. The textual function is realized by theme and rheme.\n——\nTheme 是信息展开的起点，其余部分构成 rheme；theme 可以与 subject 重合，也可以由其他成分承担。语篇功能由主位结构实现。",
+   "back": "The constituent that stands for the starting point for ⟦s|the me⟧ssage is termed the theme; all the rest of the sentence is labeled the rheme. The theme may or may not be the subject of the sentence. The textual function is realized by theme and rheme.\n——\nTheme 是信息展开的起点，其余部分构成 rheme；theme 可以与 subject 重合，也可以由其他成分承担。语篇功能由主位结构实现。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第20、21页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePages": [
@@ -2285,7 +2285,7 @@
    "chapter": 5,
    "section": "Marked、unmarked 与特殊 theme",
    "front": "Distinguish unmarked theme, marked theme, predicated theme and thematic comment.",
-   "back": "In a declarative sentence, theme typically conflates with the subject; this is an unmarked theme. If another constituent (not subject) is selected as the starting point, the theme is a marked theme. A predicated theme takes the pattern It is...that/which/who... (the cleft sentence in traditional grammar), e.g. It is the teapot that Tom broke. A thematic comment uses an evaluative It is..., e.g. It is regrettable that Tom broke the teapot.\n——\n陈述句中 subject 兼作 theme 为 unmarked theme；其他成分作起点为 marked theme；It is X that/which/who 为 predicated theme（分裂句）；It is regrettable that... 类评价句为 thematic comment。后两种记住句式。",
+   "back": "In a declarative sentence, ⟦s|theme⟧ typically conflates with the subject; this is an unmarked theme. If another constituent (not subject) is selected as the starting point, the theme is a marked theme. A predicated theme takes the pattern It is...that/which/who... (the cleft sentence in traditional grammar), e.g. It is the teapot that Tom broke. A thematic comment uses an evaluative It is..., e.g. It is regrettable that Tom broke the teapot.\n——\n陈述句中 subject 兼作 theme 为 unmarked theme；其他成分作起点为 marked theme；It is X that/which/who 为 predicated theme（分裂句）；It is regrettable that... 类评价句为 thematic comment。后两种记住句式。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第20、21页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePages": [
@@ -2349,7 +2349,7 @@
    "chapter": 5,
    "section": "Cognitive grammar 的语法模型",
    "front": "How does the cognitive model describe a usage event?",
-   "back": "The act of deploying a symbolic unit in any given usage event involves both semantic space (meaning) and phonological space (form). In intuitive terms, a usage event consists of speech sounds and their corresponding interpretations. The semantic pole of a linguistic expression corresponds to a concept, and the phonological pole corresponds to the string of sounds that realizes it; grammar is made up of such symbolic units.\n——\n使用事件把发出的语音形式与相应解释联结起来，涉及 phonological space 与 semantic space；表达式的语义极对应概念，语音极对应实现它的声音形式；语法由这些符号单位的知识构成。",
+   "back": "The act of deploying a symbolic unit in any given usage event involves both semantic ⟦s|space (meaning) and phonological space (form). In intuitive terms, a usage event consists⟧ of speech sounds and their corresponding interpretations. The semantic pole of a linguistic expression corresponds to a concept, and the phonological pole corresponds to the string of sounds that realizes it; grammar is made up of such symbolic units.\n——\n使用事件把发出的语音形式与相应解释联结起来，涉及 phonological space 与 semantic space；表达式的语义极对应概念，语音极对应实现它的声音形式；语法由这些符号单位的知识构成。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第23页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 23
@@ -2360,7 +2360,7 @@
    "chapter": 5,
    "section": "Langacker 的 figure / ground",
    "front": "How does Langacker use figure/ground to explain simple transitive clauses?",
-   "back": "At a simple transitive clause level, the subject corresponds to the figure, the object to the ground, and the verb expresses the relationship between figure and ground. To account for the degree of prominence that resides in both subject and complement, Langacker uses the terms (clausal) trajector and (clausal) landmark, i.e. syntactic figure and syntactic ground.\n——\n主语对应认知图形（figure），宾语对应背景（ground），动词表达二者之间的关系；Langacker 也把句法层面的图形称 trajector、背景称 landmark。",
+   "back": "At a simple transitive clause level, the subject corresponds to the figure, the object to the ground, and the verb expresses the relationship between figure and ground. To account for the degree of prominence that resides in both subject and complement, Langacker uses the terms (⟦s|clausal) trajector and (clausal) landmark⟧, i.e. syntactic figure and syntactic ground.\n——\n主语对应认知图形（figure），宾语对应背景（ground），动词表达二者之间的关系；Langacker 也把句法层面的图形称 trajector、背景称 landmark。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第24页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 24
@@ -2371,7 +2371,7 @@
    "chapter": 5,
    "section": "Role archetypes",
    "front": "What are Langacker's four role archetypes?",
-   "back": "Role archetypes emerge from our experience of interacting with the world. (1) Agent: initiating motion or physical activity in objects or other persons. (2) Patient: affected by physical impact from outside and undergoing a change of state or being moved to another location. (3) Instrument: the intermediary between agent and patient. (4) Experiencer: someone engaged in mental activities. E.g. in Susan is peeling a banana, Susan is agent and banana patient; in Susan loves bananas, Susan is experiencer.\n——\n四种角色原型：agent 发起动作或物理活动；patient 受外力作用并发生状态或位置变化；instrument 是连接施事与受事的工具；experiencer 参与心理活动。",
+   "back": "⟦s|Role archetypes⟧ emerge from our experience of interacting with the world. (1) Agent: initiating motion or physical activity in objects or other persons. (2) Patient: affected by physical impact from outside and undergoing a change of state or being moved to another location. (3) Instrument: the intermediary between agent and patient. (4) Experiencer: someone engaged in mental activities. E.g. in Susan is peeling a banana, Susan is agent and banana patient; in Susan loves bananas, Susan is experiencer.\n——\n四种角色原型：agent 发起动作或物理活动；patient 受外力作用并发生状态或位置变化；instrument 是连接施事与受事的工具；experiencer 参与心理活动。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第24页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 24
@@ -2382,7 +2382,7 @@
    "chapter": 5,
    "section": "Action chain 与物理互动",
    "front": "How does the action chain model explain physical action clauses?",
-   "back": "An action chain is characterized by an energetic head, the source of the energy; from this head the energy is transmitted until an entity is reached which no longer emits but consumes the remaining energy, and this element is called the tail of the action chain. Figure corresponds to subject-agent-head, ground to object-patient-tail. Metaphors: energy flow, a river, the billiard-ball metaphor.\n——\n动作链从释放能量的 head 开始，能量沿链传递，最后由不再向外传递、而是吸收能量的 tail 接收；主语、agent、head 相联，宾语、patient、tail 相联。可用能量流、河流、台球三个隐喻理解。",
+   "back": "An action ⟦s|chain⟧ is characterized by an energetic head, the source of the energy; from this head the energy is transmitted until an entity is reached which no longer emits but consumes the remaining energy, and this element is called the tail of the action chain. Figure corresponds to subject-agent-head, ground to object-patient-tail. Metaphors: energy flow, a river, the billiard-ball metaphor.\n——\n动作链从释放能量的 head 开始，能量沿链传递，最后由不再向外传递、而是吸收能量的 tail 接收；主语、agent、head 相联，宾语、patient、tail 相联。可用能量流、河流、台球三个隐喻理解。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第25页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 25
@@ -2393,7 +2393,7 @@
    "chapter": 5,
    "section": "Action chain 与物理互动",
    "front": "How does mental activity differ from a physical action chain in participant relations?",
-   "back": "Mental activity involves no action chain, no energy transmission and no energy consumption; its roles are the experiencer and the experienced. The second entity in the mental activity is not really touched or changed by this interaction; the mental link is drawn with a single arrow, as opposed to the double arrow for the strong energy link in action chains, indicating that the mental link is in a sense weaker than the energy link.\n——\n物理动作涉及能量传递和实体接触；mental activity 没有同类动作链，第二个实体不会真的因互动而被触碰或改变。其参与者是 experiencer 与 experienced，关系视为较弱的心理联系（单箭头）。",
+   "back": "Mental activity involves no action ⟦s|chain⟧, no energy transmission and no energy consumption; its roles are the experiencer and the experienced. The second entity in the mental activity is not really touched or changed by this interaction; the mental link is drawn with a single arrow, as opposed to the double arrow for the strong energy link in action chains, indicating that the mental link is in a sense weaker than the energy link.\n——\n物理动作涉及能量传递和实体接触；mental activity 没有同类动作链，第二个实体不会真的因互动而被触碰或改变。其参与者是 experiencer 与 experienced，关系视为较弱的心理联系（单箭头）。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第25页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 25
@@ -2404,7 +2404,7 @@
    "chapter": 5,
    "section": "Talmy 的 motion event frame",
    "front": "Which six cognitive components define Talmy's motion event frame, and what other event frames does he identify?",
-   "back": "According to Talmy, six cognitive components play a role in the conceptual structure of a motion event, namely FIGURE, GROUND, PATH, MOTION, MANNER and CAUSE; together they define the motion event concept, forming the motion event frame. Altogether Talmy identifies five types of event frames: motion, causation, cyclic, participant-interaction and interrelationship event-frames.\n——\n六个概念成分：FIGURE、GROUND、PATH、MOTION、MANNER、CAUSE（书写时每个字母大写）。另有 causation、cyclic、participant-interaction 与 interrelationship 等其他 event-frame 类型；motion event-frame 最重要。",
+   "back": "According to Talmy, six cognitive components play a role in the conceptual structure of a motion event, namely FIGURE, GROUND, PATH, MOTION, MANNER and CAUSE; together they define the motion event concept, forming the ⟦s|motion event frame⟧. Altogether Talmy identifies five types of event frames: motion, causation, cyclic, participant-interaction and interrelationship event-frames.\n——\n六个概念成分：FIGURE、GROUND、PATH、MOTION、MANNER、CAUSE（书写时每个字母大写）。另有 causation、cyclic、participant-interaction 与 interrelationship 等其他 event-frame 类型；motion event-frame 最重要。",
    "source": "《27版高分笔记·语言学》03语言学Chapter4.5.pdf PDF第26页",
    "sourceFile": "03语言学Chapter4.5.pdf",
    "sourcePage": 26
@@ -2487,7 +2487,7 @@
    "chapter": 6,
    "section": "Semantics 的定义",
    "front": "What is semantics? Give the definition.",
-   "back": "Semantics is defined as the study of meaning. It answers the question “What does this sentence mean?” In other words, it is the analysis of conventional meanings in words and sentences out of context.\n要点：study of meaning · conventional meanings · words and sentences · out of context\n——\n语义学研究词语和句子的规约意义，通常先不考虑具体语境；作答时点出 study of meaning、conventional、out of context 等关键词。",
+   "back": "Semantics is defined as the study of meaning. It answers the question “What does this sentence mean?” In other words, it is the analysis of conventional meanings in ⟦s|words and sentences out of context⟧.\n要点：study of meaning · conventional meanings · words and sentences · out of context\n——\n语义学研究词语和句子的规约意义，通常先不考虑具体语境；作答时点出 study of meaning、conventional、out of context 等关键词。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第2页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 2
@@ -2597,7 +2597,7 @@
    "chapter": 6,
    "section": "Synonymy",
    "front": "Are synonyms interchangeable in all contexts? Why or why not?",
-   "back": "No. Synonyms are words which have different forms but similar meanings, yet they may differ in dialect, style or formality, register, affective meaning and collocation. Their usefulness lies in serving as cohesive devices and avoiding repetition.\n——\n同义词只是意义相近，并非处处可换：在地域、语体、语域、情感色彩和搭配上常有差别；其用处是作衍接手段、避免重复。",
+   "back": "No. ⟦y|Synonyms⟧ are words which have different forms but similar meanings, yet they may differ in dialect, style or formality, register, affective meaning and collocation. Their usefulness lies in serving as cohesive devices and avoiding repetition.\n——\n同义词只是意义相近，并非处处可换：在地域、语体、语域、情感色彩和搭配上常有差别；其用处是作衍接手段、避免重复。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第5页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 5
@@ -2608,7 +2608,7 @@
    "chapter": 6,
    "section": "Synonymy",
    "front": "What types of synonymy are there? Give examples for each.",
-   "back": "Five types: dialectal synonyms (British lift vs. American elevator); synonyms of different styles or formality (pass away/die/kick the bucket); synonyms of different registers (salt vs. sodium chloride); synonyms differing in affective meaning (beauty vs. siren); synonyms differing in collocation (be able to vs. be capable of; assassinate vs. murder).\n——\n方言、语体、语域、情感、搭配五类同义词，各组例子要能配对判断；assassinate 指要人且含政治动机，murder 指普通人且无政治目的。",
+   "back": "Five types: dialectal ⟦y|synonyms⟧ (British lift vs. American elevator); synonyms of different styles or formality (pass away/die/kick the bucket); synonyms of different registers (salt vs. sodium chloride); synonyms differing in affective meaning (beauty vs. siren); synonyms differing in collocation (be able to vs. be capable of; assassinate vs. murder).\n——\n方言、语体、语域、情感、搭配五类同义词，各组例子要能配对判断；assassinate 指要人且含政治动机，murder 指普通人且无政治目的。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第5页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 5
@@ -2729,7 +2729,7 @@
    "chapter": 6,
    "section": "Componential analysis",
    "front": "How does componential analysis analyze word meaning?",
-   "back": "The sense of a word can be analyzed in terms of a set of more general sense-components (or semantic properties/features). The approach that analyzes word meaning by decomposing it into its atomic features is called componential analysis, with plus and minus signs marking whether a feature applies, e.g. man: +HUMAN +ADULT +MALE.\n——\n成分分析把词义分解为更基本的语义成分（特征），用正负号标注特征有无，如 man 可写作 +HUMAN +ADULT +MALE。",
+   "back": "The sense of a word can be analyzed in terms of a set of more general sense-components (or semantic properties/features). The approach that analyzes word meaning by decomposing it into its atomic features is called componential analysis, with plus and minus signs marking whether a feature applies, e.g. ⟦s|man: +HUMAN +ADULT +MALE⟧.\n——\n成分分析把词义分解为更基本的语义成分（特征），用正负号标注特征有无，如 man 可写作 +HUMAN +ADULT +MALE。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第8页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 8
@@ -2740,7 +2740,7 @@
    "chapter": 6,
    "section": "Componential analysis",
    "front": "Compare man, woman and father in componential analysis.",
-   "back": "Man: +HUMAN +ADULT +MALE; Woman: +HUMAN +ADULT -MALE; Father: +HUMAN +ADULT +MALE +PARENT. All the semantic features of man are included in the semantic formula of father.\n——\nman 与 woman 差在 ±MALE；father 在 man 的全部特征上增加 +PARENT，man 的语义特征全部包含于 father，体现特征包含关系。",
+   "back": "⟦s|Man: +HUMAN +ADULT +MALE⟧; Woman: +HUMAN +ADULT -MALE; Father: +HUMAN +ADULT +MALE +PARENT. All the semantic features of man are included in the semantic formula of father.\n——\nman 与 woman 差在 ±MALE；father 在 man 的全部特征上增加 +PARENT，man 的语义特征全部包含于 father，体现特征包含关系。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第8页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 8
@@ -2993,7 +2993,7 @@
    "chapter": 6,
    "section": "Metaphor",
    "front": "Use LIFE IS A JOURNEY to illustrate cross-domain mapping.",
-   "back": "Birth corresponds to the beginning of the journey, death to the end of the journey (reaching the destination), difficulties to obstacles (going uphill, finding life difficult), points of choice to crossroads, and fellow-travellers to partners, colleagues and friends. Life is understood in terms of a journey.\n——\nLIFE IS A JOURNEY 把出生映射为旅程起点、死亡为终点、困难为障碍、抉择点为十字路口、同行者为伙伴同事朋友，用旅程经验组织人生经验。",
+   "back": "⟦s|Birth⟧ corresponds to the beginning of the ⟦s|journey⟧, death to the end of the journey (reaching the destination), difficulties to ⟦s|obstacles⟧ (going uphill, finding ⟦s|life⟧ difficult), points of choice to crossroads, and ⟦s|fellow-travellers⟧ to partners, colleagues and friends. Life is understood in terms of a journey.\n——\nLIFE IS A JOURNEY 把出生映射为旅程起点、死亡为终点、困难为障碍、抉择点为十字路口、同行者为伙伴同事朋友，用旅程经验组织人生经验。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第14页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 14
@@ -3059,7 +3059,7 @@
    "chapter": 6,
    "section": "Metaphor 与 metonymy",
    "front": "How are metaphor and metonymy different and related?",
-   "back": "Metaphor is based on resemblance between two domains: X is understood in terms of Y through an analogical relation of transference. Metonymy is based on contiguity within one domain: X stands for Y. They are hard to separate in real linguistic conceptualizations, and they are not a dichotomy but two endpoints of the same continuum.\n——\n隐喻基于相似性、跨两个域，X 被理解为 Y；转喻基于邻近性、在单一域内，X 代表 Y。现实中二者难以截然分开，是同一连续体的两端而非二分。",
+   "back": "⟦s|Metaphor⟧ is based on resemblance between two domains: X is understood in terms of Y through an analogical relation of transference. Metonymy is based on contiguity within one domain: X stands for Y. They are hard to separate in real linguistic conceptualizations, and they are not a dichotomy but two endpoints of the same continuum.\n——\n隐喻基于相似性、跨两个域，X 被理解为 Y；转喻基于邻近性、在单一域内，X 代表 Y。现实中二者难以截然分开，是同一连续体的两端而非二分。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第16页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 16
@@ -3070,7 +3070,7 @@
    "chapter": 7,
    "section": "Pragmatics 的定义",
    "front": "How does pragmatics differ from semantics?",
-   "back": "Pragmatics is the analysis of meaning in context, dealing with the relationships between linguistic forms and the users of those forms. On the contrary, semantics just focuses on conventional meanings.\n——\n语用学研究语境中的意义，处理语言形式与其使用者之间的关系；语义学只关注约定俗成的语言意义。",
+   "back": "Pragmatics is the analysis of meaning in context, dealing with the relationships between linguistic forms and the users of those forms. On the contrary, ⟦s|semantics just focuses on conventional meanings⟧.\n——\n语用学研究语境中的意义，处理语言形式与其使用者之间的关系；语义学只关注约定俗成的语言意义。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第18页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 18
@@ -3125,7 +3125,7 @@
    "chapter": 7,
    "section": "Place deixis",
    "front": "How does place deixis express proximal and distal relations?",
-   "back": "Place deixis specifies the locations relative to the speech event. Proximal terms (close to the speaker) are this and here; distal terms (away from the speaker) are that and there.\n——\n地点指示以言语事件为参照定位：this、here 为近指（近说话者），that、there 为远指（远离说话者）。",
+   "back": "⟦s|Place deixis⟧ specifies the locations relative to the speech event. Proximal terms (close to the speaker) are this and here; distal terms (away from the speaker) are that and there.\n——\n地点指示以言语事件为参照定位：this、here 为近指（近说话者），that、there 为远指（远离说话者）。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第19页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 19
@@ -3136,7 +3136,7 @@
    "chapter": 7,
    "section": "Place deixis",
    "front": "How is place deixis related to motion verbs and tense?",
-   "back": "Two features: the spatial deictic sense of motion verbs can be mentally fossilized; and place deixis is relevant to the tense of the verb, e.g. I am here vs. I was there.\n——\n地点指示可固化在位移动词的空间意义中，也随动词时态改变解释（I am here / I was there）。原页有一例扫描不清，不强行补写。",
+   "back": "Two features: the spatial deictic sense of motion verbs can be mentally fossilized; and ⟦s|place deixis⟧ is relevant to the tense of the verb, e.g. I am here vs. I was there.\n——\n地点指示可固化在位移动词的空间意义中，也随动词时态改变解释（I am here / I was there）。原页有一例扫描不清，不强行补写。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第19页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 19
@@ -3147,7 +3147,7 @@
    "chapter": 7,
    "section": "Time deixis",
    "front": "How do proximal and distal terms work in time deixis?",
-   "back": "Time deixis refers to words and phrases expressing notions of time, like now, then, today. Proximal terms (the present time): now. Distal terms (both past and future time): last, next, then.\n——\n时间指示以说话时间为基准：now 指当前时间（近指）；last、next、then 指相对远离当前的过去或未来（远指）。",
+   "back": "⟦s|Time deixis⟧ refers to words and phrases expressing notions of time, like now, then, today. Proximal terms (the present time): now. Distal terms (both past and future time): last, next, then.\n——\n时间指示以说话时间为基准：now 指当前时间（近指）；last、next、then 指相对远离当前的过去或未来（远指）。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第19页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 19
@@ -3158,7 +3158,7 @@
    "chapter": 7,
    "section": "Discourse 与 social deixis",
    "front": "Define discourse deixis and social deixis.",
-   "back": "Discourse deixis is an expression that has its reference within the discourse or text, e.g. next chapter, in the preceding section. Social deixis is the encoding of social distinctions, or the use of deictic expressions to indicate the social status of the interlocutors; honorifics are used to show the higher status, e.g. tu/vous.\n——\n语篇指示在语篇或文本内部定位（next chapter、preceding section）；社交指示编码社会区别、标示交际者地位，敬称即其表现（tu/vous、您）。",
+   "back": "⟦s|Discourse deixis⟧ is an expression that has its reference within the discourse or text, e.g. next chapter, in the preceding section. Social deixis is the encoding of social distinctions, or the use of deictic expressions to indicate the social status of the interlocutors; honorifics are used to show the higher status, e.g. tu/vous.\n——\n语篇指示在语篇或文本内部定位（next chapter、preceding section）；社交指示编码社会区别、标示交际者地位，敬称即其表现（tu/vous、您）。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第19页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 19
@@ -3246,7 +3246,7 @@
    "chapter": 7,
    "section": "Pragmatic empathy",
    "front": "What communicative effects can pragmatic empathy achieve?",
-   "back": "It is used to shorten the psychological distance between the speaker and the addressee, hence sounding intimate and sympathetic; it is also more polite in social interaction.\n——\n语用共情能缩短说话者与听话者的心理距离，显得亲近、有同情心，并在社会互动中显示礼貌。",
+   "back": "It is used to shorten the psychological distance between the speaker and the ⟦s|addressee, hence sounding intimate and sympathetic⟧; it is also more polite in social interaction.\n——\n语用共情能缩短说话者与听话者的心理距离，显得亲近、有同情心，并在社会互动中显示礼貌。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第20页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 20
@@ -3257,7 +3257,7 @@
    "chapter": 7,
    "section": "Speech acts",
    "front": "What is the core claim of speech act theory?",
-   "back": "In linguistic communication, people do not merely exchange information; they actually do things through talking or writing in various circumstances. Some utterances are more than just statements: they do not state facts, rather, they change some situations. Actions performed via speaking are called speech acts. The theory was put forward by Austin and his student Searle.\n——\n言语行为理论（Austin 提出，Searle 发展）：言语交际不只是传递信息，人们通过说话做事；某些话语不陈述事实，而是改变情境。",
+   "back": "In linguistic communication, people do not merely exchange information; they actually ⟦s|do things through talking or writing in various circumstances. Some utterances are more⟧ than just statements: they do not state facts, rather, they change some situations. Actions performed via speaking are called speech acts. The theory was put forward by Austin and his student Searle.\n——\n言语行为理论（Austin 提出，Searle 发展）：言语交际不只是传递信息，人们通过说话做事；某些话语不陈述事实，而是改变情境。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第21页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 21
@@ -3444,7 +3444,7 @@
    "chapter": 7,
    "section": "Conversational implicature",
    "front": "What is conversational implicature?",
-   "back": "It is assumed that participants adhere to the CP and the maxims in social interactions, but speakers sometimes violate or flout them. It is observed that there is more meaning than is said if the maxims are violated or flouted by the speaker; this kind of implicit, non-conventional meaning is called conversational implicature.\n——\n会话含义：说话者违反或公然违背准则时，话语在字面所说之外传达的隐含的、非规约的意义，须结合合作假设与语境推导。",
+   "back": "It is assumed that participants adhere to the CP and the maxims in social interactions, but speakers sometimes violate or flout them. It is observed that there is more meaning than is said if the maxims are violated or flouted by the speaker; this kind of implicit, ⟦s|non-conventional meaning is called conversational implicature⟧.\n——\n会话含义：说话者违反或公然违背准则时，话语在字面所说之外传达的隐含的、非规约的意义，须结合合作假设与语境推导。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第24页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 24
@@ -3488,7 +3488,7 @@
    "chapter": 7,
    "section": "Politeness",
    "front": "How is politeness related to face?",
-   "back": "Politeness can be defined as the means employed to show awareness of another person's face. An act performed to respect the face of others is considered to be polite; otherwise it is impolite.\n——\n礼貌是显示注意到他人面子的手段：维护、尊重对方面子的行为是礼貌的；损害其面子的行为则不礼貌。",
+   "back": "⟦s|Politeness⟧ can be defined as the means employed to show awareness of another person's face. An act performed to respect the face of others is considered to be polite; otherwise it is impolite.\n——\n礼貌是显示注意到他人面子的手段：维护、尊重对方面子的行为是礼貌的；损害其面子的行为则不礼貌。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第25页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 25
@@ -3499,7 +3499,7 @@
    "chapter": 7,
    "section": "Positive 与 negative politeness",
    "front": "What do positive politeness and negative politeness focus on?",
-   "back": "Negative politeness is concerned with the participants' negative face: they tend to show deference, emphasize the importance of the other's time and concerns, and even include an apology for the imposition or interruption. Positive politeness is concerned with the participants' positive face: they tend to show solidarity, emphasizing that both interlocutors want the same thing and have a common goal.\n——\n消极礼貌照顾消极面子：表示尊重、顾及对方时间与关切、为强加或打扰致歉；积极礼貌照顾积极面子：显示团结、共同立场与共同目标。",
+   "back": "Negative ⟦s|politeness⟧ is concerned with the participants' negative face: they tend to show deference, emphasize the importance of the other's time and concerns, and even include an apology for the imposition or interruption. Positive politeness is concerned with the participants' positive face: they tend to show solidarity, emphasizing that both interlocutors want the same thing and have a common goal.\n——\n消极礼貌照顾消极面子：表示尊重、顾及对方时间与关切、为强加或打扰致歉；积极礼貌照顾积极面子：显示团结、共同立场与共同目标。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第25页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 25
@@ -3521,7 +3521,7 @@
    "chapter": 7,
    "section": "Politeness maxims",
    "front": "How do the tact maxim and the generosity maxim treat self and other?",
-   "back": "Tact maxim: minimize cost to other, maximize benefit to other. Generosity maxim: minimize benefit to self, maximize cost to self.\n——\n得体准则：减少对他人的成本、增大对他人的益处；慷慷准则：减少对自己的益处、增大自己承担的成本。二者方向正好相反。",
+   "back": "⟦s|Tact maxim⟧: minimize cost to other, maximize benefit to other. Generosity maxim: minimize benefit to self, maximize cost to self.\n——\n得体准则：减少对他人的成本、增大对他人的益处；慷慷准则：减少对自己的益处、增大自己承担的成本。二者方向正好相反。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第26页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 26
@@ -3543,7 +3543,7 @@
    "chapter": 7,
    "section": "Politeness maxims",
    "front": "What do the agreement maxim and the sympathy maxim require?",
-   "back": "Agreement maxim: minimize disagreement between self and other, maximize agreement between self and other. Sympathy maxim: minimize antipathy between self and other, maximize sympathy between self and other.\n——\n一致准则：减少双方分歧、增大一致；同情准则：减少双方反感、增大同情。",
+   "back": "Agreemen⟦s|t maxim⟧: minimize disagreement between self and other, maximize agreement between self and other. Sympathy maxim: minimize antipathy between self and other, maximize sympathy between self and other.\n——\n一致准则：减少双方分歧、增大一致；同情准则：减少双方反感、增大同情。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第26页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 26
@@ -3576,7 +3576,7 @@
    "chapter": 7,
    "section": "Hedges",
    "front": "What are hedges?",
-   "back": "Hedges are words or expressions whose job is to make things fuzzier. People use them to show that they lack adequate evidence for what they say, or to adjust the degree or range of commitment to a proposition.\n——\n模糊限制语是使事物变模糊的词语：说话者用它标示证据不充分，或调整命题的确定程度与范围，从而控制自己的承诺程度。",
+   "back": "Hedges are ⟦s|words or expressions whose job is to make things fuzzier⟧. People use them to show that they lack adequate evidence for what they say, or to adjust the degree or range of commitment to a proposition.\n——\n模糊限制语是使事物变模糊的词语：说话者用它标示证据不充分，或调整命题的确定程度与范围，从而控制自己的承诺程度。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第27页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 27
@@ -3609,7 +3609,7 @@
    "chapter": 7,
    "section": "Shields",
    "front": "How do shields differ from approximators?",
-   "back": "Shields show fuzziness in the relationship between the propositional content and the speaker; they do not change the truth-values of propositions.\n——\n遮护语（shields）模糊的是命题内容与说话者之间的关系，并不改变命题本身的真值，这是它与 approximators 的不同。",
+   "back": "Shields show fuzziness in the relationship between the propositional content and the ⟦s|speaker; they do not change the truth-values of propositions⟧.\n——\n遮护语（shields）模糊的是命题内容与说话者之间的关系，并不改变命题本身的真值，这是它与 approximators 的不同。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第28页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 28
@@ -3653,7 +3653,7 @@
    "chapter": 7,
    "section": "Relevance Theory",
    "front": "How does the principle of relevance characterize a relevant utterance?",
-   "back": "In verbal communication, the speaker must attract the hearer's attention. To succeed, the interlocutor would necessarily choose the most relevant utterance from a range at his disposal, the one that fits best to the context and will call for the least processing effort.\n——\n关联理论：言语交际中说话者须吸引听者注意，从可用表达中选择最契合语境、加工代价最小的最关联话语。",
+   "back": "In verbal communication, the speaker must attract the hearer's attention. To ⟦s|succeed, the interlocutor would necessarily choose the most relevant utterance from a range⟧ at his disposal, the one that fits best to the context and will call for the least processing ⟦s|effort⟧.\n——\n关联理论：言语交际中说话者须吸引听者注意，从可用表达中选择最契合语境、加工代价最小的最关联话语。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第28页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 28
@@ -3686,7 +3686,7 @@
    "chapter": 7,
    "section": "会话结构",
    "front": "What regularities do conversations show?",
-   "back": "Despite differences in participants and purpose, conversations are structured; according to pragmatists, there are some regularities in conversations, such as turn-taking, back-channel signals, adjacency pairs and pre-sequences.\n要点：turn-taking · back-channel signals · adjacency pairs · pre-sequences\n——\n会话虽因参与者和目的而异，但仍有结构规律：轮流发言、听者反馈、相邻对、前序列等。",
+   "back": "Despite differences in participants and purpose, conversations are structured; according to pragmatists, there are some regularities in conversations, such as turn-taking, back-channel signals, ⟦y|adjacency pairs⟧ and pre-sequences.\n要点：turn-taking · back-channel signals · adjacency pairs · pre-sequences\n——\n会话虽因参与者和目的而异，但仍有结构规律：轮流发言、听者反馈、相邻对、前序列等。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第29页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 29
@@ -3708,7 +3708,7 @@
    "chapter": 7,
    "section": "Back-channel signals",
    "front": "What are back-channel signals and what forms do they take?",
-   "back": "When one speaker holds the floor for an extended turn, the partner may indicate that he/she is listening. Two types: paralinguistic signals, e.g. nodding, gestures, smiles and other facial expressions; and vocal signals, e.g. uh-uh, yeah, mmm. In telephone conversations they are more necessary, because vocal signals are the only means to indicate that the one at the other end of the line is listening.\n——\n反馈信号让长话轮中的说话者知道听者在听：副语言类（点头、手势、微笑等表情动作）和声音类（uh-uh、yeah、mmm）；电话交谈中声音信号尤为关键。",
+   "back": "When one speaker holds the floor for an extended turn, the partner may indicate that he/she is listening. ⟦s|Two types⟧: paralinguistic signals, e.g. nodding, gestures, smiles and other facial expressions; and vocal signals, e.g. uh-uh, yeah, mmm. In telephone conversations they are more necessary, because vocal signals are the only means to indicate that the one at the other end of the line is listening.\n——\n反馈信号让长话轮中的说话者知道听者在听：副语言类（点头、手势、微笑等表情动作）和声音类（uh-uh、yeah、mmm）；电话交谈中声音信号尤为关键。",
    "source": "《27版高分笔记·语言学》04语言学Chapter6.7.pdf PDF第29页",
    "sourceFile": "04语言学Chapter6.7.pdf",
    "sourcePage": 29
@@ -3807,7 +3807,7 @@
    "chapter": 8,
    "section": "Grammatical cohesion",
    "front": "What are the three ways of grammatical cohesion?",
-   "back": "There are three ways of grammatical cohesion: reference, substitution and ellipsis.\n要点：reference（指称）· substitution（替代）· ellipsis（省略）。\n——\n语法衔接有三种：指称、替代和省略。",
+   "back": "There are three ways of grammatical cohesion: reference, ⟦y|substitution⟧ and ellipsis.\n要点：reference（指称）· substitution（替代）· ellipsis（省略）。\n——\n语法衔接有三种：指称、替代和省略。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第3页",
    "sourcePage": 3
@@ -3917,7 +3917,7 @@
    "chapter": 8,
    "section": "Collocation",
    "front": "How does collocation contribute to lexical cohesion?",
-   "back": "Collocation refers to the association of lexical items that regularly co-occur, or those that stand in a certain kind of recognizable semantic relation realized through opposites, part and whole, the same order series, and words that share the same lexical environment (e.g. here and future, first and finally, history and origin).\n——\n搭配指词项因惯常共现或可识别的语义关联（反义、部分与整体、同一序列、共同词汇环境）相连。",
+   "back": "⟦y|Collocation⟧ refers to the association of lexical items that regularly co-occur, or those that ⟦s|stand in a certain kind of recognizable semantic relation realized through opposites, part⟧ and whole, the same order series, and words that share the same lexical environment (e.g. here and future, first and finally, history and origin).\n——\n搭配指词项因惯常共现或可识别的语义关联（反义、部分与整体、同一序列、共同词汇环境）相连。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第5页",
    "sourcePage": 5
@@ -4214,7 +4214,7 @@
    "chapter": 9,
    "section": "Register",
    "front": "How does register differ from regional dialect and sociolect?",
-   "back": "Register refers to “varieties according to use”, in contrast with regional dialects and sociolects, both of which are “varieties according to user”. To put it simply, one's dialect shows who you are and where you are from, while the register shows what you are doing and with whom.\n——\nregister 是“按使用情境”划分的功能变体；地域方言和社会方言按“使用者”划分。dialect 提示你是谁、来自哪里，register 提示你在做什么、与谁交流。",
+   "back": "Register refers to “varieties according to use”, in ⟦s|contrast with regional dialects and sociolects, both of which are “varieties according to⟧ user”. To put it simply, one's dialect shows who you are and where you are from, while the register shows what you are doing and with whom.\n——\nregister 是“按使用情境”划分的功能变体；地域方言和社会方言按“使用者”划分。dialect 提示你是谁、来自哪里，register 提示你在做什么、与谁交流。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第12页",
    "sourcePage": 12
@@ -4291,7 +4291,7 @@
    "chapter": 9,
    "section": "Coordinate 与 subordinate bilingualism",
    "front": "Distinguish coordinate bilingualism from subordinate bilingualism.",
-   "back": "Coordinate bilingualism: children grow up speaking two languages as their family is bilingual; subordinate bilingualism: a student has to learn another language as they grow up.\n——\ncoordinate bilingualism 常指在双语家庭中成长、习得两种语言；subordinate bilingualism 常指后来通过学习掌握另一语言。",
+   "back": "Coordinate bilingualism: children grow up speaking two languages as their family is ⟦s|bilingual; subordinate bilingualism: a student has to learn another language as they grow⟧ up.\n——\ncoordinate bilingualism 常指在双语家庭中成长、习得两种语言；subordinate bilingualism 常指后来通过学习掌握另一语言。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第14页",
    "sourcePage": 14
@@ -4412,7 +4412,7 @@
    "chapter": 10,
    "section": "文化的 learnability",
    "front": "What does the learnability of culture mean? How does enculturation take place?",
-   "back": "Culture is learnable. Enculturation denotes the total activity of learning one's culture: conscious or unconscious conditioning occurring in the process whereby individuals achieve competence in a particular culture, usually through interaction, observation and imitation.\n——\n文化可通过学习获得。enculturation 指学习本文化的全部活动，是个体有意或无意地获得某一文化能力的过程，常通过互动、观察和模仿发生。",
+   "back": "Culture is learnable. Enculturation denotes the total activity of learning one's culture: conscious or unconscious conditioning occurring in the process whereby individuals achieve competence in a particular culture, usually through interaction, observation and ⟦s|imitation⟧.\n——\n文化可通过学习获得。enculturation 指学习本文化的全部活动，是个体有意或无意地获得某一文化能力的过程，常通过互动、观察和模仿发生。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第18页",
    "sourcePage": 18
@@ -4445,7 +4445,7 @@
    "chapter": 10,
    "section": "文化的 codifiability",
    "front": "What does the portability of cultural symbols enable?",
-   "back": "The portability of symbols allows us to package and store them as well as transmit them. The mind, books, pictures, films, videos and computer disks enable a culture to preserve what it deems important and worthy of transmission.\n——\n符号可被打包、储存和传播；记忆、书籍、图像、影片和数字媒介使文化得以保存其认为重要的内容并跨人群或世代传递。",
+   "back": "⟦s|The portability⟧ of symbols allows us to package and store them as well as transmit them. The mind, books, pictures, films, videos and computer disks enable a culture to preserve what it deems important and worthy of transmission.\n——\n符号可被打包、储存和传播；记忆、书籍、图像、影片和数字媒介使文化得以保存其认为重要的内容并跨人群或世代传递。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第18页",
    "sourcePage": 18
@@ -4456,7 +4456,7 @@
    "chapter": 10,
    "section": "文化的 transmittability",
    "front": "What is the transmittability of culture?",
-   "back": "For a culture to exist and develop, it must ensure that its crucial messages and elements are passed on. Once cultural habits, principles, values and attitudes are formulated, they are communicated to each member of the culture; the cultural bond is immensely strong in linking each generation to the past and the future.\n——\n文化要持续存在和发展，核心信息、习惯、价值观及态度必须传给每个成员和后代；文化纽带把每一代与过去和未来相连。",
+   "back": "For a culture to exist and develop, it must ensure that its crucial messages and elements are passed on. Once cultural habits, principles, values and attitudes are formulated, they are communicated to each member of the culture; the cultural bond is ⟦s|immensely strong in linking each generation to the past and the future⟧.\n——\n文化要持续存在和发展，核心信息、习惯、价值观及态度必须传给每个成员和后代；文化纽带把每一代与过去和未来相连。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第19页",
    "sourcePage": 19
@@ -4588,7 +4588,7 @@
    "chapter": 10,
    "section": "Ethnography of Communication",
    "front": "Who proposed the Ethnography of Communication, and what framework does it use?",
-   "back": "It was put forward by Hymes, which takes into account the various factors involved in communication; for convenience he uses the acronym SPEAKING to represent all the relevant factors.\n——\n交际民族志由 Hymes 提出，综合考虑交际涉及的各种因素；他用 SPEAKING 缩写概括所有相关因素。",
+   "back": "It was put forward by Hymes, which takes into account the various factors ⟦s|involved in communication; for convenience he uses the acronym SPEAKING to⟧ represent all the relevant factors.\n——\n交际民族志由 Hymes 提出，综合考虑交际涉及的各种因素；他用 SPEAKING 缩写概括所有相关因素。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第21页",
    "sourcePage": 21
@@ -4624,7 +4624,7 @@
    "chapter": 10,
    "section": "文化与外语教学",
    "front": "Distinguish formal culture from popular culture.",
-   "back": "Formal culture covers geography, history, literature and the like, constituting cultural knowledge or cultural background; popular culture covers everyday living style and patterns of behaving, constituting the cultural communication information of foreign language teaching and learning.\n——\nformal culture 指地理、历史、文学等背景知识；popular culture 指日常生活方式和行为模式，构成外语教学中常需掌握的交际文化内容。",
+   "back": "Formal ⟦s|culture⟧ covers geography, history, literature and the like, constituting cultural knowledge or cultural background; popular culture covers everyday living style and patterns of behaving, constituting the ⟦s|cultural communication information⟧ of foreign language teaching and learning.\n——\nformal culture 指地理、历史、文学等背景知识；popular culture 指日常生活方式和行为模式，构成外语教学中常需掌握的交际文化内容。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第22页",
    "sourcePage": 22
@@ -4635,7 +4635,7 @@
    "chapter": 10,
    "section": "文化与外语教学",
    "front": "Why is cultural information important for foreign language communication?",
-   "back": "Cultural communication information is so inclusive that it permeates almost all aspects of everyday behaviour, e.g. conventions of apologizing and thanking, culturally loaded words, and concepts of privacy, time and space. Lack of such knowledge may cause confrontation and misunderstanding, leading to a failure in intercultural communication.\n——\n日常行为、道歉和感谢惯例、文化负载词以及隐私、时间和空间概念都受文化影响；缺少相关知识可能导致误解和跨文化交际失败。",
+   "back": "⟦s|Cultural communication information⟧ is so inclusive that it permeates almost all aspects of everyday behaviour, e.g. conventions of apologizing and thanking, culturally loaded words, and concepts of privacy, time and space. Lack of such knowledge may cause confrontation and misunderstanding, leading to a failure in intercultural communication.\n——\n日常行为、道歉和感谢惯例、文化负载词以及隐私、时间和空间概念都受文化影响；缺少相关知识可能导致误解和跨文化交际失败。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第22页",
    "sourcePage": 22
@@ -4646,7 +4646,7 @@
    "chapter": 10,
    "section": "文化与外语教学",
    "front": "How should culture teaching be integrated into language teaching?",
-   "back": "Insights into the target culture and the teaching and learning of socio-cultural features should be fully integrated with the teaching of vocabulary, various linguistic forms and grammar of the target language; culturally qualified teachers should bring an awareness of cultural features into every aspect of their teaching.\n——\n目标文化知识和社会文化特征应与词汇、语言形式和语法教学完全结合；教师需在教学的每个环节持续引导文化意识。",
+   "back": "Insights into the target ⟦s|culture⟧ and the teaching and learning of socio-cultural features should be fully integrated with the teaching of vocabulary, various linguistic forms and grammar of the target language; ⟦s|culturally qualified teachers should bring an awareness of cultural features into every⟧ aspect of their teaching.\n——\n目标文化知识和社会文化特征应与词汇、语言形式和语法教学完全结合；教师需在教学的每个环节持续引导文化意识。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第22页",
    "sourcePage": 22
@@ -4712,7 +4712,7 @@
    "chapter": 11,
    "section": "SLA 与 acquisition / learning",
    "front": "Define second language, foreign language and SLA.",
-   "back": "In a bilingual or multilingual society, the language other than the mother tongue one learns is called a second language, while the language one learns mainly outside the target-language society is called a foreign language. Second language acquisition (SLA) is the process by which a language other than the mother tongue is learnt in a natural setting or in a classroom.\n——\n双语/多语社会中母语之外学习的语言称 second language；在非目标语社会环境学习的称 foreign language；SLA 是在自然情境或课堂学习母语以外语言的过程。",
+   "back": "In a bilingual or multilingual society, the language other than the mother tongue one learns is called a second language, while the language one learns mainly outside the target-language society is called a foreign language. ⟦y|Second language acquisition (SLA⟧) is the process by which a language other than the mother tongue is learnt in a natural setting or in a classroom.\n——\n双语/多语社会中母语之外学习的语言称 second language；在非目标语社会环境学习的称 foreign language；SLA 是在自然情境或课堂学习母语以外语言的过程。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第25页",
    "sourcePage": 25
@@ -4734,7 +4734,7 @@
    "chapter": 11,
    "section": "Motivation",
    "front": "Why is motivation regarded as crucial in SLA?",
-   "back": "Motivation is the single most striking factor; it is unanimously acknowledged by researchers and language teachers as an important factor, and language learning is to a great extent pre-conditioned by motivation.\n——\n动机是最突出的因素，被研究者和教师一致认为是重要条件；语言学习在相当程度上受动机预先影响。",
+   "back": "⟦s|Motivation⟧ is the single most striking factor; it is unanimously acknowledged by researchers and language teachers as an important factor, and language learning is to a great extent pre-conditioned by motivation.\n——\n动机是最突出的因素，被研究者和教师一致认为是重要条件；语言学习在相当程度上受动机预先影响。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第26页",
    "sourcePage": 26
@@ -4745,7 +4745,7 @@
    "chapter": 11,
    "section": "Motivation",
    "front": "Distinguish instrumental from integrative motivation.",
-   "back": "Instrumental motivation is learning the language for practical ends, while integrative motivation is an initial inner urge to integrate into the target language community. Integratively motivated learners are more likely to be successful because they are psychologically prepared to adopt all the manners that characterize the group and even to become a member of that group.\n——\n工具型动机为实际目标而学；融入型动机与融入或认同目标语言群体有关，此类学习者更可能成功（更愿接纳该群体的行为方式）。",
+   "back": "Instrumental ⟦s|motivation⟧ is learning the language for practical ends, while integrative motivation is an initial inner urge to integrate into the target language community. Integratively motivated learners are more likely to be successful because they are psychologically prepared to adopt all the manners that characterize the group and even to become a member of that group.\n——\n工具型动机为实际目标而学；融入型动机与融入或认同目标语言群体有关，此类学习者更可能成功（更愿接纳该群体的行为方式）。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第26页",
    "sourcePage": 26
@@ -4756,7 +4756,7 @@
    "chapter": 11,
    "section": "Motivation",
    "front": "How has the relation between motivation and success been reconsidered?",
-   "back": "The instrumental/integrative version is theoretically inadequate and practically not instructive: it fails to account for children who may not be aware of why they should learn a second language. The second version, cognitive/resultant motivation, holds that it is achievement that contributes to motivation rather than vice versa, so the relation between motivation and success is not unidirectional.\n——\n二分法理论不足、实践指导有限，也解释不了儿童的动机；cognitive/resultant 动机观认为成就促成动机，动机与成功并非单向关系。",
+   "back": "The instrumental/integrative version is theoretically inadequate and practically not instructive: it fails to account for children who may not be aware of why they should learn a second language. The second version, cognitive/resultant ⟦s|motivation⟧, holds that it is achievement that contributes to motivation rather than vice versa, so the relation between motivation and success is not unidirectional.\n——\n二分法理论不足、实践指导有限，也解释不了儿童的动机；cognitive/resultant 动机观认为成就促成动机，动机与成功并非单向关系。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第26页",
    "sourcePage": 26
@@ -4913,7 +4913,7 @@
    "chapter": 11,
    "section": "Error analysis",
    "front": "How can errors be described and categorized?",
-   "back": "1. Errors can be classified into four categories: omission, addition, selection and mis-ordering; 2. another way to describe errors is to classify them into grammatical categories, e.g. gathering all the errors relating to verbs and then classifying them.\n——\n可按遗漏、添加、误选、错序四类描述；也可按语法项目归类，如集中分析动词错误。",
+   "back": "1. Errors can be classified into four categories: omission, addition, selection and ⟦s|mis-ordering⟧; 2. another way to describe errors is to classify them into grammatical categories, e.g. gathering all the errors relating to verbs and then classifying them.\n——\n可按遗漏、添加、误选、错序四类描述；也可按语法项目归类，如集中分析动词错误。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第29页",
    "sourcePage": 29
@@ -5001,7 +5001,7 @@
    "chapter": 11,
    "section": "Gass 的输入处理模型",
    "front": "How does Gass distinguish input, noticed input, comprehended input and intake?",
-   "back": "According to Gass, noticed input is the first stage of acquisition, a passing through of the initial data; not all noticed input is comprehended, and not all comprehended input becomes intake. Intake is seen as “a process which mediates between target language input and the learner's internalized set of rules”; output can become input through interaction.\n——\n输入先被注意，再可能被理解；被注意的内容未必被理解，被理解的内容未必成为 intake。Intake 介于目标语输入与学习者内化规则之间。",
+   "back": "According to Gass, noticed input is the first stage of acquisition, a passing through of the ⟦y|initial da⟧ta; not all noticed input is comprehended, and not all comprehended input ⟦y|becomes intake⟧. Intake is seen as “a process which mediates between target language input and the learner's internalized set of rules”; output can become input through interaction.\n——\n输入先被注意，再可能被理解；被注意的内容未必被理解，被理解的内容未必成为 intake。Intake 介于目标语输入与学习者内化规则之间。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第30页",
    "sourcePage": 30
@@ -5067,7 +5067,7 @@
    "chapter": 12,
    "section": "FLT as a system",
    "front": "What levels make up foreign language teaching as a system in China?",
-   "back": "Four levels: (1) educational planning, in which the government decides what languages are taught, to whom, and what educational resources are appropriated; (2) preparation, including syllabus design and material development, and teacher preparation and retraining; (3) operation in the classroom, with three main variables: the learners, the teacher and the textbook; (4) evaluation, mostly in the form of testing the efficiency of teaching and learning.\n——\n教育规划（定语言、对象、资源）、准备（大纲/教材编写与教师培养）、课堂实施（学生、教师、教材三变量）、评价（多以测试进行）。",
+   "back": "⟦s|Four levels⟧: (1) ⟦s|educational⟧ planning, in which the government decides what languages are taught, to whom, and what educational resources are appropriated; (2) preparation, including syllabus design and material development, and ⟦s|teacher preparation and retraining⟧; (3) operation in the classroom, with three main variables: the learners, the teacher and the textbook; (4) evaluation, mostly in the form of testing the efficiency of teaching and learning.\n——\n教育规划（定语言、对象、资源）、准备（大纲/教材编写与教师培养）、课堂实施（学生、教师、教材三变量）、评价（多以测试进行）。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第33页",
    "sourcePage": 33
@@ -5133,7 +5133,7 @@
    "chapter": 12,
    "section": "Communicative syllabus",
    "front": "What is the objective of a communicative syllabus?",
-   "back": "In a communicative syllabus, the objective of teaching a foreign language is developing learners' communicative competence, which consists of grammatical competence, sociolinguistic competence, discourse competence and strategic competence; hence the syllabus is multidimensional.\n——\n交际大纲以发展交际能力为目标；交际能力含语法、社会语言、语篇和策略能力，故大纲具有多维度。",
+   "back": "In a ⟦s|communicative syllabus⟧, the objective of teaching a foreign language is developing learners' communicative competence, which consists of grammatical competence, sociolinguistic competence, discourse competence and strategic competence; hence the syllabus is multidimensional.\n——\n交际大纲以发展交际能力为目标；交际能力含语法、社会语言、语篇和策略能力，故大纲具有多维度。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第34页",
    "sourcePage": 34
@@ -5180,7 +5180,7 @@
    "chapter": 12,
    "section": "Language testing",
    "front": "What components make up Bachman's framework of communicative language ability?",
-   "back": "Bachman constructed a theoretical framework of communicative language ability, which contains language competence, strategic competence, knowledge structures, psychophysiological mechanisms and context of situation.\n要点：language competence · strategic competence · knowledge structures · psychophysiological mechanisms · context of situation.\n——\n交际语言能力框架包括语言能力、策略能力、知识结构、心理生理机制和情境五部分。",
+   "back": "Bachman constructed a theoretical framework of communicative language ability, which contains language ⟦s|competence⟧, strategic competence, knowledge structures, psychophysiological mechanisms and context of situation.\n要点：language competence · strategic competence · knowledge structures · psychophysiological mechanisms · context of situation.\n——\n交际语言能力框架包括语言能力、策略能力、知识结构、心理生理机制和情境五部分。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第35页",
    "sourcePage": 35
@@ -5191,7 +5191,7 @@
    "chapter": 12,
    "section": "Language testing",
    "front": "How is Bachman's language competence subdivided?",
-   "back": "Language competence includes grammatical competence and pragmatic competence: under grammatical competence fall organizational competence and textual competence; under pragmatic competence fall illocutionary competence and sociolinguistic competence.\n——\n语言能力分语法能力与语用能力：语法能力下有组织能力与语篇能力；语用能力下有言外能力与社会语言能力。",
+   "back": "Language ⟦s|competence⟧ includes grammatical competence and pragmatic competence: under grammatical competence fall organizational competence and textual competence; under pragmatic competence fall illocutionary competence and sociolinguistic competence.\n——\n语言能力分语法能力与语用能力：语法能力下有组织能力与语篇能力；语用能力下有言外能力与社会语言能力。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第35页",
    "sourcePage": 35
@@ -5227,7 +5227,7 @@
    "chapter": 12,
    "section": "Teacher development",
    "front": "What roles does a communicative syllabus require the teacher to perform?",
-   "back": "Different syllabuses require the teacher to perform different roles. A communicative syllabus (communicative language teaching) requires the teacher to be communicator, model, designer, organizer and counselor.\n——\n不同大纲要求教师承担不同角色；交际大纲要求教师充当 communicator、model、designer、organizer、counselor。",
+   "back": "Different syllabuses require the teacher to perform different roles. A ⟦s|communicative syllabus (communicative language teaching⟧) requires the teacher to be communicator, model, designer, organizer and counselor.\n——\n不同大纲要求教师承担不同角色；交际大纲要求教师充当 communicator、model、designer、organizer、counselor。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第36页",
    "sourcePage": 36
@@ -5282,7 +5282,7 @@
    "chapter": 12,
    "section": "POA 的理论框架",
    "front": "What are the three components of the POA theoretical framework?",
-   "back": "Its theoretical framework is composed of three components: teaching principles, teaching hypotheses and teacher-mediated teaching processes. Teaching principles set guidelines, teaching hypotheses lay foundations for teaching processes, and teaching processes actualize teaching principles while testing teaching hypotheses.\n——\n教学原则提供指导方针；教学假设为教学过程奠定基础；教学过程落实原则并检验假设。",
+   "back": "Its theoretical framework is composed of three components: teaching ⟦s|principle⟧s, teaching hypotheses and teacher-mediated teaching processes. Teaching principles set guidelines, teaching hypotheses lay foundations for teaching processes, and teaching processes actualize teaching principles while testing teaching hypotheses.\n——\n教学原则提供指导方针；教学假设为教学过程奠定基础；教学过程落实原则并检验假设。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第37页",
    "sourcePage": 37
@@ -5293,7 +5293,7 @@
    "chapter": 12,
    "section": "POA 教学原则",
    "front": "What are POA's three teaching principles?",
-   "back": "The teaching principles include the Learning-centered Principle, the Learning-using Integrated Principle and the Whole-person Education Principle.\n——\n三项原则：学习中心、学用一体、全人教育。",
+   "back": "⟦s|The teaching principles⟧ include the Learning-centered ⟦s|Principle⟧, the Learning-using Integrated Principle and the Whole-person Education Principle.\n——\n三项原则：学习中心、学用一体、全人教育。",
    "sourceFile": "05语言学Chapter8-12.pdf",
    "source": "《27版高分笔记·语言学》05语言学Chapter8-12.pdf PDF第37页",
    "sourcePage": 37

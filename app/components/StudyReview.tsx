@@ -2,6 +2,16 @@ import { useEffect, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
 import { type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
+import { parseHighlightMarkers } from "../../lib/highlight-markers";
+
+/** 教材重点标记 ⟦k|…⟧ -> 带色 span; 无标记时原样返回字符串。 */
+function renderMarked(text: string): ReactNode {
+  const segments = parseHighlightMarkers(text);
+  if (segments.length === 1 && segments[0].kind === "text") return segments[0].text;
+  return segments.map((segment, index) => segment.kind === "text"
+    ? <span key={index}>{segment.text}</span>
+    : <span key={index} className={"hl-" + segment.kind}>{segment.text}</span>);
+}
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
@@ -129,7 +139,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { if (onUndoRating) onUndoRating(); else review.undoLastRating(); }}>撤销本次评分</button></p>}
     {!review.ready ? <div className="panel empty">正在读取学习记录…</div> : card ? <div className="flash-area">
       <div className="flash-top"><span>{books.find(book => book.id === card.book)?.name} · 第 {card.chapter} 章{card.section ? " · " + card.section : ""}</span><span>{mode !== "browse" && head ? `${head.kind === "new" ? "新卡" : head.kind === "learning" ? "短间隔回顾" : "到期复习"} · ${mode === "all" ? "全部队列" : "当前范围"}剩余 ${queue.items.length} 张` : `${browseIndex + 1} / ${browseCards.length}`}</span></div>
-      <button className="flash-card" onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? card.back : card.front}</strong><span>{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>
+      <button className="flash-card" onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? renderMarked(card.back) : card.front}</strong><span>{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>
       <div className="rate-actions study-rate-actions">{!flipped ? <button className="primary" onClick={() => setRevealedCard(visibleCardKey)}>显示答案 <small className="kbd-hint">空格</small></button> : mode !== "browse" ? ratings.map(({ grade, label }, index) => {
         const preview = review.preview(card.id, grade);
         return <button key={grade} onClick={() => rate(grade)}>{label}<small className="kbd-hint">{index + 1}</small><span>{formatStudyDue(preview.dueAt)}</span></button>;

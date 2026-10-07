@@ -2,6 +2,7 @@ import { cards, loadKnowledgeCards, type Card as Card333, type Question } from "
 import { load825StudyData, type Card825 } from "./825/study-data";
 import { loadPoliticsStudyData } from "./politics/study-data";
 import { requestDeepSeek } from "./mock-quiz";
+import { stripHighlightMarkers } from "./highlight-markers";
 export { generateMockQuiz, validateMockQuizConfig, MAX_MOCK_QUIZ_QUESTIONS, MOCK_QUIZ_TYPES, MOCK_QUIZ_TYPE_LABELS } from "./mock-quiz";
 export type { MockQuizType, MockQuizConfig, MockQuizContext, MockQuizRange, MockQuizOptions, MockQuizQuestion, MockQuizResult, MockQuizUnit } from "./mock-quiz";
 
@@ -22,7 +23,7 @@ function chooseCards(rows: { front: string; back: string; section?: string }[], 
   const picked: { front: string; back: string }[] = [];
   for (const card of candidates) {
     if (picked.length >= maxCards || used >= FACT_LIMIT) break;
-    const front = trimText(card.front, 320), back = trimText(card.back, 420);
+    const front = trimText(card.front, 320), back = trimText(stripHighlightMarkers(card.back), 420);
     const cost = front.length + back.length;
     if (used + cost > FACT_LIMIT) break;
     picked.push({ front, back }); used += cost;

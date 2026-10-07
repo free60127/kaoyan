@@ -6,6 +6,7 @@ import { recordActivity } from "@/lib/activity";
 import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
 import { addMcqExcluded, readMcqExcluded } from "@/lib/mcq-excluded";
 import { setMcqExcluded } from "@/lib/practice-quiz";
+import { stripHighlightMarkers } from "@/lib/highlight-markers";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string };
@@ -214,7 +215,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     {question.hint && <small className="practice-hint">{question.hint}</small>}
     <h2>{question.stem}</h2>
     <div className="options">{question.options.map((item, index) => <button key={index} disabled={round.choice !== null} className={round.choice === null ? "" : index === question.answer ? "correct" : round.choice === index ? "wrong" : ""} onClick={() => answer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div>
-    {round.choice !== null && <div className="explanation"><b>{round.choice === question.answer ? "答对了" : "正确答案：" + "ABCD"[question.answer]}</b><p>对应闪卡：{cards.find(card => card.id === question.cardId)?.back.slice(0, 160) || question.source}</p><div className="practice-meta-actions"><button type="button" className={excluded.has(question.cardId) ? "mode-button active" : "mode-button"} onClick={() => setExcluded(addMcqExcluded(question.cardId))}>{excluded.has(question.cardId) ? "已排除出自动组卷" : "不适合选择题，排除出自动组卷"}</button></div></div>}
+    {round.choice !== null && <div className="explanation"><b>{round.choice === question.answer ? "答对了" : "正确答案：" + "ABCD"[question.answer]}</b><p>对应闪卡：{stripHighlightMarkers(cards.find(card => card.id === question.cardId)?.back || "").slice(0, 160) || question.source}</p><div className="practice-meta-actions"><button type="button" className={excluded.has(question.cardId) ? "mode-button active" : "mode-button"} onClick={() => setExcluded(addMcqExcluded(question.cardId))}>{excluded.has(question.cardId) ? "已排除出自动组卷" : "不适合选择题，排除出自动组卷"}</button></div></div>}
     <div className="quiz-footer"><span>本组 {round.right} / {round.index + (round.choice !== null ? 1 : 0)} 题正确</span><button className="primary" disabled={round.choice === null} onClick={next}>{round.index + 1 >= round.questions.length ? (requiz ? "完成重练" : "查看结果") : "下一题"}</button></div>
   </section>;
 }

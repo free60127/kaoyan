@@ -20,7 +20,9 @@ const originalFetch = globalThis.fetch;
 after(() => { globalThis.fetch = originalFetch; });
 const sectionOf = card => card.section ?? card.front.match(/^〔([^〕]+)〕/)?.[1];
 const trimText = (value, max) => value.length > max ? value.slice(0, max) + "…" : value;
-const noteOf = card => ({ front: trimText(card.front, 320), back: trimText(card.back, 420) });
+// 发送到 DeepSeek 前会剥离教材重点标记(⟦k|…⟧), 测试镜像该行为
+const stripMarkers = value => value.replace(/⟦[gbrys]\|([^⟧]*)⟧/g, "$1");
+const noteOf = card => ({ front: trimText(card.front, 320), back: trimText(stripMarkers(card.back), 420) });
 const reply = content => new Response(JSON.stringify({ choices: [{ finish_reason: "stop", message: { content } }] }), { status: 200 });
 function capture(content = "练习反馈") {
   const calls = [];
