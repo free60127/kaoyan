@@ -56,6 +56,8 @@
 .speech-dictation-hint { background: #f4f6fb; border: 1px solid #dfe3ec; border-radius: 8px; padding: 8px 10px; font-size: 0.85rem; color: #4b5563; }
 .speech-dictation-button { padding: 0 2px; font-size: inherit; }
 .mistake-quiz-button { margin: 4px 0 10px; }
+.mistake-quiz-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.mistake-quiz-actions .mistake-quiz-button { margin: 4px 0 10px; }
 .practice-scope-notice { background: #fdf6ec; border: 1px solid #f0dcb8; border-radius: 10px; padding: 8px 12px; margin: 8px 0; font-size: 0.88rem; color: #7a5b1e; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .practice-resume { background: #f0f6ff; border: 1px solid #c9dcf5; border-radius: 10px; padding: 10px 12px; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; }
 .practice-resume .next-actions { display: flex; gap: 8px; }

@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
 import { localStudyDate, type Rating, type StudyScope } from "../../lib/study-scheduler";
-import { cardMatchesStudyScope, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
+import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
@@ -41,22 +41,44 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
 
-export function StudyReviewCards({ review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId }: { review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string }) {
+export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
   const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
   const [browsePosition, setBrowsePosition] = useState({ scopeKey: locationKey, index: 0 });
   const [revealedCard, setRevealedCard] = useState<string | null>(null);
+  // R12: 到期卡不再抢占当前学习卡——固定当前显示的卡，实时到期只更新队列与计数；评分后才切换
+  const [pinned, setPinned] = useState<{ key: string; cardId: string } | null>(null);
   const browseCards = cards.filter(card => cardMatchesStudyScope(card, currentScope));
   const browseIndex = studyBrowseIndex(browsePosition, locationKey, browseCards.length);
   const scopedQueue = scopedStudyReviewView(review.queueForScope(currentScope), cards, review.progress, currentScope, review.now);
   const queue = mode === "all" ? review.queue : scopedQueue;
-  const head = queue.items[0];
+  const queueKey = `${mode}:${locationKey}`;
+  const head = mode === "browse" ? null : pickPinnedHead(pinned, queueKey, queue.items);
   const wasNew = head?.kind === "new";
   const card = mode === "browse" ? browseCards[browseIndex] : cards.find(card => card.id === head?.cardId);
   const visibleCardKey = JSON.stringify([mode, locationKey, card?.id]);
   const flipped = revealedCard === visibleCardKey;
-  useEffect(() => { setBrowsePosition({ scopeKey: locationKey, index: 0 }); setRevealedCard(null); }, [locationKey]);
+  const cardsReady = browseCards.length > 0;
+  // 固定"正在学习"的卡: 显示中的卡自动成为固定卡, 到期插入不会改变它
+  useEffect(() => {
+    if (mode === "browse" || !card) return;
+    setPinned(previous => previous && previous.key === queueKey && previous.cardId === card.id ? previous : { key: queueKey, cardId: card.id });
+  }, [queueKey, card?.id, mode]);
+  // R10: 换范围恢复上次浏览位置(按卡片 ID 定位); 固定卡与翻面状态一并重置
+  useEffect(() => {
+    setBrowsePosition({ scopeKey: locationKey, index: cardsReady ? loadBrowsePosition(localStorage, subject, locationKey, browseCards) : 0 });
+    setRevealedCard(null);
+    setPinned(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationKey, cardsReady]);
+  // R10: 浏览时保存位置, 刷新/换页后可续看
+  useEffect(() => {
+    if (mode !== "browse") return;
+    const current = browseCards[browseIndex];
+    if (current) saveBrowsePosition(localStorage, subject, locationKey, current.id, browseIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, browseIndex, locationKey, cardsReady]);
   useEffect(() => setRevealedCard(null), [visibleCardKey]);
   // 搜索/错题本跳转: 定位到目标卡的浏览位置
   useEffect(() => {
@@ -68,6 +90,7 @@ export function StudyReviewCards({ review, cards, books, bookId, chapter, sectio
     if (!card || !flipped || mode === "browse") return;
     review.rateCard(card.id, grade, mode === "scope" ? currentScope : undefined);
     onRated?.(card, grade, wasNew);
+    setPinned(null);
     setRevealedCard(null);
   }
   // 键盘: 空格/回车翻面, 1-4 评分, 浏览模式 ←/→

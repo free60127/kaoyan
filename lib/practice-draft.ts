@@ -2,12 +2,23 @@
  *  存储在独立的轻量键(不走 learning-session 的草稿结构), 与备份系统解耦——
  *  试卷是临时状态, 备份不含它; 丢了的代价只是重做一组题。 */
 
+export type SavedQuestion = {
+  cardId: string;
+  stem: string;
+  hint: string;
+  options: string[];
+  answer: number;
+  source: string;
+  /** 附加字段透传(题库题的逐项解析、来源标签等), 原样保存与恢复; 不参与校验语义。 */
+  extra?: Record<string, unknown>;
+};
+
 export type SavedRound = {
   version: 1;
   subject: string;
   mode: "practice" | "requiz";
-  meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" };
-  questions: { cardId: string; stem: string; hint: string; options: string[]; answer: number; source: string }[];
+  meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" | "section"; section?: string; drill?: { book: string; origin: string; count: number } };
+  questions: SavedQuestion[];
   index: number;
   choice: number | null;
   right: number;
@@ -22,6 +33,20 @@ export type SavedRound = {
 export const practiceDraftKey = (subject: string, mode: string) => `yantu-practice-round-v1-${subject}-${mode}`;
 const MAX_QUESTIONS = 60;
 const MAX_AGE_MS = 3 * 86400000;
+
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+  value !== null && typeof value === "object" && !Array.isArray(value);
+
+/** 只放行基础类型的附加字段(字符串/数字/布尔及其数组), 防止把任意结构塞进草稿。 */
+function sanitizeExtra(value: unknown): Record<string, unknown> | undefined {
+  if (!isPlainObject(value)) return undefined;
+  const out: Record<string, unknown> = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") { out[key] = item; continue; }
+    if (Array.isArray(item) && item.length <= 8 && item.every(entry => typeof entry === "string" && entry.length <= 600)) { out[key] = item; continue; }
+  }
+  return Object.keys(out).length ? out : undefined;
+}
 
 export function savePracticeRound(round: Omit<SavedRound, "version" | "savedAt">): boolean {
   if (round.questions.length > MAX_QUESTIONS) return false;
@@ -60,12 +85,31 @@ export function loadPracticeRound(subject: string, mode: "practice" | "requiz"):
       ? Object.fromEntries(Object.entries(row.answers).filter(([, v]) => typeof v === "number" && v >= 0 && v < 4))
       : {};
     const wrongIds = Array.isArray(row.wrongIds) ? row.wrongIds.filter((id): id is string => typeof id === "string" && id.length <= 200) : [];
+    const meta = row.meta && typeof row.meta === "object" ? { ...row.meta } as SavedRound["meta"] : { bookId: "", bookName: "", chapter: 1, scope: "chapter" as const };
+    const scope: SavedRound["meta"]["scope"] = meta.scope === "book" ? "book" : meta.scope === "section" ? "section" : "chapter";
     return {
       version: 1,
       subject: String(row.subject),
       mode: row.mode === "requiz" ? "requiz" : "practice",
-      meta: row.meta && typeof row.meta === "object" ? { ...row.meta } as SavedRound["meta"] : { bookId: "", bookName: "", chapter: 1, scope: "chapter" },
-      questions: row.questions.map(q => ({ cardId: q.cardId, stem: String(q.stem || ""), hint: String(q.hint || ""), options: q.options.map(String), answer: q.answer, source: String(q.source || "") })),
+      meta: {
+        bookId: String(meta.bookId || ""),
+        bookName: String(meta.bookName || ""),
+        chapter: Number.isInteger(meta.chapter) && (meta.chapter as number) > 0 ? meta.chapter : 1,
+        scope,
+        ...(typeof meta.section === "string" && meta.section ? { section: meta.section } : {}),
+        ...(meta.drill && isPlainObject(meta.drill) && typeof meta.drill.book === "string" && typeof meta.drill.origin === "string" && typeof meta.drill.count === "number"
+          ? { drill: { book: meta.drill.book, origin: meta.drill.origin, count: meta.drill.count } }
+          : {}),
+      },
+      questions: row.questions.map(q => ({
+        cardId: q.cardId,
+        stem: String(q.stem || ""),
+        hint: String(q.hint || ""),
+        options: q.options.map(String),
+        answer: q.answer,
+        source: String(q.source || ""),
+        ...(sanitizeExtra(q.extra) ? { extra: sanitizeExtra(q.extra) } : {}),
+      })),
       index,
       choice: typeof row.choice === "number" ? row.choice : null,
       right: typeof row.right === "number" ? row.right : 0,

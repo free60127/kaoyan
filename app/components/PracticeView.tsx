@@ -27,9 +27,9 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   onQuitRequiz?: () => void;
 }) {
   const requiz = !!requizEntries?.length;
-  const [scope, setScope] = useState<"chapter" | "book">("chapter");
+  const [scope, setScope] = useState<"section" | "chapter" | "book">("chapter");
   const [count, setCount] = useState(10);
-  const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; chosenByIndex: Record<number, number>; meta: { bookId: string; bookName: string; chapter: number; scope: "chapter" | "book" } } | null>(null);
+  const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; chosenByIndex: Record<number, number>; meta: { bookId: string; bookName: string; chapter: number; scope: "section" | "chapter" | "book"; section?: string } } | null>(null);
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
   const [excluded, setExcluded] = useState(() => readMcqExcluded());
   useEffect(() => { setMcqExcluded(excluded); }, [excluded]);
@@ -48,8 +48,14 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   const available = useMemo(() => {
     if (requiz) return requizPool.filter(card => !excluded.has(card.id));
     const activeBook = books.find(item => item.id === bookId);
-    return activeBook ? cards.filter(card => card.book === activeBook.id && !excluded.has(card.id) && (scope === "book" || card.chapter === chapter)) : [];
-  }, [requiz, requizPool, books, cards, bookId, chapter, scope, excluded]);
+    // R7: 小节范围真实过滤——选了小节就只出该小节的卡, 不再静默回退到整章
+    const inScope = (card: Card) => scope === "book"
+      ? true
+      : scope === "section"
+        ? card.chapter === chapter && card.section === section
+        : card.chapter === chapter;
+    return activeBook ? cards.filter(card => card.book === activeBook.id && !excluded.has(card.id) && inScope(card)) : [];
+  }, [requiz, requizPool, books, cards, bookId, chapter, section, scope, excluded]);
 
 
   function start() {
@@ -89,7 +95,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     }
     const initial = {
       questions, index: 0, choice: null as number | null, right: 0, done: false, wrongIds: [] as string[], chosenByIndex: {} as Record<number, number>,
-      meta: { bookId, bookName: activeBook?.name || subjectName, chapter, scope },
+      meta: { bookId, bookName: activeBook?.name || subjectName, chapter, scope, ...(scope === "section" && section ? { section } : {}) },
     };
     savePracticeRound({
       subject, mode: requiz ? "requiz" : "practice", meta: initial.meta, questions,
@@ -157,7 +163,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
       : "题目由闪卡自动生成：题干来自考点提问，正确项是该卡的核心答案，干扰项取自同章其他考点。答错的题自动进入错题本。"}</p>
     {!requiz && <div className="practice-config">
       <label>书目<select value={activeBook?.id || ""} disabled><option>{activeBook?.name || "未选择"}</option></select></label>
-      <label>范围<div className="mode-group"><button className={scope === "chapter" ? "mode-button active" : "mode-button"} onClick={() => setScope("chapter")}>当前章</button><button className={scope === "book" ? "mode-button active" : "mode-button"} onClick={() => setScope("book")}>整本书</button></div></label>
+      <label>范围<div className="mode-group">{section && <button className={scope === "section" ? "mode-button active" : "mode-button"} onClick={() => setScope("section")}>当前小节</button>}<button className={scope === "chapter" ? "mode-button active" : "mode-button"} onClick={() => setScope("chapter")}>当前章</button><button className={scope === "book" ? "mode-button active" : "mode-button"} onClick={() => setScope("book")}>整本书</button></div></label>
       <label>题数<select value={count} onChange={(event) => setCount(Number(event.target.value))}>{[10, 20, 30].map(n => <option key={n} value={n}>{n} 题</option>)}</select></label>
     </div>}
     <p className="mock-selection">当前范围可用卡片：{available.length} 张{!requiz && available.length < 4 ? " · 至少需要 4 张才能组卷" : ""}</p>
@@ -188,7 +194,9 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   </section>;
 
   const question = round.questions[round.index];
-  const scopeChanged = !requiz && !round.done && (round.meta.bookId !== bookId || (round.meta.scope === "chapter" && round.meta.chapter !== chapter));
+  const scopeChanged = !requiz && !round.done && (round.meta.bookId !== bookId
+    || (round.meta.scope === "chapter" && round.meta.chapter !== chapter)
+    || (round.meta.scope === "section" && (round.meta.chapter !== chapter || round.meta.section !== section)));
   if (round.done) return <section className="panel practice-panel">
     <div className="panel-heading"><div><span className="eyebrow">RESULT</span><h2>本组正确率 {Math.round(100 * round.right / round.questions.length)}%</h2></div></div>
     <p className="mock-selection">{requiz
@@ -201,8 +209,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
   </section>;
 
   return <section className="panel quiz-card">
-    <div className="quiz-top"><span>{requiz ? "错题重练" : `${subjectName}自测`} · {round.meta.bookName}{round.meta.scope === "chapter" ? ` 第${round.meta.chapter}章` : ""}</span><small>第 {round.index + 1} / {round.questions.length} 题</small></div>
-    {scopeChanged && <div className="practice-scope-notice" role="status">命题范围已切换到“{activeBook?.name}{scope === "chapter" ? ` 第${chapter}章` : ""}”，当前试卷仍是 {round.meta.bookName}{round.meta.scope === "chapter" ? ` 第${round.meta.chapter}章` : ""} 的题目。<button type="button" className="text-button" onClick={start}>按新范围重新开始</button></div>}
+    <div className="quiz-top"><span>{requiz ? "错题重练" : `${subjectName}自测`} · {round.meta.bookName}{round.meta.scope === "section" ? ` 第${round.meta.chapter}章${round.meta.section ? " · " + round.meta.section : ""}` : round.meta.scope === "chapter" ? ` 第${round.meta.chapter}章` : ""}</span><small>第 {round.index + 1} / {round.questions.length} 题</small></div>
+    {scopeChanged && <div className="practice-scope-notice" role="status">命题范围已切换到“{activeBook?.name}{scope === "section" ? ` 第${chapter}章${section ? " · " + section : ""}` : scope === "chapter" ? ` 第${chapter}章` : ""}”，当前试卷仍是 {round.meta.bookName} 的题目。<button type="button" className="text-button" onClick={start}>按新范围重新开始</button></div>}
     {question.hint && <small className="practice-hint">{question.hint}</small>}
     <h2>{question.stem}</h2>
     <div className="options">{question.options.map((item, index) => <button key={index} disabled={round.choice !== null} className={round.choice === null ? "" : index === question.answer ? "correct" : round.choice === index ? "wrong" : ""} onClick={() => answer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div>
