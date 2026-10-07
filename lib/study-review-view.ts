@@ -1,4 +1,4 @@
-import type { CardIdentity, StudyProgress, StudyQueue, StudyScope, StudyTime } from "./study-scheduler";
+import { newCardsStudiedToday, type CardIdentity, type StudyProgress, type StudyQueue, type StudyScope, type StudyTime } from "./study-scheduler";
 
 export function cardMatchesStudyScope(card: CardIdentity, scope: StudyScope): boolean {
   return card.book === scope.bookId && scope.chapters.includes(card.chapter) && (scope.section === undefined || card.section === scope.section);
@@ -18,6 +18,7 @@ export function scopedStudyReviewView(queue: StudyQueue, catalog: readonly CardI
   }
   return {
     items,
+    studiedToday: newCardsStudiedToday(progress, now, localCards),
     counts: {
       reviewDue: items.filter(item => item.kind !== "new").length,
       learningDue: items.filter(item => item.kind === "learning").length,

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { applyRating, buildStudyQueue, createEmptyProgress, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, undoRating, type CardIdentity, type Rating, type RatingUndo, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { applyRating, buildStudyQueue, createEmptyProgress, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
@@ -65,7 +65,9 @@ const WRITE_ERROR = "浏览器未能保存学习记录。当前页面可继续�
 export function createStudyReviewSync(subject: StudySubject, catalog: readonly CardIdentity[], storage: ReviewStorage, clock: () => StudyTime, changed: (session: StudyReviewSession, error: string) => void = () => {}) {
   let session: StudyReviewSession = { progress: createEmptyProgress(clock()), newScopes: [] };
   let error = "";
+  let loaded = false;
   let pending: SessionMutation[] = [];
+  let lastUndo: RatingUndo | null = null;
   const key = studyReviewKey(subject);
   function publish(next: StudyReviewSession, nextError: string) {
     const differs = serializeStudyReview(next) !== serializeStudyReview(session) || nextError !== error;
@@ -79,7 +81,9 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
       // Never turn a malformed shared snapshot into an empty replacement for live progress.
       if (!raw || typeof raw !== "object" || Array.isArray(raw) || !("version" in raw) || raw.version !== 1 || !("cards" in raw) || !raw.cards || typeof raw.cards !== "object" || Array.isArray(raw.cards) || !("scopes" in raw) || !Array.isArray(raw.scopes)) throw new Error(READ_ERROR);
     }
-    return restoreStudyReview(stored, catalog, clock(), stored === null ? storage.getItem(legacyKey(subject)) : undefined);
+    const restored = restoreStudyReview(stored, catalog, clock(), stored === null ? storage.getItem(legacyKey(subject)) : undefined);
+    loaded = true;
+    return restored;
   }
   try { session = read(); } catch { error = READ_ERROR; }
 
@@ -110,9 +114,13 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
   const scopeKey = (scope: StudyScope) => JSON.stringify(scope);
   return {
     get session() { return session; },
+    get catalog() { return catalog; },
+    get ready() { return loaded; },
+    get lastUndo() { return lastUndo; },
     get storageError() { return error; },
     get hasPendingWrites() { return pending.length > 0; },
     refresh,
+    updateCatalog(nextCatalog: readonly CardIdentity[]) { catalog = nextCatalog; refresh(); },
     storageChanged(event: { key: string | null }) { if (event.key === key || event.key === null) refresh(); },
     selectScopes(scopes: StudyScope[]) {
       // UI selections are based on the visible snapshot: apply only its additions/removals to the latest tab state.
@@ -128,21 +136,24 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
     },
     rateCard(cardId: string, grade: Rating, scope?: StudyScope) {
       const instant = clock();
-      return mutate(latest => rateStudyReviewCard(latest, catalog, cardId, grade, instant, scope));
-    },
-    /** 撤销支持: 记录评分前该卡状态与当日准入, 供 undo 恢复。 */
-    snapshotForUndo(cardId: string): RatingUndo {
-      const progress = session.progress;
-      return { cardId, previous: progress.cards[cardId] ? { ...progress.cards[cardId] } : null, daily: { ...progress.daily, admitted: [...progress.daily.admitted] } };
+      return mutate(latest => {
+        const next = rateStudyReviewCard(latest, catalog, cardId, grade, instant, scope);
+        if (next) lastUndo = { cardId, previous: latest.progress.cards[cardId] ? { ...latest.progress.cards[cardId] } : null, daily: { ...latest.progress.daily, admitted: [...latest.progress.daily.admitted] }, expected: next.progress.cards[cardId] };
+        return next;
+      });
     },
     undoLastRating(undo: RatingUndo) {
-      return mutate(latest => ({ ...latest, progress: undoRating(latest.progress, undo) }));
+      return mutate(latest => {
+        // A later rating in another tab supersedes this undo; keep its saved schedule.
+        if (undo.expected && Object.entries(undo.expected).some(([field, value]) => latest.progress.cards[undo.cardId]?.[field as keyof ReviewState] !== value)) return null;
+        return { ...latest, progress: undoRating(latest.progress, undo) };
+      });
     },
   };
 }
 
 export function useStudyReview(subject: StudySubject, catalog: readonly CardIdentity[], enabled: boolean) {
-  const [session, setSession] = useState<StudyReviewSession | null>(null);
+  const [snapshot, setSnapshot] = useState<{ subject: StudySubject; catalog: readonly CardIdentity[]; session: StudyReviewSession } | null>(null);
   const syncRef = useRef<{ subject: StudySubject; sync: ReturnType<typeof createStudyReviewSync> } | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [storageError, setStorageError] = useState("");
@@ -153,14 +164,18 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     if (!enabled) return;
     if (!syncRef.current || syncRef.current.subject !== subject) {
       const storage = { getItem: (key: string) => localStorage.getItem(key), setItem: (key: string, value: string) => localStorage.setItem(key, value) };
-      const sync = createStudyReviewSync(subject, catalog, storage, Date.now, (next, error) => { setSession(next); setStorageError(error); setNow(Date.now()); });
+      const sync = createStudyReviewSync(subject, catalog, storage, Date.now, (next, error) => { setSnapshot({ subject, catalog: sync.catalog, session: next }); setStorageError(error); setNow(Date.now()); });
       syncRef.current = { subject, sync };
-      setSession(sync.session); setStorageError(sync.storageError); setLastRating(null);
+      setLastRating(null); undoRef.current = null;
     }
-    const refresh = () => { syncRef.current?.sync.refresh(); setNow(Date.now()); };
+    const sync = syncRef.current.sync;
+    if (sync.catalog !== catalog) sync.updateCatalog(catalog);
+    else sync.refresh();
+    setSnapshot({ subject, catalog, session: sync.session }); setStorageError(sync.storageError);
+    const refresh = () => { sync.refresh(); setNow(Date.now()); };
     const onStorage = (event: StorageEvent) => {
       try { if (event.storageArea && event.storageArea !== localStorage) return; } catch { return; }
-      syncRef.current?.sync.storageChanged(event); setNow(Date.now());
+      sync.storageChanged(event); setNow(Date.now());
     };
     window.addEventListener("focus", refresh);
     window.addEventListener("storage", onStorage);
@@ -173,29 +188,34 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     return () => { window.clearInterval(timer); };
   }, [enabled]);
   const fallback = useMemo(() => ({ progress: createEmptyProgress(now), newScopes: [] }), [now]);
-  const current = session ?? fallback;
+  const bound = enabled && snapshot?.subject === subject && snapshot.catalog === catalog;
+  const current = bound ? snapshot.session : fallback;
+  const ready = !!bound && !!syncRef.current?.sync.ready;
+  const activeSync = () => ready ? syncRef.current?.sync : undefined;
   const queue = useMemo(() => buildReviewSession(catalog, current, now), [catalog, current, now]);
   return {
-    ready: session !== null, progress: current.progress, newScopes: current.newScopes, queue, now, storageError, lastRating,
+    ready, progress: current.progress, newScopes: current.newScopes, queue, now, storageError: enabled ? storageError : "", lastRating: bound ? lastRating : null,
+    studiedToday: newCardsStudiedToday(current.progress, now),
     queueForScope(scope: StudyScope) { return buildReviewSession(catalog, current, now, scope); },
-    selectScopes(scopes: StudyScope[]) { syncRef.current?.sync.selectScopes(scopes); },
-    pauseScope(scope: StudyScope) { syncRef.current?.sync.pauseScope(scope); },
-    setDailyNewLimit(value: number) { syncRef.current?.sync.setDailyNewLimit(value); },
+    selectScopes(scopes: StudyScope[]) { activeSync()?.selectScopes(scopes); },
+    pauseScope(scope: StudyScope) { activeSync()?.pauseScope(scope); },
+    setDailyNewLimit(value: number) { activeSync()?.setDailyNewLimit(value); },
     rateCard(cardId: string, grade: Rating, scope?: StudyScope) {
-      const undoSnapshot = syncRef.current?.sync.snapshotForUndo(cardId);
-      const next = syncRef.current?.sync.rateCard(cardId, grade, scope);
-      if (!next) return;
-      undoRef.current = undoSnapshot ?? null;
+      const next = activeSync()?.rateCard(cardId, grade, scope);
+      if (!next) return false;
+      undoRef.current = activeSync()?.lastUndo ?? null;
       setLastRating({ cardId, dueAt: next.progress.cards[cardId].dueAt });
+      return true;
     },
     undoLastRating() {
       const undo = undoRef.current;
-      if (!undo) return;
-      const next = syncRef.current?.sync.undoLastRating(undo);
+      if (!undo) return false;
+      const next = activeSync()?.undoLastRating(undo);
       undoRef.current = null;
-      if (next) setLastRating(null);
+      setLastRating(null);
+      return !!next;
     },
-    canUndo: !!undoRef.current,
+    canUndo: !!bound && !!undoRef.current,
     preview(cardId: string, grade: Rating) { return previewSchedule(current.progress.cards[cardId], grade, now); },
   };
 }

@@ -149,6 +149,17 @@ function admittedToday(progress: StudyProgress, now: StudyTime): string[] {
   return [...ids];
 }
 
+/** Unique first ratings on this local day; independent of remaining queue, scopes, and session counters. */
+export function newCardsStudiedToday(progress: StudyProgress, now: StudyTime, catalog?: readonly CardIdentity[]): number {
+  const date = localStudyDate(now);
+  const ids = catalog === undefined ? null : new Set(identities(catalog).map(card => card.id));
+  return Object.entries(progress.cards).filter(([id, review]) => {
+    if (ids && !ids.has(id)) return false;
+    const valid = normalizedReview(review);
+    return valid !== null && localStudyDate(valid.firstStudiedAt) === date;
+  }).length;
+}
+
 /** Accepts parsed storage or its raw JSON string. Does not read, write, or remove storage. */
 export function normalizeStoredProgress(stored: unknown, catalog: readonly CardIdentity[], now: StudyTime, legacy?: unknown): StudyProgress {
   const parse = (value: unknown): unknown => {
@@ -298,7 +309,7 @@ export function applyRating(progress: StudyProgress, cardId: string, grade: Rati
   return next;
 }
 
-export type RatingUndo = { cardId: string; previous: ReviewState | null; daily: StudyProgress["daily"] };
+export type RatingUndo = { cardId: string; previous: ReviewState | null; daily: StudyProgress["daily"]; expected?: ReviewState };
 
 /** 撤销最近一次评分: 恢复该卡此前的复习状态与当日新卡准入名单。
  *  只支持撤最近一次(不留链), 避免误点连撤把学习记录搞乱。 */
