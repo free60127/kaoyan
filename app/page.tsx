@@ -1,5 +1,5 @@
 import { Fragment, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type SetStateAction } from "react";
-import { BookOpen, Brain, CalendarDays, Check, ChevronRight, KeyRound, Layers3, Menu, Send, Settings2, Sparkles, Target, X } from "lucide-react";
+import { BookOpen, Brain, CalendarDays, Check, ChevronRight, Cloud, KeyRound, Layers3, Menu, Send, Settings2, Sparkles, Target, X } from "lucide-react";
 import { books as books333, cards as cards333Base, loadKnowledgeCards, questions } from "@/lib/study-data";
 import { outlines } from "@/lib/outlines";
 import { askDeepSeek } from "@/lib/deepseek-browser";
@@ -34,6 +34,7 @@ import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
 
 type View = StudyView;
 const BackupPanel = lazy(() => import("./components/BackupPanel"));
+const SyncPanel = lazy(() => import("./components/SyncPanel"));
 type Progress<T> = { "333": T; "825": T; politics: T };
 type Chapter = { title: string; sections: string[] };
 type Book = { id: string; name: string; short: string; tone: string; chapters: Chapter[] };
@@ -129,6 +130,7 @@ export default function Home() {
   const { book, chapter, section, view, pastMode, pastYear, pastIndex } = session.locations[subject];
   const [sessionStorageError, setSessionStorageError] = useState(""), [keyStorageError, setKeyStorageError] = useState("");
   const [backupOpen, setBackupOpen] = useState(false), [backupBusy, setBackupBusy] = useState(false);
+  const [syncOpen, setSyncOpen] = useState(false);
   const backupDialogRef = useRef<HTMLDivElement | null>(null), backupTriggerRef = useRef<HTMLElement | null>(null);
   const [mockStatus, setMockStatus] = useState<Record<"333" | "825", { pending: boolean; error: boolean }>>({ "333": { pending: false, error: false }, "825": { pending: false, error: false } });
   const onMockStatus = useCallback((subject: "333" | "825", status: { pending: boolean; error: boolean }) => {
@@ -616,7 +618,7 @@ export default function Home() {
     return <Fragment key={group}><div className="side-line"/><div className="side-caption">{group}</div><nav className="side-nav tools">{items.map(({ id, label, Icon }) => <button key={id} className={view === id ? "selected" : ""} onClick={() => { setView(id); setMenuOpen(false); }}><Icon size={18}/>{label}</button>)}</nav></Fragment>;
   });
 })()}
-      <div className="side-bottom"><button className="key-link" onClick={openBackup}><Layers3 size={17}/>备份与导出</button><div className="target-date"><CalendarDays size={18}/><span><b>{examDateLabel(examTarget.date)}</b><small>{examCountdownLabel(examTarget.date, examTarget.today)}</small></span></div><button className="key-link" onClick={() => setKeyOpen(true)}><KeyRound size={17}/> DeepSeek 密钥 <small>{key ? "已配置" : "未配置"}</small></button></div>
+      <div className="side-bottom"><button className="key-link" onClick={() => setSyncOpen(true)}><Cloud size={17}/>云同步 <small>{syncOpen ? "" : "手机/电脑"}</small></button><button className="key-link" onClick={openBackup}><Layers3 size={17}/>备份与导出</button><div className="target-date"><CalendarDays size={18}/><span><b>{examDateLabel(examTarget.date)}</b><small>{examCountdownLabel(examTarget.date, examTarget.today)}</small></span></div><button className="key-link" onClick={() => setKeyOpen(true)}><KeyRound size={17}/> DeepSeek 密钥 <small>{key ? "已配置" : "未配置"}</small></button></div>
     </aside>
     {menuOpen && <div className="menu-shade" onClick={() => setMenuOpen(false)}/>}
     <main className="main" inert={backupOpen || (mobileLayout && menuOpen)}>
@@ -653,6 +655,7 @@ export default function Home() {
         </>}
       </div>
     </main>
+    {syncOpen && <div className="backup-shade"><div className="backup-dialog" role="dialog" aria-modal="true" aria-label="云同步" tabIndex={-1}><Suspense fallback={<p role="status">正在打开云同步…</p>}><SyncPanel onClose={() => setSyncOpen(false)}/></Suspense></div></div>}
     {backupOpen && <div className="backup-shade"><div ref={backupDialogRef} className="backup-dialog" role="dialog" aria-modal="true" aria-labelledby="backup-title" aria-busy={backupBusy} tabIndex={-1} onKeyDown={backupKeys}><div className="backup-heading"><h2 id="backup-title">备份与导出</h2><button className="icon-button" disabled={backupBusy} aria-label="关闭备份与导出" onClick={closeBackup}><X size={20}/></button></div><Suspense fallback={<p role="status">正在打开备份工具…</p>}><BackupPanel blockedReason={backupBlockedReason} onBusyChange={setBackupBusy}/></Suspense></div></div>}
     {keyOpen && <ApiKeySettings apiKey={key} onCommit={(value) => { cancelRequest(); setKey(value); setKeyStorageError(""); }} onClose={() => setKeyOpen(false)}/>}
   </div>;

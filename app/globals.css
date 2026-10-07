@@ -140,3 +140,13 @@
 .card-edit-actions-head { display: flex; gap: 12px; align-items: center; }
 .mock-check.mock-notes { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #6b8478; margin: 8px 0; }
 .search-extra { margin-left: 8px; color: #3c8065; background: #e9f5ee; border-radius: 5px; padding: 1px 6px; font-size: 11px; }
+
+/* ===== 云同步面板 ===== */
+.backup-dialog .backup-body { max-height: min(72vh, 720px); overflow-y: auto; display: grid; gap: 12px; padding-right: 4px; }
+.sync-fieldset { border: 1px solid #dfe8e2; border-radius: 10px; padding: 12px 14px; display: grid; gap: 8px; }
+.sync-fieldset legend { font-size: 0.82rem; font-weight: 700; color: #42655a; padding: 0 6px; }
+.sync-fieldset label { display: grid; gap: 4px; font-size: 0.82rem; color: #6b8478; font-weight: 600; }
+.sync-fieldset input { padding: 8px 10px; border-radius: 8px; border: 1px solid #d7e4db; font-size: 13px; outline: none; }
+.sync-fieldset input:focus { border-color: #62a584; }
+.sync-sql summary { cursor: pointer; color: #397b6e; font-size: 0.82rem; font-weight: 600; }
+.sync-sql pre { background: #f4f8f5; border-radius: 8px; padding: 10px; font-size: 11px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
