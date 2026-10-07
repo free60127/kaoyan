@@ -3,6 +3,7 @@ import { applyStudyBackup, collectStudyBackup, loadBackupCatalogs, summarizeStud
 
 const MAX_PDF_BYTES = 32 * 1024 * 1024;
 const recordLabels: Record<BackupStorageKey, string> = {
+  "yantu-exam-target-v1": "目标初试日期（手动设置）",
   "yantu-learning-session-v1": "全部科目的学习位置、费曼草稿、825 真题作答与学习计划要求",
   "yantu-srs-v1-333": "333 闪卡复习记录、范围与每日新卡配额",
   "yantu-srs-v1-825": "825 闪卡复习记录、范围与每日新卡配额",
