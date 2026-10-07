@@ -4,12 +4,13 @@ import { type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
 import { parseHighlightMarkers } from "../../lib/highlight-markers";
 
-/** 教材重点标记 ⟦k|…⟧ -> 带色 span; 无标记时原样返回字符串。 */
+/** 教材重点标记 ⟦k|…⟧ -> 带色 span; 无标记文本必须是裸字符串——
+ *  .flash-card span 是来源行样式(12px 灰), 包 span 会把正文变小变灰。 */
 function renderMarked(text: string): ReactNode {
   const segments = parseHighlightMarkers(text);
   if (segments.length === 1 && segments[0].kind === "text") return segments[0].text;
   return segments.map((segment, index) => segment.kind === "text"
-    ? <span key={index}>{segment.text}</span>
+    ? segment.text
     : <span key={index} className={"hl-" + segment.kind}>{segment.text}</span>);
 }
 

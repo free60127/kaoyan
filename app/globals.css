@@ -58,12 +58,14 @@
 .mistake-quiz-button { margin: 4px 0 10px; }
 .mistake-quiz-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .mistake-quiz-actions .mistake-quiz-button { margin: 4px 0 10px; }
-/* 教材重点标注: 原书彩色文字/底纹与黑体在闪卡答案上的还原 */
-.flash-card .hl-g { color: #0c8a4d; }
-.flash-card .hl-b { color: #1a66c8; }
-.flash-card .hl-r { color: #cf3b2e; }
-.flash-card .hl-y { background: linear-gradient(transparent 30%, #ffe98a 30%, #ffe98a 92%, transparent 92%); padding: 0 1px; }
-.flash-card .hl-s { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: #6b7280; }
+/* 教材重点标注: 原书彩色文字/底纹与黑体在闪卡答案上的还原。
+   必须挂在 strong 下并显式继承字号/字重, 否则会吃到 .flash-card span(来源行 12px 灰)的样式。 */
+.flash-card strong span[class^="hl-"] { font-size: inherit; line-height: inherit; font-weight: inherit; }
+.flash-card strong .hl-g { color: #0c8a4d; }
+.flash-card strong .hl-b { color: #1a66c8; }
+.flash-card strong .hl-r { color: #cf3b2e; }
+.flash-card strong .hl-y { background: linear-gradient(transparent 30%, #ffe98a 30%, #ffe98a 92%, transparent 92%); padding: 0 1px; }
+.flash-card strong .hl-s { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: #6b7280; }
 .practice-scope-notice { background: #fdf6ec; border: 1px solid #f0dcb8; border-radius: 10px; padding: 8px 12px; margin: 8px 0; font-size: 0.88rem; color: #7a5b1e; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .practice-resume { background: #f0f6ff; border: 1px solid #c9dcf5; border-radius: 10px; padding: 10px 12px; margin: 10px 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; }
 .practice-resume .next-actions { display: flex; gap: 8px; }
