@@ -59,8 +59,9 @@
 .mistake-quiz-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .mistake-quiz-actions .mistake-quiz-button { margin: 4px 0 10px; }
 /* 教材重点标注: 原书彩色文字/底纹与黑体在闪卡答案上的还原。
-   必须挂在 strong 下并显式继承字号/字重, 否则会吃到 .flash-card span(来源行 12px 灰)的样式。 */
-.flash-card strong span[class^="hl-"] { font-size: inherit; line-height: inherit; font-weight: inherit; }
+   继承字号/字重, 不设 color——无样式正文由 RichTextView 输出裸字符串(保持黑色),
+   带色段各有自己的颜色规则; 底纹/下划线段也不能被来源行样式缩小。 */
+.flash-card strong span.rich-seg { font-size: inherit; line-height: inherit; font-weight: inherit; }
 .flash-card strong .hl-g { color: #0c8a4d; }
 .flash-card strong .hl-b { color: #1a66c8; }
 .flash-card strong .hl-r { color: #cf3b2e; }
