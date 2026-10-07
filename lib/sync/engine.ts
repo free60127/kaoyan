@@ -48,7 +48,9 @@ export function getSyncConfig(): SyncConfig | null {
   } catch { return null; }
 }
 export function saveSyncConfig(config: SyncConfig): void {
-  localStorage.setItem(CONFIG_KEY, JSON.stringify({ url: config.url.trim().replace(/\/+$/, ""), anonKey: config.anonKey.trim() }));
+  // 常见粘贴错误容错: 去掉 /rest/v1、/auth/v1 等接口后缀, 只保留 协议+主机+项目ref
+  const url = config.url.trim().replace(/\/+$/, "").replace(/^(https:\/\/[^/]+).*$/i, "$1");
+  localStorage.setItem(CONFIG_KEY, JSON.stringify({ url, anonKey: config.anonKey.trim() }));
 }
 
 function readLocal(key: string): string | null {
