@@ -14,6 +14,10 @@ const recordLabels: Record<BackupStorageKey, string> = {
   "yantu-stats-v1-333": "333 每日学习统计（评分、练习、连续天数）",
   "yantu-stats-v1-825": "825 每日学习统计",
   "yantu-stats-v1-politics": "政治每日学习统计",
+  "yantu-activity-v1-333": "333 今日活动明细（评分/答题/撤销逐条）",
+  "yantu-activity-v1-825": "825 今日活动明细",
+  "yantu-activity-v1-politics": "政治今日活动明细",
+  "yantu-mcq-excluded-v1": "人工不适合选择题排除标记",
 };
 const subjects = { "333": "333 教育综合", "825": "825 英语专业基础", politics: "政治", english: "英语二" };
 const sizeLabel = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MiB`;

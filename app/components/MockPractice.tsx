@@ -75,13 +75,13 @@ export function MockPractice({ subject, books, active, apiKey, onNeedKey, onOpen
   useEffect(() => () => { request.current.id++; request.current.controller?.abort(); }, []);
 
   function changeScope(next: Record<string, number[]>, section?: typeof sectionScope) {
-    setReplacement(undefined);
+    setReplacement(undefined); dispatch({ type: "stop", error: "" });
     setSelection(next); setSectionScope(section);
     const selectedBooks = books.filter((book) => next[book.id]?.length).map((book) => book.id);
     if (templateId && selectedBooks.length) setCounts(countsToStrings(getApplicableMockPaperTemplate(templateId, subject, selectedBooks).config));
   }
   function useTemplate(next?: MockPaperTemplateId) {
-    setReplacement(undefined);
+    setReplacement(undefined); dispatch({ type: "stop", error: "" });
     setTemplateId(next);
     if (next) {
       // Preserve explicit book choices; an empty scope starts with all books.
@@ -131,7 +131,7 @@ export function MockPractice({ subject, books, active, apiKey, onNeedKey, onOpen
         })}</div>
         <p className="mock-selection"><b>已选范围：</b>{scopeLabel || "尚未选择"}</p>
         <label className="mock-template">试卷构成<select value={templateId || "custom"} onChange={(event) => useTemplate(event.target.value === "custom" ? undefined : templateOption)}><option value="custom">自定义题型数量</option><option value={templateOption}>{subject === "333" ? "按 2026 333 真题构成" : "按 2026 825 回忆版构成"}</option></select></label>
-        {template && <TemplateSource template={template}/>}<div className="mock-counts">{MOCK_QUIZ_TYPES.map((type) => <label key={type}>{MOCK_QUIZ_TYPE_LABELS[type]}<input type="number" min="0" max="60" step="1" inputMode="numeric" value={counts[type]} onChange={(event) => { setCounts((previous) => ({ ...previous, [type]: event.target.value })); setTemplateId(undefined); setReplacement(undefined); }}/></label>)}</div>
+        {template && <TemplateSource template={template}/>}<div className="mock-counts">{MOCK_QUIZ_TYPES.map((type) => <label key={type}>{MOCK_QUIZ_TYPE_LABELS[type]}<input type="number" min="0" max="60" step="1" inputMode="numeric" value={counts[type]} onChange={(event) => { setCounts((previous) => ({ ...previous, [type]: event.target.value })); setTemplateId(undefined); setReplacement(undefined); dispatch({ type: "stop", error: "" }); }}/></label>)}</div>
         <p className="mock-help">共 {total} 题 · 每种题型 0–60 道，总数 1–60 道。{template ? `构成参考共 ${template.totalPoints} 分；开放题不自动判分。` : "自定义卷未设考试分值。"}</p>
         <button className="primary" onClick={generate}>{session ? "按以上设置生成新卷" : "生成 AI 模拟卷"}</button>
         {replacement && <div className="mock-source" role="alert"><b>生成成功后将替换本卷并清除本卷作答。</b><p>新卷范围：{replacement.scopeLabel}。取消或生成失败会保留当前卷与作答。</p><button className="primary" onClick={() => generateSnapshot(replacement)}>确认生成并在成功后替换</button><button className="secondary" onClick={() => setReplacement(undefined)}>保留本卷</button></div>}

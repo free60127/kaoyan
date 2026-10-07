@@ -24,11 +24,13 @@ export function recordActivity(store: ActivityStore, subject: string, kind: Acti
   try { store.setItem(activityKey(subject), JSON.stringify(entries.slice(-MAX_ENTRIES))); } catch { /* 存储失败时横幅通道已覆盖, 这里静默 */ }
 }
 
-/** 今天的活动(按本地日历日), 最新的在前。 */
+const localDayKey = (date: Date) => new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+/** 今天的活动(按本地日历日过滤——东八区凌晨的记录属于当天而非UTC前一天), 最新的在前。 */
 export function todayActivities(store: ActivityStore, subject: string, now: Date = new Date()): ActivityEntry[] {
-  const todayKey = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  const todayKey = localDayKey(now);
   return readEntries(store, subject)
-    .filter(entry => entry.t.slice(0, 10) === todayKey)
+    .filter(entry => localDayKey(new Date(entry.t)) === todayKey)
     .reverse();
 }
 

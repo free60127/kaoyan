@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { loadChoiceBank, pickChoices, choiceBookName, type ChoiceQuestion } from "@/lib/choice-bank";
 import { recordMistake } from "@/lib/mistakes";
+import { addMcqExcluded, readMcqExcluded } from "@/lib/mcq-excluded";
 import { recordStat, type StatStore } from "@/lib/stats";
 
 /** 333 选择题练习: 真实题库(丹丹1000题/阶段测试/丹丹卷)按四书筛选, 交互式作答。 */
@@ -10,6 +11,7 @@ export function ChoiceDrill({ storage, onNeedKey }: { storage: StatStore; onNeed
   const [book, setBook] = useState<"all" | ChoiceQuestion["book"]>("all");
   const [origin, setOrigin] = useState<"all" | string>("all");
   const [round, setRound] = useState<{ questions: ChoiceQuestion[]; index: number; choice: number | null; right: number; wrongIds: string[]; done: boolean; chosen: Record<number, number> } | null>(null);
+  const [excluded, setExcluded] = useState(() => readMcqExcluded());
   const [count, setCount] = useState(20);
   const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
 
@@ -62,6 +64,7 @@ export function ChoiceDrill({ storage, onNeedKey }: { storage: StatStore; onNeed
       <div className="options">{question.options.map((item, index) => <button key={index} disabled={round.choice !== null} className={round.choice === null ? "" : index === question.answer ? "correct" : round.choice === index ? "wrong" : ""} onClick={() => answer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div>
       {round.choice !== null && <div className="explanation"><b>{round.choice === question.answer ? "答对了" : "正确答案：" + "ABCD"[question.answer]}</b>
         {analysis.length > 0 ? <p>{analysis.map((line, i) => <span key={i}>{line}<br /></span>)}</p> : question.referenceAnswer ? <p>{question.referenceAnswer.slice(0, 300)}</p> : null}
+        <div className="practice-meta-actions"><button type="button" className={excluded.has(question.id) ? "mode-button active" : "mode-button"} onClick={() => setExcluded(addMcqExcluded(question.id))}>{excluded.has(question.id) ? "已排除出自动组卷" : "不适合选择题，排除出自动组卷"}</button></div>
       </div>}
       <div className="quiz-footer"><span>本组 {round.right} / {round.index + (round.choice !== null ? 1 : 0)} 题正确</span><button className="primary" disabled={round.choice === null} onClick={next}>{round.index + 1 >= round.questions.length ? "查看结果" : "下一题"}</button></div>
     </section>;

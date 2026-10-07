@@ -46,6 +46,8 @@ function mock(subject) {
 function fullStorage() {
   const values = { [sessionKey]: JSON.stringify(learning()), "unrelated": "keep", "yantu-key": "never read" };
   values["yantu-mistakes-v1"] = JSON.stringify([{ id: "333:card:x1", subject: "333", kind: "card", refId: "x1", label: "题面", wrongCount: 2, lastAt: now.toISOString() }]);
+  values["yantu-mcq-excluded-v1"] = JSON.stringify(["principles-k1-001"]);
+  for (const subject of ["333", "825", "politics"]) values[`yantu-activity-v1-${subject}`] = JSON.stringify([{ t: now.toISOString(), kind: "rating", subject, label: "题面", detail: "记住了" }]);
   for (const subject of ["333", "825", "politics"]) {
     values[srsKey(subject)] = JSON.stringify(progress(subject));
     values[doneKey(subject)] = JSON.stringify({ [`${catalogs[subject].books[0].id}-1`]: true, [`${catalogs[subject].books[0].id}-2`]: false });
@@ -90,7 +92,7 @@ test("politics still rejects quiz and mock views in backup", () => {
   storage.values.set(sessionKey, JSON.stringify(raw));
   assert.throws(() => collect(storage, catalogs, now), /未知页面/);
 });
-test("all thirteen keys round trip realistic three-subject records, future dates, drafts and full papers", () => {
+test("all eighteen keys round trip realistic three-subject records, future dates, drafts and full papers", () => {
   const source = fullStorage(), backup = collect(source, catalogs, now), target = memory({ unrelated: "untouched", "yantu-key": "private" });
   assert.deepEqual(Object.keys(backup.records), BACKUP_STORAGE_KEYS);
   assert.equal(source.writes.length, 0);
@@ -157,7 +159,7 @@ test("credential extra fields at any valid data level are discarded", () => {
   for (const key of BACKUP_STORAGE_KEYS) {
     if (key.startsWith("yantu-done")) continue;
     const row = JSON.parse(storage.values.get(key)); row.apiKey = "sk-SECRET";
-    if (Array.isArray(row)) row[0].apiKey = "sk-SECRET";
+    if (Array.isArray(row)) { if (typeof row[0] === "object" && row[0]) row[0].apiKey = "sk-SECRET"; continue; }
     if (row.cards) Object.values(row.cards)[0].apiKey = "sk-SECRET";
     if (row.locations) row.locations["333"].apiKey = "sk-SECRET";
     if (row.session) { row.session.responses.essay.apiKey = "sk-SECRET"; row.session.result.questions[0].apiKey = "sk-SECRET"; }

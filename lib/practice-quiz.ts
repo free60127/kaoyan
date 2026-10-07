@@ -80,8 +80,13 @@ export function buildPracticeQuestions(cards: readonly PracticeCard[], options: 
     const distractors: string[] = [];
     for (const candidate of shuffled(source, rng)) {
       if (distractors.length >= 3) break;
-      if (!distractors.includes(candidate) && candidate !== correct) distractors.push(candidate);
+      // 归一化去重: 大小写/空白/末尾省略号视为同一条; 中英同义答案(如中文解释与英文原文)不会同时出现在选项里
+      if (distractors.some(existing => normalizeOption(existing) === normalizeOption(candidate))) continue;
+      if (normalizeOption(candidate) === normalizeOption(correct)) continue;
+      distractors.push(candidate);
     }
+    // 凑不满 3 个不同干扰项的题不能构成有效四选一, 直接丢弃
+    if (distractors.length < 3) return null;
     const options = shuffled([correct, ...distractors], rng);
     return {
       cardId: card.id,
@@ -91,5 +96,10 @@ export function buildPracticeQuestions(cards: readonly PracticeCard[], options: 
       answer: options.indexOf(correct),
       source: `闪卡自测 · ${card.book} 第${card.chapter}章`,
     };
-  });
+  }).filter((question): question is PracticeQuestion => question !== null);
+}
+
+/** 选项归一化: 小写、去空白与尾部省略号, 用于同义重复判定。 */
+export function normalizeOption(text: string): string {
+  return text.toLowerCase().replace(/\s+/g, "").replace(/…$/, "").replace(/[。；;]/g, "");
 }

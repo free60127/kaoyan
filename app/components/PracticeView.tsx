@@ -13,13 +13,14 @@ type RequizEntry = { refId: string; wrongCount: number };
 
 /** Four-choice self-quiz built from flashcards; reused by all three subjects.
  *  Requiz mode: when entries are provided, only cards matching those ids are used. */
-export function PracticeView({ subject, subjectName, books, cards, bookId, chapter, storage, requizEntries, onRequizDone, onQuitRequiz }: {
+export function PracticeView({ subject, subjectName, books, cards, bookId, chapter, section, storage, requizEntries, onRequizDone, onQuitRequiz }: {
   subject: string;
   subjectName: string;
   books: Book[];
   cards: Card[];
   bookId: string;
   chapter: number;
+  section?: string;
   storage: StatStore;
   requizEntries?: RequizEntry[];
   onRequizDone?: (removedIds: string[]) => void;
@@ -83,7 +84,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
           return { cardId: card.id, stem: card.front.replace(/^〔.+?〕\s*/, ""), hint: hintMatch ? hintMatch[1].slice(0, 30) : "", options, answer: options.indexOf(correct), source: `${subjectName} · 错题重练` };
         });
     } else {
-      questions = buildPracticeQuestions(cards, { bookId, chapters: scope === "chapter" ? [chapter] : [], count, seed: Math.floor(Math.random() * 2 ** 31) });
+      // 与 available 计数同一资格规则(含人工排除标记), 保证"可用N题"与实际组卷一致
+      questions = buildPracticeQuestions(available, { bookId, chapters: [], count, seed: Math.floor(Math.random() * 2 ** 31) });
     }
     const initial = {
       questions, index: 0, choice: null as number | null, right: 0, done: false, wrongIds: [] as string[], chosenByIndex: {} as Record<number, number>,
@@ -167,10 +169,14 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
           // 卡库中已找不到的卡(数据更新后)剔除; 全部失效则放弃续做
           const questions = resumable.questions.filter(q => byId.has(q.cardId));
           if (!questions.length) { clearPracticeRound(subject, requiz ? "requiz" : "practice"); setResumable(null); return; }
+          const chosenByIndex = Object.fromEntries(Object.entries(resumable.answers).map(([k, v]) => [Number(k), v]));
+          const resumeIndex = Math.min(resumable.index, questions.length - 1);
           setRound({
-            questions, index: Math.min(resumable.index, questions.length - 1),
-            choice: null, right: resumable.right, done: false,
-            wrongIds: [...resumable.wrongIds], chosenByIndex: Object.fromEntries(Object.entries(resumable.answers).map(([k, v]) => [Number(k), v])),
+            questions, index: resumeIndex,
+            // 恢复当前题的已选状态: 该题若已作答过, 选项显示原选择与判定, 且不可重选(计分已在首次作答时完成)
+            choice: chosenByIndex[resumeIndex] !== undefined ? chosenByIndex[resumeIndex] : null,
+            right: resumable.right, done: false,
+            wrongIds: [...resumable.wrongIds], chosenByIndex,
             meta: resumable.meta,
           });
           setResumable(null);

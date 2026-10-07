@@ -58,7 +58,7 @@ export function StatsView({ subject, subjectLabel, books, done, due, learnedCard
       <div className="panel-heading"><div><span className="eyebrow">TODAY'S LOG</span><h2>今天实际完成了什么</h2></div></div>
       {activities.length === 0 ? <p className="mock-help">今天还没有记录。闪卡评分、真题与自测答题都会出现在这里。</p> : <div className="activity-list">
         {activities.map((entry, index) => <div key={entry.t + String(index)} className="activity-row">
-          <small>{entry.t.slice(11, 16)}</small>
+          <small>{new Date(entry.t).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", hour12: false })}</small>
           <span className={"activity-kind kind-" + entry.kind}>{entry.kind === "rating" ? "评分" : entry.kind === "undo" ? "撤销" : entry.kind === "quiz" ? "真题" : "自测"}</span>
           <b>{entry.label}</b>
           {entry.detail && <small>{entry.detail}</small>}
