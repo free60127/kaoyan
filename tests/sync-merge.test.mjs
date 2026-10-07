@@ -91,3 +91,72 @@ test("同步键注册: 备份键均映射到合并策略或 LWW, 临时数据不
     assert.ok(!merge.SYNCABLE_KEYS[key], `${key} 不应周期同步`);
   }
 });
+
+test("双设备模拟: 电脑学卡→手机可见; 手机学到期的卡→电脑可见; 双向并发收敛", async () => {
+  const merge = await realModule("../lib/sync/merge.ts");
+  // 两台设备各自的 localStorage + 一个共享云存储(模拟 Supabase kv 表)
+  const laptop = new Map(), phone = new Map(), cloud = new Map();
+  const read = (device, key) => device.get(key) ?? null;
+  // 引擎的推送/拉取协议(与 engine.ts 相同的合并路径)
+  const push = (device, key) => {
+    const json = read(device, key);
+    if (json === null) return;
+    const known = device.get("__sync__" + key);
+    if (known === json) return;
+    cloud.set(key, { value: JSON.parse(json), updated_at: new Date().toISOString() });
+    device.set("__sync__" + key, json);
+  };
+  const pull = (device, key) => {
+    const row = cloud.get(key);
+    if (!row) return;
+    const localJson = read(device, key);
+    const local = localJson === null ? null : JSON.parse(localJson);
+    const { value } = merge.mergeKeyValue(merge.mergeKindFor(key), local, row.value);
+    const mergedJson = JSON.stringify(value);
+    if (localJson !== mergedJson) device.set(key, mergedJson);
+    // 与引擎一致: 合并结果是远端超集时回推(使另一台设备收敛), 然后才记录同步快照
+    if (JSON.stringify(row.value) !== mergedJson) { cloud.set(key, { value, updated_at: new Date().toISOString() }); device.set("__sync__" + key, mergedJson); return; }
+    device.set("__sync__" + key, mergedJson);
+  };
+  const sync = (device) => { for (const key of merge.SYNCABLE_KEYS ? Object.keys(merge.SYNCABLE_KEYS) : []) { pull(device, key); push(device, key); } };
+  const srsOf = (device) => JSON.parse(read(device, "yantu-srs-v1-333") || "null");
+  const dueCount = (device) => { const s = srsOf(device); if (!s) return 0; const now = "2026-10-08T01:41:00.000Z"; return Object.values(s.cards).filter(c => c.dueAt <= now).length; };
+
+  // 初始: 两端都学过同一批卡(A、B), 已同步
+  const initial = srs(
+    { "a": card("a", "2026-10-08T00:30:00.000Z"), "b": card("b", "2026-10-08T00:31:00.000Z") },
+    { date: "2026-10-08", admitted: ["a", "b"] },
+  );
+  laptop.set("yantu-srs-v1-333", JSON.stringify(initial));
+  phone.set("yantu-srs-v1-333", JSON.stringify(initial));
+  sync(laptop); sync(phone);
+  assert.equal(dueCount(laptop), 0); assert.equal(dueCount(phone), 0);
+
+  // 场景1: 电脑(笔记本)学 9 张新卡(c1..c9), 写入本地
+  const laptopStudy = srsOf(laptop);
+  for (let i = 1; i <= 9; i += 1) laptopStudy.cards[`c${i}`] = card(`c${i}`, "2026-10-08T00:35:00.000Z", { stage: "learning" });
+  laptopStudy.daily.admitted = [...laptopStudy.daily.admitted, ...Array.from({ length: 9 }, (_, i) => `c${i + 1}`)];
+  laptop.set("yantu-srs-v1-333", JSON.stringify(laptopStudy));
+  sync(laptop); // 笔记本端引擎推送
+  sync(phone);  // 手机端引擎拉取
+  const phoneAfterLaptop = srsOf(phone);
+  for (let i = 1; i <= 9; i += 1) assert.ok(phoneAfterLaptop.cards[`c${i}`], `手机缺少电脑学的卡 c${i}`);
+  assert.equal(phoneAfterLaptop.daily.admitted.length, 11);
+
+  // 场景2: 手机学的卡 10 分钟后到期(dueAt 已过), 电脑拉取后能看到到期卡
+  const phoneStudy = srsOf(phone);
+  phoneStudy.cards["d1"] = card("d1", "2026-10-08T01:30:00.000Z", { stage: "learning", dueAt: "2026-10-08T01:40:00.000Z" }); // 已到期
+  phone.set("yantu-srs-v1-333", JSON.stringify(phoneStudy));
+  sync(phone); sync(laptop);
+  assert.equal(dueCount(laptop), 1); // 笔记本现在能看到这张到期卡
+
+  // 场景3: 两端同时各学不同的卡, 交错同步后收敛到一致
+  const l = srsOf(laptop); l.cards["e1"] = card("e1", "2026-10-08T01:41:00.000Z");
+  laptop.set("yantu-srs-v1-333", JSON.stringify(l)); sync(laptop);
+  const p = srsOf(phone); p.cards["e2"] = card("e2", "2026-10-08T01:42:00.000Z");
+  phone.set("yantu-srs-v1-333", JSON.stringify(p)); sync(phone);
+  sync(laptop); // 笔记本拉取手机的 e2
+  const laptopFinal = srsOf(laptop), phoneFinal = srsOf(phone);
+  assert.deepEqual(Object.keys(laptopFinal.cards).sort(), Object.keys(phoneFinal.cards).sort());
+  assert.ok(laptopFinal.cards.e2 && phoneFinal.cards.e1);
+});

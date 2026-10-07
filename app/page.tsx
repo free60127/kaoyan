@@ -157,6 +157,12 @@ export default function Home() {
   const cards333Model = useMemo(() => knowledge333 ? [...base333.cards, ...knowledge333] : base333.cards, [knowledge333]);
   // 个人层: 订阅存储变化; 合并卡库 = 教材卡(叠加修改) + 个人卡(隐藏的剔除)
   const [personal, setPersonal] = useState<PersonalStore>(() => readPersonal());
+  // 云同步引擎随应用启动(已配置即自动连接): 不依赖打开同步面板
+  useEffect(() => {
+    let cancelled = false;
+    import("@/lib/sync/engine").then(module => { if (!cancelled) void module.initSync(); }).catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
   useEffect(() => {
     const sync = () => setPersonal(readPersonal());
     window.addEventListener("yantu-personal-changed", sync);

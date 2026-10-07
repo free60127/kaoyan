@@ -8,7 +8,7 @@ import { mergeKindFor, mergeKeyValue, SYNCABLE_KEYS, type MergeKind } from "./me
 
 const CONFIG_KEY = "yantu-sync-config";
 const LWW_KEYS = new Set(["yantu-learning-session-v1", "yantu-exam-target-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"]);
-const PUSH_INTERVAL_MS = 8000;
+const PUSH_INTERVAL_MS = 5000;
 const ACTIVITY_LIMIT_KEYS = true;
 
 export type SyncState = "off" | "signed-out" | "connecting" | "online" | "error";
@@ -73,7 +73,9 @@ function mergeKindOf(key: string): MergeKind | "lww" {
   return LWW_KEYS.has(key) ? "lww" : mergeKindFor(key);
 }
 
-/** 远端行 → 合并进本地; 返回是否写入了本地 */
+/** 远端行 → 合并进本地; 返回是否写入了本地。
+ *  合并结果若是远端的超集(本地有更新内容), 必须回推到云端——否则另一台设备永远看不到(F08场景)。
+ *  lastSynced 的写入顺序: 回推完成后才记录快照, 否则去重检查会误跳过回推。 */
 function applyRemote(key: string, remoteValue: unknown, updatedAt: string): boolean {
   if (!syncableKey(key)) return false;
   const known = lastSynced.get(key);
@@ -84,17 +86,21 @@ function applyRemote(key: string, remoteValue: unknown, updatedAt: string): bool
   const merged = localJson === null ? { value: remoteValue, changed: true } : mergeKeyValue(kind, localValue, remoteValue);
   const mergedJson = JSON.stringify(merged.value);
   if (localJson !== mergedJson) writeLocal(key, mergedJson);
-  lastSynced.set(key, { json: localJson === mergedJson ? localJson! : mergedJson, updatedAt });
-  // 合并后若远端不是最新超集, 推送合并结果让另一端收敛
-  if (JSON.stringify(remoteValue) !== mergedJson) void pushKey(key, mergedJson);
+  const remoteIsBehind = JSON.stringify(remoteValue) !== mergedJson;
+  if (remoteIsBehind) {
+    void pushKey(key, mergedJson, true);
+    lastSynced.set(key, { json: mergedJson, updatedAt: new Date().toISOString() });
+  } else {
+    lastSynced.set(key, { json: mergedJson, updatedAt });
+  }
   return localJson !== mergedJson;
 }
 
-async function pushKey(key: string, jsonOverride?: string) {
+async function pushKey(key: string, jsonOverride?: string, force = false) {
   if (!client || !userId) return;
   const json = jsonOverride ?? readLocal(key) ?? "";
   const known = lastSynced.get(key);
-  if (known && known.json === json) return;
+  if (!force && known && known.json === json) return;
   let value: unknown;
   try { value = json === "" ? null : JSON.parse(json); } catch { return; }
   const updatedAt = new Date().toISOString();
@@ -151,20 +157,48 @@ async function startOnline(sessionEmail: string): Promise<void> {
       if (row?.key) applyRemote(String(row.key), row.value, String(row.updated_at ?? ""));
     })
     .subscribe();
-  if (!timer) timer = setInterval(() => { void pushChanged(); }, PUSH_INTERVAL_MS);
-  const onVisible = () => { if (document.visibilityState === "visible") void pushChanged(); };
+  // 周期任务: 推送本地变化; 每 3 个周期(约15s)再拉取一次——realtime 断线(锁屏/休眠/网络切换)后仍能追上另一端
+  if (!timer) {
+    let ticks = 0;
+    timer = setInterval(() => {
+      ticks += 1;
+      void pushChanged();
+      if (ticks % 3 === 0) void pullAll();
+    }, PUSH_INTERVAL_MS);
+  }
+  const onVisible = () => {
+    if (document.visibilityState === "visible") { void pushChanged(); void pullAll(); }
+    else void pushChanged(); // 切后台/锁屏前尽力推送
+  };
+  const onPageHide = () => { void pushChanged(); };
   document.addEventListener("visibilitychange", onVisible);
+  window.addEventListener("pagehide", onPageHide);
+  pageListeners = () => {
+    document.removeEventListener("visibilitychange", onVisible);
+    window.removeEventListener("pagehide", onPageHide);
+  };
   setStatus({ state: "online", email: sessionEmail, lastSync: new Date().toISOString() });
 }
+
+let pageListeners: (() => void) | null = null;
 
 function stopOnline(): void {
   if (channel) { void client?.removeChannel(channel); channel = null; }
   if (timer) { clearInterval(timer); timer = null; }
+  if (pageListeners) { pageListeners(); pageListeners = null; }
   lastSynced.clear();
   userId = null;
 }
 
-export async function initSync(): Promise<void> {
+let initPromise: Promise<void> | null = null;
+
+/** 应用启动时调用(幂等): 已配置则自动连接并开始同步, 无需打开同步面板。 */
+export function initSync(): Promise<void> {
+  if (!initPromise) initPromise = doInitSync();
+  return initPromise;
+}
+
+async function doInitSync(): Promise<void> {
   const config = getSyncConfig();
   if (!config) { setStatus({ state: "off" }); return; }
   if (client) return;
