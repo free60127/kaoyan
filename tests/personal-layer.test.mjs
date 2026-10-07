@@ -113,3 +113,31 @@ test("scheduler: resetCardProgress 清除复习状态与当日准入, 范围保�
   // 未学过的卡: 原样返回
   assert.equal(scheduler.resetCardProgress(reset, "card-a", now), reset);
 });
+
+test("多标签: 旧标签的滞后写入被 rev 锁拒绝, 新内容不丢", async () => {
+  const personal = await realModule("../lib/personal-cards.ts");
+  const store = new Map();
+  // 两个标签共用同一 localStorage: 读改写各自进行
+  globalThis.localStorage = { getItem: key => store.get(key) ?? null, setItem: (key, value) => store.set(key, value), removeItem: key => store.delete(key) };
+  try {
+    // 标签 A 首存
+    const a1 = personal.saveOverlay("333", "card-x", { note: { text: "A 的补充", runs: [] } }, "原问题", "原答案", null);
+    assert.equal(a1.ok, true);
+    // 标签 B 读到 A 的版本并保存更新
+    const bRead = personal.readPersonal();
+    const bRev = bRead.overlays["333:card-x"].rev;
+    const bSave = personal.saveOverlay("333", "card-x", { note: { text: "B 更新的补充", runs: [] } }, "原问题", "原答案", bRev);
+    assert.equal(bSave.ok, true);
+    // 标签 A 用过期 rev 再写: 必须被拒绝, B 的内容保持完整
+    const a2 = personal.saveOverlay("333", "card-x", { note: { text: "A 的旧写入", runs: [] } }, "原问题", "原答案", a1.store.overlays["333:card-x"].rev);
+    assert.equal(a2.reason, "conflict");
+    assert.equal(personal.readPersonal().overlays["333:card-x"].note.text, "B 更新的补充");
+    // A 重读最新版本后写入成功(无丢失)
+    const latest = personal.readPersonal();
+    const a3 = personal.saveOverlay("333", "card-x", { note: { text: "A 在最新版本上的追加", runs: [] } }, "原问题", "原答案", latest.overlays["333:card-x"].rev);
+    assert.equal(a3.ok, true);
+    assert.equal(a3.store.overlays["333:card-x"].note.text, "A 在最新版本上的追加");
+  } finally {
+    delete globalThis.localStorage;
+  }
+});

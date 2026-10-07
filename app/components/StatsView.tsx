@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Flame } from "lucide-react";
 import { lastNDays, streakDays, type DayStat, type StatStore } from "@/lib/stats";
 import { todayActivities, type ActivityEntry } from "@/lib/activity";
@@ -11,8 +11,27 @@ export function StatsView({ subject, subjectLabel, books, done, due, learnedCard
   subject: string; subjectLabel: string; books: Book[]; done: Record<string, boolean>; due: number; learnedCards: number; totalCards: number; storage: StatStore; forecast: LoadDay[]; activities: ActivityEntry[];
 }) {
   const [tick, setTick] = useState(0);
-  const days: DayStat[] = useMemo(() => lastNDays(storage, subject, 14), [subject, tick]);
-  const streak = useMemo(() => streakDays(storage, subject), [subject, tick]);
+  // 统计必须跟随数据变化, 不能只靠手动刷新: 跨标签 storage 写入、本页写入事件、跨日零点都触发重算
+  useEffect(() => {
+    const bump = () => setTick((value) => value + 1);
+    const onStorage = (event: StorageEvent) => {
+      if (!event.key || event.key.includes("yantu-stats") || event.key.includes("yantu-activity")) bump();
+    };
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("yantu-storage-saved", bump);
+    let day = new Date().toDateString();
+    const timer = window.setInterval(() => {
+      const now = new Date().toDateString();
+      if (now !== day) { day = now; bump(); }
+    }, 30_000);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("yantu-storage-saved", bump);
+      window.clearInterval(timer);
+    };
+  }, []);
+  const days: DayStat[] = useMemo(() => lastNDays(storage, subject, 14), [subject, tick, storage]);
+  const streak = useMemo(() => streakDays(storage, subject), [subject, tick, storage]);
   const today = days[days.length - 1] || { ratings: 0, again: 0, newCards: 0, quiz: 0, quizCorrect: 0 } as DayStat;
   const max = Math.max(1, ...days.map((day) => day.ratings + day.quiz));
   const refresh = () => setTick((value) => value + 1);

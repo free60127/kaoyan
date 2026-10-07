@@ -107,12 +107,13 @@ export default function Home() {
   const [dataPolitics, setDataPolitics] = useState<StudyDataPolitics | null>(null);
   const [knowledge333, setKnowledge333] = useState<Card[] | null>(null);
   const [essayQuestions, setEssayQuestions] = useState<EssayQuestion[] | null>(null);
+  const [essayError, setEssayError] = useState(""), [essayLoadAttempt, setEssayLoadAttempt] = useState(0);
   useEffect(() => {
     if (essayQuestions) return;
     let cancelled = false;
-    loadEssayQuestions().then(data => { if (!cancelled) setEssayQuestions(data); }).catch(() => { /* 主观题库加载失败不影响其他功能 */ });
+    loadEssayQuestions().then(data => { if (!cancelled) { setEssayQuestions(data); setEssayError(""); } }).catch(() => { if (!cancelled) setEssayError("主观题库加载失败"); });
     return () => { cancelled = true; };
-  }, [essayQuestions]);
+  }, [essayQuestions, essayLoadAttempt]);
   const [jumpCard, setJumpCard] = useState<string | undefined>(undefined);
   useEffect(() => {
     let cancelled = false;
@@ -496,11 +497,13 @@ export default function Home() {
   }
   const searchEntries = useMemo<SearchEntry[]>(() => {
     if (view !== "search" || !knowledge333 || !dataPolitics || !data825) return [];
+    // 书名与当前科目解耦: 各科目用各自的目录, 避免 825 卡显示 linguistics/literature 内部 ID
+    const books825: Book[] = (data825?.books || []).map((item) => ({ id: item.id, name: item.name, short: item.id === "linguistics" ? "语言" : "文学", tone: "#4976b6", chapters: [] }));
     const toEntry = (subjectId: PersonalSubject, subjectName: string, bookList: Book[], card: Card): SearchEntry => ({ subject: subjectId, subjectName, bookId: card.book, bookName: bookList.find((item) => item.id === card.book)?.name || card.book, chapter: card.chapter, section: card.section || "", id: card.id, front: card.front, extra: card.id.startsWith("mine-") ? "个人卡" : personal.overlays[overlayKey(subjectId, card.id)]?.note?.text });
     return [
       ...cards333Merged.map((card) => toEntry("333", "333 教育综合", books333WithSections, card)),
       ...cardsPoliticsMerged.map((card) => toEntry("politics", "政治", politicsModels.books, card)),
-      ...cards825Merged.map((card) => toEntry("825", "825 英语专业基础", books, card)),
+      ...cards825Merged.map((card) => toEntry("825", "825 英语专业基础", books825, card)),
     ];
   }, [view, knowledge333, dataPolitics, data825, cards333Merged, cardsPoliticsMerged, cards825Merged, personal]);
   async function ask(mode: "plan" | "feedback") {
@@ -579,7 +582,7 @@ export default function Home() {
           {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{wrongOnly ? `只练错题：${wrongPool.length} 道` : useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button></div>{wrongOnly && !wrongPool.length && <div className="empty">当前章节没有已记录的错题。<button className="secondary" onClick={() => setWrongOnly(false)}>练全部真题</button></div>}
           {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
           {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView subject="politics" subjectName="政治" books={books} cards={politicsModels.cards} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
-          {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "手册、丹丹1000题、阶段测试与丹丹卷的主观题：材料、设问与分点参考答案按来源完整保留；先自己作答再展开对照。")}<EssayBank entries={(essayQuestions || []).map(q => ({ id: q.id, book: q.book || "principles", tags: q.tags, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
+          {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "手册、丹丹1000题、阶段测试与丹丹卷的主观题：材料、设问与分点参考答案按来源完整保留；先自己作答再展开对照。")}{essayError && <div className="empty" role="alert">{essayError}，题目列表暂时无法显示；闪卡与练习不受影响。<button className="secondary" onClick={() => { setEssayError(""); setEssayLoadAttempt((attempt) => attempt + 1); setEssayQuestions(null); }}>重新加载</button></div>}<EssayBank entries={(essayQuestions || []).map(q => ({ id: q.id, book: q.book || "principles", tags: q.tags, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
           {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill storage={localStorageStore}/></>}
           {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView subject="825" subjectName="825 英语专业基础" books={books} cards={(data825?.cards || []) as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
