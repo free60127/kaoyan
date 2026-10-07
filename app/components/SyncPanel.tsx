@@ -40,7 +40,9 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
   async function saveConfig() {
     if (!engine) return;
     if (!/^https:\/\/.+\.supabase\.co/.test(config.url.trim())) { setMessage({ error: true, text: "项目 URL 应形如 https://xxxx.supabase.co" }); return; }
-    if (!config.anonKey.trim().startsWith("eyJ")) { setMessage({ error: true, text: "匿名密钥 anon key 是以 eyJ 开头的长字符串（不是 service_role 密钥）。" }); return; }
+    const key = config.anonKey.trim();
+    // 兼容两种密钥: 旧版 anon key(eyJ 开头)与新式 publishable key(sb_publishable_ 开头)
+    if (!key.startsWith("eyJ") && !key.startsWith("sb_publishable_")) { setMessage({ error: true, text: "密钥应是 eyJ 开头的 anon key，或 sb_publishable_ 开头的 Publishable key（不是 Secret key）。" }); return; }
     engine.saveSyncConfig(config);
     setMessage({ text: "配置已保存，正在连接…" });
     location.reload();
@@ -73,7 +75,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
         <legend>① 连接你的 Supabase 项目（免费，一次性设置）</legend>
         <p className="mock-help">在 supabase.com 创建免费项目 → SQL Editor 里执行下面的建表语句 → 把 Project URL 和 anon public key 粘贴到这里。数据按账号隔离，密钥公开是设计安全的。</p>
         <label>项目 URL<input value={config.url} onChange={(event) => setConfig(previous => ({ ...previous, url: event.target.value }))} placeholder="https://xxxx.supabase.co"/></label>
-        <label>anon public key<input value={config.anonKey} onChange={(event) => setConfig(previous => ({ ...previous, anonKey: event.target.value }))} placeholder="eyJhbGciOi…"/></label>
+        <label>anon key 或 Publishable key<input value={config.anonKey} onChange={(event) => setConfig(previous => ({ ...previous, anonKey: event.target.value }))} placeholder="eyJhbGciOi…"/></label>
         <button className="secondary" onClick={saveConfig}>保存配置并连接</button>
         <details className="sync-sql"><summary>建表 SQL（点开复制到 Supabase SQL Editor）</summary>
           <pre>{SETUP_SQL}</pre>
