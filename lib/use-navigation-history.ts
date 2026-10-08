@@ -2,7 +2,8 @@ import { useEffect, useRef } from "react";
 import { isRestorableView, isStudySubject, restoreLearningSession, type BookIds, type LearningLocation, type LearningSession, type StudySubject } from "./learning-session";
 
 type Navigation = { subject: StudySubject; location: LearningLocation; cardId?: string };
-const routeKey = ({ subject, location, cardId }: Navigation) => JSON.stringify([subject, location.view, location.book, location.chapter, location.section, location.view === "cards" ? cardId : null]);
+// Browsing cards updates the current entry instead of adding a Back step per card.
+const routeKey = ({ subject, location }: Navigation) => JSON.stringify([subject, location.view, location.book, location.chapter, location.section]);
 /** Browser/Android Back changes navigation only; drafts and schedules stay live.
  * Do not create an extra initial entry or intercept navigation out of the app. */
 export function useNavigationHistory(session: LearningSession, ready: boolean, ids: BookIds, cardId: string | undefined, onNavigate: (next: Navigation) => void) {

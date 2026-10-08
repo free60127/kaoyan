@@ -4,9 +4,24 @@ import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 
 const bundled = await build({ entryPoints: [fileURLToPath(new URL("../lib/learning-session.ts", import.meta.url))], bundle: true, platform: "node", format: "esm", write: false });
-const { createLearningSession, restoreLearningSession, feynmanDraftKey, pastAnswerKey, validateLocation } = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString("base64")}`);
+const { createLearningSession, restoreLearningSession, feynmanDraftKey, pastAnswerKey, validateLocation, changedSessionPaths, mergeLearningSession } = await import(`data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].text).toString("base64")}`);
 const ids = { "333": ["principles", "psychology"], "825": ["linguistics", "literature"], politics: ["mayuan", "sixiu"] };
 const catalog = [{ id: "mayuan", chapters: [{ sections: ["chapter one"] }, { sections: ["考点二", "考点三"] }] }];
+
+test("another tab's navigation never moves the local page while new shared drafts are received", () => {
+  const local = createLearningSession(ids), remote = createLearningSession(ids);
+  local.subject = "825"; local.locations["825"].view = "search"; local.locations["825"].chapter = 7;
+  remote.subject = "333"; remote.locations["825"].view = "cards"; remote.pastAnswers.one = "remote answer";
+  const merged = mergeLearningSession(local, remote, new Set());
+  assert.equal(merged.subject, "825"); assert.equal(merged.locations["825"].view, "search"); assert.equal(merged.locations["825"].chapter, 7); assert.equal(merged.pastAnswers.one, "remote answer");
+});
+test("local dirty drafts and remotely changed other drafts both survive navigation persistence", () => {
+  const before = createLearningSession(ids); before.pastAnswers.one = "old";
+  const local = structuredClone(before), remote = structuredClone(before);
+  local.pastAnswers.one = "local edit"; remote.pastAnswers.two = "other question"; remote.subject = "politics";
+  const merged = mergeLearningSession(local, remote, changedSessionPaths(before, local));
+  assert.deepEqual(merged.pastAnswers, { one: "local edit", two: "other question" }); assert.equal(merged.subject, local.subject);
+});
 
 test("reload retains each subject's full location, scoped drafts and separate planner prompts", () => {
   const session = createLearningSession(ids);

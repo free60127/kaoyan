@@ -68,7 +68,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
   return <ModalFrame label="云同步" onClose={onClose}>
     <div className="backup-heading"><h2 id="sync-title"><Cloud size={20}/> 云同步 · 邮箱账号</h2><button className="icon-button" aria-label="关闭云同步" onClick={onClose}><X size={20}/></button></div>
     <div className="backup-body">
-      <p className="mock-help">登录后，本机的学习记录（复习排期、错题本、统计、个人编辑、考试日期等）会自动与你的账号同步；另一台设备登录同一邮箱即可看到相同数据，任一设备评分/学新卡都会自动推送。仅保存在本浏览器的内容：选择题未完成题组、自由浏览位置、DeepSeek 密钥。</p>
+      <p className="mock-help">登录后，本机的学习记录（复习排期、错题本、统计、个人编辑、考试日期等）会自动与你的账号同步；另一台设备登录同一邮箱即可看到相同数据，任一设备评分/学新卡都会自动推送。仅保存在本浏览器的内容：选择题未完成题组、自由浏览位置、DeepSeek 密钥、尚未保存的闪卡编辑草稿。编辑草稿保存修改后才会同步。</p>
 
       <p className="mock-selection">当前状态：<b>{stateLabel[status.state]}</b>{status.email ? ` · ${status.email}` : ""}{status.pendingUploads ? ` · 待上传 ${status.pendingUploads} 项` : ""}{status.pendingApply ? ` · 待保存 ${status.pendingApply} 项` : ""}{status.lastSync ? ` · 上次同步 ${new Date(status.lastSync).toLocaleTimeString("zh-CN")}` : ""}</p>
       {status.error && <p className="error" role="alert">{status.error}</p>}

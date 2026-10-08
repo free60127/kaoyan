@@ -46,7 +46,7 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
 
-export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, originalById }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
+export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, onBrowseCardChange, originalById }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string; onBrowseCardChange?: (cardId?: string) => void; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
   const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
@@ -113,9 +113,9 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
   }, [locationKey, cardsReady]);
   // R10: 浏览时保存位置, 刷新/换页后可续看
   useEffect(() => {
-    if (mode !== "browse") return;
+    if (mode !== "browse") { if (!jumpCardId) onBrowseCardChange?.(undefined); return; }
     const current = browseCards[browseIndex];
-    if (current) saveBrowsePosition(localStorage, subject, locationKey, current.id, browseIndex);
+    if (current) { saveBrowsePosition(localStorage, subject, locationKey, current.id, browseIndex); onBrowseCardChange?.(current.id); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, browseIndex, locationKey, cardsReady]);
   useEffect(() => setRevealedCard(null), [visibleCardKey]);
@@ -166,8 +166,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}
     <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>{mode === "all" ? "本科目今日已学" : "本章今日已学"}新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small></>}</div>
     {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { const cardId = review.lastRating?.cardId; if (onUndoRating) onUndoRating(); else review.undoLastRating(); if (cardId) setPinned({ key: queueKey, cardId }); setRevealedCard(null); }}>撤销本次评分</button></p>}
-    {!review.ready ? <div className="panel empty">正在读取学习记录…</div>
-    : editor && editorTarget ? <CardEditor
+    {editor && editorTarget ? <CardEditor
       subject={subject as PersonalSubject}
       subjectName={books.find(book => book.id === bookId)?.name || subject}
       books={books}
@@ -177,6 +176,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
       onAddScope={scope => review.selectScopes([...review.newScopes, scope])}
       onResetCard={cardId => review.resetCard(cardId)}
     />
+    : !review.ready ? <div className="panel empty">正在读取学习记录…</div>
     : card ? <div className="flash-area">
       <div className="flash-top"><span>{books.find(book => book.id === card.book)?.name} · 第 {card.chapter} 章{card.section ? " · " + card.section : ""}{card.id.startsWith("mine-") && <em className="personal-tag">个人补充卡</em>}</span><span>{mode !== "browse" && head ? `${head.kind === "new" ? "新卡" : head.kind === "learning" ? "短间隔回顾" : "到期复习"} · ${mode === "all" ? "全部队列" : "当前范围"}剩余 ${queue.items.length} 张` : `${browseIndex + 1} / ${browseCards.length}`}</span></div>
       <button className="flash-card" style={display.bg ? { backgroundColor: display.bg } : undefined} onClick={() => setRevealedCard(flipped ? null : visibleCardKey)}><small>{flipped ? "答案" : "问题"}</small><strong>{flipped ? <RichTextView text={card.back} runs={display.aRuns || []}/> : <RichTextView text={card.front} runs={display.qRuns || []} renderTextbook={false}/>}</strong>{flipped && display.note && <span className="personal-note"><b>我的补充</b><RichTextView text={display.note.text} runs={display.note.runs}/></span>}<span className="card-source">{flipped ? card.source : "先自己回答，再点击查看答案"}</span>{flipped && card.sourceFile && <span className="card-source original-source">原 PDF：{card.sourceFile}{card.sourcePages?.length ? " · 第 " + card.sourcePages.join("、") + " 页" : card.sourcePage ? " · 第 " + card.sourcePage + " 页" : ""}</span>}</button>

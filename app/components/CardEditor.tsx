@@ -2,18 +2,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { RotateCcw, Trash2 } from "lucide-react";
 import {
   addPersonalCard, deletePersonalCard,
-  saveOverlay, updatePersonalCard,
+  saveOverlay, updatePersonalCard, readPersonal, overlayKey,
   type PersonalCard, type PersonalOverlay, type PersonalSubject,
 } from "@/lib/personal-cards";
 import { adjustRuns, RICH_COLORS, RICH_HIGHLIGHTS, reinjectTextbookMarkers, sanitizeRuns, textbookEditContent, type RichRun, type RichRunKind } from "@/lib/rich-text";
 import { stripHighlightMarkers } from "@/lib/highlight-markers";
 import { RichTextView } from "./RichTextView";
+import { readOwnedDraft, updateOwnedDraft, mergeEditFields, type EditFields, type EditLocation, type CardEditDraft } from "@/lib/card-edit-draft";
 
 const DRAFT_KEY = "yantu-card-edit-draft-v2";
 type FieldState = { text: string; runs: RichRun[] };
-type Fields = { q: FieldState; a: FieldState; note: FieldState; bg: string | undefined };
-type EditLocation = { book: string; chapter: number; section: string };
-type Draft = { fields: Fields; location?: EditLocation; baselineRev: number | null };
+type Fields = EditFields;
+type Draft = CardEditDraft;
 type Target =
   | { kind: "textbook"; cardId: string; originalFront: string; originalBack: string }
   | { kind: "personal"; card: PersonalCard }
@@ -31,39 +31,24 @@ const draftId = (subject: string, target: Target) =>
     : target.kind === "personal" ? `${subject}:p:${target.card.id}`
     : `${subject}:new`; // 新建卡的归属保存在草稿内, 不随初始位置变化(F13)
 
-function loadDraft(id: string): Draft | null {
+function draftOwner(): string {
+  try {
+    let owner = sessionStorage.getItem("yantu-card-editor-tab");
+    if (!owner) { owner = crypto.randomUUID(); sessionStorage.setItem("yantu-card-editor-tab", owner); }
+    return owner;
+  } catch { return Math.random().toString(36).slice(2); }
+}
+function loadDraft(id: string, owner: string): Draft | null {
   try {
     const all = JSON.parse(localStorage.getItem(DRAFT_KEY) || "{}");
-    const draft = all && typeof all === "object" ? (all as Record<string, unknown>)[id] : null;
-    if (!draft || typeof draft !== "object") return null;
-    const row = draft as Record<string, unknown>;
-    const field = (value: unknown): FieldState => {
-      const item = (value || {}) as Record<string, unknown>;
-      const text = typeof item.text === "string" ? item.text : "";
-      return { text, runs: sanitizeRuns((item.runs || []) as RichRun[], text.length) };
-    };
-    const location = row.location && typeof row.location === "object"
-      ? (() => {
-          const loc = row.location as Record<string, unknown>;
-          if (typeof loc.book !== "string" || !loc.book) return undefined;
-          return { book: loc.book, chapter: Number(loc.chapter) || 1, section: typeof loc.section === "string" ? loc.section : "" };
-        })()
-      : undefined;
-    const baselineRev = typeof row.baselineRev === "number" || row.baselineRev === null ? row.baselineRev as number | null : null;
-    return {
-      fields: { q: field(row.q), a: field(row.a), note: field(row.note), bg: typeof row.bg === "string" ? row.bg : undefined },
-      ...(location ? { location } : {}),
-      baselineRev,
-    };
+    return all && typeof all === "object" && !Array.isArray(all) ? readOwnedDraft(all, id, owner) : null;
   } catch { return null; }
 }
 
-function writeDraft(id: string, draft: Draft | null): boolean {
+function writeDraft(id: string, owner: string, draft: Draft | null, expected?: Draft | null): boolean {
   try {
     const all = JSON.parse(localStorage.getItem(DRAFT_KEY) || "{}") as Record<string, unknown>;
-    if (draft) all[id] = draft;
-    else delete all[id];
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(all));
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(updateOwnedDraft(all, id, owner, draft, expected)));
     return true;
   } catch { return false; }
 }
@@ -100,8 +85,11 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
   onResetCard: (cardId: string) => void;
 }) {
   // F02: 基线在打开时冻结; 草稿恢复时以草稿里保存的基线为准
-  const storedDraft = useMemo(() => loadDraft(draftId(subject, target)), [subject, target]);
-  const baselineRev = useRef<number | null>(storedDraft ? storedDraft.baselineRev : overlay ? overlay.rev : null);
+  const [owner] = useState(draftOwner);
+  const [storedDraft] = useState(() => loadDraft(draftId(subject, target), owner));
+  const currentRev = target.kind === "personal" ? target.card.rev : overlay?.rev ?? null;
+  const baselineRev = useRef<number | null>(storedDraft ? storedDraft.baselineRev : currentRev);
+  const [conflicted, setConflicted] = useState(false);
   const initialLocation = useMemo<EditLocation | null>(() => {
     if (storedDraft?.location) return storedDraft.location;
     if (target.kind === "personal") return { book: target.card.book, chapter: target.card.chapter, section: target.card.section };
@@ -128,6 +116,8 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [fields, setFields] = useState<Fields>(initial);
+  const baselineFields = useRef(storedDraft?.baselineFields ?? (storedDraft ? undefined : initial));
+  const baselineLocation = useRef(storedDraft?.baselineLocation ?? (storedDraft ? undefined : initialLocation ?? undefined));
   const [location, setLocation] = useState<EditLocation | null>(initialLocation);
   const [status, setStatus] = useState<{ error?: boolean; text: string }>(() => ({ text: storedDraft ? "已恢复上次未保存的草稿。" : "" }));
   const [showOriginal, setShowOriginal] = useState(false);
@@ -140,10 +130,11 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
   // 草稿自动保存: 文本与归属都是草稿的一部分(F13)
   useEffect(() => {
     if (!dirty) return;
-    const ok = writeDraft(draftId(subject, target), { fields, location: location ?? undefined, baselineRev: baselineRev.current });
+    const ok = writeDraft(draftId(subject, target), owner, { fields, location: location ?? undefined, baselineRev: baselineRev.current, baselineFields: baselineFields.current, baselineLocation: baselineLocation.current });
     setStatus({ text: ok ? "草稿已保存（关闭面板后下次可恢复）。" : "草稿保存失败，请复制保留内容。", error: !ok });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fields, location]);
+  useEffect(() => { if (target.kind !== "new" && currentRev !== baselineRev.current) setConflicted(true); }, [currentRev, target.kind]);
 
   const update = (field: "q" | "a" | "note", next: FieldState) => setFields(previous => ({ ...previous, [field]: next }));
 
@@ -182,9 +173,14 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
 
   function closeKeepingDraft() { onDone(); } // F06: 关闭/取消永远保留草稿
   function discardDraftAndClose() {
-    if (window.confirm("确定放弃这份草稿？关闭后这些未保存的修改无法找回。")) { writeDraft(draftId(subject, target), null); onDone(); }
+    if (!window.confirm("确定放弃这份草稿？关闭后这些未保存的修改无法找回。")) return;
+    if (!writeDraft(draftId(subject, target), owner, null, storedDraft)) { setStatus({ error: true, text: "草稿清理失败，请允许本地存储后重试。" }); return; }
+    onDone();
   }
-  function finishAfterSuccess() { writeDraft(draftId(subject, target), null); onDone(); }
+  function finishAfterSuccess() {
+    if (!writeDraft(draftId(subject, target), owner, null, storedDraft)) { setStatus({ error: true, text: "修改已保存，但旧草稿未能清理。请允许本地存储后重新保存，或关闭面板保留草稿。" }); return; }
+    onDone();
+  }
 
   function cancel() {
     if (dirty && !window.confirm("有未保存的修改。关闭并保留草稿？（下次打开可恢复）")) return;
@@ -193,14 +189,41 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
 
   function reportSave(result: { ok: boolean; reason?: string; message?: string }, successText: string) {
     if (!result.ok) {
+      if (result.reason === "conflict") setConflicted(true);
       setStatus({ error: true, text: result.reason === "conflict"
-        ? "另一标签页刚修改了这张卡。你的输入仍保留在编辑器和草稿里；请关闭面板重新打开，在最新版本上继续编辑。"
+        ? "另一端已修改这张卡。你的草稿仍保留；请合并最新版本，检查后再保存。"
         : result.reason === "invalid" ? (result.message || "内容未通过校验。")
         : "保存失败：浏览器存储不可用或已满。请复制保留内容。" });
       return false;
     }
     setStatus({ text: successText });
     return true;
+  }
+
+  function mergeLatest() {
+    const latest = readPersonal();
+    let next: Fields, rev: number | null, nextLocation: EditLocation | undefined;
+    if (target.kind === "textbook") {
+      const value = latest.overlays[overlayKey(subject, target.cardId)];
+      next = { q: textbookEditContent(value?.q || emptyField(target.originalFront)), a: textbookEditContent(value?.a || emptyField(target.originalBack)), note: value?.note || emptyField(), bg: value?.bg };
+      rev = value?.rev ?? null;
+    } else if (target.kind === "personal") {
+      const value = latest.cards.find(card => card.id === target.card.id && !card.deleted);
+      if (!value) { setStatus({ error: true, text: "这张个人卡已被删除。草稿仍保留，请复制内容后新建卡片。" }); return; }
+      next = { q: value.front, a: value.back, note: value.note || emptyField(), bg: value.bg }; rev = value.rev;
+      nextLocation = { book: value.book, chapter: value.chapter, section: value.section };
+    } else return;
+    const merged = mergeEditFields(fields, next, baselineFields.current);
+    if ([merged.q, merged.a, merged.note].some(field => field.text.length > MAX_TEXT)) {
+      setStatus({ error: true, text: "合并后内容超过字数上限。草稿与已保存版本均保留，请先删减草稿再合并。" }); return;
+    }
+    const mergedLocation = nextLocation && JSON.stringify(location) === JSON.stringify(baselineLocation.current) ? nextLocation : location;
+    setLocation(mergedLocation);
+    baselineRev.current = rev; baselineFields.current = next; baselineLocation.current = nextLocation;
+    setFields(merged); setConflicted(false);
+    const saved = writeDraft(draftId(subject, target), owner, { fields: merged, location: mergedLocation ?? undefined, baselineRev: rev, baselineFields: next, baselineLocation: nextLocation });
+    if (!saved) { setStatus({ error: true, text: "已合并到编辑器，但草稿存储失败。请复制保留内容后保存。" }); return; }
+    setStatus({ text: "已合并最新版本；冲突文字保留双方，格式保留在对应文字上。请检查后保存。" });
   }
 
   function saveTextbook() {
@@ -220,7 +243,7 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
     };
     if (!reportSave(saveOverlay(subject, target.cardId, patch, target.originalFront, target.originalBack, baselineRev.current), "修改已保存。复习排期与学习记录保持不变。")) return;
     if (resetAsNew && window.confirm("将同时清除此卡的学习记录，重新作为新卡学习。确定？")) onResetCard(target.cardId);
-    setTimeout(finishAfterSuccess, 600);
+    finishAfterSuccess();
   }
 
   function savePersonalCard(joinScope: boolean) {
@@ -232,13 +255,13 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
     const note = fields.note.text.trim() ? { text: fields.note.text, runs: sanitizeRuns(fields.note.runs, fields.note.text.length) } : undefined;
     if (target.kind === "personal") {
       // 归属可迁移(F11): 保存采用编辑器里的位置; 卡 ID 与已有学习记录不变
-      if (!reportSave(updatePersonalCard(target.card.id, { front, back, note, bg: fields.bg, book: loc.book, chapter: loc.chapter, section: loc.section }, target.card.rev), "修改已保存。")) return;
-      setTimeout(finishAfterSuccess, 500);
+      if (!reportSave(updatePersonalCard(target.card.id, { front, back, note, bg: fields.bg, book: loc.book, chapter: loc.chapter, section: loc.section }, baselineRev.current ?? target.card.rev), "修改已保存。")) return;
+      finishAfterSuccess();
       return;
     }
     if (!reportSave(addPersonalCard({ subject, book: loc.book, chapter: loc.chapter, section: loc.section, front, back, note, bg: fields.bg }), joinScope ? "个人卡已保存并加入今日新学（受每日新卡上限约束）。" : "个人卡已保存。可在「设置学习范围」里把它加入学习。")) return;
     if (joinScope) onAddScope({ bookId: loc.book, chapters: [loc.chapter], ...(loc.section ? { section: loc.section } : {}) });
-    setTimeout(finishAfterSuccess, 700);
+    finishAfterSuccess();
   }
 
   const originalText = target.kind === "textbook" ? { front: target.originalFront, back: target.originalBack } : null;
@@ -315,6 +338,7 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
     </div>
 
     <p className={status.error ? "error" : "card-edit-status"} role={status.error ? "alert" : "status"}>{status.text}</p>
+    {conflicted && <div role="status"><p>已有更新版本。合并会保留双方冲突文字，未改动的字段采用最新内容；不会直接覆盖已保存版本。</p><button className="secondary" onClick={mergeLatest}>合并最新版本与我的草稿</button></div>}
 
     <div className="next-actions">
       {target.kind === "textbook" && <button className="primary" onClick={saveTextbook}>保存修改</button>}
@@ -323,10 +347,10 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
       {target.kind === "textbook" && overlay && (overlay.q || overlay.a) && <button className="secondary" onClick={() => {
         if (!window.confirm("恢复教材原文？问题和答案会还原，我的补充与整卡背景保留。")) return;
         if (!reportSave(saveOverlay(subject, target.cardId, { q: null, a: null }, target.originalFront, target.originalBack, baselineRev.current), "已恢复教材原文（我的补充保留）。")) return;
-        setTimeout(finishAfterSuccess, 600);
+        finishAfterSuccess();
       }}><RotateCcw size={14}/>恢复原文</button>}
       {target.kind === "textbook" && <label className="card-edit-reset"><input type="checkbox" checked={resetAsNew} onChange={(event) => setResetAsNew(event.target.checked)}/>保存时清除此卡学习记录，重新作为新卡学习（题目已改成全新知识点时使用）</label>}
-      {storedDraft && dirty && <button className="secondary" onClick={discardDraftAndClose}>放弃草稿并关闭</button>}
+      {(storedDraft || dirty) && <button className="secondary" onClick={discardDraftAndClose}>放弃草稿并关闭</button>}
       <button className="secondary" onClick={cancel}>{dirty ? "取消（保留草稿）" : "关闭"}</button>
     </div>
   </section>;

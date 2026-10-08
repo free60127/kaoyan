@@ -97,7 +97,7 @@ export default function BackupPanel({ blockedReason, onBusyChange }: { blockedRe
   const disabled = busy || !catalogs || Boolean(blockedReason);
   return <>
     <p className="backup-intro">学习记录会自动保存到当前浏览器。导出 PDF 可阅读学习记录、完整模拟卷与作答，也可在其他浏览器导入恢复。需要自己保存并传递文件。</p>
-    <p className="mock-help">备份保留复习范围、每日新卡配额、未来到期时间、章节标记、学习位置、费曼草稿、错题本、每日学习统计与个人编辑层（修改/补充/个人卡）；不包含 DeepSeek 密钥、选择题未完成题组与自由浏览位置（这三项换设备后需重新开始，不影响已学记录）。</p>
+    <p className="mock-help">备份保留复习范围、每日新卡配额、未来到期时间、章节标记、学习位置、费曼草稿、错题本、每日学习统计与个人编辑层（修改/补充/个人卡）；不包含 DeepSeek 密钥、选择题未完成题组、自由浏览位置与尚未保存的闪卡编辑草稿。编辑草稿请先保存修改，再导出备份。</p>
     {blockedReason && <p className="error" role="alert">{blockedReason}</p>}
     {!catalogs && !error && <p role="status">正在加载学习目录…</p>}
     <div className="backup-actions"><button className="primary" disabled={disabled} onClick={exportPdf}>导出 PDF 备份</button><button className="secondary" disabled={disabled} onClick={() => inputRef.current?.click()}>选择 PDF 导入</button><input ref={inputRef} type="file" accept="application/pdf,.pdf" aria-label="选择本站 PDF 备份" hidden disabled={disabled} onChange={selectPdf}/></div>

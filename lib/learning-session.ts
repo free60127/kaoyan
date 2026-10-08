@@ -83,3 +83,29 @@ export function validateLocation(location: LearningLocation, books: { id: string
   const section = book.id === location.book && chapter === location.chapter && book.chapters[chapter - 1]?.sections.includes(location.section) ? location.section : "";
   return book.id === location.book && chapter === location.chapter && section === location.section ? location : { ...location, book: book.id, chapter, section };
 }
+
+function sessionPaths(session: LearningSession): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const [key, value] of Object.entries(session.feynmanDrafts)) map.set("fd:" + key, value);
+  for (const [key, value] of Object.entries(session.pastAnswers)) map.set("pa:" + key, value);
+  for (const [key, value] of Object.entries(session.plannerPrompts)) map.set("pp:" + key, value);
+  return map;
+}
+export function changedSessionPaths(before: LearningSession | null, after: LearningSession): Set<string> {
+  if (!before) return new Set(sessionPaths(after).keys());
+  const beforePaths = sessionPaths(before), afterPaths = sessionPaths(after), dirty = new Set<string>();
+  for (const [path, value] of afterPaths) if (beforePaths.get(path) !== value) dirty.add(path);
+  for (const path of beforePaths.keys()) if (!afterPaths.has(path)) dirty.add(path);
+  return dirty;
+}
+/** Shared drafts merge, but navigation belongs to each open tab. */
+export function mergeLearningSession(local: LearningSession, remote: LearningSession, dirty: Set<string>): LearningSession {
+  const merged: LearningSession = { ...JSON.parse(JSON.stringify(remote)), subject: local.subject, locations: local.locations };
+  for (const [path, value] of sessionPaths(local)) {
+    if (!dirty.has(path)) continue;
+    if (path.startsWith("fd:")) merged.feynmanDrafts[path.slice(3)] = value;
+    else if (path.startsWith("pa:")) merged.pastAnswers[path.slice(3)] = value;
+    else if (path.startsWith("pp:")) merged.plannerPrompts[path.slice(3) as StudySubject] = value;
+  }
+  return merged;
+}
