@@ -62,7 +62,7 @@ export function readVisibleMistakes(): Mistake[] {
 export const mistakesSavedEvent = "yantu-storage-saved";
 export const mistakesSaveFailedEvent = "yantu-storage-error";
 function saveMistakes(list: Mistake[]): boolean {
-  try { localStorage.setItem(mistakesStorageKey, JSON.stringify(list)); notifyStorage(mistakesSavedEvent); return true; }
+  try { localStorage.setItem(mistakesStorageKey, JSON.stringify(list)); notifyStorage(mistakesSavedEvent, { store: "mistakes" }); return true; }
   catch { notifyStorage(mistakesSaveFailedEvent, { store: "mistakes" }); return false; }
 }
 

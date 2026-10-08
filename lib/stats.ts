@@ -87,7 +87,7 @@ export function reduceStat(store: StatStore, subject: string, patch: Partial<Omi
   const updated: DayStat = { ...day, ...sumBuckets(buckets), devices: buckets };
   try {
     store.setItem(statsKey(subject), JSON.stringify({ ...days, [date]: updated }));
-    notifyStorage("yantu-storage-saved");
+    notifyStorage("yantu-storage-saved", { store: "stats", subject });
   } catch { notifyStorage("yantu-storage-error", { store: "stats", subject }); }
 }
 
@@ -109,7 +109,7 @@ export function recordStat(store: StatStore, subject: string, patch: Partial<Omi
   days[date] = next;
   try {
     store.setItem(statsKey(subject), JSON.stringify(days));
-    notifyStorage("yantu-storage-saved");
+    notifyStorage("yantu-storage-saved", { store: "stats", subject });
     return next;
   } catch {
     notifyStorage("yantu-storage-error", { store: "stats", subject });

@@ -47,7 +47,7 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
 
-export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, onBrowseCardChange, originalById }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => boolean; jumpCardId?: string; onBrowseCardChange?: (cardId?: string) => void; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
+export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, onBrowseCardChange, originalById, timingPaused = false }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => boolean; timingPaused?: boolean; jumpCardId?: string; onBrowseCardChange?: (cardId?: string) => void; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
   const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
@@ -89,7 +89,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     return {};
   };
   const display = card ? personalInfo(card.id) : {};
-  const timing = useCardTiming(subject, card, head?.kind, review.ready && mode !== "browse" && !jumpCardId, !!editor, display.note?.text);
+  const timing = useCardTiming(subject, card, head?.kind, review.ready && mode !== "browse" && !jumpCardId, !!editor || timingPaused, display.note?.text);
   // 编辑目标: 个人卡/教材卡(原文从基库取, 合并卡上的已是应用覆盖层后的内容)
   const editorTarget = !editor ? null : (() => {
     if (editor.mode === "create") return { kind: "new" as const, book: bookId, chapter, section };

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { formatStudyTime, readTimingRecords, timingComparisons, timingEnabled, setTimingEnabled, type CardTiming } from "../../lib/card-timing";
+import { formatStudyTime, readTimingSnapshot, timingComparisons, timingEnabled, setTimingEnabled, type CardTiming } from "../../lib/card-timing";
 import { studyDate, type StatStore } from "../../lib/stats";
 
 const kindLabel = { new: "新卡学习", learning: "短间隔回顾", review: "到期复习" };
@@ -18,7 +18,8 @@ export function CardTimingStats({ subject, storage, tick }: { subject: string; s
   const [settingsError, setSettingsError] = useState("");
   const enabled = useMemo(() => timingEnabled(storage), [storage, tick]);
   useEffect(() => { setQuery(""); setLimit(20); }, [subject]);
-  const rows = useMemo(() => Object.values(readTimingRecords(storage, subject)), [subject, storage, tick]);
+  const snapshot = useMemo(() => readTimingSnapshot(storage, subject), [subject, storage, tick]);
+  const rows = useMemo(() => Object.values(snapshot.records), [snapshot]);
   const comparisons = useMemo(() => timingComparisons(rows), [rows]);
   const now = new Date(), today = studyDate(now);
   const dates = Array.from({ length: 14 }, (_, i) => { const date = new Date(now); date.setDate(date.getDate() - (13 - i)); return studyDate(date); });
@@ -29,7 +30,8 @@ export function CardTimingStats({ subject, storage, tick }: { subject: string; s
     <div className="panel-heading"><div><span className="eyebrow">RECALL TIME</span><h2>闪卡背诵用时</h2></div></div>
     <label className="timing-toggle"><input type="checkbox" aria-label="自动记录背诵用时" checked={enabled} onChange={event => setSettingsError(setTimingEnabled(storage, event.target.checked) ? "" : "自动计时设置未能保存，请释放浏览器存储空间后重试。")}/>自动记录背诵用时 <small>{enabled ? "已开启" : "已关闭 · 已有记录保留"}</small></label>
     {settingsError && <p className="error" role="alert">{settingsError}</p>}
-    <p className="mock-help">只记录新卡学习和复习；自由浏览不计时。翻面继续计时，后台、锁屏与编辑期间暂停。用时包含回忆和查看答案，不能单独代表掌握程度。</p>
+    {snapshot.error && <p className="error" role="alert">{snapshot.error}</p>}
+    <p className="mock-help">只记录新卡学习和复习；自由浏览不计时。翻面继续计时，后台、锁屏、编辑与弹窗期间暂停。用时包含回忆和查看答案，不能单独代表掌握程度。</p>
     <div className="timing-summary">
       <div><small>今日有效用时</small><strong>{formatStudyTime(totals[today] || 0)}</strong></div>
       <div><small>近 14 天</small><strong>{formatStudyTime(dates.reduce((sum, date) => sum + (totals[date] || 0), 0))}</strong></div>
@@ -45,7 +47,7 @@ export function CardTimingStats({ subject, storage, tick }: { subject: string; s
         {item.first && item.last ? <>首次 {formatStudyTime(item.first.elapsedMs)} → 最近 {formatStudyTime(item.last.elapsedMs)}<b>{item.improvement === null ? "再完成一次即可对比" : Math.abs(item.improvement) < 0.05 ? "用时基本持平" : `${item.improvement > 0 ? "用时减少" : "用时增加"} ${Math.abs(item.improvement).toFixed(1)}%`}</b></> : <>最近有效用时 {formatStudyTime(item.latest.elapsedMs)}<b>尚无完成背诵记录</b></>}
       </span></summary>
       <small className="timing-card-id">卡片编号：{item.cardId}</small><AttemptHistory rows={item.history}/>
-    </details>)}</div> : <p className="mock-help">{rows.length ? "没有匹配的卡片。" : "还没有背诵用时记录。开始新卡学习或复习，评分或离开闪卡后即可在这里查看。"}</p>}
+    </details>)}</div> : <p className="mock-help">{rows.length ? "没有匹配的卡片。" : snapshot.error ? "暂时没有可显示的有效记录，请先处理上方读取错误。" : "还没有背诵用时记录。开始新卡学习或复习，评分或离开闪卡后即可在这里查看。"}</p>}
     {limit < filtered.length && <button className="secondary" onClick={() => setLimit(n => n + 20)}>显示更多卡片（剩余 {filtered.length - limit} 张）</button>}
     <p className="mock-help">从功能启用后开始记录，历史学习无法补算；用时随账号自动同步，并包含在 PDF 备份中。中途离开的有效用时也计入总时长。</p>
   </section>;

@@ -230,7 +230,7 @@ function activate(uid: string, email: string, restoringSession = false): void {
     else switchPartition(uid);
     userId = uid; void startOnline(email);
   }
-  catch { stopOnline(); setStatus({ state: "error", email: undefined, error: "账号数据分区未能保存，未切换学习数据。请释放存储空间后重新登录。" }); }
+  catch { stopOnline(); window.dispatchEvent(new CustomEvent("yantu-account-change-failed")); setStatus({ state: "error", email: undefined, error: "账号数据分区未能保存，未切换学习数据。请释放存储空间后重新登录。" }); }
 }
 export function initSync(): Promise<void> { return initPromise ||= doInitSync(); }
 async function doInitSync(): Promise<void> {
@@ -241,11 +241,11 @@ async function doInitSync(): Promise<void> {
     else if (event === "SIGNED_OUT") {
       if ((readLocal(ACTIVE_KEY) || "guest") !== "guest") window.dispatchEvent(new CustomEvent("yantu-account-changing"));
       try { if (userId) { queueLocalChanges(); savePartition(userId); } stopOnline(); switchPartition("guest"); setStatus({ state: "signed-out", email: undefined, error: undefined }); }
-      catch { stopOnline(); setStatus({ state: "error", email: undefined, error: "退出账号时本机分区保存失败，请释放存储空间后重试。" }); }
+      catch { stopOnline(); window.dispatchEvent(new CustomEvent("yantu-account-change-failed")); setStatus({ state: "error", email: undefined, error: "退出账号时本机分区保存失败，请释放存储空间后重试。" }); }
     }
   });
   const { data } = await client.auth.getSession(); if (data.session?.user) activate(data.session.user.id, data.session.user.email || data.session.user.id, true);
-  else { try { if (readLocal(ACTIVE_KEY) && readLocal(ACTIVE_KEY) !== "guest") switchPartition("guest"); setStatus({ state: "signed-out", email: undefined }); } catch { setStatus({ state: "error", error: "无法恢复访客数据，请检查本地存储。" }); } }
+  else { try { if (readLocal(ACTIVE_KEY) && readLocal(ACTIVE_KEY) !== "guest") switchPartition("guest"); setStatus({ state: "signed-out", email: undefined }); } catch { window.dispatchEvent(new CustomEvent("yantu-account-change-failed")); setStatus({ state: "error", error: "无法恢复访客数据，请检查本地存储。" }); } }
 }
 export async function syncSignUp(email: string, password: string): Promise<{ ok: boolean; message: string }> {
   if (!client) return { ok: false, message: "请先填写并保存同步服务配置。" }; const { data, error } = await client.auth.signUp({ email, password });

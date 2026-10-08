@@ -34,3 +34,13 @@ test('concurrent toggle changes prefer off, explicitly enabling after merge reso
 test('restoring already-active authenticated account does not interrupt the current timer',async()=>{
   const c=cloud(),a=device(c,{id:'PC',disk:[['yantu-sync-active-partition','A']]});let changing=0;a.window.addEventListener('yantu-account-changing',()=>changing++);await a.init();assert.equal(changing,0);
 });
+
+test('failed account partition save reports recovery event and retains original timing history',async()=>{
+ const c=cloud(),a=device(c,{id:'PC'});await a.init();a.put(key,{pc:row('pc',20000)});
+ let failed=0;a.window.addEventListener('yantu-account-change-failed',()=>failed++);
+ a.flags.failOnceKey='yantu-partition-v1';
+ await a.api.syncSignOut();await settle();
+ assert.equal(failed,1);assert.equal(a.mem.get('yantu-sync-active-partition'),'A');assert.equal(a.read(key).pc.elapsedMs,20000);
+ await a.api.syncSignIn('A','pw');await settle();await a.sync();assert.equal(a.read(key).pc.elapsedMs,20000);
+ await a.api.syncSignOut();await settle();assert.equal(a.read(key),null);
+});

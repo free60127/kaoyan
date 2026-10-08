@@ -35,7 +35,8 @@ import { overlayKey, personalStorageKey, readPersonal, type PersonalStore, type 
 import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
 import { ModalFrame } from "./components/ModalFrame";
 import { useNavigationHistory } from "@/lib/use-navigation-history";
-import { retryTimingWrites } from "@/lib/use-card-timing";
+import { retryTimingWrites, timingWritesPending } from "@/lib/use-card-timing";
+import { acknowledgeStorageSave } from "@/lib/storage-save-errors";
 
 type View = StudyView;
 const BackupPanel = lazy(() => import("./components/BackupPanel"));
@@ -188,6 +189,7 @@ export default function Home() {
   const [choice, setChoice] = useState<number | null>(null), [score, setScore] = useState({ right: 0, total: 0 });
   const [doneStorageError, setDoneStorageError] = useState("");
   const [recordSaveErrors, setRecordSaveErrors] = useState<Record<string, boolean>>({});
+  const [examOpen, setExamOpen] = useState(false);
   const [doneBySubject, setDoneBySubject] = useState<Progress<Record<string, boolean>>>({ "333": {}, "825": {}, politics: {} }), [progressReady, setProgressReady] = useState(false);
   const [feedback, setFeedback] = useState(""), [reply, setReply] = useState("");
   const draftKey = feynmanDraftKey(subject, { book, chapter, section });
@@ -354,21 +356,19 @@ export default function Home() {
   useEffect(() => {
     const onSaved = (event: Event) => {
       const store = (event as CustomEvent).detail?.store as string | undefined;
-      setRecordSaveErrors(previous => {
-        if (!store) return Object.keys(previous).length ? {} : previous;
-        if (!(store in previous)) return previous;
-        const next = { ...previous }; delete next[store]; return next;
-      });
+      setRecordSaveErrors(previous => acknowledgeStorageSave(previous, store, timingWritesPending()));
     };
     const onError = (event: Event) => {
       const store = (event as CustomEvent).detail?.store as string | undefined;
       setRecordSaveErrors(previous => ({ ...previous, [store || "unknown"]: true }));
     };
     const timingRetry = window.setInterval(retryTimingWrites, 15000);
+    const accountChanged = () => { setRecordSaveErrors(timingWritesPending() ? { "card-timing": true } : {}); retryTimingWrites(); };
+    window.addEventListener("yantu-account-changed", accountChanged);
     window.addEventListener("focus", retryTimingWrites);
     window.addEventListener("yantu-storage-saved", onSaved);
     window.addEventListener("yantu-storage-error", onError);
-    return () => { window.clearInterval(timingRetry); window.removeEventListener("focus", retryTimingWrites); window.removeEventListener("yantu-storage-saved", onSaved); window.removeEventListener("yantu-storage-error", onError); };
+    return () => { window.clearInterval(timingRetry); window.removeEventListener("yantu-account-changed", accountChanged); window.removeEventListener("focus", retryTimingWrites); window.removeEventListener("yantu-storage-saved", onSaved); window.removeEventListener("yantu-storage-error", onError); };
   }, []);
   // 章节标记持久化: {marks, touch} 形状, 记录变化键的触碰时间供云合并判定新旧(F08)
   const prevDone = useRef<Record<string, Record<string, boolean>>>({ "333": {}, "825": {}, politics: {} });
@@ -439,7 +439,7 @@ export default function Home() {
   const review825 = useStudyReview("825", cards825Merged, data825 !== null);
   const reviewPolitics = useStudyReview("politics", cardsPoliticsMerged, dataPolitics !== null);
   const review = subject === "825" ? review825 : subject === "politics" ? reviewPolitics : review333;
-  const backupBlockedReason = sessionStorageError || doneStorageError || review333.storageError || review825.storageError || reviewPolitics.storageError || Object.values(mockStatus).some(status => status.error)
+  const backupBlockedReason = sessionStorageError || doneStorageError || Object.keys(recordSaveErrors).length > 0 || timingWritesPending() || review333.storageError || review825.storageError || reviewPolitics.storageError || Object.values(mockStatus).some(status => status.error)
     ? "当前有学习记录尚未成功保存，请先解决本地保存错误；导出与导入暂不可用，避免丢失当前修改。"
     : loading || Object.values(mockStatus).some(status => status.pending) ? "AI 正在生成内容，请等待完成或取消生成后再导出、导入。" : !progressReady ? "学习记录正在加载，请稍候。" : "";
   const chapterQuestions = questions.filter((item) => item.book === book && item.chapter === chapter), bookQuestions = questions.filter((item) => item.book === book);
@@ -659,10 +659,10 @@ export default function Home() {
     </aside>
     {menuOpen && <div className="menu-shade" onClick={() => setMenuOpen(false)}/>}
     <main data-modal-background className="main" inert={backupOpen || syncOpen || (mobileLayout && menuOpen)}>
-      <header className="topbar"><button ref={mobileMenuRef} className="mobile-menu" aria-label="打开导航菜单" aria-expanded={menuOpen} aria-controls="study-sidebar" onClick={() => setMenuOpen(true)}><Menu size={22}/></button><span>研途 <ChevronRight size={15}/> {subjects.find((item) => item.id === subject)?.name} <ChevronRight size={15}/> <b>{subject === "english" ? "资料区未接入" : views.find((item) => item.id === view)?.label}</b></span><div><ExamTarget controller={examController} snapshot={examTarget}/><span className="date-chip"><CalendarDays size={15}/>{dateLabel}</span><button className="icon-button" onClick={() => setKeyOpen(true)} aria-label="设置密钥"><Settings2 size={18}/></button></div></header>
+      <header className="topbar"><button ref={mobileMenuRef} className="mobile-menu" aria-label="打开导航菜单" aria-expanded={menuOpen} aria-controls="study-sidebar" onClick={() => setMenuOpen(true)}><Menu size={22}/></button><span>研途 <ChevronRight size={15}/> {subjects.find((item) => item.id === subject)?.name} <ChevronRight size={15}/> <b>{subject === "english" ? "资料区未接入" : views.find((item) => item.id === view)?.label}</b></span><div><ExamTarget controller={examController} snapshot={examTarget} onOpenChange={setExamOpen}/><span className="date-chip"><CalendarDays size={15}/>{dateLabel}</span><button className="icon-button" onClick={() => setKeyOpen(true)} aria-label="设置密钥"><Settings2 size={18}/></button></div></header>
       <div className="content">
         {doneStorageError && <p className="error" role="alert">{doneStorageError}</p>}
-        {Object.keys(recordSaveErrors).length > 0 && <p className="error" role="alert">错题或学习统计刚未能写入本地存储（存储空间不足或被禁用）。当前页面仍可继续使用，但刷新后这些记录会丢失；请检查浏览器存储设置后重试。</p>}
+        {Object.keys(recordSaveErrors).length > 0 && <p className="error" role="alert">学习记录、统计或计时设置尚未成功写入本地存储（存储空间不足或被禁用）。请检查浏览器存储设置；未保存的背诵用时会在当前页面自动重试，刷新前请确认错误已消失。</p>}
         {sessionStorageError && <p className="error" role="alert">{sessionStorageError}</p>}
         {keyStorageError && <p className="error" role="alert">{keyStorageError}</p>}
         <MockPractice subject="333" books={books333WithSections} active={subject === "333" && view === "mock"} apiKey={key} onNeedKey={() => setKeyOpen(true)} onOpenBackup={openBackup} onStatusChange={onMockStatus} current={{ bookId: book, chapter, section }}/>
@@ -681,7 +681,7 @@ export default function Home() {
           {view === "overview" && subject === "825" && <Overview825 {...overviewProps}/>}
           {view === "overview" && subject === "politics" && <OverviewPolitics {...overviewProps}/>}
           {view === "chapters" && <>{heading("BOOK BY BOOK", "从章节开始，形成自己的知识地图", subject === "825" ? "查看原书章节与小节；历年真题已按章节归档为真题卡，选择小节即含对应真题。真题练习按书目和年份筛选。" : subject === "politics" ? "查看五科教材章节与考点小节；选择考点后背诵对应闪卡，或用费曼复述讲出来。" : "选书、选章；完成学习后标记进度，并进入闪卡或真题。")}<div className="book-tabs">{books.map((item) => <button key={item.id} className={book === item.id ? "active" : ""} onClick={() => chooseChapter(item.id, 1)}><i style={{ background: item.tone }}/>{item.name}</button>)}</div><div className="chapter-layout"><section className="panel chapter-list"><span className="eyebrow">{activeBook?.chapters.length || 0} CHAPTERS</span><h2>{activeBook?.name}</h2>{activeBook?.chapters.map((item, index) => <button key={item.title} className={chapter === index + 1 ? "chapter-row active" : "chapter-row"} onClick={() => chooseChapter(book, index + 1)}><span>{String(index + 1).padStart(2, "0")}</span><b>{item.title}</b>{done[book + "-" + (index + 1)] ? <Check size={17}/> : <ChevronRight size={17}/>}</button>)}</section><section className="panel chapter-detail"><span className="eyebrow">{activeBook?.name} / 第 {chapter} 章</span><h2>{chapterName}</h2>{subject === "825" ? <p>选择小节查看笔记闪卡与历年真题卡；真题已按章节归档，也可在真题练习按书目与年份筛选。</p> : subject === "politics" ? <p>本章考点小节来自闪卡标签；先背考点，再用费曼复述串讲本章。</p> : <p>先浏览教材，再用闪卡主动回忆，最后用真题检验；复述反馈会结合当前章节。</p>}<div className="detail-count"><div><b>{chapterCards.length}</b><small>{subject === "333" ? "已校对闪卡" : "考点闪卡"}</small></div><div><b>{subject === "politics" ? (chapterInfo?.sections.length || 0) : subject === "825" ? "书目 / 年份" : chapterQuestions.length}</b><small>{subject === "politics" ? "考点小节" : subject === "825" ? "真题筛选" : "匹配真题"}</small></div></div>{(chapterInfo?.sections || []).length > 0 && <div className="section-outline"><strong>{subject === "825" ? "本章小节" : subject === "politics" ? "本章考点" : "本章目录"}</strong>{chapterInfo?.sections.map((item, index) => <button key={item} onClick={() => { chooseSection(item); setView("cards"); }}><span>{String(index + 1).padStart(2, "0")}</span>{item}<ChevronRight size={15}/></button>)}</div>}{subject === "333" && !chapterCards.length && <p className="notice">该章尚无人工核对闪卡。可先阅读原书，再进行费曼复述。</p>}<div className="detail-buttons"><button className="primary" onClick={() => setView("cards")}>背诵闪卡</button><button className="secondary" onClick={() => setView("feynman")}>口述本章</button></div><button className="mark-done" onClick={() => setDoneBySubject((previous) => ({ ...previous, [progressSubject]: { ...previous[progressSubject], [book + "-" + chapter]: !done[book + "-" + chapter] } }))}><Check size={16}/>{done[book + "-" + chapter] ? "已完成 · 点击撤销" : "标记本章已学习"}</button></section></div></>}
-          {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject + accountVersion} subject={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} onBrowseCardChange={cardId => { setBrowseCardId(cardId); if (cardId === jumpCard) setJumpCard(undefined); }} originalById={originalById} onRated={handleRated} onUndoRating={undoLastRating}/></>}
+          {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject + accountVersion} timingPaused={backupOpen || syncOpen || keyOpen || examOpen || (mobileLayout && menuOpen)} subject={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} onBrowseCardChange={cardId => { setBrowseCardId(cardId); if (cardId === jumpCard) setJumpCard(undefined); }} originalById={originalById} onRated={handleRated} onUndoRating={undoLastRating}/></>}
           {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{wrongOnly ? `只练错题：${wrongPool.length} 道` : useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button></div>{wrongOnly && !wrongPool.length && <div className="empty">当前章节没有已记录的错题。<button className="secondary" onClick={() => setWrongOnly(false)}>练全部真题</button></div>}
           {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
           {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView key={accountVersion} subject="politics" subjectName="政治" books={books} cards={cardsPoliticsMerged} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { createCardTimer, createTimingId, saveCardTiming, flushCardTiming, readTimingRecords, timingContentKey, timingEnabled, timingSettingsKey, type CardTiming, type TimingKind } from "./card-timing";
+import { createCardTimer, createTimingId, saveCardTiming, flushCardTiming, hasPendingTimingWrites, readTimingRecords, timingContentKey, timingEnabled, timingSettingsKey, type CardTiming, type TimingKind } from "./card-timing";
 import type { Rating } from "./study-scheduler";
 
 const accountKey = "yantu-sync-active-partition";
@@ -9,6 +9,7 @@ const currentAccount = () => { try { return localStorage.getItem(accountKey) || 
 export function retryTimingWrites() {
   for (const subject of ["333", "825", "politics"]) flushCardTiming(store, subject, currentAccount());
 }
+export const timingWritesPending = () => hasPendingTimingWrites(store, currentAccount());
 export function useCardTiming(subject: string, card: { id: string; front: string; back: string } | undefined, kind: TimingKind | undefined, enabled: boolean, paused: boolean, note = "") {
   const [switchedOn, setSwitchedOn] = useState(() => timingEnabled(store));
   useEffect(() => {
@@ -20,8 +21,15 @@ export function useCardTiming(subject: string, card: { id: string; front: string
   const active = useRef<{ timer: ReturnType<typeof createCardTimer>; account: string } | null>(null);
   const pausedRef = useRef(paused); pausedRef.current = paused;
   const blocked = useRef(false);
+  const pageAway = useRef(false);
+  const [attemptEpoch, setAttemptEpoch] = useState(0);
+  useEffect(() => {
+    const failed = () => { if (blocked.current) { blocked.current = false; setAttemptEpoch(n => n + 1); } };
+    window.addEventListener("yantu-account-change-failed", failed);
+    return () => window.removeEventListener("yantu-account-change-failed", failed);
+  }, []);
   const contentKey = useMemo(() => card ? timingContentKey(card.front, card.back, note) : "", [card?.front, card?.back, note]);
-  const key = switchedOn && enabled && card && kind ? JSON.stringify([subject, card.id, contentKey]) : "";
+  const key = switchedOn && enabled && card && kind ? JSON.stringify([subject, card.id, contentKey, attemptEpoch]) : "";
   const account = currentAccount;
   const persist = (row: CardTiming | null, owner: string) => { if (row && account() === owner) saveCardTiming(store, subject, row, owner); };
   const finish = (grade?: Rating) => {
@@ -39,21 +47,22 @@ export function useCardTiming(subject: string, card: { id: string; front: string
     const update = () => {
       if (active.current !== current || blocked.current) return;
       if (account() !== current.account) { current.timer.pause(); active.current = null; return; }
-      if (document.visibilityState === "visible" && !pausedRef.current) current.timer.resume();
+      if (document.visibilityState === "visible" && !pageAway.current && !pausedRef.current) current.timer.resume();
       else { current.timer.pause(); persist(current.timer.checkpoint(), current.account); }
     };
-    const hide = () => { current.timer.pause(); persist(current.timer.checkpoint(), current.account); };
+    const hide = () => { pageAway.current = true; current.timer.pause(); persist(current.timer.checkpoint(), current.account); };
+    const show = () => { pageAway.current = false; update(); };
     const changing = () => { finish(); blocked.current = true; completedVisits.delete(`${current.account}:${subject}`); };
     const checkpoint = () => { update(); if (active.current === current) persist(current.timer.checkpoint(), current.account); };
     update();
     const interval = window.setInterval(checkpoint, 15000);
     document.addEventListener("visibilitychange", update);
     window.addEventListener("pagehide", hide);
-    window.addEventListener("pageshow", update);
+    window.addEventListener("pageshow", show);
     window.addEventListener("yantu-account-changing", changing);
     return () => {
       window.clearInterval(interval); document.removeEventListener("visibilitychange", update);
-      window.removeEventListener("pagehide", hide); window.removeEventListener("pageshow", update); window.removeEventListener("yantu-account-changing", changing);
+      window.removeEventListener("pagehide", hide); window.removeEventListener("pageshow", show); window.removeEventListener("yantu-account-changing", changing);
       if (active.current === current) finish();
     };
     // Identity changes end a visit; flips, clock ticks and scope/all switches on the same card do not.
@@ -61,7 +70,7 @@ export function useCardTiming(subject: string, card: { id: string; front: string
   }, [key]);
   useEffect(() => {
     const current = active.current; if (!current || blocked.current) return;
-    if (paused || document.visibilityState !== "visible") { current.timer.pause(); persist(current.timer.checkpoint(), current.account); }
+    if (paused || pageAway.current || document.visibilityState !== "visible") { current.timer.pause(); persist(current.timer.checkpoint(), current.account); }
     else current.timer.resume();
   }, [paused]);
   return {

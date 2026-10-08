@@ -58,8 +58,9 @@ function ExamTargetEditor({ controller, snapshot, onClose }: { controller: ExamT
   </div>;
 }
 
-export function ExamTarget({ controller, snapshot }: { controller: ExamTargetController; snapshot: ExamTargetSnapshot }) {
+export function ExamTarget({ controller, snapshot, onOpenChange }: { controller: ExamTargetController; snapshot: ExamTargetSnapshot; onOpenChange?: (open: boolean) => void }) {
   const [open, setOpen] = useState(false);
+  useEffect(() => { onOpenChange?.(open); return () => onOpenChange?.(false); }, [open, onOpenChange]);
   const countdown = snapshot.ready ? examCountdownLabel(snapshot.date, snapshot.today) : "考试日期读取中…";
   return <div className="exam-target">
     <button type="button" className="exam-target-trigger" disabled={!snapshot.ready} aria-haspopup="dialog" aria-expanded={open} aria-label={`${countdown}，${examDateLabel(snapshot.date)}${snapshot.error ? "，存储出现问题" : ""}，点击设置`} onClick={() => setOpen(true)}>

@@ -67,7 +67,19 @@ export function validateTimingRecords(value: unknown): TimingRecords {
   return out;
 }
 export function readTimingRecords(store: StatStore, subject: string): TimingRecords {
-  try { return validateTimingRecords(JSON.parse(store.getItem(cardTimingKey(subject)) || "{}")); } catch { return {}; }
+  return readTimingSnapshot(store, subject).records;
+}
+export function readTimingSnapshot(store: StatStore, subject: string): { records: TimingRecords; error: string } {
+  const records: TimingRecords = {};
+  try {
+    const parsed: unknown = JSON.parse(store.getItem(cardTimingKey(subject)) || "{}");
+    if (!obj(parsed)) throw new Error("invalid records");
+    let invalid = 0;
+    for (const [id, row] of Object.entries(parsed)) {
+      try { Object.assign(records, validateTimingRecords({ [id]: row })); } catch { invalid++; }
+    }
+    return { records, error: invalid ? `有 ${invalid} 条背诵用时记录无法读取，统计仅包含有效记录。原始数据已保留，请检查存储或同步错误后重试。` : "" };
+  } catch { return { records, error: "背诵用时记录暂时无法读取。原始数据已保留，请检查浏览器存储或同步错误后重试。" }; }
 }
 // A changed card starts a new comparison series, including changes to personal notes.
 export function timingContentKey(...text: string[]): string {
@@ -107,6 +119,9 @@ export function createCardTimer(base: Omit<CardTiming, "elapsedMs" | "days" | "s
 
 // Retain failed writes in memory until storage recovers, scoped to the original account.
 const pending = new Map<StatStore, Map<string, Map<string, CardTiming>>>();
+export function hasPendingTimingWrites(store: StatStore, account = "guest"): boolean {
+  return [...(pending.get(store)?.entries() || [])].some(([key, rows]) => key.startsWith(`${account}:yantu-card-timing-v1-`) && rows.size > 0);
+}
 export function saveCardTiming(store: StatStore, subject: string, row: CardTiming, account = "guest"): boolean {
   if (row.status === "interrupted" && row.elapsedMs < 1000) return true; // Ignore StrictMode probes / immediate navigation.
   const byAccount = pending.get(store) || new Map<string, Map<string, CardTiming>>(); pending.set(store, byAccount);
