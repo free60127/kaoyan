@@ -12,9 +12,13 @@
  * 全部防御式: 形状不符保守返回, 绝不抛错。 */
 
 
-export type MergeKind = "srs" | "done" | "mistakes" | "stats" | "activity" | "excluded" | "personal" | "session";
+export type MergeKind = "srs" | "done" | "mistakes" | "stats" | "activity" | "excluded" | "personal" | "session" | "timing" | "timingSettings";
 
 export const SYNCABLE_KEYS: Record<string, MergeKind> = {
+  "yantu-card-timing-settings-v1": "timingSettings",
+  "yantu-card-timing-v1-333": "timing",
+  "yantu-card-timing-v1-825": "timing",
+  "yantu-card-timing-v1-politics": "timing",
   "yantu-srs-v1-333": "srs",
   "yantu-srs-v1-825": "srs",
   "yantu-srs-v1-politics": "srs",
@@ -66,6 +70,8 @@ export function mergeKeyValue(kind: MergeKind | "lww", local: unknown, remote: u
       case "excluded": value = mergeArrayUnion(local, remote); break;
       case "personal": value = mergePersonal(local, remote); break;
       case "session": value = mergeSession(local, remote); break;
+      case "timing": value = { ...(isObj(local) ? local : {}), ...(isObj(remote) ? remote : {}) }; break;
+      case "timingSettings": value = { enabled: isObj(local) && local.enabled === true && isObj(remote) && remote.enabled === true }; break;
       default: value = remote;
     }
     value = JSON.parse(canonicalJson(value)); // 输出规范化: 键序确定, 双端收敛到相同字节

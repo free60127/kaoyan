@@ -87,6 +87,10 @@ function flatten(key: string, value: unknown): Row {
     const daily = obj(root.daily), date = String(daily.date || "");
     if (date) put(["date", date], true);
     for (const id of array(daily.admitted)) put(["admitted", date, String(id)], true);
+  } else if (kind === "timingSettings") {
+    put(["enabled"], root.enabled === true);
+  } else if (kind === "timing") {
+    for (const [id, attempt] of entries(root)) put([id], attempt);
   } else if (kind === "stats") {
     for (const [date, raw] of entries(value)) {
       const day = obj(raw), devices = Object.keys(obj(day.devices)).length ? obj(day.devices) : { legacy: Object.fromEntries(fields.map(f => [f, day[f] || 0])) };
@@ -228,6 +232,8 @@ export function materialize(key: string, doc: SyncDocument, local: unknown = nul
     for (const day of Object.values(days)) for (const field of fields) day[field] = Object.values(obj(day.devices)).reduce<number>((sum, bucket) => sum + (Number(obj(bucket)[field]) || 0), 0);
     return days;
   }
+  if (kind === "timingSettings") return { enabled: rows.find(([p]) => p[0] === "enabled")?.[1] === true };
+  if (kind === "timing") return Object.fromEntries(rows.map(([p, v]) => [p[0], v]));
   if (kind === "done") return { marks: Object.fromEntries(rows.map(([p, v]) => [p[0], v])), touch: {} };
   if (kind === "personal") {
     const overlays: Record<string, Row> = {}, cards: Record<string, Row> = {}; let seq = 0;

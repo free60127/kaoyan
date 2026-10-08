@@ -6,6 +6,7 @@ import { overlayKey, personalStorageKey, readPersonal, setPersonalCardHidden, sa
 import type { RichRun } from "../../lib/rich-text";
 import { RichTextView } from "./RichTextView";
 import { CardEditor } from "./CardEditor";
+import { useCardTiming } from "../../lib/use-card-timing";
 
 type Book = { id: string; name: string; chapters: { title: string }[] };
 type Card = { id: string; book: string; chapter: number; section?: string; front: string; back: string; source: string; sourceFile?: string; sourcePage?: number; sourcePages?: number[] };
@@ -46,7 +47,7 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
 
 const ratings: { grade: Rating; label: string }[] = [{ grade: "again", label: "重来" }, { grade: "hard", label: "困难" }, { grade: "good", label: "记住了" }, { grade: "easy", label: "很熟悉" }];
 
-export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, onBrowseCardChange, originalById }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => void; jumpCardId?: string; onBrowseCardChange?: (cardId?: string) => void; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
+export function StudyReviewCards({ subject, review, cards, books, bookId, chapter, section, picker, onRated, onUndoRating, jumpCardId, onBrowseCardChange, originalById }: { subject: string; review: StudyReviewController; cards: Card[]; books: Book[]; bookId: string; chapter: number; section: string; picker: ReactNode; onRated?: (card: Card, grade: Rating, wasNew: boolean) => void; onUndoRating?: () => boolean; jumpCardId?: string; onBrowseCardChange?: (cardId?: string) => void; originalById?: (cardId: string) => { front: string; back: string } | undefined }) {
   const [mode, setMode] = useState<"scope" | "all" | "browse">("scope");
   const currentScope: { bookId: string; chapters: number[]; section?: string } = { bookId, chapters: [chapter], ...(section ? { section } : {}) };
   const locationKey = scopeKey(currentScope);
@@ -88,6 +89,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     return {};
   };
   const display = card ? personalInfo(card.id) : {};
+  const timing = useCardTiming(subject, card, head?.kind, review.ready && mode !== "browse" && !jumpCardId, !!editor, display.note?.text);
   // 编辑目标: 个人卡/教材卡(原文从基库取, 合并卡上的已是应用覆盖层后的内容)
   const editorTarget = !editor ? null : (() => {
     if (editor.mode === "create") return { kind: "new" as const, book: bookId, chapter, section };
@@ -128,6 +130,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
   function rate(grade: Rating) {
     if (!card || !flipped || mode === "browse") return;
     if (!review.rateCard(card.id, grade, mode === "scope" ? currentScope : undefined)) return;
+    timing.complete(grade);
     onRated?.(card, grade, wasNew);
     setPinned(null);
     setRevealedCard(null);
@@ -165,7 +168,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     <StudyReviewScopes books={books} cards={cards} review={review} current={currentScope} showCurrent={mode !== "all"}/>
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}
     <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>{mode === "all" ? "本科目今日已学" : "本章今日已学"}新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small></>}</div>
-    {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { const cardId = review.lastRating?.cardId; if (onUndoRating) onUndoRating(); else review.undoLastRating(); if (cardId) setPinned({ key: queueKey, cardId }); setRevealedCard(null); }}>撤销本次评分</button></p>}
+    {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { const cardId = review.lastRating?.cardId; const undone = onUndoRating ? onUndoRating() : review.undoLastRating(); if (!undone) return; if (cardId) timing.undo(cardId); if (cardId) setPinned({ key: queueKey, cardId }); setRevealedCard(null); }}>撤销本次评分</button></p>}
     {editor && editorTarget ? <CardEditor
       subject={subject as PersonalSubject}
       subjectName={books.find(book => book.id === bookId)?.name || subject}

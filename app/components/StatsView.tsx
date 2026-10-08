@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Flame } from "lucide-react";
 import { lastNDays, streakDays, type DayStat, type StatStore } from "@/lib/stats";
 import { todayActivities, type ActivityEntry } from "@/lib/activity";
+import { CardTimingStats } from "./CardTimingStats";
 
 type LoadDay = { date: string; review: number; learning: number };
 
@@ -15,7 +16,7 @@ export function StatsView({ subject, subjectLabel, books, done, due, learnedCard
   useEffect(() => {
     const bump = () => setTick((value) => value + 1);
     const onStorage = (event: StorageEvent) => {
-      if (!event.key || event.key.includes("yantu-stats") || event.key.includes("yantu-activity")) bump();
+      if (!event.key || event.key.includes("yantu-stats") || event.key.includes("yantu-activity") || event.key.includes("yantu-card-timing")) bump();
     };
     window.addEventListener("storage", onStorage);
     window.addEventListener("yantu-storage-saved", bump);
@@ -42,6 +43,7 @@ export function StatsView({ subject, subjectLabel, books, done, due, learnedCard
       <div className="stat"><span className="stat-icon">🧩</span><small>今日新学 / 练习</small><strong>{today.newCards} / {today.quiz}</strong><span>练习答对 {today.quizCorrect} 题</span></div>
       <div className="stat"><span className="stat-icon">📈</span><small>当前复习状态</small><strong>{due} 张到期</strong><span>已学 {learnedCards} / {totalCards} 张卡</span></div>
     </div>
+    <CardTimingStats subject={subject} storage={storage} tick={tick}/>
     <section className="panel">
       <div className="panel-heading"><div><span className="eyebrow">LAST 14 DAYS</span><h2>{subjectLabel} · 近 14 天</h2></div><button className="text-button" onClick={refresh}>刷新</button></div>
       <div className="stats-chart" role="img" aria-label="近14天学习量柱状图">

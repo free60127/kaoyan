@@ -26,9 +26,12 @@ const fontBytes = new Uint8Array(await readFile(new URL("../public/fonts/yantu-p
 const clone = value => JSON.parse(JSON.stringify(value));
 const backup = { format: "yantu-study-backup", version: 1, createdAt: "2026-09-30T12:00:00.000Z", records: {} };
 backup.records["yantu-exam-target-v1"] = { version: 1, date: "2028-02-29" };
+backup.records["yantu-card-timing-settings-v1"] = { enabled: false };
 for (const subject of ["333", "825", "politics"]) {
   const card = catalogs[subject].cards.find(card => card.section) || catalogs[subject].cards[0];
   const range = { bookId: card.book, chapters: [card.chapter], ...(card.section ? { section: card.section } : {}) };
+  const timing = { id: subject + '-timing', cardId: card.id, label: card.front.slice(0,300), contentKey: 'snapshot', kind: 'review', startedAt: '2026-09-30T12:00:00Z', updatedAt: '2026-09-30T12:01:00Z', elapsedMs: 60000, days: { '2026-09-30': 60000 }, status: 'completed', grade: 'good' };
+  backup.records[`yantu-card-timing-v1-${subject}`] = { [timing.id]: timing };
   backup.records[`yantu-srs-v1-${subject}`] = { version: 1,
     cards: { [card.id]: { dueAt: "2027-10-04T12:00:00.000Z", firstStudiedAt: "2026-09-29T12:00:00.000Z", lastReviewedAt: "2026-09-29T12:00:00.000Z", intervalDays: 370, ease: 2.6, reps: 3, lapses: 1, stage: "review" } },
     scopes: [range], newScopes: [range], dailyNewLimit: 17, daily: { date: "2026-09-29", admitted: [card.id] },

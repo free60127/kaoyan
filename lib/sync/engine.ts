@@ -125,6 +125,7 @@ function savePartition(uid: string): void {
 }
 function switchPartition(uid: string): void {
   const previous = readLocal(ACTIVE_KEY) || "guest"; if (previous === uid) return;
+  window.dispatchEvent(new CustomEvent("yantu-account-changing"));
   savePartition(previous); const all = partitions();
   // Only the first guest login imports guest data; empty B cannot inherit A.
   const target = all[uid] || (previous === "guest" && uid !== "guest" && !Object.keys(all).some(id => id !== "guest") ? all.guest : {}), before = all[previous];
@@ -220,11 +221,12 @@ async function startOnline(email: string): Promise<void> {
 function activate(uid: string, email: string, restoringSession = false): void {
   if (uid === userId) return;
   try {
+    if ((readLocal(ACTIVE_KEY) || "guest") !== uid) window.dispatchEvent(new CustomEvent("yantu-account-changing"));
     if (userId) { queueLocalChanges(); savePartition(userId); }
     stopOnline();
     // v2 had no active marker. On authenticated startup the live data is newer
     // than its old login-time partition snapshot; adopt it instead of restoring.
-    if (restoringSession && !readLocal(ACTIVE_KEY)) { savePartition(uid); localStorage.setItem(ACTIVE_KEY, uid); }
+    if (restoringSession && !readLocal(ACTIVE_KEY)) { savePartition(uid); localStorage.setItem(ACTIVE_KEY, uid); window.dispatchEvent(new CustomEvent("yantu-account-changed")); }
     else switchPartition(uid);
     userId = uid; void startOnline(email);
   }
@@ -237,6 +239,7 @@ async function doInitSync(): Promise<void> {
   client.auth.onAuthStateChange((event, session) => {
     if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session?.user) activate(session.user.id, session.user.email || session.user.id, event === "INITIAL_SESSION");
     else if (event === "SIGNED_OUT") {
+      if ((readLocal(ACTIVE_KEY) || "guest") !== "guest") window.dispatchEvent(new CustomEvent("yantu-account-changing"));
       try { if (userId) { queueLocalChanges(); savePartition(userId); } stopOnline(); switchPartition("guest"); setStatus({ state: "signed-out", email: undefined, error: undefined }); }
       catch { stopOnline(); setStatus({ state: "error", email: undefined, error: "退出账号时本机分区保存失败，请释放存储空间后重试。" }); }
     }

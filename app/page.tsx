@@ -35,6 +35,7 @@ import { overlayKey, personalStorageKey, readPersonal, type PersonalStore, type 
 import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
 import { ModalFrame } from "./components/ModalFrame";
 import { useNavigationHistory } from "@/lib/use-navigation-history";
+import { retryTimingWrites } from "@/lib/use-card-timing";
 
 type View = StudyView;
 const BackupPanel = lazy(() => import("./components/BackupPanel"));
@@ -363,9 +364,11 @@ export default function Home() {
       const store = (event as CustomEvent).detail?.store as string | undefined;
       setRecordSaveErrors(previous => ({ ...previous, [store || "unknown"]: true }));
     };
+    const timingRetry = window.setInterval(retryTimingWrites, 15000);
+    window.addEventListener("focus", retryTimingWrites);
     window.addEventListener("yantu-storage-saved", onSaved);
     window.addEventListener("yantu-storage-error", onError);
-    return () => { window.removeEventListener("yantu-storage-saved", onSaved); window.removeEventListener("yantu-storage-error", onError); };
+    return () => { window.clearInterval(timingRetry); window.removeEventListener("focus", retryTimingWrites); window.removeEventListener("yantu-storage-saved", onSaved); window.removeEventListener("yantu-storage-error", onError); };
   }, []);
   // 章节标记持久化: {marks, touch} 形状, 记录变化键的触碰时间供云合并判定新旧(F08)
   const prevDone = useRef<Record<string, Record<string, boolean>>>({ "333": {}, "825": {}, politics: {} });
@@ -513,8 +516,8 @@ export default function Home() {
   }
   function undoLastRating() {
     const effects = ratingSideEffects.current?.[subject];
-    if (!review.undoLastRating()) return;
-    if (!effects) return;
+    if (!review.undoLastRating()) return false;
+    if (!effects) return true;
     dropLastActivity(localStorageStore, subject, "rating");
     recordActivity(localStorageStore, subject, "undo", "撤销了一次闪卡评分");
     delete ratingSideEffects.current![subject];
@@ -522,6 +525,7 @@ export default function Home() {
     reduceStat(localStorageStore, effects.subject, effects.stats, effects.date);
     window.dispatchEvent(new CustomEvent("yantu-storage-saved"));
     if (effects.mistakeUndo) undoMistake(effects.mistakeUndo);
+    return true;
   }
   function handleQuizAnswer(index: number) {
     if (!quiz) return;
@@ -685,7 +689,7 @@ export default function Home() {
           {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill key={accountVersion} storage={localStorageStore}/></>}
           {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView key={accountVersion} subject="825" subjectName="825 英语专业基础" books={books} cards={cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView key={accountVersion} subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
-          {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "每日评分、练习与连续学习天数；数据保存在本浏览器，可用“备份与导出”迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)}/></>)}
+          {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "背诵用时与同一卡的速度变化、每日评分及练习；登录后自动同步，也可通过 PDF 备份迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)}/></>)}
           {view === "search" && <>{heading("GLOBAL SEARCH", "搜索全部闪卡", "跨科目搜索 3600+ 张闪卡，点击结果直达对应章节与卡片。")}{!searchEntries.length ? <div className="panel empty">正在汇总三科卡片索引…</div> : <SearchView entries={searchEntries} query={searchQuery} onQueryChange={setSearchQuery} scrollTop={searchScroll} onJump={entry => {
             const origin = { subject, location: { ...session.locations[subject], view: "search" as const } };
             setSearchScroll(window.scrollY); jumpToCard(entry.id); setSearchReturn(origin);
