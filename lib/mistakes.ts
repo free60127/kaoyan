@@ -1,5 +1,5 @@
 export type MistakeKind = "card" | "quiz" | "practice";
-export type Mistake = { id: string; subject: string; kind: MistakeKind; refId: string; label: string; wrongCount: number; lastAt: string };
+export type Mistake = { id: string; subject: string; kind: MistakeKind; refId: string; label: string; wrongCount: number; lastAt: string; /** tombstone(F08): 已删除标记, 云合并防复活 */ deleted?: boolean };
 /** 广播存储写入结果; Node/测试环境无 window 时静默。 */
 function notifyStorage(type: string, detail?: Record<string, string>) {
   if (typeof window === "undefined" || typeof window.dispatchEvent !== "function") return;
@@ -25,12 +25,18 @@ function parseList(value: string | null): Mistake[] {
       label: item.label.slice(0, 200),
       wrongCount: Number.isInteger(item.wrongCount) && (item.wrongCount as number) > 0 ? item.wrongCount as number : 1,
       lastAt: typeof item.lastAt === "string" ? item.lastAt : new Date().toISOString(),
+      ...(item.deleted === true ? { deleted: true } : {}),
     }));
   } catch { return []; }
 }
 
+/** 全量(含 tombstone): 读改写路径用——tombstone 必须保留才能防云合并复活。 */
 export function readMistakes(): Mistake[] {
   try { return parseList(localStorage.getItem(mistakesStorageKey)); } catch { return []; }
+}
+/** 用户可见列表(UI/重练候选/只练错题): 过滤已删除。 */
+export function readVisibleMistakes(): Mistake[] {
+  return readMistakes().filter(item => !item.deleted);
 }
 
 export const mistakesSavedEvent = "yantu-storage-saved";
@@ -61,9 +67,11 @@ export function removeMistake(id: string): Mistake[] {
 }
 
 /** Remove several mistakes at once by entry id. 写失败时广播事件（横幅提示），内存结果仍返回供本次会话使用。 */
+/** 删除 = tombstone(F08): 条目保留 deleted 标记, 云合并不会被另一端的旧数据复活。 */
 export function removeMistakes(ids: readonly string[]): Mistake[] {
   const drop = new Set(ids);
-  const updated = readMistakes().filter(item => !drop.has(item.id));
+  const now = new Date().toISOString();
+  const updated = readMistakes().map(item => drop.has(item.id) ? { ...item, deleted: true, lastAt: now } : item);
   try {
     localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));
     notifyStorage(mistakesSavedEvent);
@@ -74,7 +82,8 @@ export function removeMistakes(ids: readonly string[]): Mistake[] {
 /** Remove every entry of a subject whose refId matches (re-quiz mastered cards). */
 export function removeMistakesByRef(subject: string, refIds: readonly string[]): Mistake[] {
   const drop = new Set(refIds);
-  const updated = readMistakes().filter(item => !(item.subject === subject && drop.has(item.refId)));
+  const now = new Date().toISOString();
+  const updated = readMistakes().map(item => item.subject === subject && drop.has(item.refId) ? { ...item, deleted: true, lastAt: now } : item);
   try {
     localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));
     notifyStorage(mistakesSavedEvent);
@@ -84,7 +93,8 @@ export function removeMistakesByRef(subject: string, refIds: readonly string[]):
 
 /** Clear one subject's mistakes. 同上，失败可见。 */
 export function clearMistakes(subject: string): Mistake[] {
-  const updated = readMistakes().filter(item => item.subject !== subject);
+  const now = new Date().toISOString();
+  const updated = readMistakes().map(item => item.subject === subject ? { ...item, deleted: true, lastAt: now } : item);
   try {
     localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));
     notifyStorage(mistakesSavedEvent);
@@ -100,7 +110,7 @@ export const parseMistakes = parseList;
 export function selectRequizList(list: Mistake[], subject: string, limit = 20): Mistake[] {
   const byRef = new Map<string, Mistake>();
   for (const item of list) {
-    if (item.subject !== subject || item.kind === "quiz") continue;
+    if (item.subject !== subject || item.kind === "quiz" || item.deleted) continue;
     const existing = byRef.get(item.refId);
     if (!existing) { byRef.set(item.refId, { ...item }); continue; }
     const newer = item.lastAt > existing.lastAt ? item : existing;

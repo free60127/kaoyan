@@ -1,42 +1,52 @@
-/** 云同步引擎: Supabase(邮箱登录) + kv 行存储 + 实时订阅。
- *  - 推送: 周期 diff 本地可同步键与上次同步快照, 变化即 upsert(updated_at=now)
- *  - 拉取: realtime 行变更 → 按类型智能合并 → 写回 localStorage → 合成 storage 事件驱动全页刷新
- *  - 冲突: 按类型的确定性合并(SRS 按卡/错题按条目/计数取大/个人层按 rev), 双端离线修改可收敛
- *  不同步: 选择题未完成题组、自由浏览位置、DeepSeek 密钥(仅会话存储)。 */
+/** 云同步引擎 v2。协议: 本地写入 → outbox(持久化待上传队列) → 确认成功才出队;
+ *  拉取 → 按类型合并 → 写入成功才确认远端版本, 失败进 pendingApply 周期重试。
+ *  内容比较一律用 canonicalJson(键序无关, F06); 时间戳仅展示, 不参与判定(F12)。
+ *  本机数据按账号分区(F02): 切换账号互不带数据, 访客分区独立。
+ *  损坏键隔离到隔离区(F13), 不阻断其余数据同步。 */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { mergeKindFor, mergeKeyValue, SYNCABLE_KEYS, type MergeKind } from "./merge";
+import { canonicalJson, mergeKindFor, mergeKeyValue, SYNCABLE_KEYS } from "./merge";
 
 const CONFIG_KEY = "yantu-sync-config";
-const LWW_KEYS = new Set(["yantu-learning-session-v1", "yantu-exam-target-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"]);
+const OUTBOX_KEY = "yantu-sync-outbox-v1";
+const PARTITION_KEY = "yantu-partition-v1";
+const QUARANTINE_KEY = "yantu-sync-quarantine-v1";
+const LWW_KEYS = new Set(["yantu-exam-target-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"]);
 const PUSH_INTERVAL_MS = 5000;
-const ACTIVITY_LIMIT_KEYS = true;
+const DEVICE_KEY = "yantu-device-id";
+const PARTITION_EXEMPT = new Set([CONFIG_KEY, OUTBOX_KEY, PARTITION_KEY, QUARANTINE_KEY, DEVICE_KEY]);
 
 export type SyncState = "off" | "signed-out" | "connecting" | "online" | "error";
-export type SyncStatus = { state: SyncState; email?: string; error?: string; lastSync?: string };
+export type SyncStatus = { state: SyncState; email?: string; error?: string; lastSync?: string; pendingUploads: number; pendingApply: number };
+export type SyncResult = { pulled: number; pushed: number; failed: string[]; errors: string[] };
 
 let client: SupabaseClient | null = null;
 let userId: string | null = null;
 let timer: ReturnType<typeof setInterval> | null = null;
 let channel: ReturnType<SupabaseClient["channel"]> | null = null;
-/** key → 上次同步的本地 JSON 快照与行时间戳 */
-const lastSynced = new Map<string, { json: string; updatedAt: string }>();
+let pageListeners: (() => void) | null = null;
+let initPromise: Promise<void> | null = null;
+/** 已确认的远端内容(规范化)与本地内容(规范化): 判定"是否有新东西"全靠内容, 不靠时钟(F12) */
+let ackedRemote = new Map<string, string>();
+let ackedLocal = new Map<string, string>();
+let outbox: Record<string, string> = {};
+let pendingApply = new Map<string, { value: unknown }>();
+let previousUid: string | null = null;
+let syncBusy = false;
 const listeners = new Set<(status: SyncStatus) => void>();
-let status: SyncStatus = { state: "off" };
-
-export const SYNC_EXCLUDED = ["选择题未完成题组与自由浏览位置"];
+let status: SyncStatus = { state: "off", pendingUploads: 0, pendingApply: 0 };
 
 function setStatus(patch: Partial<SyncStatus>) {
-  status = { ...status, ...patch };
+  status = { ...status, ...patch, pendingUploads: Object.keys(readOutbox()).length, pendingApply: pendingApply.size };
   for (const listener of listeners) listener(status);
 }
-
-export function getSyncStatus(): SyncStatus { return status; }
+export function getSyncStatus(): SyncStatus { return { ...status, pendingUploads: Object.keys(readOutbox()).length, pendingApply: pendingApply.size }; }
 export function onSyncStatus(listener: (status: SyncStatus) => void): () => void {
   listeners.add(listener);
-  listener(status);
+  listener(getSyncStatus());
   return () => listeners.delete(listener);
 }
 
+// ---------- 配置 ----------
 export type SyncConfig = { url: string; anonKey: string };
 export function getSyncConfig(): SyncConfig | null {
   try {
@@ -48,152 +58,240 @@ export function getSyncConfig(): SyncConfig | null {
   } catch { return null; }
 }
 export function saveSyncConfig(config: SyncConfig): void {
-  // 常见粘贴错误容错: 去掉 /rest/v1、/auth/v1 等接口后缀, 只保留 协议+主机+项目ref
+  // 容错常见粘贴错误: 去掉 /rest/v1、/auth/v1 等接口后缀与尾部斜杠
   const url = config.url.trim().replace(/\/+$/, "").replace(/^(https:\/\/[^/]+).*$/i, "$1");
   localStorage.setItem(CONFIG_KEY, JSON.stringify({ url, anonKey: config.anonKey.trim() }));
 }
 
+// ---------- 本地读写(带成功/失败与隔离 F13) ----------
 function readLocal(key: string): string | null {
   try { return localStorage.getItem(key); } catch { return null; }
 }
-function writeLocal(key: string, json: string) {
+function writeLocal(key: string, json: string): boolean {
   const previous = localStorage.getItem(key);
-  if (previous === json) return;
+  if (previous === json) return true;
   try {
     localStorage.setItem(key, json);
-    // 合成 storage 事件: 同标签内的复习/统计/错题/个人层监听器据此刷新
     window.dispatchEvent(new StorageEvent("storage", { key, newValue: json, oldValue: previous, storageArea: localStorage, url: location.href }));
-  } catch { /* 配额满等写入失败: 下个周期重试 */ }
+    return true;
+  } catch { return false; }
 }
-
-function syncableKey(key: string): boolean {
-  return key in SYNCABLE_KEYS || LWW_KEYS.has(key);
-}
-function mergeKindOf(key: string): MergeKind | "lww" {
-  return LWW_KEYS.has(key) ? "lww" : mergeKindFor(key);
-}
-
-/** 远端行 → 合并进本地; 返回是否写入了本地。
- *  合并结果若是远端的超集(本地有更新内容), 必须回推到云端——否则另一台设备永远看不到(F08场景)。
- *  lastSynced 的写入顺序: 回推完成后才记录快照, 否则去重检查会误跳过回推。 */
-function applyRemote(key: string, remoteValue: unknown, updatedAt: string): boolean {
-  if (!syncableKey(key)) return false;
-  const known = lastSynced.get(key);
-  if (known && known.updatedAt >= updatedAt) return false; // 已应用过更新的版本
-  const localJson = readLocal(key);
-  const localValue = localJson === null ? null : JSON.parse(localJson);
-  const kind = mergeKindOf(key);
-  const merged = localJson === null ? { value: remoteValue, changed: true } : mergeKeyValue(kind, localValue, remoteValue);
-  const mergedJson = JSON.stringify(merged.value);
-  if (localJson !== mergedJson) writeLocal(key, mergedJson);
-  const remoteIsBehind = JSON.stringify(remoteValue) !== mergedJson;
-  if (remoteIsBehind) {
-    void pushKey(key, mergedJson, true);
-    lastSynced.set(key, { json: mergedJson, updatedAt: new Date().toISOString() });
-  } else {
-    lastSynced.set(key, { json: mergedJson, updatedAt });
+function parseLocalSafe(key: string): { ok: true; value: unknown } | { ok: false } {
+  const raw = readLocal(key);
+  if (raw === null) return { ok: true, value: null };
+  try { return { ok: true, value: JSON.parse(raw) }; }
+  catch {
+    try { localStorage.setItem(`${QUARANTINE_KEY}:${key}`, raw); } catch { /* 隔离区满则放弃 */ }
+    return { ok: false };
   }
-  return localJson !== mergedJson;
 }
 
-async function pushKey(key: string, jsonOverride?: string, force = false) {
-  if (!client || !userId) return;
-  const json = jsonOverride ?? readLocal(key) ?? "";
-  const known = lastSynced.get(key);
-  if (!force && known && known.json === json) return;
+// ---------- outbox(持久化待上传队列, F04) ----------
+function loadOutbox(): void { outbox = readOutbox(); }
+
+function readOutbox(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(OUTBOX_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed as Record<string, string> : {};
+  } catch { return {}; }
+}
+function writeOutbox(out: Record<string, string>): void {
+  try { localStorage.setItem(OUTBOX_KEY, JSON.stringify(out)); } catch { /* 队列过大: 下周期重试 */ }
+}
+
+// ---------- 账号分区(F02) ----------
+function isPartitionable(key: string): boolean {
+  return key.startsWith("yantu-") && !PARTITION_EXEMPT.has(key) && !key.startsWith("sb-");
+}
+function savePartition(uid: string): void {
+  try {
+    const all = JSON.parse(localStorage.getItem(PARTITION_KEY) || "{}") as Record<string, Record<string, string>>;
+    const snapshot: Record<string, string> = {};
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key && isPartitionable(key)) snapshot[key] = localStorage.getItem(key) as string;
+    }
+    all[uid] = snapshot;
+    localStorage.setItem(PARTITION_KEY, JSON.stringify(all));
+  } catch { /* 分区快照失败: 保持现状 */ }
+}
+function restorePartition(uid: string): boolean {
+  try {
+    const all = JSON.parse(localStorage.getItem(PARTITION_KEY) || "{}") as Record<string, Record<string, string>>;
+    const snapshot = all[uid];
+    if (!snapshot) return false;
+    for (let i = localStorage.length - 1; i >= 0; i -= 1) {
+      const key = localStorage.key(i);
+      if (key && isPartitionable(key) && !(key in snapshot)) localStorage.removeItem(key);
+    }
+    for (const [key, value] of Object.entries(snapshot)) localStorage.setItem(key, value);
+    return true;
+  } catch { return false; }
+}
+/** 登录切换: 先保存上一身份的数据, 再加载目标身份分区; 首次登录以当前本机数据作为初始分区。 */
+function switchPartition(previousUid: string | null, uid: string): void {
+  if (previousUid) savePartition(previousUid);
+  if (!restorePartition(uid)) savePartition(uid);
+}
+
+function syncableKey(key: string): boolean { return key in SYNCABLE_KEYS || LWW_KEYS.has(key); }
+
+/** 拉取: 远端行 → 按类型合并 → 写本地成功才确认; 失败进 pendingApply 周期重试(F05)。 */
+function applyRemote(key: string, remoteValue: unknown): boolean {
+  const parsedLocal = parseLocalSafe(key);
+  const merged = mergeKeyValue(mergeKindFor(key), parsedLocal.ok ? parsedLocal.value : null, remoteValue);
+  const mergedJson = JSON.stringify(merged.value);
+  const written = writeLocal(key, mergedJson);
+  if (!written) {
+    pendingApply.set(key, { value: remoteValue });
+    setStatus({ state: "error", error: "云端数据未能保存到本机（存储空间不足或被禁用），恢复后将自动重试。" });
+    return false;
+  }
+  pendingApply.delete(key);
+  ackedRemote.set(key, canonicalJson(remoteValue));
+  ackedLocal.set(key, canonicalJson(merged.value));
+  delete outbox[key];
+  // 合并结果是远端的超集(本机有更新内容): 回推, 让另一台设备收敛
+  if (canonicalJson(remoteValue) !== canonicalJson(merged.value)) outbox[key] = mergedJson;
+  return true;
+}
+
+/** 推送一条(带确认): 成功才出队并推进本地基线(F04)。 */
+async function pushOutboxEntry(key: string): Promise<boolean> {
+  if (!client || !userId) return false;
+  const localJson = readLocal(key) ?? "";
+  const queued = outbox[key] || "";
+  let localCanonical = "", queuedCanonical = "";
+  try {
+    localCanonical = localJson ? canonicalJson(JSON.parse(localJson)) : "";
+    queuedCanonical = queued ? canonicalJson(JSON.parse(queued)) : "";
+  } catch { /* 损坏内容跳过 */ }
+  // 本地内容比队列里的更新: 推本地最新; 否则推队列(可能是崩溃前待传内容)
+  const json = localCanonical && (!queuedCanonical || localCanonical !== queuedCanonical) ? localJson : queued;
   let value: unknown;
-  try { value = json === "" ? null : JSON.parse(json); } catch { return; }
-  const updatedAt = new Date().toISOString();
-  const { error } = await client.from("kv_store").upsert({ user_id: userId, key, value, updated_at: updatedAt });
-  if (error) { setStatus({ state: "error", error: `上传 ${key} 失败：${error.message}` }); return; }
-  lastSynced.set(key, { json, updatedAt });
+  try { value = JSON.parse(json); } catch { delete outbox[key]; writeOutbox(outbox); return false; }
+  const { error } = await client.from("kv_store").upsert({ user_id: userId, key, value, updated_at: new Date().toISOString() });
+  if (error) {
+    setStatus({ state: "error", error: `上传 ${key} 失败：${error.message}`, lastSync: status.lastSync });
+    return false;
+  }
+  ackedRemote.set(key, canonicalJson(value));
+  ackedLocal.set(key, canonicalJson(value));
+  delete outbox[key];
+  writeOutbox(outbox);
   setStatus({ state: "online", error: undefined, lastSync: new Date().toISOString() });
+  return true;
 }
 
-async function pushChanged(): Promise<number> {
-  if (!client || !userId) return 0;
-  const pushed: string[] = [];
+/** 本地新变化入队: 与上次确认的本地内容比较(规范化), 变化即入队(F06 键序无关)。 */
+function queueLocalChanges(): void {
+  if (!userId) return;
   for (let i = 0; i < localStorage.length; i += 1) {
     const key = localStorage.key(i);
     if (!key || !syncableKey(key)) continue;
-    const json = readLocal(key) ?? "";
-    const known = lastSynced.get(key);
-    if (known && known.json === json) continue;
-    await pushKey(key, json);
-    pushed.push(key);
+    const raw = readLocal(key);
+    if (raw === null) continue;
+    let canonical = "";
+    try { canonical = canonicalJson(JSON.parse(raw)); } catch { continue; }
+    if (ackedLocal.get(key) === canonical) continue;
+    outbox[key] = raw;
   }
-  return pushed.length;
 }
 
-async function pullAll(): Promise<number> {
+async function pullAll(result?: SyncResult): Promise<number> {
   if (!client || !userId) return 0;
   const { data, error } = await client.from("kv_store").select("key, value, updated_at").eq("user_id", userId);
-  if (error) { setStatus({ state: "error", error: `下载失败：${error.message}` }); return 0; }
+  if (error) {
+    result?.failed.push("__pull__");
+    result?.errors.push(`下载失败：${error.message}`);
+    setStatus({ state: "error", error: `下载失败：${error.message}`, lastSync: status.lastSync });
+    return 0;
+  }
   let applied = 0;
   for (const row of data ?? []) {
-    if (applyRemote(String(row.key), row.value, String(row.updated_at))) applied += 1;
-    else if (!lastSynced.has(String(row.key))) lastSynced.set(String(row.key), { json: readLocal(String(row.key)) ?? "", updatedAt: String(row.updated_at) });
+    try {
+      if (applyRemote(String(row.key), row.value)) applied += 1;
+    } catch { /* F13: 单行异常不阻断其余数据 */ }
   }
-  setStatus({ state: "online", error: undefined, lastSync: new Date().toISOString() });
   return applied;
 }
 
-async function fullSync(): Promise<void> {
-  await pullAll();
-  await pushChanged();
+async function drainOutbox(result?: SyncResult): Promise<number> {
+  let pushed = 0;
+  for (const key of Object.keys({ ...outbox })) {
+    if (!outbox[key]) continue;
+    const ok = await pushOutboxEntry(key);
+    if (ok) pushed += 1;
+    else result?.failed.push(key);
+  }
+  return pushed;
 }
 
-export async function syncNow(): Promise<void> {
-  if (!client || !userId) return;
-  await fullSync();
+async function fullSync(): Promise<SyncResult> {
+  const result: SyncResult = { pulled: 0, pushed: 0, failed: [], errors: [] };
+  queueLocalChanges();
+  result.pulled = await pullAll(result);
+  result.pushed = await drainOutbox(result);
+  queueLocalChanges();
+  setStatus({ state: "online", error: result.errors.length ? result.errors[0] : undefined, lastSync: new Date().toISOString() });
+  return result;
 }
 
-async function startOnline(sessionEmail: string): Promise<void> {
+export async function syncNow(): Promise<SyncResult> {
+  if (!client || !userId) return { pulled: 0, pushed: 0, failed: ["__off__"], errors: ["同步未连接。"] };
+  if (syncBusy) return { pulled: 0, pushed: 0, failed: [], errors: [] };
+  syncBusy = true;
+  try { return await fullSync(); } finally { syncBusy = false; }
+}
+
+async function startOnline(email: string): Promise<void> {
   setStatus({ state: "connecting", error: undefined });
-  await fullSync();
+  loadOutbox();
+  const result = await fullSync();
   channel = client!.channel("kv-store-changes")
     .on("postgres_changes", { event: "*", schema: "public", table: "kv_store", filter: `user_id=eq.${userId}` }, payload => {
-      const row = payload.new as { key?: string; value?: unknown; updated_at?: string } | null;
-      if (row?.key) applyRemote(String(row.key), row.value, String(row.updated_at ?? ""));
+      const row = payload.new as { key?: string; value?: unknown } | null;
+      if (row?.key) {
+        try { applyRemote(String(row.key), row.value); } catch { /* 单行异常隔离(F13) */ }
+      }
     })
     .subscribe();
-  // 周期任务: 推送本地变化; 每 3 个周期(约15s)再拉取一次——realtime 断线(锁屏/休眠/网络切换)后仍能追上另一端
   if (!timer) {
     let ticks = 0;
     timer = setInterval(() => {
       ticks += 1;
-      void pushChanged();
+      queueLocalChanges();
+      void drainOutbox();
       if (ticks % 3 === 0) void pullAll();
+      for (const [key, pending] of [...pendingApply.entries()]) {
+        try { applyRemote(key, pending.value); } catch { /* 下周期再试 */ }
+      }
     }, PUSH_INTERVAL_MS);
   }
   const onVisible = () => {
-    if (document.visibilityState === "visible") { void pushChanged(); void pullAll(); }
-    else void pushChanged(); // 切后台/锁屏前尽力推送
+    if (document.visibilityState === "visible") void syncNow();
+    else { queueLocalChanges(); void drainOutbox(); }
   };
-  const onPageHide = () => { void pushChanged(); };
+  const onPageHide = () => { queueLocalChanges(); void drainOutbox(); };
   document.addEventListener("visibilitychange", onVisible);
   window.addEventListener("pagehide", onPageHide);
   pageListeners = () => {
     document.removeEventListener("visibilitychange", onVisible);
     window.removeEventListener("pagehide", onPageHide);
   };
-  setStatus({ state: "online", email: sessionEmail, lastSync: new Date().toISOString() });
+  setStatus({ state: "online", email, lastSync: new Date().toISOString(), error: result.errors.length ? result.errors[0] : undefined });
 }
-
-let pageListeners: (() => void) | null = null;
 
 function stopOnline(): void {
   if (channel) { void client?.removeChannel(channel); channel = null; }
   if (timer) { clearInterval(timer); timer = null; }
   if (pageListeners) { pageListeners(); pageListeners = null; }
-  lastSynced.clear();
+  ackedRemote = new Map(); ackedLocal = new Map(); pendingApply = new Map();
   userId = null;
 }
 
-let initPromise: Promise<void> | null = null;
-
-/** 应用启动时调用(幂等): 已配置则自动连接并开始同步, 无需打开同步面板。 */
-export function initSync(): Promise<void> {
+export async function initSync(): Promise<void> {
   if (!initPromise) initPromise = doInitSync();
   return initPromise;
 }
@@ -203,29 +301,36 @@ async function doInitSync(): Promise<void> {
   if (!config) { setStatus({ state: "off" }); return; }
   if (client) return;
   client = createClient(config.url, config.anonKey, { auth: { persistSession: true, autoRefreshToken: true } });
+  loadOutbox();
   setStatus({ state: "connecting" });
-  const { data } = await client.auth.getSession();
-  const session = data.session;
   client.auth.onAuthStateChange((event, authSession) => {
-    if (event === "SIGNED_IN" && authSession?.user) {
+    if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && authSession?.user && userId !== authSession.user.id) {
+      if (userId && userId !== authSession.user.id) stopOnline();
+      switchPartition(previousUid, authSession.user.id);
+      previousUid = authSession.user.id;
       userId = authSession.user.id;
+      ackedRemote = new Map(); ackedLocal = new Map(); outbox = {};
       void startOnline(authSession.user.email || authSession.user.id);
     } else if (event === "SIGNED_OUT") {
+      if (previousUid) savePartition(previousUid);
+      previousUid = null;
       stopOnline();
       setStatus({ state: "signed-out" });
     }
   });
-  if (session?.user) {
-    userId = session.user.id;
-    await startOnline(session.user.email || session.user.id);
-  } else setStatus({ state: "signed-out" });
+  const { data } = await client.auth.getSession();
+  if (data.session?.user && userId !== data.session.user.id) {
+    switchPartition(previousUid, data.session.user.id);
+    previousUid = data.session.user.id;
+    userId = data.session.user.id;
+    void startOnline(data.session.user.email || data.session.user.id);
+  } else if (!data.session) setStatus({ state: "signed-out" });
 }
 
 export async function syncSignUp(email: string, password: string): Promise<{ ok: boolean; message: string }> {
   if (!client) return { ok: false, message: "请先填写并保存同步服务配置。" };
   const { data, error } = await client.auth.signUp({ email, password });
   if (error) return { ok: false, message: error.message };
-  // 邮箱确认开启时不会有会话; 关闭时直接登录
   return data.session ? { ok: true, message: "注册成功，同步已开启。" } : { ok: true, message: "注册成功：请到邮箱点击确认链接，然后回来登录。" };
 }
 

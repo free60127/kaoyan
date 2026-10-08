@@ -44,11 +44,12 @@ test("同步合并: SRS 按卡取最新复习状态, 当日准入并集, 范围�
 
 test("同步合并: done true 并集 / 错题按 lastAt / 计数取大 / 活动去重 / 排除并集 / 个人层按 rev", async () => {
   const merge = await realModule("../lib/sync/merge.ts");
-  // done: 一端标记另一端未标 → true 保留
+  // done: 一端标记另一端未标 → true 保留; 输出为 {marks, touch} 形状
   const done = merge.mergeKeyValue("done", { "china-1": true, "china-2": false }, { "china-2": true, "china-3": true });
-  assert.equal(done.value["china-1"], true);
-  assert.equal(done.value["china-2"], true);
-  assert.equal(done.value["china-3"], true);
+  assert.equal(done.value.marks["china-1"], true);
+  assert.equal(done.value.marks["china-2"], true);
+  assert.equal(done.value.marks["china-3"], true);
+  assert.ok(done.value.marks["china-1"]);
   // 错题: 同 id 取 lastAt 较新
   const mistakes = merge.mergeKeyValue("mistakes",
     [{ id: "m1", lastAt: "2026-10-07T09:00:00.000Z", wrongCount: 1 }, { id: "m2", lastAt: "2026-10-06T09:00:00.000Z", wrongCount: 2 }],
@@ -59,7 +60,10 @@ test("同步合并: done true 并集 / 错题按 lastAt / 计数取大 / 活动�
   const stats = merge.mergeKeyValue("stats",
     { "2026-10-07": { date: "2026-10-07", ratings: 5, again: 1, newCards: 10, quiz: 3, quizCorrect: 2 } },
     { "2026-10-07": { date: "2026-10-07", ratings: 3, again: 0, newCards: 12, quiz: 9, quizCorrect: 9 } });
-  assert.deepEqual(stats.value["2026-10-07"], { date: "2026-10-07", ratings: 5, again: 1, newCards: 12, quiz: 9, quizCorrect: 9 });
+  // 旧形状(无设备桶): 合并进 legacy 桶, 计数取较大——合计与旧语义一致
+  assert.deepEqual(
+    { ratings: stats.value["2026-10-07"].ratings, again: stats.value["2026-10-07"].again, newCards: stats.value["2026-10-07"].newCards, quiz: stats.value["2026-10-07"].quiz, quizCorrect: stats.value["2026-10-07"].quizCorrect },
+    { ratings: 5, again: 1, newCards: 12, quiz: 9, quizCorrect: 9 });
   // 活动: 去重合并
   const activity = merge.mergeKeyValue("activity",
     [{ t: "2026-10-07T01:00:00.000Z", kind: "rating", label: "卡A", detail: "记住了" }],
@@ -76,8 +80,9 @@ test("同步合并: done true 并集 / 错题按 lastAt / 计数取大 / 活动�
   assert.equal(personal.value.overlays["333:c1"].rev, 2);
   assert.equal(personal.value.cards.length, 2);
   assert.equal(personal.value.seq, 7);
-  // 形状异常保守返回
-  assert.deepEqual(merge.mergeKeyValue("srs", "broken", { any: 1 }).value, { any: 1 });
+  // 形状异常保守返回: 不抛错, 本地坏数据被远端结构覆盖
+  const weird = merge.mergeKeyValue("srs", "broken", { any: 1 });
+  assert.equal(weird.value.any, 1);
 });
 
 test("同步键注册: 备份键均映射到合并策略或 LWW, 临时数据不同步", async () => {
@@ -159,4 +164,28 @@ test("双设备模拟: 电脑学卡→手机可见; 手机学到期的卡→电�
   const laptopFinal = srsOf(laptop), phoneFinal = srsOf(phone);
   assert.deepEqual(Object.keys(laptopFinal.cards).sort(), Object.keys(phoneFinal.cards).sort());
   assert.ok(laptopFinal.cards.e2 && phoneFinal.cards.e1);
+});
+
+test("F03: 同 rev 并发编辑无损合并(双方文本保留, 双端收敛)", async () => {
+  const merge = await realModule("../lib/sync/merge.ts");
+  const common = { version: 1, seq: 2, overlays: { "333:c1": { rev: 1, note: { text: "共同基线", runs: [] }, updatedAt: "2026-10-08T00:00:00.000Z", baseHash: "x" } }, cards: [] };
+  const pc = JSON.parse(JSON.stringify(common));
+  pc.overlays["333:c1"].note.text = "PC 补充的独特内容";
+  pc.overlays["333:c1"].rev = 2;
+  const phone = JSON.parse(JSON.stringify(common));
+  phone.overlays["333:c1"].note.text = "手机补充的独特内容";
+  phone.overlays["333:c1"].rev = 2;
+  // 双端各自合并对方的版本
+  const pcMerged = merge.mergeKeyValue("personal", pc, phone);
+  const phoneMerged = merge.mergeKeyValue("personal", phone, pc);
+  const pcText = pcMerged.value.overlays["333:c1"].note.text;
+  const phoneText = phoneMerged.value.overlays["333:c1"].note.text;
+  // 无损: 双方内容都在, 且带设备标注可区分
+  assert.ok(pcText.includes("PC 补充的独特内容") && pcText.includes("手机补充的独特内容"), pcText);
+  // 确定性收敛: 双端拼接结果完全一致, 且 rev 已提升避免再次冲突
+  assert.equal(pcText, phoneText);
+  assert.equal(pcMerged.value.overlays["333:c1"].rev, 3); // 合并版本 rev+1, 压过双方 rev2
+  // 收敛后再次互相同步不再变化
+  const stable = merge.mergeKeyValue("personal", pcMerged.value, phoneMerged.value);
+  assert.equal(stable.changed, false);
 });

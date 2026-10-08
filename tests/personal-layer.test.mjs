@@ -86,7 +86,9 @@ test("personal-cards: 覆盖层保存带版本锁, 冲突可检出; 个人卡增
     const shown = personal.setPersonalCardHidden(card.id, false);
     assert.equal(shown.store.cards[0].hidden, undefined);
     const removed = personal.deletePersonalCard(card.id);
-    assert.equal(removed.store.cards.length, 0);
+    // F08: 删除留 tombstone(带 rev), 云合并不会被另一端旧版本复活
+    assert.equal(removed.store.cards[0].deleted, true);
+    assert.equal(removed.store.cards[0].id, card.id);
     // 坏数据安全解析
     store.set(personal.personalStorageKey, "{broken");
     assert.deepEqual(personal.readPersonal().cards, []);

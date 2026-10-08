@@ -1,7 +1,7 @@
 import { lazy, useEffect, useState } from "react";
 import { Cloud, X } from "lucide-react";
 
-type SyncStatus = { state: "off" | "signed-out" | "connecting" | "online" | "error"; email?: string; error?: string; lastSync?: string };
+type SyncStatus = { state: "off" | "signed-out" | "connecting" | "online" | "error"; email?: string; error?: string; lastSync?: string; pendingUploads: number; pendingApply: number };
 
 const SETUP_SQL = `create table public.kv_store (
   user_id uuid not null references auth.users(id) on delete cascade,
@@ -16,7 +16,7 @@ create policy "own rows" on public.kv_store for all
 alter publication supabase_realtime add table public.kv_store;`;
 
 export function SyncPanel({ onClose }: { onClose: () => void }) {
-  const [status, setStatus] = useState<SyncStatus>({ state: "off" });
+  const [status, setStatus] = useState<SyncStatus>({ state: "off", pendingUploads: 0, pendingApply: 0 });
   const [config, setConfig] = useState({ url: "", anonKey: "" });
   const [email, setEmail] = useState(""), [password, setPassword] = useState("");
   const [message, setMessage] = useState<{ error?: boolean; text: string }>({ text: "" });
@@ -67,7 +67,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
     <div className="backup-body">
       <p className="mock-help">登录后，本机的学习记录（复习排期、错题本、统计、个人编辑、考试日期等）会自动与你的账号同步；另一台设备登录同一邮箱即可看到相同数据，任一设备评分/学新卡都会自动推送。仅保存在本浏览器的内容：选择题未完成题组、自由浏览位置、DeepSeek 密钥。</p>
 
-      <p className="mock-selection">当前状态：<b>{stateLabel[status.state]}</b>{status.email ? ` · ${status.email}` : ""}{status.lastSync ? ` · 上次同步 ${new Date(status.lastSync).toLocaleTimeString("zh-CN")}` : ""}</p>
+      <p className="mock-selection">当前状态：<b>{stateLabel[status.state]}</b>{status.email ? ` · ${status.email}` : ""}{status.pendingUploads ? ` · 待上传 ${status.pendingUploads} 项` : ""}{status.lastSync ? ` · 上次同步 ${new Date(status.lastSync).toLocaleTimeString("zh-CN")}` : ""}</p>
       {status.error && <p className="error" role="alert">{status.error}</p>}
       {message.text && <p className={message.error ? "error" : "card-edit-status"} role={message.error ? "alert" : "status"}>{message.text}</p>}
 
@@ -93,7 +93,10 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
 
       {status.state === "online" && <fieldset className="sync-fieldset">
         <legend>同步</legend>
-        <button className="secondary" disabled={!engine} onClick={() => { setMessage({ text: "正在同步…" }); void engine?.syncNow().then(() => setMessage({ text: "同步完成。" })); }}>立即同步</button>
+        <button className="secondary" disabled={!engine} onClick={() => { setMessage({ text: "正在同步…" }); void engine?.syncNow().then(result => {
+          if (result.errors.length || result.failed.length) setMessage({ error: true, text: `同步未完成：上传 ${result.pushed} 项、下载合并 ${result.pulled} 项，${result.failed.length + result.errors.length} 项失败（将自动重试）。` });
+          else setMessage({ text: `同步完成：上传 ${result.pushed} 项、下载合并 ${result.pulled} 项。` });
+        }); }}>立即同步</button>
         <button className="secondary" disabled={!engine} onClick={() => { if (window.confirm("退出登录后本机数据保留，但暂停云同步。确定？")) void engine?.syncSignOut(); }}>退出登录</button>
         <p className="mock-help">同一数据在两台设备同时修改时按类型智能合并：复习状态按卡片取最新、错题按条目、计数取较大值、个人编辑按版本号。极端情况下以先收敛的一端为准，不会整份覆盖。</p>
       </fieldset>}

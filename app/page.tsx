@@ -10,6 +10,8 @@ import { readMistakes, recordMistake, removeMistakes } from "@/lib/mistakes";
 import { listStats, studyDate } from "@/lib/stats";
 import { recordStat } from "@/lib/stats";
 import { dropLastActivity, recordActivity, todayActivities } from "@/lib/activity";
+import { reduceStat } from "@/lib/stats";
+import { readDone, writeDone } from "@/lib/done-store";
 import { forecastLoad } from "@/lib/study-scheduler";
 import { StudyReviewCards } from "./components/StudyReview";
 import { MockPractice } from "./components/MockPractice";
@@ -96,7 +98,7 @@ function applyPersonal(cards: Card[], subject: PersonalSubject, personal: Person
     return { ...card, front: overlay.q ? overlay.q.text : card.front, back: overlay.a ? overlay.a.text : card.back, note: overlay.note?.text || undefined };
   });
   // F07: 个人卡的补充进合并卡(note 字段), 搜索与 AI 与展示同源
-  const extra = personal.cards.filter(card => card.subject === subject && !card.hidden).map(card => ({ id: card.id, book: card.book, chapter: card.chapter, ...(card.section ? { section: card.section } : {}), front: card.front.text, back: card.back.text, note: card.note?.text || undefined, source: "个人补充卡" }) as Card);
+  const extra = personal.cards.filter(card => card.subject === subject && !card.hidden && !card.deleted).map(card => ({ id: card.id, book: card.book, chapter: card.chapter, ...(card.section ? { section: card.section } : {}), front: card.front.text, back: card.back.text, note: card.note?.text || undefined, source: "个人补充卡" }) as Card);
   return [...kept, ...extra];
 }
 const total333 = books333.reduce((sum, book) => sum + book.chapters.length, 0);
@@ -191,7 +193,7 @@ export default function Home() {
   const [quizIndex, setQuizIndex] = useState(0);
   const [wrongOnly, setWrongOnly] = useState(false);
   // 持久化错题本中的真题错题 + 本次会话新增, 合并为"只练错题"范围
-  const [wrongQuizIds, setWrongQuizIds] = useState<Set<string>>(() => new Set(readMistakes().filter(item => item.subject === "333" && item.kind === "quiz").map(item => item.refId)));
+  const [wrongQuizIds, setWrongQuizIds] = useState<Set<string>>(() => new Set(readMistakes().filter(item => !item.deleted && item.subject === "333" && item.kind === "quiz").map(item => item.refId)));
   const [markedOnly825, setMarkedOnly825] = useState(false);
   const [marked825, setMarked825] = useState<Set<string>>(() => new Set(readMistakes().filter(item => item.subject === "825" && item.kind === "quiz").map(item => item.refId)));
   const pendingQuizJump = useRef<string | null>(null);
@@ -280,7 +282,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setDoneBySubject({ "333": readStorage("yantu-done"), "825": readStorage("yantu-done-825"), politics: readStorage("yantu-done-politics") });
+    setDoneBySubject({
+      "333": readDone(localStorage, "yantu-done").marks,
+      "825": readDone(localStorage, "yantu-done-825").marks,
+      politics: readDone(localStorage, "yantu-done-politics").marks,
+    });
     try {
       const restored = restoreLearningSession(localStorage.getItem(learningSessionKey), subjectBookIds, localStorage.getItem("yantu-last-place"));
       subjectRef.current = restored.subject;
@@ -345,9 +351,33 @@ export default function Home() {
     window.addEventListener("yantu-storage-error", onError);
     return () => { window.removeEventListener("yantu-storage-saved", onSaved); window.removeEventListener("yantu-storage-error", onError); };
   }, []);
-  useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done", JSON.stringify(doneBySubject["333"])); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject["333"], progressReady]);
-  useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done-825", JSON.stringify(doneBySubject["825"])); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject["825"], progressReady]);
-  useEffect(() => { if (progressReady) { try { localStorage.setItem("yantu-done-politics", JSON.stringify(doneBySubject.politics)); } catch { setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。"); } } }, [doneBySubject.politics, progressReady]);
+  // 章节标记持久化: {marks, touch} 形状, 记录变化键的触碰时间供云合并判定新旧(F08)
+  const prevDone = useRef<Record<string, Record<string, boolean>>>({ "333": {}, "825": {}, politics: {} });
+  useEffect(() => {
+    if (!progressReady) return;
+    const keys = { "333": "yantu-done", "825": "yantu-done-825", politics: "yantu-done-politics" } as const;
+    let failed = false;
+    for (const subjectKey of ["333", "825", "politics"] as const) {
+      const marks = doneBySubject[subjectKey];
+      const previous = prevDone.current[subjectKey] || {};
+      const changed = Object.keys(marks).filter(key => previous[key] !== marks[key]);
+      const ok = writeDone(localStorage, keys[subjectKey], marks, changed);
+      if (!ok) failed = true;
+    }
+    prevDone.current = { "333": { ...doneBySubject["333"] }, "825": { ...doneBySubject["825"] }, politics: { ...doneBySubject.politics } };
+    if (failed) setDoneStorageError("浏览器未能保存章节标记，请允许本地存储。");
+  }, [doneBySubject, progressReady]);
+  // F10: 另一设备的章节标记到达时无需刷新即更新
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key !== "yantu-done" && event.key !== "yantu-done-825" && event.key !== "yantu-done-politics") return;
+      const doneKey = event.key === "yantu-done-825" ? "825" : event.key === "yantu-done-politics" ? "politics" : "333";
+      const marks = readDone(localStorage, event.key).marks;
+      setDoneBySubject(previous => ({ ...previous, [doneKey]: marks }));
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
   useEffect(() => {
     if ((subject !== "825" && view !== "search") || data825) return;
     let cancelled = false; setDataError("");
@@ -464,25 +494,9 @@ export default function Home() {
     dropLastActivity(localStorageStore, subject, "rating");
     recordActivity(localStorageStore, subject, "undo", "撤销了一次闪卡评分");
     delete ratingSideEffects.current![subject];
-    // 统计回滚: 按评分当日的日期扣回(支持跨日撤销), 只动本科目
-    const stored = JSON.parse(localStorage.getItem("yantu-stats-v1-" + effects.subject) || "{}");
-    const current = stored[effects.date];
-    if (current) {
-      stored[effects.date] = {
-        date: effects.date,
-        ratings: Math.max(0, current.ratings - effects.stats.ratings),
-        again: Math.max(0, current.again - effects.stats.again),
-        newCards: Math.max(0, current.newCards - effects.stats.newCards),
-        quiz: current.quiz,
-        quizCorrect: current.quizCorrect,
-      };
-      try {
-        localStorage.setItem("yantu-stats-v1-" + effects.subject, JSON.stringify(stored));
-        window.dispatchEvent(new CustomEvent("yantu-storage-saved"));
-      } catch {
-        window.dispatchEvent(new CustomEvent("yantu-storage-error", { detail: { store: "stats", subject: effects.subject } }));
-      }
-    }
+    // 统计回滚: 按评分当日的日期扣回(支持跨日撤销), 只动本科目与本设备桶(F07)
+    reduceStat(localStorageStore, effects.subject, effects.stats, effects.date);
+    window.dispatchEvent(new CustomEvent("yantu-storage-saved"));
     // 错题回滚: 本次新建的移除; 已存在的恢复原错误次数
     if (effects.mistakeRefId) {
       const list = readMistakes();

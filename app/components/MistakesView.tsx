@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { RefreshCw, Trash2 } from "lucide-react";
-import { clearMistakes, readMistakes, removeMistakes, removeMistakesByRef, selectRequizList, type Mistake } from "@/lib/mistakes";
+import { clearMistakes, readVisibleMistakes, removeMistakes, removeMistakesByRef, selectRequizList, type Mistake } from "@/lib/mistakes";
 import { loadChoiceBank } from "@/lib/choice-bank";
 import { PracticeView } from "./PracticeView";
 import { ChoiceDrill } from "./ChoiceDrill";
@@ -10,13 +10,13 @@ const kindLabel: Record<Mistake["kind"], string> = { card: "闪卡", quiz: "真�
 const subjectName: Record<string, string> = { "333": "333 教育综合", "825": "825 英语专业基础", politics: "政治" };
 
 export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage }: { subject: string; onReviewCard: (cardId: string) => void; onRedoQuiz: (quizId: string) => void; cards: Record<string, { id: string; book: string; chapter: number; section?: string; front: string; back: string }[]>; storage: StatStore }) {
-  const [items, setItems] = useState<Mistake[]>(() => readMistakes());
+  const [items, setItems] = useState<Mistake[]>(() => readVisibleMistakes());
   const [only, setOnly] = useState<string>(subject);
   const [requiz, setRequiz] = useState(false);
   const [choiceRequiz, setChoiceRequiz] = useState(false);
   const [choiceBankIds, setChoiceBankIds] = useState<ReadonlySet<string> | null>(null);
   useEffect(() => {
-    const sync = () => setItems(readMistakes());
+    const sync = () => setItems(readVisibleMistakes());
     window.addEventListener("storage", sync);
     return () => window.removeEventListener("storage", sync);
   }, []);

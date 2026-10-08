@@ -37,6 +37,8 @@ export type PersonalCard = {
   note?: RichContent;
   bg?: string;
   hidden?: boolean;
+  /** tombstone(F08): 已删除标记, 云合并防复活 */
+  deleted?: boolean;
   createdAt: string;
   rev: number;
 };
@@ -105,6 +107,7 @@ function parseStore(raw: string | null): PersonalStore {
           note: parseContent(item.note),
           bg: isHexColor(item.bg),
           hidden: item.hidden === true ? true : undefined,
+          deleted: item.deleted === true ? true : undefined,
           createdAt: typeof item.createdAt === "string" && Number.isFinite(Date.parse(item.createdAt)) ? item.createdAt : new Date(0).toISOString(),
           rev: Number.isInteger(item.rev) && (item.rev as number) > 0 ? item.rev as number : 1,
         });
@@ -254,7 +257,11 @@ export function setPersonalCardHidden(id: string, hidden: boolean): SaveResult {
 
 export function deletePersonalCard(id: string): SaveResult {
   const current = readPersonal();
-  current.cards = current.cards.filter(item => item.id !== id);
+  // F08: 删除留 tombstone(带 rev), 云合并不会被另一端的旧版本复活
+  const card = current.cards.find(item => item.id === id);
+  if (!card) return { ok: true, store: current };
+  card.deleted = true;
+  card.rev += 1;
   current.seq += 1;
   const written = writeStore(current);
   return written.ok ? { ok: true, store: current } : { ok: false, reason: "storage", store: current };

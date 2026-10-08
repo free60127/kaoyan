@@ -244,7 +244,7 @@ test("UTF8 size limit includes unrecognized fields before sanitizing; bounded te
 test("partial replace touches included keys only, preserving absent keys and credentials", () => {
   const storage = fullStorage(), before = new Map(storage.values), backup = backupWith(doneKey("333"), {});
   assert.deepEqual(apply(storage, backup, catalogs).keys, [doneKey("333")]);
-  for (const [key, value] of before) assert.equal(storage.values.get(key), key === doneKey("333") ? "{}" : value);
+  for (const [key, value] of before) assert.equal(storage.values.get(key), key === doneKey("333") ? '{"marks":{},"touch":{}}' : value);
   assert.deepEqual(apply(storage, { ...backup, records: {} }, catalogs).keys, []);
 });
 test("quota failure restores original strings and removes previously absent and throwing-write keys", () => {

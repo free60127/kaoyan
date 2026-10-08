@@ -14,8 +14,8 @@ export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yan
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
-export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; lastAt: string };
-export type BackupDayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number };
+export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; lastAt: string; deleted?: boolean };
+export type BackupDayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number; devices?: Record<string, Record<string, number>> };
 export type BackupActivity = { t: string; kind: string; subject: string; label: string; detail: string };
 export type BackupRecordMap = {
   "yantu-exam-target-v1": ExamTargetRecord;
@@ -24,9 +24,9 @@ export type BackupRecordMap = {
   "yantu-srs-v1-333": BackupProgress;
   "yantu-srs-v1-825": BackupProgress;
   "yantu-srs-v1-politics": BackupProgress;
-  "yantu-done": Record<string, boolean>;
-  "yantu-done-825": Record<string, boolean>;
-  "yantu-done-politics": Record<string, boolean>;
+  "yantu-done": Record<string, unknown>;
+  "yantu-done-825": Record<string, unknown>;
+  "yantu-done-politics": Record<string, unknown>;
   "yantu-mistakes-v1": BackupMistake[];
   "yantu-activity-v1-333": BackupActivity[];
   "yantu-activity-v1-825": BackupActivity[];
@@ -200,12 +200,27 @@ function progress(value: unknown, catalog: BackupCatalog, allowMissingNewScopes 
   const normalized = normalizeStoredProgress({ ...row, cards, scopes: cleanScopes }, catalog.cards, `${date}T12:00:00`);
   return { ...normalized, scopes: cleanScopes, daily: { date, admitted }, newScopes };
 }
-function completion(value: unknown, catalog: BackupCatalog): Record<string, boolean> {
+/** 章节标记 v2: {marks, touch}——touch 记录每键触碰时间与设备, 云合并据此判定新旧(F08 撤销不复活)。 */
+function completion(value: unknown, catalog: BackupCatalog): Record<string, unknown> {
+  const row = object(value, "章节标记");
   const valid = new Set(catalog.books.flatMap(book => book.chapters.map((_, index) => `${book.id}-${index + 1}`)));
-  return Object.fromEntries(Object.entries(object(value, "章节标记")).map(([key, value]) => {
+  const isV2 = row.marks !== undefined || row.touch !== undefined;
+  if (isV2) for (const key of Object.keys(row)) if (!["marks", "touch"].includes(key)) fail("章节标记", "包含未允许的字段");
+  const marksRow = isV2 ? object(row.marks ?? {}, "章节标记") : row;
+  const marks: Record<string, boolean> = {};
+  for (const [key, value] of Object.entries(marksRow)) {
     if (!valid.has(key) || typeof value !== "boolean") return fail("章节标记", "未知章节或值无效");
-    return [key, value];
-  }));
+    marks[key] = value;
+  }
+  const touch: Record<string, { v: boolean; t: string; d: string }> = {};
+  if (row.touch !== undefined) {
+    for (const [key, entry] of Object.entries(object(row.touch, "章节标记触碰"))) {
+      if (!valid.has(key)) continue;
+      const item = object(entry, "章节标记触碰");
+      touch[key] = { v: item.v === true, t: timestamp(item.t, "章节标记触碰"), d: text(item.d, "章节标记触碰", 80) };
+    }
+  }
+  return { marks, touch };
 }
 function mistakes(value: unknown): BackupMistake[] {
   return boundedList(value, 20_000, "错题本").map(entry => {
@@ -215,7 +230,8 @@ function mistakes(value: unknown): BackupMistake[] {
     if (!["card", "quiz", "practice"].includes(kind)) fail("错题条目", "类型无效");
     const wrongCount = integer(row.wrongCount, 1, 1_000_000, "错题次数");
     const id = text(row.id, "错题条目", 200), refId = text(row.refId, "错题条目", 200);
-    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, lastAt: timestamp(row.lastAt, "错题时间") };
+    // deleted 是 tombstone(F08): 已删除的错题保留记录, 防止另一端旧数据复活
+    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, lastAt: timestamp(row.lastAt, "错题时间"), ...(row.deleted === true ? { deleted: true } : {}) };
   });
 }
 function activities(value: unknown): BackupActivity[] {
@@ -312,14 +328,31 @@ function personalLayer(value: unknown, catalogs: BackupCatalogs): PersonalStore 
 function dayStats(value: unknown): Record<string, BackupDayStat> {
   return Object.fromEntries(Object.entries(object(value, "学习统计")).filter(([date]) => /^\d{4}-\d{2}-\d{2}$/.test(date)).map(([date, entry]) => {
     const row = object(entry, `学习统计 ${date}`);
-    return [dateOnly(date, "统计日期"), {
+    const clean: BackupDayStat = {
       date: dateOnly(row.date, "统计日期"),
       ratings: integer(row.ratings, 0, 100_000, "评分次数"),
       again: integer(row.again, 0, 100_000, "重来次数"),
       newCards: integer(row.newCards, 0, 100_000, "新学张数"),
       quiz: integer(row.quiz, 0, 100_000, "练习题数"),
       quizCorrect: integer(row.quizCorrect, 0, 100_000, "练习答对"),
-    }];
+    };
+    // 设备分桶(F07): 原样保留, 云合并按设备取值
+    if (row.devices !== undefined) {
+      const devices = object(row.devices, `学习统计 ${date} 设备`);
+      const cleanDevices: Record<string, Record<string, number>> = {};
+      for (const [deviceId, bucket] of Object.entries(devices)) {
+        const bucketRow = object(bucket, `学习统计 ${date} 设备`);
+        cleanDevices[deviceId.slice(0, 80)] = {
+          ratings: integer(bucketRow.ratings, 0, 100_000, "评分次数"),
+          again: integer(bucketRow.again, 0, 100_000, "重来次数"),
+          newCards: integer(bucketRow.newCards, 0, 100_000, "新学张数"),
+          quiz: integer(bucketRow.quiz, 0, 100_000, "练习题数"),
+          quizCorrect: integer(bucketRow.quizCorrect, 0, 100_000, "练习答对"),
+        };
+      }
+      if (Object.keys(cleanDevices).length) clean.devices = cleanDevices;
+    }
+    return [dateOnly(date, "统计日期"), clean];
   }));
 }
 function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCatalogs, collecting = false): BackupRecordMap[BackupStorageKey] {
@@ -424,7 +457,12 @@ export function summarizeStudyBackup(input: StudyBackup, catalogs: BackupCatalog
   const result = Object.fromEntries(allSubjects.map(subject => [subject, { studiedCards: 0, completedChapters: 0, mockQuestions: 0, drafts: 0, mistakes: 0, quizAnswers: 0 }])) as BackupSummary;
   for (const subject of subjects) {
     result[subject].studiedCards = Object.keys(backup.records[srsKey(subject)]?.cards || {}).length;
-    result[subject].completedChapters = Object.values(backup.records[doneKey(subject)] || {}).filter(Boolean).length;
+    const doneRecord = backup.records[doneKey(subject)];
+    if (doneRecord && typeof doneRecord === "object" && "marks" in doneRecord) {
+      result[subject].completedChapters = Object.values((doneRecord as { marks: Record<string, boolean> }).marks).filter(Boolean).length;
+    } else {
+      result[subject].completedChapters = Object.values(doneRecord || {}).filter(Boolean).length;
+    }
     if (subject !== "politics") result[subject].mockQuestions = backup.records[mockKey(subject)]?.session?.result.questions.length || 0;
   }
   const mistakeList = backup.records["yantu-mistakes-v1"];
@@ -432,7 +470,7 @@ export function summarizeStudyBackup(input: StudyBackup, catalogs: BackupCatalog
     if (allSubjects.includes(entry.subject as StudySubject)) result[entry.subject as StudySubject].mistakes++;
   }
   for (const subject of subjects) {
-    result[subject].quizAnswers = Object.values(backup.records[`yantu-stats-v1-${subject}` as BackupStorageKey] || {}).reduce((sum, day) => sum + (day?.quiz || 0), 0);
+    result[subject].quizAnswers = Object.values(backup.records[`yantu-stats-v1-${subject}` as BackupStorageKey] || {}).reduce((sum: number, day) => sum + ((day as { quiz?: number } | undefined)?.quiz || 0), 0);
   }
   const saved = backup.records[learningSessionKey];
   if (saved) {
@@ -489,7 +527,9 @@ export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs
         add(`${card ? `${describe(subject, card.book, [card.chapter], card.section)}\n问题：${card.front}\n参考内容：${stripHighlightMarkers(card.back)}` : `卡片 ${id}（当前题库已移除，保留历史记录）`}\n下次复习：${review.dueAt}；阶段：${review.stage}；复习次数：${review.reps}；遗忘次数：${review.lapses}\n间隔天数：${review.intervalDays}；难度系数：${review.ease}\n首次学习：${review.firstStudiedAt}；上次复习：${review.lastReviewedAt}${card ? `\n来源：${card.source}` : ""}`);
       }
     }
-    for (const [key, done] of Object.entries(backup.records[doneKey(subject)] || {})) {
+    const doneRow = backup.records[doneKey(subject)];
+    const doneMarks = doneRow && typeof doneRow === "object" && "marks" in doneRow ? (doneRow as { marks: Record<string, boolean> }).marks : doneRow as Record<string, boolean> | undefined;
+    for (const [key, done] of Object.entries(doneMarks || {})) {
       const book = catalogs[subject].books.find(book => key.startsWith(`${book.id}-`))!;
       add(`${done ? "已完成" : "未完成"}：${describe(subject, book.id, [Number(key.slice(book.id.length + 1))])}`);
     }

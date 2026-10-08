@@ -61,9 +61,12 @@ test("mistakes: 累计错误次数、移除与按科目清空", async () => {
   const repeated = list.find((item) => item.refId === "principles-k1-001");
   assert.equal(repeated.wrongCount, 2);
   list = removeMistakes([repeated.id]);
-  assert.equal(list.length, 1);
+  // F08: 删除留 tombstone——条目仍在, 但用户可见列表不含它, 云合并不会复活
+  assert.equal(list.length, 2);
+  assert.equal(list.find((item) => item.id === repeated.id).deleted, true);
+  assert.equal(list.filter((item) => !item.deleted).length, 1);
   list = clearMistakes("politics");
-  assert.equal(list.length, 0);
+  assert.equal(list.filter((item) => !item.deleted && item.subject === "politics").length, 0);
   // 损坏数据安全解析
   assert.equal(parseMistakes("{broken").length, 0);
   // 重练选择: 仅闪卡/自测类, 按最近优先排序, 上限截断
@@ -96,8 +99,10 @@ test("mistakes: 累计错误次数、移除与按科目清空", async () => {
   recordMistake("333", "practice", "shared", "333的卡", now);
   recordMistake("politics", "practice", "shared", "政治的同名卡", now);
   const afterRef = removeMistakesByRef("333", ["shared"]);
-  assert.ok(!afterRef.some(item => item.subject === "333" && item.refId === "shared"));
-  assert.ok(afterRef.some(item => item.subject === "politics" && item.refId === "shared"));
+  // F08: 删除留 tombstone——333 的条目标记 deleted(不再可见/不再参与重练), 政治不受影响
+  const removedEntry = afterRef.find(item => item.subject === "333" && item.refId === "shared");
+  assert.equal(removedEntry.deleted, true);
+  assert.ok(afterRef.some(item => item.subject === "politics" && item.refId === "shared" && !item.deleted));
   delete globalThis.localStorage;
 });
 
