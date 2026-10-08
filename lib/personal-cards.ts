@@ -46,7 +46,8 @@ export type PersonalCard = {
 export type PersonalStore = { version: 1; seq: number; overlays: Record<string, PersonalOverlay>; cards: PersonalCard[] };
 
 export const overlayKey = (subject: string, cardId: string) => `${subject}:${cardId}`;
-const MAX_CARDS = 2000, MAX_TEXT = 20_000;
+export const PERSONAL_TEXT_LIMIT = 20_000;
+const MAX_CARDS = 2000, MAX_TEXT = PERSONAL_TEXT_LIMIT;
 
 export function contentHash(text: string): string {
   // djb2: 冲突检测用的原文指纹, 非安全哈希

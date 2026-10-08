@@ -1,7 +1,7 @@
 /** Durable account-scoped sync; all transport paths share one serialized runner. */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { canonicalJson, SYNCABLE_KEYS, LWW_KEYS } from "./merge";
-import { compactDocument, documentConflicts, editDocument, importLegacy, isSyncDocument, legacyDocument, materialize, mergeDocuments, type SyncDocument } from "./document";
+import { compactDocument, documentConflicts, editDocument, importLegacy, isSyncDocument, legacyDocument, materialize, mergeDocuments, normalizeDocument, type SyncDocument } from "./document";
 import { getDeviceId } from "../device";
 const CONFIG_KEY = "yantu-sync-config", OUTBOX_KEY = "yantu-sync-outbox-v1", META_KEY = "yantu-sync-meta-v3";
 const PARTITION_KEY = "yantu-partition-v1", ACTIVE_KEY = "yantu-sync-active-partition", QUARANTINE_KEY = "yantu-sync-quarantine-v1";
@@ -27,9 +27,23 @@ function setStatus(patch: Partial<SyncStatus>) { status = { ...status, ...patch,
 export const getSyncStatus = (): SyncStatus => ({ ...status, pendingUploads: Object.keys(outbox).length, pendingApply: pendingApply.size, conflicts: conflictCount() });
 export function onSyncStatus(fn: (s: SyncStatus) => void): () => void { listeners.add(fn); fn(getSyncStatus()); return () => { listeners.delete(fn); }; }
 export function getSyncConfig(): SyncConfig | null {
-  try { const v = JSON.parse(localStorage.getItem(CONFIG_KEY) || "null"); return v && typeof v.url === "string" && v.url.startsWith("https://") && typeof v.anonKey === "string" && v.anonKey ? v : null; } catch { return null; }
+  try { return normalizeSyncConfig(JSON.parse(localStorage.getItem(CONFIG_KEY) || "null")); } catch { return null; }
 }
-export function saveSyncConfig(config: SyncConfig): void { const url = config.url.trim().replace(/\/+$/, "").replace(/^(https:\/\/[^/]+).*$/i, "$1"); localStorage.setItem(CONFIG_KEY, JSON.stringify({ url, anonKey: config.anonKey.trim() })); }
+export function normalizeSyncConfig(config: unknown): SyncConfig | null {
+  if (!config || typeof config !== "object") return null;
+  const v = config as Partial<SyncConfig>;
+  if (typeof v.url !== "string" || typeof v.anonKey !== "string") return null;
+  try {
+    const url = new URL(v.url.trim()), anonKey = v.anonKey.trim();
+    if (url.protocol !== "https:" || !/^[a-z0-9-]+\.supabase\.co$/i.test(url.hostname) || url.username || url.password || !/^(eyJ|sb_publishable_)[\w.-]+$/.test(anonKey)) return null;
+    return { url: url.origin, anonKey };
+  } catch { return null; }
+}
+export function saveSyncConfig(config: SyncConfig): void {
+  const normalized = normalizeSyncConfig(config);
+  if (!normalized) throw new Error("请填写 https://项目编号.supabase.co 和有效的 anon / Publishable key。");
+  localStorage.setItem(CONFIG_KEY, JSON.stringify(normalized));
+}
 const syncableKey = (key: string) => Object.hasOwn(SYNCABLE_KEYS, key) || LWW_KEYS.has(key);
 const WIRE_PREFIX = "yantu-sync-v3:";
 function logicalKey(wireKey: string): string | null {
@@ -61,13 +75,13 @@ function loadOutbox(): void {
   outbox = readOutbox(); docs = {}; baselines = {};
   try {
     const meta = JSON.parse(readLocal(META_KEY) || "{}");
-    for (const [key, doc] of Object.entries(meta.docs || {})) if (syncableKey(key) && isSyncDocument(doc)) docs[key] = doc;
+    for (const [key, doc] of Object.entries(meta.docs || {})) if (syncableKey(key) && isSyncDocument(doc)) docs[key] = normalizeDocument(key, doc);
     baselines = meta.baselines || {};
     // The first write is the durable commit. Recover a crash before the index write.
     for (const key of Array.isArray(meta.pending) ? meta.pending : []) if (typeof key === "string" && syncableKey(key) && docs[key]) outbox[key] = canonicalJson(docs[key]);
     for (const [key, json] of Object.entries(outbox)) {
       if (json === "@document" && docs[key]) { outbox[key] = canonicalJson(docs[key]); continue; }
-      const v = JSON.parse(json); if (isSyncDocument(v)) docs[key] = docs[key] ? mergeDocuments(docs[key], v) : v;
+      const v = JSON.parse(json); if (isSyncDocument(v)) { const normalized = normalizeDocument(key, v); docs[key] = docs[key] ? mergeDocuments(docs[key], normalized) : normalized; }
     }
   } catch { /* Legacy queue recaptured from application data. */ }
 }
@@ -87,6 +101,7 @@ function applyRemote(key: string, remote: unknown): boolean {
   if (!syncableKey(key)) return true;
   try {
     if (remote && typeof remote === "object" && "protocol" in remote && !isSyncDocument(remote)) throw new Error("invalid sync document");
+    if (isSyncDocument(remote)) remote = normalizeDocument(key, remote);
     capture(key); const parsed = parseLocalSafe(key), local = parsed.ok ? parsed.value : null;
     const before = docs[key] ? canonicalJson(docs[key]) : "";
     const merged = compactDocument(key, isSyncDocument(remote) ? mergeDocuments(docs[key] || legacyDocument(key, null), remote) : importLegacy(key, docs[key], local, remote));
@@ -113,7 +128,12 @@ function switchPartition(uid: string): void {
     for (const key of Object.keys(before)) if (!(key in target)) localStorage.removeItem(key);
     for (const [key, value] of Object.entries(target)) localStorage.setItem(key, value);
     localStorage.setItem(ACTIVE_KEY, uid);
-  } catch (error) { for (const [key, value] of Object.entries(before)) localStorage.setItem(key, value); throw error; }
+  } catch (error) {
+    // A target-only key written before a later failure must not remain in A.
+    for (const key of Object.keys(target)) if (!Object.hasOwn(before, key)) localStorage.removeItem(key);
+    for (const [key, value] of Object.entries(before)) localStorage.setItem(key, value);
+    throw error;
+  }
   window.dispatchEvent(new StorageEvent("storage", { key: null, storageArea: localStorage, url: location.href }));
   window.dispatchEvent(new CustomEvent("yantu-account-changed"));
 }
@@ -126,11 +146,13 @@ async function pullAll(result?: SyncResult): Promise<number> {
     // PostgREST caps each response. Stable ordering and explicit ranges keep old
     // device rows beyond the first page participating in the merge.
     const rows: { key: string; value: unknown; updated_at: string }[] = [], pageSize = 500;
-    for (let offset = 0; ; offset += pageSize) {
-      const { data, error } = await active.from("kv_store").select("key, value, updated_at").eq("user_id", uid).order("key").range(offset, offset + pageSize - 1);
+    for (let offset = 0; ;) {
+      const { data, count, error } = await active.from("kv_store").select("key, value, updated_at", { count: "exact" }).eq("user_id", uid).order("key").range(offset, offset + pageSize - 1);
       if (token !== generation) return 0;
       if (error) { failure(result, "__pull__", `下载失败：${error.message}`); return 0; }
-      rows.push(...(data || [])); if (!data || data.length < pageSize) break;
+      rows.push(...(data || [])); offset += data?.length || 0;
+      if (typeof count === "number" ? offset >= count : !data || data.length < pageSize) break;
+      if (!data?.length) { failure(result, "__pull__", "下载未完成：服务返回空分页，请稍后重试。"); return 0; }
     }
     let applied = 0; for (const row of rows) { const key = logicalKey(String(row.key)); if (!key) continue; if (applyRemote(key, row.value)) applied++; else failure(result, key, status.error || "本机写入失败。"); } return applied;
   } catch (error) { if (token === generation) failure(result, "__pull__", `下载失败：${String(error)}`); return 0; }

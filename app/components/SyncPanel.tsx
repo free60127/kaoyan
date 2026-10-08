@@ -40,13 +40,13 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
 
   async function saveConfig() {
     if (!engine) return;
-    if (!/^https:\/\/.+\.supabase\.co/.test(config.url.trim())) { setMessage({ error: true, text: "项目 URL 应形如 https://xxxx.supabase.co" }); return; }
-    const key = config.anonKey.trim();
-    // 兼容两种密钥: 旧版 anon key(eyJ 开头)与新式 publishable key(sb_publishable_ 开头)
-    if (!key.startsWith("eyJ") && !key.startsWith("sb_publishable_")) { setMessage({ error: true, text: "密钥应是 eyJ 开头的 anon key，或 sb_publishable_ 开头的 Publishable key（不是 Secret key）。" }); return; }
-    engine.saveSyncConfig(config);
-    setMessage({ text: "配置已保存，正在连接…" });
-    location.reload();
+    const normalized = engine.normalizeSyncConfig(config);
+    if (!normalized) { setMessage({ error: true, text: "项目 URL 应形如 https://xxxx.supabase.co；密钥应为 anon key 或 Publishable key（不是 Secret key）。" }); return; }
+    try {
+      engine.saveSyncConfig(normalized);
+      setMessage({ text: "配置已保存，正在连接…" });
+      location.reload();
+    } catch { setMessage({ error: true, text: "配置未能保存，请允许浏览器本地存储或释放空间后重试。" }); }
   }
 
   async function auth(kind: "signin" | "signup") {
@@ -59,7 +59,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
     finally { setBusy(false); }
   }
 
-  const configured = !!config.url && !!config.anonKey;
+  const configured = !!engine?.getSyncConfig();
   const stateLabel: Record<SyncStatus["state"], string> = {
     off: "未配置", "signed-out": "已配置 · 未登录", connecting: "连接中…", online: "已连接", error: "同步出错",
   };

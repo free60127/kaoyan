@@ -61,6 +61,18 @@ function fullStorage() {
 }
 function backupWith(key, value) { return { format: "yantu-study-backup", version: 1, createdAt: now.toISOString(), records: { [key]: value } }; }
 
+test("round7: mistake per-device counts survive backup import and reject inconsistent totals", () => {
+  const key = "yantu-mistakes-v1", storage = fullStorage();
+  const row = JSON.parse(storage.values.get(key))[0];
+  row.wrongCount = 5; row.wrongCounts = { legacy: 2, pc: 2, phone: 1 };
+  storage.values.set(key, JSON.stringify([row]));
+  const backup = collect(storage, catalogs, now), restored = memory();
+  apply(restored, backup, catalogs);
+  assert.deepEqual(JSON.parse(restored.values.get(key))[0].wrongCounts, row.wrongCounts);
+  const corrupted = clone(backup); corrupted.records[key][0].wrongCounts.phone = 2;
+  assert.throws(() => validate(corrupted, catalogs), /错题设备计数/);
+});
+
 test("real lazy catalogs match app chapter and section models", () => {
   for (const subject of ["333", "825", "politics"]) {
     assert.ok(catalogs[subject].cards.length > 100);

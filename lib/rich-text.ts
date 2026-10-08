@@ -11,6 +11,7 @@ export type RichContent = { text: string; runs: RichRun[] };
 export const RICH_COLORS = ["#cf3b2e", "#1a66c8", "#0c8a4d", "#7b3fb5"] as const;
 export const RICH_HIGHLIGHTS = ["#ffe98a", "#c9e5ff", "#cdeecd"] as const;
 const HEX = /^#[0-9a-fA-F]{6}$/;
+export const RICH_RUN_LIMIT = 400;
 
 export function isRichColor(value: unknown): value is string {
   return typeof value === "string" && HEX.test(value);
@@ -31,7 +32,7 @@ export function sanitizeRuns(runs: RichRun[], textLength: number): RichRun[] {
     const value = run.value === undefined ? undefined : isRichColor(run.value) ? run.value.toLowerCase() : undefined;
     if ((run.kind === "color" || run.kind === "hl") && !value) continue;
     cleaned.push({ start, end, kind: run.kind, ...(value ? { value } : {}) });
-    if (cleaned.length >= 400) break;
+    if (cleaned.length >= RICH_RUN_LIMIT) break;
   }
   return cleaned;
 }

@@ -14,7 +14,7 @@ export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yan
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
-export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; lastAt: string; deleted?: boolean };
+export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; wrongCounts?: Record<string, number>; lastAt: string; deleted?: boolean };
 export type BackupDayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number; devices?: Record<string, Record<string, number>> };
 export type BackupActivity = { t: string; kind: string; subject: string; label: string; detail: string };
 export type BackupRecordMap = {
@@ -229,9 +229,11 @@ function mistakes(value: unknown): BackupMistake[] {
     const kind = String(row.kind);
     if (!["card", "quiz", "practice"].includes(kind)) fail("错题条目", "类型无效");
     const wrongCount = integer(row.wrongCount, 1, 1_000_000, "错题次数");
+    const wrongCounts = row.wrongCounts === undefined ? undefined : Object.fromEntries(Object.entries(object(row.wrongCounts, "错题设备计数")).map(([id, n]) => [text(id, "错题设备", 80), integer(n, 0, 1_000_000, "错题设备计数")]));
+    if (wrongCounts && Object.values(wrongCounts).reduce((sum, n) => sum + n, 0) !== wrongCount) fail("错题设备计数", "与错题总次数不一致");
     const id = text(row.id, "错题条目", 200), refId = text(row.refId, "错题条目", 200);
     // deleted 是 tombstone(F08): 已删除的错题保留记录, 防止另一端旧数据复活
-    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, lastAt: timestamp(row.lastAt, "错题时间"), ...(row.deleted === true ? { deleted: true } : {}) };
+    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, ...(wrongCounts ? { wrongCounts } : {}), lastAt: timestamp(row.lastAt, "错题时间"), ...(row.deleted === true ? { deleted: true } : {}) };
   });
 }
 function activities(value: unknown): BackupActivity[] {

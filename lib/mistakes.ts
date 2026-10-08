@@ -1,5 +1,7 @@
 export type MistakeKind = "card" | "quiz" | "practice";
-export type Mistake = { id: string; subject: string; kind: MistakeKind; refId: string; label: string; wrongCount: number; lastAt: string; /** tombstone(F08): 已删除标记, 云合并防复活 */ deleted?: boolean };
+import { getDeviceId } from "./device";
+export type Mistake = { id: string; subject: string; kind: MistakeKind; refId: string; label: string; wrongCount: number; wrongCounts?: Record<string, number>; lastAt: string; /** tombstone(F08): 已删除标记, 云合并防复活 */ deleted?: boolean };
+const counters = (value: unknown): Record<string, number> => value && typeof value === "object" && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).filter(([id, n]) => !["__proto__", "constructor", "prototype"].includes(id) && typeof n === "number" && Number.isSafeInteger(n) && n >= 0)) : {};
 /** 广播存储写入结果; Node/测试环境无 window 时静默。 */
 function notifyStorage(type: string, detail?: Record<string, string>) {
   if (typeof window === "undefined" || typeof window.dispatchEvent !== "function") return;
@@ -24,6 +26,7 @@ function parseList(value: string | null): Mistake[] {
       refId: item.refId,
       label: item.label.slice(0, 200),
       wrongCount: Number.isInteger(item.wrongCount) && (item.wrongCount as number) > 0 ? item.wrongCount as number : 1,
+      ...(Object.keys(counters(item.wrongCounts)).length ? { wrongCounts: counters(item.wrongCounts) } : {}),
       lastAt: typeof item.lastAt === "string" ? item.lastAt : new Date().toISOString(),
       ...(item.deleted === true ? { deleted: true } : {}),
     }));
@@ -48,9 +51,11 @@ export function recordMistake(subject: string, kind: MistakeKind, refId: string,
   const list = readMistakes();
   const id = mistakeId(subject, kind, refId);
   const existing = list.find(item => item.id === id);
+  const wrongCounts = { ...(existing?.wrongCounts || (existing ? { legacy: existing.wrongCount } : {})) };
+  const device = getDeviceId(); wrongCounts[device] = (wrongCounts[device] || 0) + 1;
   const next: Mistake = existing
-    ? { ...existing, deleted: false, wrongCount: existing.wrongCount + 1, lastAt: now.toISOString(), label: label.slice(0, 200) || existing.label }
-    : { id, subject, kind, refId, label: label.slice(0, 200), wrongCount: 1, lastAt: now.toISOString() };
+    ? { ...existing, deleted: false, wrongCounts, wrongCount: Object.values(wrongCounts).reduce((sum, n) => sum + n, 0), lastAt: now.toISOString(), label: label.slice(0, 200) || existing.label }
+    : { id, subject, kind, refId, label: label.slice(0, 200), wrongCounts, wrongCount: 1, lastAt: now.toISOString() };
   const updated = [next, ...list.filter(item => item.id !== id)];
   try {
     localStorage.setItem(mistakesStorageKey, JSON.stringify(updated));

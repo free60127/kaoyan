@@ -38,6 +38,7 @@ export const LWW_KEYS = new Set(["yantu-exam-target-v1", "kaoyan.mock-practice.v
 
 const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
 const isArr = Array.isArray;
+const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 
 /** 递归排序对象键的稳定序列化: 内容相同则字符串相同, 与键插入顺序无关。 */
 export function canonicalJson(value: unknown): string {
@@ -98,7 +99,7 @@ function arrOf(v: unknown): unknown[] { return isArr(v) ? v : []; }
 function sortedUnion(local: unknown, remote: unknown, field: string) {
   const a = isObj(local) && isArr(local[field]) ? local[field] as unknown[] : [];
   const b = isObj(remote) && isArr(remote[field]) ? remote[field] as unknown[] : [];
-  return [...new Set([...a, ...b].map(canonicalJson))].map(v => JSON.parse(v)).sort((x, y) => canonicalJson(x).localeCompare(canonicalJson(y)));
+  return [...new Set([...a, ...b].map(canonicalJson))].map(v => JSON.parse(v)).sort((x, y) => compare(canonicalJson(x), canonicalJson(y)));
 }
 
 // ---------- done ----------
@@ -162,7 +163,7 @@ function mergeMistakes(local: unknown, remote: unknown) {
     const newer = String(item.lastAt || "") > String(existing.lastAt || "") ? item : existing;
     byId.set(id, { ...newer, wrongCount: Math.max(Number(item.wrongCount) || 0, Number(existing.wrongCount) || 0) });
   }
-  return [...byId.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  return [...byId.values()].sort((a, b) => compare(String(a.id), String(b.id)));
 }
 
 // ---------- stats(设备分桶) ----------
@@ -217,12 +218,12 @@ function mergeActivity(local: unknown, remote: unknown) {
     seen.add(key);
     merged.push(item);
   }
-  merged.sort((a, b) => String(a.t || "").localeCompare(String(b.t || "")));
+  merged.sort((a, b) => compare(String(a.t || ""), String(b.t || "")));
   return merged.slice(-300);
 }
 function mergeArrayUnion(local: unknown, remote: unknown) {
   if (!isArr(local) || !isArr(remote)) return remote;
-  return [...new Set([...local, ...remote].map(canonicalJson))].map(v => JSON.parse(v)).sort((a, b) => canonicalJson(a).localeCompare(canonicalJson(b)));
+  return [...new Set([...local, ...remote].map(canonicalJson))].map(v => JSON.parse(v)).sort((a, b) => compare(canonicalJson(a), canonicalJson(b)));
 }
 
 // ---------- personal(同 rev 无损合并) ----------
@@ -269,7 +270,7 @@ function mergePersonal(local: unknown, remote: unknown) {
     version: 1,
     seq: Math.max(Number(lo.seq || 0), Number(ro.seq || 0)),
     overlays,
-    cards: [...cardsById.values()].sort((a, b) => String(a.id).localeCompare(String(b.id))),
+    cards: [...cardsById.values()].sort((a, b) => compare(String(a.id), String(b.id))),
   };
 }
 
