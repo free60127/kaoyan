@@ -46,6 +46,7 @@ export function writeDone(store: { getItem(key: string): string | null; setItem(
   const device = getDeviceId();
   const touch = { ...previous.touch };
   for (const changed of changedKeys) {
+    if (previous.marks[changed] === marks[changed]) continue;
     touch[changed] = { v: marks[changed] === true, t: now, d: device };
   }
   try {

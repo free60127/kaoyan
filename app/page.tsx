@@ -315,6 +315,17 @@ export default function Home() {
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
       if (event.key !== learningSessionKey && event.key !== null) return;
+      if (event.key === null) {
+        const restored = restoreLearningSession(localStorage.getItem(learningSessionKey), subjectBookIds);
+        lastSavedSession.current = restored;
+        setSession(restored);
+        requestId.current += 1;
+        requestController.current?.abort();
+        requestController.current = null;
+        setLoading(false); setFeedback(""); setReply(""); setJumpCard(undefined);
+        quizzes.current = {};
+        return;
+      }
       let remote: LearningSession | null = null;
       try { remote = event.newValue ? restoreLearningSession(event.newValue, subjectBookIds) : null; } catch { return; }
       setSession(previous => {
@@ -370,9 +381,16 @@ export default function Home() {
   // F10: 另一设备的章节标记到达时无需刷新即更新
   useEffect(() => {
     const onStorage = (event: StorageEvent) => {
+      if (event.key === null) {
+        const restored = { "333": readDone(localStorage, "yantu-done").marks, "825": readDone(localStorage, "yantu-done-825").marks, politics: readDone(localStorage, "yantu-done-politics").marks };
+        prevDone.current = restored;
+        setDoneBySubject(restored);
+        return;
+      }
       if (event.key !== "yantu-done" && event.key !== "yantu-done-825" && event.key !== "yantu-done-politics") return;
       const doneKey = event.key === "yantu-done-825" ? "825" : event.key === "yantu-done-politics" ? "politics" : "333";
       const marks = readDone(localStorage, event.key).marks;
+      prevDone.current = { ...prevDone.current, [doneKey]: marks };
       setDoneBySubject(previous => ({ ...previous, [doneKey]: marks }));
     };
     window.addEventListener("storage", onStorage);

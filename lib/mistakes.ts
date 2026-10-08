@@ -49,7 +49,7 @@ export function recordMistake(subject: string, kind: MistakeKind, refId: string,
   const id = mistakeId(subject, kind, refId);
   const existing = list.find(item => item.id === id);
   const next: Mistake = existing
-    ? { ...existing, wrongCount: existing.wrongCount + 1, lastAt: now.toISOString(), label: label.slice(0, 200) || existing.label }
+    ? { ...existing, deleted: false, wrongCount: existing.wrongCount + 1, lastAt: now.toISOString(), label: label.slice(0, 200) || existing.label }
     : { id, subject, kind, refId, label: label.slice(0, 200), wrongCount: 1, lastAt: now.toISOString() };
   const updated = [next, ...list.filter(item => item.id !== id)];
   try {

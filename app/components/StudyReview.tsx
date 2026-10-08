@@ -75,6 +75,11 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     return () => { window.removeEventListener("yantu-personal-changed", sync); window.removeEventListener("storage", onStorage); };
   }, []);
   const [editor, setEditor] = useState<null | { mode: "edit"; cardId: string } | { mode: "create" }>(null);
+  useEffect(() => {
+    const reset = () => { setEditor(null); setPinned(null); setRevealedCard(null); };
+    window.addEventListener("yantu-account-changed", reset);
+    return () => window.removeEventListener("yantu-account-changed", reset);
+  }, []);
   const personalInfo = (cardId: string): { qRuns?: RichRun[]; aRuns?: RichRun[]; note?: { text: string; runs: RichRun[] }; bg?: string } => {
     const overlay = personal.overlays[overlayKey(subject, cardId)];
     if (overlay) return { qRuns: overlay.q?.runs, aRuns: overlay.a?.runs, note: overlay.note, bg: overlay.bg };
@@ -160,7 +165,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     <StudyReviewScopes books={books} cards={cards} review={review} current={currentScope} showCurrent={mode !== "all"}/>
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}
     <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>{mode === "all" ? "本科目今日已学" : "本章今日已学"}新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small></>}</div>
-    {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { if (onUndoRating) onUndoRating(); else review.undoLastRating(); }}>撤销本次评分</button></p>}
+    {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { const cardId = review.lastRating?.cardId; if (onUndoRating) onUndoRating(); else review.undoLastRating(); if (cardId) setPinned({ key: queueKey, cardId }); setRevealedCard(null); }}>撤销本次评分</button></p>}
     {!review.ready ? <div className="panel empty">正在读取学习记录…</div>
     : editor && editorTarget ? <CardEditor
       subject={subject as PersonalSubject}

@@ -1,4 +1,6 @@
-/** 云同步合并策略 v2(纯函数)。设计要点:
+/** 旧版数据首次导入的合并策略(纯函数)。正常同步使用 document.ts 的因果版本。
+ *  这里不负责撤销、集合删除等正常同步操作，仅兼容没有版本记录的旧数据。
+ *  设计要点:
  *  - canonicalJson: 递归排序对象键的稳定序列化——一切"是否有变化"的判断都用它,
  *    键插入顺序不同不再造成回推循环(F06)。
  *  - 输出全部规范化(映射键排序), 双端收敛到逐字节相同的内容。
@@ -6,7 +8,7 @@
  *  - stats: devices 按设备分桶, 合并按设备逐字段取较大, 显示合计(F07 并行学习不吞计数)。
  *  - mistakes: 删除留 tombstone(deleted), 合并按 id 取 lastAt 新者, 删除不复活(F08)。
  *  - personal: rev 高者胜; 同 rev 内容分歧时无损拼接双方文本并升 rev(F03 不丢任一笔记)。
- *  - session: 位置/科目保留本机(导航不跨设备跳), 草稿按键并集(冲突保本机, 推送后收敛)。
+ *  - session: 位置/科目保留本机，草稿按键并集，同键保留双方文字。
  * 全部防御式: 形状不符保守返回, 绝不抛错。 */
 
 
@@ -88,7 +90,8 @@ function mergeDaily(local: unknown, remote: unknown) {
   const ld = isObj(local) && isObj(local.daily) ? local.daily as Record<string, unknown> : null;
   const rd = isObj(remote) && isObj(remote.daily) ? remote.daily as Record<string, unknown> : null;
   if (!ld) return rd; if (!rd) return ld;
-  const admitted = [...new Set([...arrOf(ld.admitted).map(canonicalJson), ...arrOf(rd.admitted).map(canonicalJson)])].map(v => JSON.parse(v));
+  if (ld.date !== rd.date) return String(ld.date || "") > String(rd.date || "") ? ld : rd;
+  const admitted = [...new Set([...arrOf(ld.admitted).map(canonicalJson), ...arrOf(rd.admitted).map(canonicalJson)])].sort().map(v => JSON.parse(v));
   return { ...rd, admitted };
 }
 function arrOf(v: unknown): unknown[] { return isArr(v) ? v : []; }
@@ -125,14 +128,14 @@ function mergeDone(local: unknown, remote: unknown) {
   for (const key of [...new Set([...Object.keys(a.marks), ...Object.keys(b.marks), ...Object.keys(a.touch), ...Object.keys(b.touch)])].sort()) {
     const ta = a.touch[key], tb = b.touch[key];
     if (ta && tb) {
-      const winner = tb.t > ta.t ? { v: tb.v, from: b } : { v: ta.v, from: a };
-      marks[key] = winner.v; touch[key] = { v: winner.v, t: (tb.t > ta.t ? tb.t : ta.t), d: (tb.t > ta.t ? (tb.d || "") : (ta.d || "")) };
+      const winner = tb.t > ta.t || tb.t === ta.t && canonicalJson(tb) > canonicalJson(ta) ? tb : ta;
+      marks[key] = winner.v; touch[key] = winner;
     } else if (tb) {
-      // 一端无触碰记录(旧数据): 若值一致随便取; 不一致时 true 优先(与旧行为兼容), 并补触碰
-      const v = b.marks[key] === true || a.marks[key] === true ? true : b.marks[key] ?? a.marks[key] ?? false;
+      // 明确触碰优先于无时间的旧数据，包括取消标记。
+      const v = tb.v;
       marks[key] = v === true; touch[key] = { v: v === true, t: tb.t, d: tb.d || "" };
     } else if (ta) {
-      const v = a.marks[key] === true || b.marks[key] === true ? true : a.marks[key] ?? b.marks[key] ?? false;
+      const v = ta.v;
       marks[key] = v === true; touch[key] = { v: v === true, t: ta.t, d: ta.d || "" };
     } else {
       const v = a.marks[key] === true || b.marks[key] === true ? true : a.marks[key] ?? b.marks[key] ?? false;
@@ -151,8 +154,8 @@ function mergeMistakes(local: unknown, remote: unknown) {
     if (!id) continue;
     const existing = byId.get(id);
     if (!existing) { byId.set(id, item); continue; }
-    // 删除 tombstone 永远保留(F08); 同存取 lastAt 较新、错误次数较大
-    if (item.deleted === true || existing.deleted === true) {
+    // 同时刻删除优先；新的答错记录可以恢复到可见列表。
+    if ((item.deleted === true || existing.deleted === true) && item.lastAt === existing.lastAt) {
       byId.set(id, item.deleted === true ? item : existing);
       continue;
     }
@@ -271,16 +274,24 @@ function mergePersonal(local: unknown, remote: unknown) {
 }
 
 function conflictMergeEntries(mine: Record<string, unknown>, theirs: Record<string, unknown>): Record<string, unknown> {
-  const merged: Record<string, unknown> = { ...mine };
+  const merged: Record<string, unknown> = { ...(canonicalJson(mine) > canonicalJson(theirs) ? mine : theirs) };
+  const substantive = (entry: Record<string, unknown>) => Object.fromEntries(Object.entries(entry).filter(([key]) => key !== "updatedAt" && key !== "rev"));
+  const conflict = canonicalJson(substantive(mine)) !== canonicalJson(substantive(theirs));
+  merged.updatedAt = [String(mine.updatedAt || ""), String(theirs.updatedAt || "")].sort().at(-1);
   for (const field of ["q", "a", "note", "front", "back"] as const) {
     const mineText = typeof mine[field] === "object" && mine[field] !== null ? String((mine[field] as Record<string, unknown>).text || "") : typeof mine[field] === "string" ? mine[field] as string : "";
     const theirsText = typeof theirs[field] === "object" && theirs[field] !== null ? String((theirs[field] as Record<string, unknown>).text || "") : typeof theirs[field] === "string" ? theirs[field] as string : "";
-    if (!mineText || !theirsText || canonicalJson(mineText) === canonicalJson(theirsText)) continue;
-    merged[field] = typeof mine[field] === "object"
-      ? { ...mine[field], text: concatConflict(mineText, theirsText) }
-      : concatConflict(mineText, theirsText);
+    if (mineText === theirsText) continue;
+    if (!mineText || !theirsText) { merged[field] = mineText ? mine[field] : theirs[field]; continue; }
+    const ordered = mineText <= theirsText ? [mine[field], theirs[field]] : [theirs[field], mine[field]];
+    if (typeof mine[field] === "object" || typeof theirs[field] === "object") {
+      const left = isObj(ordered[0]) ? ordered[0] : { text: ordered[0], runs: [] };
+      const right = isObj(ordered[1]) ? ordered[1] : { text: ordered[1], runs: [] };
+      const offset = String(left.text).length + "\n——另一设备的修改——\n".length;
+      merged[field] = { text: concatConflict(mineText, theirsText), runs: [...arrOf(left.runs), ...arrOf(right.runs).filter(isObj).map(run => ({ ...run, start: Number(run.start) + offset, end: Number(run.end) + offset }))] };
+    } else merged[field] = concatConflict(mineText, theirsText);
   }
-  merged.rev = Math.max(revOf(mine), revOf(theirs)) + 1;
+  merged.rev = Math.max(revOf(mine), revOf(theirs)) + (conflict ? 1 : 0);
   return merged;
 }
 function revOf(entry: Record<string, unknown>): number { return Number(entry.rev || 0); }
@@ -295,7 +306,9 @@ function mergeSession(local: unknown, remote: unknown) {
   const unionMaps = (localKey: string, remoteKey: string) => {
     const a = isObj(lo[localKey]) ? lo[localKey] as Record<string, unknown> : {};
     const b = isObj(ro[remoteKey]) ? ro[remoteKey] as Record<string, unknown> : {};
-    return { ...b, ...a }; // 同键冲突保本机(推送后收敛), 不同键并集
+    const merged: Record<string, unknown> = { ...b, ...a };
+    for (const key of Object.keys(a)) if (typeof a[key] === "string" && typeof b[key] === "string" && a[key] !== b[key]) merged[key] = [...new Set([...String(a[key]).split("\n——另一设备的修改——\n"), ...String(b[key]).split("\n——另一设备的修改——\n")])].sort().join("\n——另一设备的修改——\n");
+    return merged;
   };
   merged.feynmanDrafts = unionMaps("feynmanDrafts", "feynmanDrafts");
   merged.pastAnswers = unionMaps("pastAnswers", "pastAnswers");

@@ -121,7 +121,10 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
     get hasPendingWrites() { return pending.length > 0; },
     refresh,
     updateCatalog(nextCatalog: readonly CardIdentity[]) { catalog = nextCatalog; refresh(); },
-    storageChanged(event: { key: string | null }) { if (event.key === key || event.key === null) refresh(); },
+    storageChanged(event: { key: string | null }) {
+      if (event.key === null) { pending = []; lastUndo = null; }
+      if (event.key === key || event.key === null) refresh();
+    },
     selectScopes(scopes: StudyScope[]) {
       // UI selections are based on the visible snapshot: apply only its additions/removals to the latest tab state.
       const before = expanded(session.newScopes), desired = expanded(scopes);
@@ -180,6 +183,7 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     const onStorage = (event: StorageEvent) => {
       try { if (event.storageArea && event.storageArea !== localStorage) return; } catch { return; }
       sync.storageChanged(event); setNow(Date.now());
+      if (event.key === null) setLastRating(null);
     };
     window.addEventListener("focus", refresh);
     window.addEventListener("storage", onStorage);

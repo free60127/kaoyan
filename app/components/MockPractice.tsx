@@ -2,7 +2,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { generateMockQuiz, MOCK_QUIZ_TYPES, MOCK_QUIZ_TYPE_LABELS, type MockQuizQuestion } from "@/lib/mock-quiz";
 import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "@/lib/mock-paper-templates";
 import { countsToStrings, initialMockCounts, initialMockPracticeState, mockPracticeReducer, mockPracticeScore, mockRangesFromSelection, snapshotMockSettings, type MockPracticeBook, type MockResponse, type MockSnapshot } from "@/lib/mock-practice-state";
-import { readMockPractice, writeMockPractice, type MockSettings } from "@/lib/mock-practice-storage";
+import { mockStorageKey, readMockPractice, writeMockPractice, type MockSettings } from "@/lib/mock-practice-storage";
 import { CopyAnswerButton } from "./CopyAnswerButton";
 import { selectedAnswer } from "@/lib/copy-answer";
 
@@ -37,18 +37,26 @@ export function MockPractice({ subject, books, active, apiKey, onNeedKey, onOpen
   useEffect(() => { onStatusChange(subject, { pending: state.pending, error: storageStatus.error }); }, [subject, state.pending, storageStatus.error, onStatusChange]);
 
   useEffect(() => {
+    const restore = () => {
     const defaults: MockSettings = { counts: initialMockCounts(subject), selection: books[0] ? { [books[0].id]: [1] } : {} };
     let restored: ReturnType<typeof readMockPractice>;
     try { restored = readMockPractice(window.localStorage, subject, latestBooks.current); }
     catch { restored = { status: "error", message: "浏览器本地存储不可用；当前页面可继续使用，刷新后无法恢复。" }; }
     const settings = restored.status === "loaded" ? restored.record.settings : defaults;
     const restoredSession = restored.status === "loaded" ? restored.record.session : null;
+    request.current.id++; request.current.controller?.abort(); request.current.controller = undefined;
+    setConfirmClear(false); setReplacement(undefined);
     setCounts(settings.counts); setSelection(settings.selection); setSectionScope(settings.sectionScope); setTemplateId(settings.templateId);
     dispatch({ type: "restore", session: restoredSession });
     // Establish the loaded baseline before enabling autosave. Never overwrite a record on startup.
     storedFingerprint.current = JSON.stringify({ settings, session: restoredSession });
     setStorageStatus(restored.status === "error" ? { error: true, message: restored.message } : { error: false, message: restored.status === "loaded" ? "已恢复本地设置、模拟卷与作答。" : "设置、模拟卷与作答将自动保存到当前浏览器。" });
     setHydratedSubject(subject);
+    };
+    restore();
+    const onStorage = (event: StorageEvent) => { if (event.key === null || event.key === mockStorageKey(subject)) restore(); };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, [subject]);
   useEffect(() => {
     if (hydratedSubject !== subject) return;

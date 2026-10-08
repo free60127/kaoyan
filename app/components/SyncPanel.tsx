@@ -1,7 +1,7 @@
-import { lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Cloud, X } from "lucide-react";
 
-type SyncStatus = { state: "off" | "signed-out" | "connecting" | "online" | "error"; email?: string; error?: string; lastSync?: string; pendingUploads: number; pendingApply: number };
+type SyncStatus = { state: "off" | "signed-out" | "connecting" | "online" | "error"; email?: string; error?: string; lastSync?: string; pendingUploads: number; pendingApply: number; conflicts?: number };
 
 const SETUP_SQL = `create table public.kv_store (
   user_id uuid not null references auth.users(id) on delete cascade,
@@ -26,15 +26,16 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     let cancelled = false;
+    let unsubscribe: (() => void) | undefined;
     import("@/lib/sync/engine").then(module => {
       if (cancelled) return;
       setEngine(module);
-      module.onSyncStatus(setStatus);
+      unsubscribe = module.onSyncStatus(setStatus);
       const saved = module.getSyncConfig();
       if (saved) setConfig(saved);
       void module.initSync();
     });
-    return () => { cancelled = true; };
+    return () => { cancelled = true; unsubscribe?.(); };
   }, []);
 
   async function saveConfig() {
@@ -54,7 +55,8 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
     try {
       const result = kind === "signin" ? await engine.syncSignIn(email.trim(), password) : await engine.syncSignUp(email.trim(), password);
       setMessage({ error: !result.ok, text: result.message });
-    } finally { setBusy(false); }
+    } catch (error) { setMessage({ error: true, text: `连接失败：${String(error)}` }); }
+    finally { setBusy(false); }
   }
 
   const configured = !!config.url && !!config.anonKey;
@@ -67,8 +69,12 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
     <div className="backup-body">
       <p className="mock-help">登录后，本机的学习记录（复习排期、错题本、统计、个人编辑、考试日期等）会自动与你的账号同步；另一台设备登录同一邮箱即可看到相同数据，任一设备评分/学新卡都会自动推送。仅保存在本浏览器的内容：选择题未完成题组、自由浏览位置、DeepSeek 密钥。</p>
 
-      <p className="mock-selection">当前状态：<b>{stateLabel[status.state]}</b>{status.email ? ` · ${status.email}` : ""}{status.pendingUploads ? ` · 待上传 ${status.pendingUploads} 项` : ""}{status.lastSync ? ` · 上次同步 ${new Date(status.lastSync).toLocaleTimeString("zh-CN")}` : ""}</p>
+      <p className="mock-selection">当前状态：<b>{stateLabel[status.state]}</b>{status.email ? ` · ${status.email}` : ""}{status.pendingUploads ? ` · 待上传 ${status.pendingUploads} 项` : ""}{status.pendingApply ? ` · 待保存 ${status.pendingApply} 项` : ""}{status.lastSync ? ` · 上次同步 ${new Date(status.lastSync).toLocaleTimeString("zh-CN")}` : ""}</p>
       {status.error && <p className="error" role="alert">{status.error}</p>}
+      {!!status.conflicts && <div role="status"><p>有 {status.conflicts} 处双端同时修改。文字已尽可能合并；不同样式或非文字值采用一致的选择规则，原版本仍保留。请检查内容后编辑保存，或先导出双方原稿。</p><button className="secondary" onClick={() => {
+        const url = URL.createObjectURL(new Blob([JSON.stringify(engine?.getSyncConflictArchive(), null, 2)], { type: "application/json" }));
+        const link = document.createElement("a"); link.href = url; link.download = "yantu-sync-conflicts.json"; link.click(); URL.revokeObjectURL(url);
+      }}>导出冲突原稿</button></div>}
       {message.text && <p className={message.error ? "error" : "card-edit-status"} role={message.error ? "alert" : "status"}>{message.text}</p>}
 
       <fieldset className="sync-fieldset">
@@ -82,7 +88,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
         </details>
       </fieldset>
 
-      {configured && status.state !== "online" && <fieldset className="sync-fieldset">
+      {configured && !status.email && <fieldset className="sync-fieldset">
         <legend>② {mode === "signin" ? "登录" : "注册"}（邮箱 + 密码）</legend>
         <div className="mistake-filters"><button className={mode === "signin" ? "mode-button active" : "mode-button"} onClick={() => setMode("signin")}>登录</button><button className={mode === "signup" ? "mode-button active" : "mode-button"} onClick={() => setMode("signup")}>注册新账号</button></div>
         <label>邮箱<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com"/></label>
@@ -91,14 +97,14 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
         <p className="mock-help">注册新账号时，本项目若开启了邮箱确认，需要先去邮箱点确认链接再登录。首次登录会把本机数据上传到账号，换设备登录会先合并再保持同步。</p>
       </fieldset>}
 
-      {status.state === "online" && <fieldset className="sync-fieldset">
+      {status.email && <fieldset className="sync-fieldset">
         <legend>同步</legend>
-        <button className="secondary" disabled={!engine} onClick={() => { setMessage({ text: "正在同步…" }); void engine?.syncNow().then(result => {
+        <button className="secondary" disabled={!engine || busy} onClick={() => { setBusy(true); setMessage({ text: "正在同步…" }); void engine?.syncNow().then(result => {
           if (result.errors.length || result.failed.length) setMessage({ error: true, text: `同步未完成：上传 ${result.pushed} 项、下载合并 ${result.pulled} 项，${result.failed.length + result.errors.length} 项失败（将自动重试）。` });
-          else setMessage({ text: `同步完成：上传 ${result.pushed} 项、下载合并 ${result.pulled} 项。` });
-        }); }}>立即同步</button>
-        <button className="secondary" disabled={!engine} onClick={() => { if (window.confirm("退出登录后本机数据保留，但暂停云同步。确定？")) void engine?.syncSignOut(); }}>退出登录</button>
-        <p className="mock-help">同一数据在两台设备同时修改时按类型智能合并：复习状态按卡片取最新、错题按条目、计数取较大值、个人编辑按版本号。极端情况下以先收敛的一端为准，不会整份覆盖。</p>
+          else setMessage({ text: engine?.getSyncStatus().pendingUploads ? "本轮同步已完成，期间产生的新修改正在等待后续上传。" : `同步完成：上传 ${result.pushed} 项、下载合并 ${result.pulled} 项。` });
+        }).catch(error => setMessage({ error: true, text: `同步失败：${String(error)}` })).finally(() => setBusy(false)); }}>立即同步</button>
+        <button className="secondary" disabled={!engine || busy} onClick={() => { if (window.confirm("退出后返回访客数据，账号学习记录保留在本机分区。确定退出？")) void engine?.syncSignOut().catch(error => setMessage({ error: true, text: `退出失败：${String(error)}` })); }}>退出登录</button>
+        <p className="mock-help">各设备的学习记录会合并，后续撤销、删除也会同步。两端同时修改同一份草稿或卡片文字时，双方内容会保留并标出“另一设备的修改”，请检查后编辑整理。页面位置各设备独立。</p>
       </fieldset>}
     </div>
   </div></div>;
