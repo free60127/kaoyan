@@ -2,7 +2,7 @@
  *  绝不存任意 HTML；教材重点标记 ⟦k|…⟧ 与个人 runs 叠加渲染。
  *  runs 的 start/end 以"剥离教材标记后的纯文本"偏移为准——编辑器与存储两侧一致。 */
 
-import { parseHighlightMarkers } from "./highlight-markers";
+import { parseHighlightMarkers, stripHighlightMarkers } from "./highlight-markers";
 
 export type RichRunKind = "color" | "hl" | "b" | "u";
 export type RichRun = { start: number; end: number; kind: RichRunKind; value?: string };
@@ -19,6 +19,39 @@ export function isRichColor(value: unknown): value is string {
 
 export const emptyRich = (text = ""): RichContent => ({ text, runs: [] });
 export const richPlain = (content: RichContent | undefined): string => (content ? content.text : "");
+
+/** Editor coordinates are plain text. Old drafts used raw marker offsets;
+ * old nested overlays used offsets after one stripping pass. Keep both aligned. */
+export function textbookEditContent(content: RichContent, rawOffsets = false): RichContent {
+  let text = rawOffsets ? content.text : stripHighlightMarkers(content.text);
+  const sourceLength = text.length;
+  let positions = Array.from({ length: text.length }, (_, i) => i);
+  for (;;) {
+    const removed = new Set<number>();
+    for (const match of text.matchAll(/⟦([gbrys])\|([^⟧]*)⟧/g)) {
+      const start = match.index!;
+      for (let i = start; i < start + 3; i++) removed.add(i);
+      removed.add(start + match[0].length - 1);
+    }
+    if (!removed.size) break;
+    text = [...text.split("")].filter((_, i) => !removed.has(i)).join("");
+    positions = positions.filter((_, i) => !removed.has(i));
+  }
+  const offset = (n: number) => positions.filter(i => i < n).length;
+  return { text, runs: sanitizeRuns(content.runs, sourceLength).map(run => ({ ...run, start: offset(run.start), end: offset(run.end) })).filter(run => run.end > run.start) };
+}
+
+/** Repair only the known duplicated, same-kind textbook wrapper. User notes
+ * and arbitrary bracket text are not passed through this migration. */
+export function repairNestedTextbookContent(content: RichContent): RichContent {
+  let text = content.text;
+  for (;;) {
+    const next = text.replace(/⟦([gbrys])\|⟦\1\|([^⟦⟧]*)⟧⟧/g, "⟦$1|$2⟧");
+    if (next === text) break;
+    text = next;
+  }
+  return text === content.text ? content : { text, runs: textbookEditContent(content).runs };
+}
 
 /** 校验并净化 runs(来自草稿/备份/导入的数据不可信): 区间夹紧、去空、去重叠、限制数量。 */
 export function sanitizeRuns(runs: RichRun[], textLength: number): RichRun[] {
@@ -132,6 +165,7 @@ export function renderRichSegments(text: string, runs: RichRun[] = []): StyledSe
 
 /** 把原文本的教材标记 ⟦k|…⟧ 重新注入到编辑后的文本: 归一化子串匹配, 互不重叠, 先到先得。 */
 export function reinjectTextbookMarkers(original: string, edited: string, cap = 12): string {
+  edited = textbookEditContent({ text: edited, runs: [] }, true).text;
   const phrases: { key: string; kind: string }[] = [];
   for (const segment of parseHighlightMarkers(original)) {
     if (segment.kind !== "text") {

@@ -18,7 +18,8 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
   useEffect(() => {
     const sync = () => setItems(readVisibleMistakes());
     window.addEventListener("storage", sync);
-    return () => window.removeEventListener("storage", sync);
+    window.addEventListener("yantu-storage-saved", sync);
+    return () => { window.removeEventListener("storage", sync); window.removeEventListener("yantu-storage-saved", sync); };
   }, []);
   useEffect(() => { setOnly(subject); setRequiz(false); setChoiceRequiz(false); }, [subject]);
   // R4: 选择题库错题重练——需要知道哪些错题 refId 命中题库
@@ -80,7 +81,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
         <button key={id} className={only === id ? "mode-button active" : "mode-button"} onClick={() => setOnly(id)}>{id === "all" ? "全部" : subjectName[id]}</button>
       ))}</div>
     </div>
-    <p className="mock-help">评分“重来”的闪卡、答错的真题与自测题会自动收集到这里。闪卡错题与选择题库错题可整组重练（答对自动移出）；真题类错题请在真题练习页重做。</p>
+    <p className="mock-help">评分“重来”的闪卡、答错的真题与自测题会自动收集到这里。开放题的手动待复习标记也保存在这里，不计为答错。闪卡错题与选择题库错题可整组重练（答对自动移出）；真题请在真题练习页重做。</p>
     {!items.length && <div className="empty">还没有错题记录。评分或答题后自动收集。</div>}
     {items.length > 0 && groups.length === 0 && <div className="empty">该科目暂无错题。</div>}
     {items.length > 0 && <div className="mistake-quiz-actions">
@@ -94,7 +95,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
       </div>
       {list.map((item) => <div key={item.id} className="mistake-row">
         <div className="mistake-info">
-          <small>{kindLabel[item.kind]} · 错 {item.wrongCount} 次 · {new Date(item.lastAt).toLocaleDateString("zh-CN")}</small>
+          <small>{kindLabel[item.kind]} · {item.pendingOnly ? "手动标记待复习" : `错 ${item.wrongCount} 次`} · {new Date(item.lastAt).toLocaleDateString("zh-CN")}</small>
           <b>{item.label}</b>
         </div>
         <div className="mistake-actions">

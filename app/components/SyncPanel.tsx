@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Cloud, X } from "lucide-react";
+import { ModalFrame } from "./ModalFrame";
 
 type SyncStatus = { state: "off" | "signed-out" | "connecting" | "online" | "error"; email?: string; error?: string; lastSync?: string; pendingUploads: number; pendingApply: number; conflicts?: number };
 
@@ -64,7 +65,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
     off: "未配置", "signed-out": "已配置 · 未登录", connecting: "连接中…", online: "已连接", error: "同步出错",
   };
 
-  return <div className="backup-shade"><div className="backup-dialog" role="dialog" aria-modal="true" aria-label="云同步" onKeyDown={event => { if (event.key === "Escape" && !busy) onClose(); }} tabIndex={-1}>
+  return <ModalFrame label="云同步" onClose={onClose}>
     <div className="backup-heading"><h2 id="sync-title"><Cloud size={20}/> 云同步 · 邮箱账号</h2><button className="icon-button" aria-label="关闭云同步" onClick={onClose}><X size={20}/></button></div>
     <div className="backup-body">
       <p className="mock-help">登录后，本机的学习记录（复习排期、错题本、统计、个人编辑、考试日期等）会自动与你的账号同步；另一台设备登录同一邮箱即可看到相同数据，任一设备评分/学新卡都会自动推送。仅保存在本浏览器的内容：选择题未完成题组、自由浏览位置、DeepSeek 密钥。</p>
@@ -77,19 +78,22 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
       }}>导出冲突原稿</button></div>}
       {message.text && <p className={message.error ? "error" : "card-edit-status"} role={message.error ? "alert" : "status"}>{message.text}</p>}
 
+      <details className="sync-advanced" open={!configured}>
+      <summary>高级连接设置（通常无需修改）</summary>
       <fieldset className="sync-fieldset">
-        <legend>① 连接你的 Supabase 项目（免费，一次性设置）</legend>
-        <p className="mock-help">在 supabase.com 创建免费项目 → SQL Editor 里执行下面的建表语句 → 把 Project URL 和 anon public key 粘贴到这里。数据按账号隔离，密钥公开是设计安全的。</p>
+        <legend>连接项目</legend>
+        <p className="mock-help">本站已配置云同步，直接使用下方邮箱账号登录即可。仅自行部署或更换项目时需要设置这里：在 Supabase 项目中执行建表 SQL，填入项目 URL 和公开 Publishable key。切换前请先退出账号并备份当前记录。</p>
         <label>项目 URL<input value={config.url} onChange={(event) => setConfig(previous => ({ ...previous, url: event.target.value }))} placeholder="https://xxxx.supabase.co"/></label>
         <label>anon key 或 Publishable key<input value={config.anonKey} onChange={(event) => setConfig(previous => ({ ...previous, anonKey: event.target.value }))} placeholder="eyJhbGciOi…"/></label>
-        <button className="secondary" onClick={saveConfig}>保存配置并连接</button>
+        <button className="secondary" disabled={busy || !!status.email} onClick={saveConfig}>保存配置并连接</button>
         <details className="sync-sql"><summary>建表 SQL（点开复制到 Supabase SQL Editor）</summary>
           <pre>{SETUP_SQL}</pre>
         </details>
       </fieldset>
+      </details>
 
       {configured && !status.email && <fieldset className="sync-fieldset">
-        <legend>② {mode === "signin" ? "登录" : "注册"}（邮箱 + 密码）</legend>
+        <legend>{mode === "signin" ? "登录" : "注册"}（邮箱 + 密码）</legend>
         <div className="mistake-filters"><button className={mode === "signin" ? "mode-button active" : "mode-button"} onClick={() => setMode("signin")}>登录</button><button className={mode === "signup" ? "mode-button active" : "mode-button"} onClick={() => setMode("signup")}>注册新账号</button></div>
         <label>邮箱<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com"/></label>
         <label>密码（至少 6 位）<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="••••••••"/></label>
@@ -107,7 +111,7 @@ export function SyncPanel({ onClose }: { onClose: () => void }) {
         <p className="mock-help">各设备的学习记录会合并，后续撤销、删除也会同步。两端同时修改同一份草稿或卡片文字时，双方内容会保留并标出“另一设备的修改”，请检查后编辑整理。页面位置各设备独立。</p>
       </fieldset>}
     </div>
-  </div></div>;
+  </ModalFrame>;
 }
 
 export default SyncPanel;

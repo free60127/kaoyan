@@ -2,7 +2,7 @@
  *  原则: 教材数据不动——个人内容独立存储、按 卡片ID 关联、带版本号;
  *  复习排期继续用原卡 ID, 不因编辑重置。多标签页用 rev 乐观锁防互覆。 */
 
-import { sanitizeRuns, type RichContent, type RichRun } from "./rich-text";
+import { repairNestedTextbookContent, sanitizeRuns, type RichContent, type RichRun } from "./rich-text";
 
 export const personalStorageKey = "yantu-personal-v1";
 export type PersonalSubject = "333" | "825" | "politics";
@@ -76,12 +76,13 @@ function parseStore(raw: string | null): PersonalStore {
     for (const [key, entry] of Object.entries(overlays)) {
       if (!key || key.length > 260 || !entry || typeof entry !== "object" || Array.isArray(entry)) continue;
       const item = entry as Record<string, unknown>;
+      const q = parseContent(item.q), a = parseContent(item.a);
       const overlay: PersonalOverlay = {
         rev: Number.isInteger(item.rev) && (item.rev as number) > 0 ? item.rev as number : 1,
         updatedAt: typeof item.updatedAt === "string" && Number.isFinite(Date.parse(item.updatedAt)) ? item.updatedAt : new Date(0).toISOString(),
         baseHash: typeof item.baseHash === "string" ? item.baseHash.slice(0, 64) : "",
-        q: parseContent(item.q),
-        a: parseContent(item.a),
+        q: q ? repairNestedTextbookContent(q) : undefined,
+        a: a ? repairNestedTextbookContent(a) : undefined,
         note: parseContent(item.note),
         bg: isHexColor(item.bg),
         hidden: item.hidden === true ? true : undefined,

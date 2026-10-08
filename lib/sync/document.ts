@@ -7,6 +7,7 @@ import { canonicalJson, mergeKindFor, mergeKeyValue } from "./merge";
 import { stripHighlightMarkers } from "../highlight-markers";
 import { RICH_RUN_LIMIT } from "../rich-text";
 import { PERSONAL_TEXT_LIMIT } from "../personal-cards";
+import { normalizeMistakeCounters } from "../mistakes";
 
 type Clock = Record<string, number>;
 type Version = { clock: Clock; value: unknown; deleted?: true };
@@ -30,6 +31,22 @@ function scopeUnits(value: unknown): Row[] {
 
 /** Earlier v3 rows grouped chapters. Split their registers without resetting clocks. */
 export function normalizeDocument(key: string, doc: SyncDocument): SyncDocument {
+  if (mergeKindFor(key) === "mistakes") {
+    const cells: Cells = {};
+    for (const [p, register] of Object.entries(doc.cells)) {
+      const parts = JSON.parse(p) as string[];
+      if (parts.length !== 1) { cells[p] = versions([...(cells[p] || []), ...register]); continue; }
+      for (const v of register.filter(v => v.deleted)) {
+        const reset = path(parts[0], "reset");
+        cells[reset] = versions([...(cells[reset] || []), { clock: v.clock, value: true }]);
+      }
+      // Split old whole-entry registers without losing their causal clocks.
+      for (const v of register.filter(v => !v.deleted)) for (const [target, value] of Object.entries(flattenMistake(obj(v.value)))) {
+        cells[target] = versions([...(cells[target] || []), { ...v, value: v.deleted ? null : value }]);
+      }
+    }
+    return { ...doc, cells };
+  }
   if (mergeKindFor(key) !== "srs") return doc;
   const cells: Cells = {};
   for (const [p, register] of Object.entries(doc.cells)) {
@@ -45,6 +62,17 @@ export function normalizeDocument(key: string, doc: SyncDocument): SyncDocument 
     }
   }
   return { ...doc, cells };
+}
+
+function flattenMistake(item: Row): Row {
+  if (!item.id) return {};
+  const id = String(item.id), { wrongCount, wrongCounts, deleted, restoredDeletion, ...metadata } = item;
+  const pending = metadata.pendingOnly === true || metadata.pendingOnly === undefined && metadata.subject === "825" && metadata.kind === "quiz";
+  const normalized = normalizeMistakeCounters({ wrongCount: pending ? 0 : wrongCount, wrongCounts });
+  const out: Row = { [path(id, "entry")]: { ...metadata, pendingOnly: pending },
+    [path(id, "visibility")]: { deleted: deleted === true, restored: restoredDeletion === true } };
+  for (const [device, count] of Object.entries(normalized.wrongCounts)) out[path(id, "count", device)] = count;
+  return out;
 }
 
 /** Convert domain values to independently editable registers. Never sync navigation. */
@@ -73,7 +101,7 @@ function flatten(key: string, value: unknown): Row {
   } else if (kind === "session") {
     for (const field of ["feynmanDrafts", "pastAnswers", "plannerPrompts"]) for (const [id, draft] of entries(root[field])) put([field, id], draft);
   } else if (kind === "mistakes") {
-    for (const item of array(value)) if (obj(item).id) put([String(obj(item).id)], item);
+    for (const item of array(value)) Object.assign(out, flattenMistake(obj(item)));
   } else if (kind === "activity" || kind === "excluded") {
     for (const item of array(value)) put([canonicalJson(item)], item);
   } else if (mockKey(key)) {
@@ -127,6 +155,10 @@ export function editDocument(key: string, doc: SyncDocument, baseline: unknown, 
     if (canonicalJson(before[p]) === canonicalJson(after[p]) && (p in before) === (p in after)) continue;
     const clock: Clock = {};
     for (const version of cells[p] || []) for (const [id, count] of Object.entries(version.clock)) clock[id] = Math.max(clock[id] || 0, count);
+    if (mergeKindFor(key) === "mistakes") {
+      const id = (JSON.parse(p) as string[])[0];
+      for (const version of cells[path(id, "reset")] || []) for (const [device, count] of Object.entries(version.clock)) clock[device] = Math.max(clock[device] || 0, count);
+    }
     clock[device] = (clock[device] || 0) + 1;
     cells[p] = [{ clock, value: after[p] ?? null, ...(!(p in after) ? { deleted: true as const } : {}) }];
   }
@@ -164,11 +196,13 @@ function resolve(register: Version[], text = false, maxText = 200_000): unknown 
 }
 
 export function materialize(key: string, doc: SyncDocument, local: unknown = null): unknown {
+  doc = normalizeDocument(key, doc);
   const kind = mergeKindFor(key), rows: [string[], unknown][] = [];
   for (const [p, register] of Object.entries(doc.cells)) {
     const parts = JSON.parse(p) as string[];
     const text = kind === "session" || kind === "personal" && ["q", "a", "note", "front", "back"].includes(parts[2]) || mockKey(key) && parts[0] === "response" && parts[3] === "text";
-    const value = resolve(register, text, kind === "personal" ? PERSONAL_TEXT_LIMIT : mockKey(key) ? 20_000 : 200_000);
+    const active = kind === "mistakes" && parts[1] !== "reset" ? register.filter(v => (doc.cells[path(parts[0], "reset")] || []).every(reset => dominates(v.clock, reset.clock))) : register;
+    const value = resolve(active, text, kind === "personal" ? PERSONAL_TEXT_LIMIT : mockKey(key) ? 20_000 : 200_000);
     if (value !== undefined) rows.push([parts, value]);
   }
   rows.sort((a, b) => compare(canonicalJson(a[0]), canonicalJson(b[0])));
@@ -209,14 +243,23 @@ export function materialize(key: string, doc: SyncDocument, local: unknown = nul
     return result;
   }
   if (kind === "activity") return rows.map(([, v]) => v).sort((a, b) => compare(String(obj(a).t), String(obj(b).t))).slice(-300);
-  if (kind === "mistakes") return rows.map(([p, value]) => {
-    const register = doc.cells[path(...p)] || [], counts: Record<string, number> = {};
-    for (const v of register.filter(v => !v.deleted)) {
-      const item = obj(v.value), buckets = Object.keys(obj(item.wrongCounts)).length ? obj(item.wrongCounts) : { legacy: item.wrongCount };
-      for (const [id, n] of entries(buckets)) if (!["__proto__", "constructor", "prototype"].includes(id) && typeof n === "number" && Number.isSafeInteger(n) && n >= 0) counts[id] = Math.max(counts[id] || 0, n);
+  if (kind === "mistakes") {
+    const items: Record<string, Row> = {};
+    for (const [p, value] of rows) {
+      const item = items[p[0]] ||= { wrongCounts: {} };
+      if (p[1] === "entry") Object.assign(item, obj(value));
+      if (p[1] === "count" && typeof value === "number" && Number.isSafeInteger(value) && value >= 0) (item.wrongCounts as Row)[p[2]] = value;
     }
-    return { ...obj(value), wrongCounts: counts, wrongCount: Object.values(counts).reduce((sum, n) => sum + n, 0), ...(register.some(v => obj(v.value).deleted === true) ? { deleted: true } : {}) };
-  });
+    for (const [id, item] of Object.entries(items)) {
+      const states = (doc.cells[path(id, "visibility")] || []).filter(v => !v.deleted && (doc.cells[path(id, "reset")] || []).every(reset => dominates(v.clock, reset.clock))).map(v => obj(v.value));
+      // Explicit concurrent deletion wins. Undo restoring a past deletion
+      // cannot hide a concurrent new mistake on another device.
+      item.deleted = states.some(v => v.deleted === true && !v.restored) || states.length > 0 && states.every(v => v.deleted === true);
+      item.restoredDeletion = item.deleted === true && states.every(v => v.restored === true);
+      item.wrongCount = Object.values(obj(item.wrongCounts)).reduce<number>((sum, n) => sum + Number(n), 0);
+    }
+    return Object.values(items).filter(item => item.id);
+  }
   if (kind === "excluded") return rows.map(([, v]) => v);
   if (mockKey(key)) {
     const selected = rows.find(([p]) => p[0] === "selected")?.[1];

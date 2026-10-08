@@ -3,6 +3,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { canonicalJson, SYNCABLE_KEYS, LWW_KEYS } from "./merge";
 import { compactDocument, documentConflicts, editDocument, importLegacy, isSyncDocument, legacyDocument, materialize, mergeDocuments, normalizeDocument, type SyncDocument } from "./document";
 import { getDeviceId } from "../device";
+import { defaultSyncConfig } from "./default-config";
 const CONFIG_KEY = "yantu-sync-config", OUTBOX_KEY = "yantu-sync-outbox-v1", META_KEY = "yantu-sync-meta-v3";
 const PARTITION_KEY = "yantu-partition-v1", ACTIVE_KEY = "yantu-sync-active-partition", QUARANTINE_KEY = "yantu-sync-quarantine-v1";
 const EXEMPT = new Set([CONFIG_KEY, PARTITION_KEY, ACTIVE_KEY, "yantu-device-id"]);
@@ -27,7 +28,10 @@ function setStatus(patch: Partial<SyncStatus>) { status = { ...status, ...patch,
 export const getSyncStatus = (): SyncStatus => ({ ...status, pendingUploads: Object.keys(outbox).length, pendingApply: pendingApply.size, conflicts: conflictCount() });
 export function onSyncStatus(fn: (s: SyncStatus) => void): () => void { listeners.add(fn); fn(getSyncStatus()); return () => { listeners.delete(fn); }; }
 export function getSyncConfig(): SyncConfig | null {
-  try { return normalizeSyncConfig(JSON.parse(localStorage.getItem(CONFIG_KEY) || "null")); } catch { return null; }
+  try {
+    const saved = localStorage.getItem(CONFIG_KEY);
+    return normalizeSyncConfig(saved === null ? defaultSyncConfig : JSON.parse(saved));
+  } catch { return null; }
 }
 export function normalizeSyncConfig(config: unknown): SyncConfig | null {
   if (!config || typeof config !== "object") return null;

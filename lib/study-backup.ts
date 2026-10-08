@@ -7,6 +7,7 @@ import { renderRichSegments } from "./rich-text";
 import { parsePersonalStore, personalStorageKey, type PersonalStore } from "./personal-cards";
 import type { RichContent } from "./rich-text";
 import { examTargetKey, validateExamTarget, type ExamTargetRecord } from "./exam-target";
+import { normalizeMistakeCounters } from "./mistakes";
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 // 个人编辑层放最前: 导入时先恢复个人卡, 再恢复依赖它的复习记录
@@ -14,7 +15,7 @@ export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yan
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
-export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; wrongCounts?: Record<string, number>; lastAt: string; deleted?: boolean };
+export type BackupMistake = { id: string; subject: string; kind: string; refId: string; label: string; wrongCount: number; wrongCounts?: Record<string, number>; lastAt: string; deleted?: boolean; restoredDeletion?: boolean; pendingOnly?: boolean };
 export type BackupDayStat = { date: string; ratings: number; again: number; newCards: number; quiz: number; quizCorrect: number; devices?: Record<string, Record<string, number>> };
 export type BackupActivity = { t: string; kind: string; subject: string; label: string; detail: string };
 export type BackupRecordMap = {
@@ -228,12 +229,12 @@ function mistakes(value: unknown): BackupMistake[] {
     const subject = text(row.subject, "错题条目", 20);
     const kind = String(row.kind);
     if (!["card", "quiz", "practice"].includes(kind)) fail("错题条目", "类型无效");
-    const wrongCount = integer(row.wrongCount, 1, 1_000_000, "错题次数");
+    const wrongCount = integer(row.wrongCount, 0, 1_000_000, "错题次数");
     const wrongCounts = row.wrongCounts === undefined ? undefined : Object.fromEntries(Object.entries(object(row.wrongCounts, "错题设备计数")).map(([id, n]) => [text(id, "错题设备", 80), integer(n, 0, 1_000_000, "错题设备计数")]));
     if (wrongCounts && Object.values(wrongCounts).reduce((sum, n) => sum + n, 0) !== wrongCount) fail("错题设备计数", "与错题总次数不一致");
     const id = text(row.id, "错题条目", 200), refId = text(row.refId, "错题条目", 200);
     // deleted 是 tombstone(F08): 已删除的错题保留记录, 防止另一端旧数据复活
-    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, ...(wrongCounts ? { wrongCounts } : {}), lastAt: timestamp(row.lastAt, "错题时间"), ...(row.deleted === true ? { deleted: true } : {}) };
+    return { id, subject, kind, refId, label: text(row.label, "错题条目"), wrongCount, ...(wrongCounts ? { wrongCounts } : {}), lastAt: timestamp(row.lastAt, "错题时间"), ...(row.deleted === true ? { deleted: true } : {}), ...(row.restoredDeletion === true ? { restoredDeletion: true } : {}), ...(typeof row.pendingOnly === "boolean" ? { pendingOnly: row.pendingOnly } : {}) };
   });
 }
 function activities(value: unknown): BackupActivity[] {
@@ -419,7 +420,19 @@ export function collectStudyBackup(storage: Pick<Storage, "getItem">, catalogs: 
     let raw: string | null;
     try { raw = storage.getItem(key); } catch { return fail("本地记录", "读取失败"); }
     if (raw !== null) {
-      Object.assign(records, { [key]: cleanRecord(key, parsePayload(raw, key), catalogs, true) });
+      let value = parsePayload(raw, key);
+      if (key === "yantu-mistakes-v1") value = boundedList(value, 20_000, "错题本").map(entry => {
+        const row = object(entry, "错题条目");
+        // Only local legacy counts are repaired. Imported backup validation
+        // remains strict; malformed fields still fail instead of disappearing.
+        const wrongCount = integer(row.wrongCount, 0, 1_000_000, "错题次数");
+        if (row.wrongCounts !== undefined) for (const [id, n] of Object.entries(object(row.wrongCounts, "错题设备计数"))) {
+          text(id, "错题设备", 80); integer(n, 0, 1_000_000, "错题设备计数");
+        }
+        const pendingOnly = row.pendingOnly === true || row.pendingOnly === undefined && row.subject === "825" && row.kind === "quiz";
+        return { ...row, ...normalizeMistakeCounters({ wrongCount: pendingOnly ? 0 : wrongCount, wrongCounts: row.wrongCounts }), pendingOnly };
+      });
+      Object.assign(records, { [key]: cleanRecord(key, value, catalogs, true) });
       continue;
     }
     if (key === learningSessionKey) {
@@ -469,7 +482,7 @@ export function summarizeStudyBackup(input: StudyBackup, catalogs: BackupCatalog
   }
   const mistakeList = backup.records["yantu-mistakes-v1"];
   if (mistakeList) for (const entry of mistakeList) {
-    if (allSubjects.includes(entry.subject as StudySubject)) result[entry.subject as StudySubject].mistakes++;
+    if (!entry.deleted && (entry.wrongCount > 0 || entry.pendingOnly) && allSubjects.includes(entry.subject as StudySubject)) result[entry.subject as StudySubject].mistakes++;
   }
   for (const subject of subjects) {
     result[subject].quizAnswers = Object.values(backup.records[`yantu-stats-v1-${subject}` as BackupStorageKey] || {}).reduce((sum: number, day) => sum + ((day as { quiz?: number } | undefined)?.quiz || 0), 0);

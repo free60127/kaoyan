@@ -5,7 +5,7 @@ import {
   saveOverlay, updatePersonalCard,
   type PersonalCard, type PersonalOverlay, type PersonalSubject,
 } from "@/lib/personal-cards";
-import { adjustRuns, RICH_COLORS, RICH_HIGHLIGHTS, reinjectTextbookMarkers, sanitizeRuns, type RichRun, type RichRunKind } from "@/lib/rich-text";
+import { adjustRuns, RICH_COLORS, RICH_HIGHLIGHTS, reinjectTextbookMarkers, sanitizeRuns, textbookEditContent, type RichRun, type RichRunKind } from "@/lib/rich-text";
 import { stripHighlightMarkers } from "@/lib/highlight-markers";
 import { RichTextView } from "./RichTextView";
 
@@ -109,14 +109,14 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
     return null;
   }, [storedDraft, target]);
   const initial = useMemo<Fields>(() => {
-    if (storedDraft) return storedDraft.fields;
+    if (storedDraft) return target.kind === "textbook" ? { ...storedDraft.fields, q: textbookEditContent(storedDraft.fields.q, true), a: textbookEditContent(storedDraft.fields.a, true) } : storedDraft.fields;
     if (target.kind === "textbook") {
       // F05: 编辑区是纯文本——教材标记剥掉, 保存时按原文重注入; 个人样式区间以纯文本偏移存储
       const q = overlay?.q;
       const a = overlay?.a;
       return {
-        q: { text: q ? stripHighlightMarkers(q.text) : target.originalFront, runs: q ? q.runs : [] },
-        a: { text: a ? stripHighlightMarkers(a.text) : target.originalBack, runs: a ? a.runs : [] },
+        q: textbookEditContent(q || emptyField(target.originalFront)),
+        a: textbookEditContent(a || emptyField(target.originalBack)),
         note: overlay?.note ? { ...overlay.note } : emptyField(),
         bg: overlay?.bg,
       };
@@ -213,8 +213,8 @@ export function CardEditor({ subject, subjectName, books, target, overlay, onDon
     // F05: 输入是纯文本, 注入前无编码, 重复保存不会嵌套
     const aText = reinjectTextbookMarkers(target.originalBack, fields.a.text);
     const patch = {
-      q: fields.q.text === target.originalFront && !fields.q.runs.length ? null : { text: fields.q.text, runs: sanitizeRuns(fields.q.runs, fields.q.text.length) },
-      a: fields.a.text === target.originalBack && !fields.a.runs.length ? null : { text: aText, runs: sanitizeRuns(fields.a.runs, fields.a.text.length) },
+      q: fields.q.text === stripHighlightMarkers(target.originalFront) && !fields.q.runs.length ? null : { text: fields.q.text, runs: sanitizeRuns(fields.q.runs, fields.q.text.length) },
+      a: fields.a.text === stripHighlightMarkers(target.originalBack) && !fields.a.runs.length ? null : { text: aText, runs: sanitizeRuns(fields.a.runs, fields.a.text.length) },
       note: fields.note.text.trim() ? { text: fields.note.text, runs: sanitizeRuns(fields.note.runs, fields.note.text.length) } : null,
       bg: fields.bg ?? null,
     };

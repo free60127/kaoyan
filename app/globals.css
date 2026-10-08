@@ -107,7 +107,11 @@
 .rich-seg.hl-r { color: #cf3b2e; }
 .rich-seg.hl-y { background: linear-gradient(transparent 30%, #ffe98a 30%, #ffe98a 92%, transparent 92%); padding: 0 1px; }
 .flash-card strong span.rich-seg, .flash-card span.personal-note span.rich-seg { font-size: inherit; line-height: inherit; }
-.rich-seg.rich-b { font-weight: 800; }
+.rich-seg.rich-b { font-weight: 700; }
+.flash-card strong, .card-edit-preview-card > strong, .card-edit-preview-answer {
+  font-family: Arial, "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-weight: 400;
+}
 .rich-seg.rich-u { text-decoration: underline; text-underline-offset: 4px; }
 
 .flash-card span.personal-note { display: block; font-size: 15px; color: #1e4034; border-top: 1px dashed #c9d8ce; margin-top: 14px; padding-top: 10px; white-space: pre-line; }
