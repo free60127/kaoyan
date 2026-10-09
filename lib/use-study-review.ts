@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { applyRating, buildStudyQueue, createEmptyProgress, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, resetCardProgress, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { alignStoredDayReviews, applyRating, buildStudyQueue, createEmptyProgress, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, resetCardProgress, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
@@ -66,6 +66,7 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
   let session: StudyReviewSession = { progress: createEmptyProgress(clock()), newScopes: [] };
   let error = "";
   let loaded = false;
+  let migrationWriteFailed = false;
   let pending: SessionMutation[] = [];
   let lastUndo: RatingUndo | null = null;
   const key = studyReviewKey(subject);
@@ -76,21 +77,26 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
   }
   function read() {
     const stored = storage.getItem(key);
+    migrationWriteFailed = false;
     if (stored !== null) {
       const raw = parse(stored);
       // Never turn a malformed shared snapshot into an empty replacement for live progress.
       if (!raw || typeof raw !== "object" || Array.isArray(raw) || !("version" in raw) || raw.version !== 1 || !("cards" in raw) || !raw.cards || typeof raw.cards !== "object" || Array.isArray(raw.cards) || !("scopes" in raw) || !Array.isArray(raw.scopes)) throw new Error(READ_ERROR);
+      const aligned = alignStoredDayReviews(raw);
+      if (aligned.changed) {
+        try { storage.setItem(key, JSON.stringify(aligned.value)); } catch { migrationWriteFailed = true; }
+      }
     }
     const restored = restoreStudyReview(stored, catalog, clock(), stored === null ? storage.getItem(legacyKey(subject)) : undefined);
     loaded = true;
     return restored;
   }
-  try { session = read(); } catch { error = READ_ERROR; }
+  try { session = read(); if (migrationWriteFailed) error = WRITE_ERROR; } catch { error = READ_ERROR; }
 
   function refresh() {
     // Failed local writes must not be replaced by an older persistent snapshot on focus/events.
     if (pending.length) return;
-    try { publish(read(), ""); } catch { publish(session, READ_ERROR); }
+    try { const next = read(); publish(next, migrationWriteFailed ? WRITE_ERROR : ""); } catch { publish(session, READ_ERROR); }
   }
   function mutate(operation: SessionMutation): StudyReviewSession | null {
     let latest = session;
@@ -100,12 +106,12 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
       for (const retry of pending) latest = retry(latest) ?? latest;
     } catch { readable = false; }
     const next = operation(latest);
-    if (!next) { publish(latest, readable ? (pending.length ? error : "") : READ_ERROR); return null; }
+    if (!next) { publish(latest, readable ? (migrationWriteFailed ? WRITE_ERROR : pending.length ? error : "") : READ_ERROR); return null; }
     pending.push(operation);
     if (readable) {
       try {
         storage.setItem(key, serializeStudyReview(next));
-        pending = []; publish(next, "");
+        pending = []; migrationWriteFailed = false; publish(next, "");
       } catch { publish(next, WRITE_ERROR); }
     } else publish(next, READ_ERROR);
     return next;
@@ -118,7 +124,7 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
     get ready() { return loaded; },
     get lastUndo() { return lastUndo; },
     get storageError() { return error; },
-    get hasPendingWrites() { return pending.length > 0; },
+    get hasPendingWrites() { return pending.length > 0 || migrationWriteFailed; },
     refresh,
     updateCatalog(nextCatalog: readonly CardIdentity[]) { catalog = nextCatalog; refresh(); },
     storageChanged(event: { key: string | null }) {

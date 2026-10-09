@@ -68,7 +68,7 @@ test("reload preserves future dates, selected sections, active ranges, daily quo
   assert.deepEqual(restored, session);
   assert.equal(buildReviewSession(catalog, restored, now).items.length, 0);
   assert.equal(buildReviewSession(catalog, restored, now).remainingNewLimit, 0);
-  assert.equal(restored.progress.cards.a1.dueAt, later(4 * 1440).toISOString());
+  assert.equal(restored.progress.cards.a1.dueAt, new Date(2026, 9, 4, 6, 30).toISOString());
   assert.equal(buildReviewSession(catalog, restored, later(1440)).counts.newToday, 1);
   assert.equal(studyReviewKey("333"), "yantu-srs-v1-333");
   assert.equal(studyReviewKey("825"), "yantu-srs-v1-825");

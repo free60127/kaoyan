@@ -111,7 +111,25 @@ function normalizedReview(value: unknown): ReviewState | null {
   const firstStudiedAt = timestamp(value.firstStudiedAt);
   const lastReviewedAt = timestamp(value.lastReviewedAt);
   if (!dueAt || !firstStudiedAt || !lastReviewedAt || !finite(value.intervalDays) || value.intervalDays < 0 || value.intervalDays > MAX_INTERVAL || !finite(value.ease) || value.ease < 1.3 || value.ease > 10 || !nonnegativeInt(value.reps) || !nonnegativeInt(value.lapses) || !["learning", "review", "relearning"].includes(String(value.stage))) return null;
-  return { dueAt, firstStudiedAt, lastReviewedAt, intervalDays: value.intervalDays, ease: value.ease, reps: value.reps, lapses: value.lapses, stage: value.stage as ReviewState["stage"] };
+  const alignedDue = value.stage === "review" && value.intervalDays >= 1 ? reviewMorning(dueAt) : dueAt;
+  return { dueAt: alignedDue, firstStudiedAt, lastReviewedAt, intervalDays: value.intervalDays, ease: value.ease, reps: value.reps, lapses: value.lapses, stage: value.stage as ReviewState["stage"] };
+}
+
+/** Day reviews open together at 06:30 on their existing local due date. */
+function reviewMorning(value: StudyTime): string {
+  const date = time(value); date.setHours(6, 30, 0, 0); return date.toISOString();
+}
+
+/** Patch only valid day-review due times; retain every other stored field and damaged entry. */
+export function alignStoredDayReviews(value: unknown): { value: unknown; changed: boolean } {
+  if (!isRecord(value) || value.version !== 1 || !isRecord(value.cards)) return { value, changed: false };
+  const cards = { ...value.cards }; let changed = false;
+  for (const [id, raw] of Object.entries(cards)) {
+    const review = normalizedReview(raw);
+    if (!review || !isRecord(raw) || Date.parse(String(raw.dueAt)) === Date.parse(review.dueAt)) continue;
+    cards[id] = { ...raw, dueAt: review.dueAt }; changed = true;
+  }
+  return { value: changed ? { ...value, cards } : value, changed };
 }
 
 /** Retains valid unknown IDs for history; queue construction uses only the current catalog. */
@@ -126,7 +144,7 @@ export function migrateLegacyReviews(legacy: unknown, _catalog: readonly CardIde
   for (const [id, value] of Object.entries(legacy)) {
     if (!id || !isRecord(value) || !(own(value, "due") || own(value, "interval") || own(value, "reps"))) continue;
     entries.push([id, {
-      dueAt: localMidnight(value.due) ?? instant,
+      dueAt: localMidnight(value.due) ? reviewMorning(localMidnight(value.due)!) : instant,
       intervalDays: finite(value.interval) && value.interval >= 0 ? Math.min(MAX_INTERVAL, value.interval) : 0,
       ease: finite(value.ease) && value.ease >= 1.3 ? Math.min(10, value.ease) : 2.5,
       reps: nonnegativeInt(value.reps) ? value.reps : 0,
@@ -285,8 +303,15 @@ export function previewSchedule(previous: ReviewState | undefined, grade: Rating
     if (grade === "easy") ease = Math.min(10, ease + 0.15);
   }
   const delayDays = delayMinutes / 1440;
+  let dueAt = new Date(instant.getTime() + delayMinutes * MINUTE).toISOString();
+  if (stage === "review" && delayDays >= 1) {
+    // Calendar days preserve tomorrow across DST. Fractional intervals retain their target date.
+    const date = new Date(instant); date.setDate(date.getDate() + Math.floor(delayDays));
+    date.setTime(date.getTime() + (delayDays % 1) * 1440 * MINUTE);
+    dueAt = reviewMorning(date);
+  }
   return {
-    dueAt: new Date(instant.getTime() + delayMinutes * MINUTE).toISOString(),
+    dueAt,
     intervalDays: delayDays,
     ease, reps, lapses, stage,
     firstStudiedAt: old?.firstStudiedAt ?? instant.toISOString(),

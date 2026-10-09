@@ -100,7 +100,7 @@ test("due cards precede new cards and sort by due time; future cards stay exclud
   progress = applyRating(progress, "a3", "good", now);
   const queue = buildStudyQueue(catalog, progress, advance(5));
   assert.deepEqual(queue.items.map(item => item.cardId), ["a2", "a1", "b1"]);
-  assert.equal(queue.nextDueAt, advance(1440).toISOString());
+  assert.equal(queue.nextDueAt, new Date(2026, 9, 1, 6, 30).toISOString());
   assert.equal(queue.counts.reviewDue, 2);
   assert.equal(queue.counts.newToday, 1);
   assert.equal(buildStudyQueue(catalog, { ...progress, scopes: [] }, advance(5)).counts.reviewDue, 0);
@@ -124,14 +124,14 @@ test("mature review intervals grow differently and relearning preserves first st
   assert.equal(previewSchedule({ ...mature, intervalDays: 36500 }, "easy", now).intervalDays, 36500);
 });
 
-test("legacy future dates retain local midnight, zero reps are learned, scopes infer only rated chapters", () => {
+test("legacy future dates open at local 06:30, zero reps are learned, scopes infer only rated chapters", () => {
   const legacy = {
     a1: { due: "2026-10-05", interval: 10, ease: 2.2, reps: 0 },
     a3: { due: "2026-09-30", interval: 3, ease: 2.5, reps: 2 },
     retired: { due: "2026-10-06", interval: 4, ease: 2.5, reps: 1 },
   };
   const migrated = migrateLegacyReviews(legacy, catalog, now);
-  assert.equal(migrated.a1.dueAt, new Date(2026, 9, 5, 0, 0, 0).toISOString());
+  assert.equal(migrated.a1.dueAt, new Date(2026, 9, 5, 6, 30, 0).toISOString());
   assert.equal(migrated.a1.reps, 0);
   assert.equal(migrated.a1.intervalDays, 10);
   assert.equal(migrated.a1.ease, 2.2);

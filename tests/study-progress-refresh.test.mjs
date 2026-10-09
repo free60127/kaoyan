@@ -63,7 +63,8 @@ for (const subject of ["333", "825", "politics"]) {
     assert.equal(queue.counts.newToday, 0);
     assert.equal(queue.counts.reviewDue, 0);
     assert.equal(queue.remainingNewLimit, 97);
-    assert.equal(queue.nextDueAt, new Date(day(1)).toISOString());
+    const morningDue = new Date(day(1)); morningDue.setHours(6, 30, 0, 0);
+    assert.equal(queue.nextDueAt, morningDue.toISOString());
     assert.deepEqual(complete.session.progress.scopes, [scope]);
     assert.deepEqual(complete.session.newScopes, [scope]);
     const tomorrow = open(day(1));

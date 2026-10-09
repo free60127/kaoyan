@@ -164,6 +164,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
   const showLastRating = mode !== "browse" && lastCard && (mode === "all" || cardMatchesStudyScope(lastCard, currentScope));
   return <>
     <div className="study-mode-tabs" role="group" aria-label="闪卡使用方式"><button className={mode === "scope" ? "active" : ""} aria-pressed={mode === "scope"} onClick={() => setMode("scope")}>当前章{section ? " / 小节" : ""}复习</button><button className={mode === "all" ? "active" : ""} aria-pressed={mode === "all"} onClick={() => setMode("all")}>全部学习范围复习</button><button className={mode === "browse" ? "active" : ""} aria-pressed={mode === "browse"} onClick={() => setMode("browse")}>当前章自由浏览</button></div>
+    {mode !== "browse" && <p className="mock-help">按天安排的复习在目标日期早上 6:30 统一到期；重来 1 分钟、困难 5 分钟的短间隔回顾仍从评分时刻计算。</p>}
     {mode !== "all" && <div className="study-location"><strong>{mode === "scope" ? "当前复习范围" : "当前浏览位置"}</strong>{picker}</div>}
     <StudyReviewScopes books={books} cards={cards} review={review} current={currentScope} showCurrent={mode !== "all"}/>
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}

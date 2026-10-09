@@ -33,7 +33,7 @@ for (const subject of ["333", "825", "politics"]) {
   const timing = { id: subject + '-timing', cardId: card.id, label: card.front.slice(0,300), contentKey: 'snapshot', kind: 'review', startedAt: '2026-09-30T12:00:00Z', updatedAt: '2026-09-30T12:01:00Z', elapsedMs: 60000, days: { '2026-09-30': 60000 }, status: 'completed', grade: 'good' };
   backup.records[`yantu-card-timing-v1-${subject}`] = { [timing.id]: timing };
   backup.records[`yantu-srs-v1-${subject}`] = { version: 1,
-    cards: { [card.id]: { dueAt: "2027-10-04T12:00:00.000Z", firstStudiedAt: "2026-09-29T12:00:00.000Z", lastReviewedAt: "2026-09-29T12:00:00.000Z", intervalDays: 370, ease: 2.6, reps: 3, lapses: 1, stage: "review" } },
+    cards: { [card.id]: { dueAt: new Date(2027, 9, 4, 6, 30).toISOString(), firstStudiedAt: "2026-09-29T12:00:00.000Z", lastReviewedAt: "2026-09-29T12:00:00.000Z", intervalDays: 370, ease: 2.6, reps: 3, lapses: 1, stage: "review" } },
     scopes: [range], newScopes: [range], dailyNewLimit: 17, daily: { date: "2026-09-29", admitted: [card.id] },
   };
   backup.records[subject === "333" ? "yantu-done" : `yantu-done-${subject}`] = { [`${card.book}-${card.chapter}`]: true };
@@ -144,7 +144,7 @@ test("multi-page Chinese searchable text retains full long answers, all options,
   assert.ok(joined.includes(compact("目标初试日期：2028-02-29（手动设置）")));
   assert.doesNotMatch(text, /^[、。，：；？！》）〕】〉」』”’]/mu, "sample must not wrap closing CJK punctuation onto an otherwise empty line");
   assert.doesNotMatch(text, /[《（〔【〈「『“‘]$/mu, "sample must not leave opening CJK punctuation at the end of a line");
-  for (const value of ["研途学习记录与模拟卷备份", "政治", "2027-10-04T12:00:00.000Z", "333模拟选择题完整题干", "825模拟论述题完整题干", "选项甲完整内容", "选项乙完整内容", "选项丙完整内容", "选项丁完整内容", "我的作答：C", "参考答案：B", "完整选择解析", "完整参考答案", "完整考点依据", "AI 模拟题来源", "〔理解〕、“概念”；", "[U+1F9E0]", "FINAL_ANSWER_END"]) assert.ok(joined.includes(compact(value)), value);
+  for (const value of ["研途学习记录与模拟卷备份", "政治", new Date(2027, 9, 4, 6, 30).toISOString(), "333模拟选择题完整题干", "825模拟论述题完整题干", "选项甲完整内容", "选项乙完整内容", "选项丙完整内容", "选项丁完整内容", "我的作答：C", "参考答案：B", "完整选择解析", "完整参考答案", "完整考点依据", "AI 模拟题来源", "〔理解〕、“概念”；", "[U+1F9E0]", "FINAL_ANSWER_END"]) assert.ok(joined.includes(compact(value)), value);
   // Footer text intervenes between page fragments; exclude it for continuity.
   const body = text.replace(/研途学习备份\s*\|\s*\d+\s*\/\s*\d+/g, "").replace(/研途学习记录与模拟卷备份/g, "");
   assert.equal(compact(body).split(compact(longAnswer)).length - 1, 2);

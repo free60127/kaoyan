@@ -21,7 +21,7 @@ function memory(initial = {}) {
 function progress(subject) {
   const card = catalogs[subject].cards.find(card => card.section) || catalogs[subject].cards[0];
   const scope = { bookId: card.book, chapters: [card.chapter], ...(card.section ? { section: card.section } : {}) };
-  return { version: 1, cards: { [card.id]: { dueAt: "2027-10-04T12:00:00.000Z", firstStudiedAt: "2026-09-29T12:00:00.000Z", lastReviewedAt: "2026-09-29T12:00:00.000Z", intervalDays: 370, ease: 2.6, reps: 3, lapses: 1, stage: "review" } }, scopes: [scope], newScopes: [scope], dailyNewLimit: 17, daily: { date: "2026-09-29", admitted: [card.id] } };
+  return { version: 1, cards: { [card.id]: { dueAt: new Date(2027, 9, 4, 6, 30).toISOString(), firstStudiedAt: "2026-09-29T12:00:00.000Z", lastReviewedAt: "2026-09-29T12:00:00.000Z", intervalDays: 370, ease: 2.6, reps: 3, lapses: 1, stage: "review" } }, scopes: [scope], newScopes: [scope], dailyNewLimit: 17, daily: { date: "2026-09-29", admitted: [card.id] } };
 }
 function learning() {
   const locations = Object.fromEntries(["333", "825", "politics", "english"].map(subject => {
@@ -161,7 +161,7 @@ test("document includes original problems, chapter labels, dates, every option a
     // 备份文档会剥离教材重点标记(⟦k|…⟧)后再输出
     assert.ok(text.includes(card.back.replace(/⟦[gbrys]\|([^⟧]*)⟧/g, "$1")));
   }
-  for (const value of ["2027-10-04T12:00:00.000Z", "已完成", "新学范围", "333复述草稿\n第二行", "完整真题答复\n继续论证", "非历年真题", "选项甲", "选项乙", "选项丙", "选项丁", "我的作答：C", "参考答案：B", "我的完整作答\n结论", "完整参考答案\n论证", "完整选择解析", "完整考点依据"]) assert.ok(text.includes(value), value);
+  for (const value of [new Date(2027, 9, 4, 6, 30).toISOString(), "已完成", "新学范围", "333复述草稿\n第二行", "完整真题答复\n继续论证", "非历年真题", "选项甲", "选项乙", "选项丙", "选项丁", "我的作答：C", "参考答案：B", "我的完整作答\n结论", "完整参考答案\n论证", "完整选择解析", "完整考点依据"]) assert.ok(text.includes(value), value);
   assert.ok(text.includes("目标初试日期：2028-02-29（手动设置）"));
 });
 test("legacy reviews and last-place migrate without losing future dues or changing source storage", () => {
@@ -175,7 +175,7 @@ test("legacy reviews and last-place migrate without losing future dues or changi
   const source = memory(values), backup = collect(source, catalogs, now);
   for (const subject of ["333", "825", "politics"]) {
     const saved = backup.records[srsKey(subject)], id = catalogs[subject].cards[0].id;
-    assert.equal(saved.cards[id].dueAt, new Date(2027, 9, 4).toISOString());
+    assert.equal(saved.cards[id].dueAt, new Date(2027, 9, 4, 6, 30).toISOString());
     assert.equal(saved.cards[id].reps, 3);
     assert.deepEqual(saved.newScopes, []);
     assert.deepEqual(saved.daily.admitted, []);
