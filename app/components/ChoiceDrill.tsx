@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { choiceBookName, drillPool, drillRequizQuestions, fromSavedQuestion, loadChoiceBank, pickChoices, stripOptionLabel, toSavedQuestion, type ChoiceQuestion } from "@/lib/choice-bank";
+import { choiceBookName, drillPool, drillRequizQuestions, fromSavedQuestion, loadChoiceBank, pickChoices, shuffleOptions, stripOptionLabel, toSavedQuestion, type ChoiceQuestion } from "@/lib/choice-bank";
 import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
 import { recordMistake, removeMistakesByRef } from "@/lib/mistakes";
 import { addMcqExcluded, readMcqExcluded, resetMcqExcluded } from "@/lib/mcq-excluded";
@@ -20,6 +20,13 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
   const [round, setRound] = useState<Round | null>(null);
   const [excluded, setExcluded] = useState(() => readMcqExcluded());
   const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
+  // C: 按章筛选(题库 chapter 字段为章名标签); D: 打乱选项(防背选项位置), 持久化
+  const [chapter, setChapter] = useState<string>("all");
+  const [shuffle, setShuffle] = useState(() => { try { return localStorage.getItem("yantu-shuffle-options-v1") === "1"; } catch { return false; } });
+  function setShufflePersisted(value: boolean) {
+    setShuffle(value);
+    try { localStorage.setItem("yantu-shuffle-options-v1", value ? "1" : "0"); } catch { /* ignore */ }
+  }
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
 
   useEffect(() => {
@@ -33,8 +40,9 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
   }, [requiz]);
 
   const origins = useMemo(() => [...new Set((questions || []).map(q => q.origin))], [questions]);
+  const chapterOptions = useMemo(() => [...new Set((questions || []).filter(q => book === "all" || q.book === book).map(q => q.chapter).filter(Boolean))], [questions, book]);
   // R3: "可用N题"、抽题、再来一组共用同一个过滤掉人工排除项的最终池
-  const pool = useMemo(() => (questions ? drillPool(questions, { book, origin }, excluded) : []), [questions, book, origin, excluded]);
+  const pool = useMemo(() => (questions ? drillPool(questions, { book, origin }, excluded).filter(q => chapter === "all" || q.chapter === chapter) : []), [questions, book, origin, excluded, chapter]);
 
   function persist(target: Round) {
     if (target.done || requiz) return;
@@ -51,7 +59,8 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
     });
   }
   function start(source?: readonly ChoiceQuestion[]) {
-    const picked = requiz ? drillRequizQuestions(questions || [], requizIds || []) : pickChoices(source || pool, count, seed);
+    const pickedRaw = requiz ? drillRequizQuestions(questions || [], requizIds || []) : pickChoices(source || pool, count, seed);
+    const picked = shuffle && !requiz ? shuffleOptions(pickedRaw, seed ^ 0x9e3779b9) : pickedRaw;
     if (!picked.length) return;
     const fresh: Round = { questions: picked, index: 0, choice: null, right: 0, wrongIds: [], done: false, chosen: {} };
     persist(fresh);
@@ -169,8 +178,13 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
         <option value="all">全部来源</option>
         {origins.map(o => <option key={o} value={o}>{o}</option>)}
       </select></label>
+      <label>章节<select value={chapter} onChange={(event) => setChapter(event.target.value)}>
+        <option value="all">全部章节</option>
+        {chapterOptions.map(c => <option key={c} value={c}>{c}</option>)}
+      </select></label>
       <label>题数<select value={count} onChange={(event) => setCount(Number(event.target.value))}>{[10, 20, 30, 50].map(n => <option key={n} value={n}>{n} 题</option>)}</select></label>
     </div>
+    <p className="mock-selection"><label className="card-edit-reset"><input type="checkbox" checked={shuffle} onChange={(event) => setShufflePersisted(event.target.checked)}/>打乱选项顺序（防止背"选项位置"，真题原顺序派时关闭）</label></p>
     <p className="mock-selection">当前范围可用：{pool.length} 题{excludedCount > 0 ? `（已排除 ${excludedCount} 题，不参与组卷）` : ""}</p>
     {excludedCount > 0 && <p className="mock-selection"><button type="button" className="text-button" onClick={() => setExcluded(resetMcqExcluded())}>恢复全部已排除（{excludedCount}）</button></p>}
     {resumable && <div className="practice-resume" role="status">

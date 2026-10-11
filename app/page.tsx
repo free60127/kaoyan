@@ -1,5 +1,5 @@
 import { Fragment, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type SetStateAction } from "react";
-import { BookOpen, Brain, CalendarDays, Check, ChevronRight, Cloud, KeyRound, Layers3, Menu, Send, Settings2, Sparkles, Target, X } from "lucide-react";
+import { BookOpen, CalendarDays, Check, ChevronRight, Cloud, KeyRound, Layers3, Menu, Settings2, Sparkles, Target, X } from "lucide-react";
 import { books as books333, cards as cards333Base, loadKnowledgeCards, questions } from "@/lib/study-data";
 import { outlines } from "@/lib/outlines";
 import { askDeepSeek } from "@/lib/deepseek-browser";
@@ -15,7 +15,6 @@ import { readDone, writeDone } from "@/lib/done-store";
 import { forecastLoad } from "@/lib/study-scheduler";
 import { StudyReviewCards } from "./components/StudyReview";
 import { MockPractice } from "./components/MockPractice";
-import { SpeechInputControls } from "./components/SpeechInputControls";
 import { ApiKeySettings } from "./components/ApiKeySettings";
 import { ExamTarget, useExamTarget } from "./components/ExamTarget";
 import { examCountdownLabel, examDateLabel, examPlannerContext } from "@/lib/exam-target";
@@ -26,10 +25,11 @@ import { StatsView } from "./components/StatsView";
 import { SearchView, type SearchEntry } from "./components/SearchView";
 import { EssayBank } from "./components/EssayBank";
 import { ChoiceDrill } from "./components/ChoiceDrill";
+import { ChoiceBank } from "./components/ChoiceBank";
 import { loadEssayQuestions, type EssayQuestion } from "@/lib/essay-questions";
 import { Overview333, Overview825, OverviewPolitics } from "./components/OverviewPanels";
 import { selectedAnswer } from "@/lib/copy-answer";
-import { changedSessionPaths, mergeLearningSession as mergeSession, createLearningSession, defaultPlannerPrompt, feynmanDraftKey, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type LearningSession, type StudySubject, type StudyView } from "@/lib/learning-session";
+import { changedSessionPaths, mergeLearningSession as mergeSession, createLearningSession, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type LearningSession, type StudySubject, type StudyView } from "@/lib/learning-session";
 import { sidebarViews, subjects, subjectBooks, views } from "@/lib/subject-capabilities";
 import { overlayKey, personalStorageKey, readPersonal, type PersonalStore, type PersonalSubject } from "@/lib/personal-cards";
 import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
@@ -191,15 +191,7 @@ export default function Home() {
   const [recordSaveErrors, setRecordSaveErrors] = useState<Record<string, boolean>>({});
   const [examOpen, setExamOpen] = useState(false);
   const [doneBySubject, setDoneBySubject] = useState<Progress<Record<string, boolean>>>({ "333": {}, "825": {}, politics: {} }), [progressReady, setProgressReady] = useState(false);
-  const [feedback, setFeedback] = useState(""), [reply, setReply] = useState("");
-  const draftKey = feynmanDraftKey(subject, { book, chapter, section });
-  const answer = session.feynmanDrafts[draftKey] || "";
-  const setAnswer = useCallback((next: SetStateAction<string>) => {
-    setSession(previous => ({ ...previous, feynmanDrafts: { ...previous.feynmanDrafts, [draftKey]: typeof next === "function" ? next(previous.feynmanDrafts[draftKey] || "") : next } }));
-  }, [draftKey]);
-  const prompt = session.plannerPrompts[subject] ?? defaultPlannerPrompt;
-  function setPrompt(value: string) { setSession(previous => ({ ...previous, plannerPrompts: { ...previous.plannerPrompts, [subject]: value } })); }
-  const [key, setKey] = useState(""), [keyOpen, setKeyOpen] = useState(false), [loading, setLoading] = useState(false), [speechLanguage, setSpeechLanguage] = useState("zh-CN"), [menuOpen, setMenuOpen] = useState(false);
+  const [key, setKey] = useState(""), [keyOpen, setKeyOpen] = useState(false), [menuOpen, setMenuOpen] = useState(false);
   const [pastRevealed, setPastRevealed] = useState(false);
   const [mobileLayout, setMobileLayout] = useState(() => window.matchMedia("(max-width: 720px)").matches);
   const sidebarRef = useRef<HTMLElement | null>(null), mobileMenuRef = useRef<HTMLButtonElement | null>(null);
@@ -248,17 +240,17 @@ export default function Home() {
   const lastSavedSession = useRef<LearningSession | null>(null);
   const quizzes = useRef<Record<string, { quizIndex: number; choice: number | null; score: { right: number; total: number } }>>({});
   function cancelRequest() {
-    requestId.current += 1; requestController.current?.abort(); requestController.current = null; setLoading(false);
+    requestId.current += 1; requestController.current?.abort(); requestController.current = null;
   }
   function updateLocation(patch: Partial<LearningLocation>) {
-    cancelRequest(); setFeedback(""); setReply("");
+    cancelRequest();
     if (patch.view && patch.view !== "cards") setJumpCard(undefined);
     if (patch.view && patch.view !== "cards" || patch.book !== undefined || patch.chapter !== undefined || patch.section !== undefined) setBrowseCardId(undefined);
     setSession(previous => ({ ...previous, locations: { ...previous.locations, [previous.subject]: { ...previous.locations[previous.subject], ...patch } } }));
   }
   useNavigationHistory(session, progressReady, subjectBookIds, browseCardId ?? jumpCard, next => {
     cancelRequest(); subjectRef.current = next.subject;
-    setFeedback(""); setReply(""); setJumpCard(next.cardId); setMenuOpen(false);
+    setJumpCard(next.cardId); setMenuOpen(false);
     setBrowseCardId(undefined);
     setChoice(null); setQuizIndex(0); setPastRevealed(false);
     setSession(previous => ({ ...previous, subject: next.subject, locations: { ...previous.locations, [next.subject]: next.location } }));
@@ -330,7 +322,7 @@ export default function Home() {
         requestId.current += 1;
         requestController.current?.abort();
         requestController.current = null;
-        setLoading(false); setFeedback(""); setReply(""); setJumpCard(undefined);
+        setJumpCard(undefined);
         quizzes.current = {};
         return;
       }
@@ -429,7 +421,7 @@ export default function Home() {
     if (!progressReady || !books.length || (subject === "333" && !knowledge333)) return;
     const normalized = validateLocation(session.locations[subject], books);
     if (normalized === session.locations[subject]) return;
-    cancelRequest(); setFeedback(""); setReply("");
+    cancelRequest();
     setSession(previous => previous.subject === subject ? { ...previous, locations: { ...previous.locations, [subject]: normalized } } : previous);
   }, [subject, book, chapter, section, data825, dataPolitics, knowledge333, progressReady]);
   const allCards: Card[] = subject === "825" ? cards825Merged : subject === "politics" ? cardsPoliticsMerged : subject === "333" ? cards333Merged : [];
@@ -441,7 +433,7 @@ export default function Home() {
   const review = subject === "825" ? review825 : subject === "politics" ? reviewPolitics : review333;
   const backupBlockedReason = sessionStorageError || doneStorageError || Object.keys(recordSaveErrors).length > 0 || timingWritesPending() || review333.storageError || review825.storageError || reviewPolitics.storageError || Object.values(mockStatus).some(status => status.error)
     ? "当前有学习记录尚未成功保存，请先解决本地保存错误；导出与导入暂不可用，避免丢失当前修改。"
-    : loading || Object.values(mockStatus).some(status => status.pending) ? "AI 正在生成内容，请等待完成或取消生成后再导出、导入。" : !progressReady ? "学习记录正在加载，请稍候。" : "";
+    : Object.values(mockStatus).some(status => status.pending) ? "AI 正在生成内容，请等待完成或取消生成后再导出、导入。" : !progressReady ? "学习记录正在加载，请稍候。" : "";
   const chapterQuestions = questions.filter((item) => item.book === book && item.chapter === chapter), bookQuestions = questions.filter((item) => item.book === book);
   // 章节映射题不足 4 道时改用同书题库, 避免小池循环; meta 会说明来源。
   const useBookPool = chapterQuestions.length < 4 && bookQuestions.length > chapterQuestions.length;
@@ -496,7 +488,7 @@ export default function Home() {
     setBrowseCardId(undefined);
     setSession(previous => ({ ...previous, subject: next, locations: { ...previous.locations, [next]: { ...previous.locations[next], view: "overview" } } }));
     setMenuOpen(false); setQuizIndex(saved?.quizIndex || 0); setChoice(saved?.choice ?? null);
-    setPastRevealed(false); setScore(saved?.score || { right: 0, total: 0 }); setFeedback(""); setReply("");
+    setPastRevealed(false); setScore(saved?.score || { right: 0, total: 0 });
   }
   function chooseSection(nextSection: string) { updateLocation({ section: nextSection }); }
   const localStorageStore = useMemo(() => ({ getItem: (key: string) => localStorage.getItem(key), setItem: (key: string, value: string) => localStorage.setItem(key, value) }), []);
@@ -602,24 +594,6 @@ export default function Home() {
       ...cards825Merged.map((card) => toEntry("825", "825 英语专业基础", books825, card)),
     ];
   }, [view, knowledge333, dataPolitics, data825, cards333Merged, cardsPoliticsMerged, cards825Merged, personal]);
-  async function ask(mode: "plan" | "feedback") {
-    if (!review.ready) return;
-    if (!key.trim()) { setKeyOpen(true); return; }
-    const input = mode === "plan" ? prompt : answer; if (!input.trim()) return;
-    cancelRequest();
-    const controller = new AbortController(); requestController.current = controller;
-    const currentRequest = ++requestId.current;
-    setLoading(true); mode === "plan" ? setReply("") : setFeedback("");
-    try {
-      const data = await askDeepSeek(key, mode, `${input}\n\n今日学习状态：当前待复习 ${due} 张（含短间隔回顾 ${review.queue.counts.learningDue} 张）；今日已学新卡 ${studiedToday} 张；今日剩余新卡 ${newToday} 张；每日新卡上限 ${review.progress.dailyNewLimit} 张。复习覆盖持续学习范围，新卡仅来自今天所选范围。`, { subject, bookId: book, chapterNo: chapter, book: activeBook?.name || "", chapter: chapterName, section, done: completed, due, date: today(), exam: examPlannerContext(examTarget.date) }, { signal: controller.signal });
-      if (currentRequest !== requestId.current) return;
-      mode === "plan" ? setReply(data.text || "") : setFeedback(data.text || "");
-    } catch (error) { if (currentRequest === requestId.current) { const message = error instanceof Error ? error.message : "连接失败"; mode === "plan" ? setReply(message) : setFeedback(message); } }
-    finally {
-      if (!requestController.current) document.documentElement.removeAttribute("data-ai-busy");
-      if (currentRequest === requestId.current) { requestController.current = null; setLoading(false); }
-    }
-  }
 
   const overviewProps = {
     subjectLabel: subjects.find((item) => item.id === subject)?.name || subject,
@@ -637,7 +611,7 @@ export default function Home() {
     chapter, chapterName,
     activeBookName: activeBook?.name || "",
     onChooseBook: (bookId: string) => chooseChapter(bookId, 1),
-    onSetView: (next: "cards" | "quiz" | "chapters" | "feynman" | "choice") => setView(next as View),
+    onSetView: (next: "cards" | "quiz" | "chapters" | "choice") => setView(next as View),
   };
   const picker = activeBook ? <div className="pickers"><label>书目<select value={book} onChange={(event) => chooseChapter(event.target.value, 1, view)}>{books.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label><label>章节<select value={chapter} onChange={(event) => chooseChapter(book, Number(event.target.value), view)}>{activeBook.chapters.map((item, index) => <option key={item.title} value={index + 1}>第 {index + 1} 章 · {item.title}</option>)}</select></label>{!(subject === "333" && view === "quiz") && (chapterInfo?.sections || []).length > 0 && <label>小节<select value={section} onChange={(event) => chooseSection(event.target.value)}><option value="">本章全部小节</option>{(chapterInfo?.sections || []).map((item) => <option key={item} value={item}>{item}</option>)}</select></label>}</div> : null;
   const heading = (label: string, title: string, description: string) => <div className="page-head"><span className="eyebrow">{label}</span><h1>{title}</h1><p>{description}</p></div>;
@@ -686,17 +660,16 @@ export default function Home() {
           {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
           {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView key={accountVersion} subject="politics" subjectName="政治" books={books} cards={cardsPoliticsMerged} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "手册、丹丹1000题、阶段测试与丹丹卷的主观题：材料、设问与分点参考答案按来源完整保留；先自己作答再展开对照。")}{essayError && <div className="empty" role="alert">{essayError}，题目列表暂时无法显示；闪卡与练习不受影响。<button className="secondary" onClick={() => { setEssayError(""); setEssayLoadAttempt((attempt) => attempt + 1); setEssayQuestions(null); }}>重新加载</button></div>}<EssayBank key={accountVersion} entries={(essayQuestions || []).map(q => ({ id: q.id, book: q.book || "principles", tags: q.tags, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
-          {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill key={accountVersion} storage={localStorageStore}/></>}
+          {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书/章节筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill key={accountVersion} storage={localStorageStore}/></>}
+          {view === "bank" && subject === "333" && <>{heading("QUESTION BANK", "333 · 题库浏览", "全部选择题可搜索、筛选与收藏；展开查看选项、正确答案与逐项辨析。")}<ChoiceBank subject={subject}/></>}
           {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView key={accountVersion} subject="825" subjectName="825 英语专业基础" books={books} cards={cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView key={accountVersion} subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
-          {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "背诵用时与同一卡的速度变化、每日评分及练习；登录后自动同步，也可通过 PDF 备份迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)}/></>)}
+          {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "背诵用时与同一卡的速度变化、每日评分及练习；登录后自动同步，也可通过 PDF 备份迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)} cards={allCards} onChooseChapter={(targetBook, targetChapter) => chooseChapter(targetBook, targetChapter, "cards")}/></>)}
           {view === "search" && <>{heading("GLOBAL SEARCH", "搜索全部闪卡", "跨科目搜索 3600+ 张闪卡，点击结果直达对应章节与卡片。")}{!searchEntries.length ? <div className="panel empty">正在汇总三科卡片索引…</div> : <SearchView entries={searchEntries} query={searchQuery} onQueryChange={setSearchQuery} scrollTop={searchScroll} onJump={entry => {
             const origin = { subject, location: { ...session.locations[subject], view: "search" as const } };
             setSearchScroll(window.scrollY); jumpToCard(entry.id); setSearchReturn(origin);
           }}/>}</>}
           {view === "quiz" && subject === "825" && <>{heading("PAST PAPERS", "825 真题 · 开放题练习与索引", "按书目和年份筛选；真题已按章节归档（章节学习中可看本章真题卡），可文字作答并查看参考答案，不自动判分。")}<div className="past-filters"><label>书目<select value={book} onChange={(event) => { chooseChapter(event.target.value, 1, "quiz"); setPastYear(2026); }}><option value="linguistics">语言学</option><option value="literature">英美文学</option></select></label><label>年份<select value={activeYear || ""} onChange={(event) => { setPastYear(Number(event.target.value)); setPastIndex(0); setPastRevealed(false); }} disabled={!years.length}>{years.map((year) => <option key={year} value={year}>{year} 年</option>)}</select></label><button className={pastMode === "practice" ? "mode-button active" : "mode-button"} onClick={() => { setPastMode("practice"); setPastIndex(0); setPastRevealed(false); }}>可练习题 ({yearQuestions.filter((item) => item.practiceReady).length})</button><button className={pastMode === "index" ? "mode-button active" : "mode-button"} onClick={() => { setPastMode("index"); setPastIndex(0); setPastRevealed(false); }}>索引浏览 ({yearQuestions.filter((item) => !item.practiceReady).length})</button><button className={markedOnly825 ? "mode-button active" : "mode-button"} disabled={marked825.size === 0} onClick={() => { setMarkedOnly825(value => !value); setPastIndex(0); setPastRevealed(false); }}>只看标记题 ({marked825.size})</button></div><section className="panel quiz-card"><div className="past-question-heading"><div className="quiz-top"><span>{pastMode === "practice" ? "可练习真题" : "仅索引浏览"}</span><small>{pastPool.length ? "第 " + (pastPosition + 1) + " / " + pastPool.length + " 条" : "当前年份没有该类记录"}</small></div></div>{pastQuestion ? <><div className="question-meta"><span>{pastQuestion.year} 年</span><span>{questionType[pastQuestion.type] || "其他题型"} ({pastQuestion.type})</span><span>{statusLabel[pastQuestion.status]}</span></div><h2>{pastQuestion.stem}</h2>{pastMode === "practice" ? <><p className="not-scored">文字作答练习 · 不自动判分</p><label className="answer-label" htmlFor="past-answer">我的作答</label><textarea id="past-answer" ref={pastAnswerRef} className="past-answer" value={pastAnswer} onChange={(event) => setPastAnswer(event.target.value)} placeholder="组织答案；完成后可查看资料中的参考答案。"/><CopyAnswerButton text={pastAnswer} answerRef={pastAnswerRef}/><button className="primary reveal-button" onClick={() => setPastRevealed((value) => !value)}>{pastRevealed ? "收起参考信息" : "查看参考答案与解析"}</button>{pastRevealed && <div className="explanation past-explanation">{pastQuestion.referenceAnswer ? <><b>参考答案 · 非官方资料，仅供对照</b><p>{pastQuestion.referenceAnswer}</p></> : <><b>该题没有参考答案</b><p>当前资料没有可用参考答案；系统不会对你的文字作答评分。</p></>}{pastQuestion.analysis ? <><strong>解析</strong><p>{pastQuestion.analysis}</p></> : <p>当前记录没有单独的解析文本。</p>}{pastQuestion.answerSource && <small>答案来源：{pastQuestion.answerSource}</small>}</div>}</> : <div className="limitation-box"><b>索引浏览 · 不进入练习</b><p>{pastQuestion.limitation || "该记录未通过可练习校验，仅供目录和出处浏览。"}</p></div>}<div className="source-details"><p><b>来源状态：</b>{statusLabel[pastQuestion.status]}</p><p><b>原题来源：</b>{pastQuestion.source}</p><p><b>原 PDF：</b>{pastQuestion.sourceFile} · 第 {pastQuestion.sourcePage} 页</p></div><div className="mark-review-row"><button className={marked825.has(pastQuestion.id) ? "mode-button active" : "mode-button"} onClick={() => toggleMark825(pastQuestion.id)}>{marked825.has(pastQuestion.id) ? "已标记待复习 · 点击取消" : "标记待复习"}</button></div><div className="quiz-footer"><span>按书目和年份整理 · 真题已按章节归档，可在章节学习查看本章真题卡</span><button className="secondary" disabled={pastPosition === 0 || !pastPool.length} onClick={() => { setPastIndex((index) => Math.max(0, index % pastPool.length - 1)); setPastRevealed(false); }}>上一题</button><button className="primary" disabled={pastPool.length < 2} onClick={() => { setPastIndex((index) => (index + 1) % pastPool.length); setPastRevealed(false); }}>下一题</button></div></> : <div className="empty">当前年份没有记录，请切换年份或书目。</div>}</section></>}
-          {view === "feynman" && <>{heading("TEACH IT BACK", subject === "825" ? "用自己的话讲清一个知识点" : "把知识讲给“别人”听", "可打字或使用浏览器语音转文字。DeepSeek 的评分和反馈仅是学习建议，不是标准答案。")}{picker}<div className="feynman-layout"><section className="panel speaking"><span className="eyebrow">CURRENT TOPIC</span><h2>{section || chapterName}</h2><p>{subject === "825" ? "AI 会参考当前书目中有限的相关笔记；可选择章节或小节。" : subject === "politics" ? "建议按“是什么 → 为什么 → 有哪些要点 → 易混点”讲述，可选择考点小节。尽量不照着闪卡念。" : "建议按“是什么 → 为什么 → 举一个课堂例子 → 易混点”讲述，可选择小节。尽量不用照着教材念。"}</p>{sectionHints.length > 0 && <div className="section-outline topic-hints"><strong>本节知识点（来自笔记卡，供复述自查）</strong>{sectionHints.map((item, index) => <div key={index}><span>{String(index + 1).padStart(2, "0")}</span>{item}</div>)}</div>}<SpeechInputControls key={JSON.stringify([subject, book, chapter, section])} language={speechLanguage} onLanguageChange={setSpeechLanguage} setAnswer={setAnswer} answerRef={answerRef}/></section><section className="panel writing"><label htmlFor="answer">我的复述</label><textarea id="answer" ref={answerRef} value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder="例如：我会这样向同学解释这个概念……"/><div className="write-footer"><small>{answer.length} 字</small><CopyAnswerButton text={answer} answerRef={answerRef}/><button className="primary" disabled={!answer.trim() || loading || !review.ready} onClick={() => ask("feedback")}><Sparkles size={17}/>{loading ? "分析中…" : "让 DeepSeek 评分并反馈"}</button>{loading && <button className="secondary" onClick={cancelRequest}>取消生成</button>}</div>{feedback && <><div className="ai-caveat">AI 反馈是练习参考，不能替代教材或权威评分。</div><div className="ai-result"><b><Brain size={18}/> DeepSeek 反馈</b><p>{feedback}</p></div></>}</section></div></>}
-          {view === "planner" && <>{heading("AI STUDY COACH", "为今天定一个可执行的计划", "DeepSeek 会结合当前科目、书目、章节和少量相关笔记规划；请补充可用时间与状态。")}<div className="planner-layout"><section className="panel planner"><div className="planner-title"><span><Sparkles size={21}/></span><div><h2>今天想怎么学？</h2><p>可以直接修改下面的问题，再发送给 DeepSeek。</p></div></div><textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} aria-label="学习计划要求"/><div className="write-footer"><small>当前：{activeBook?.name} · 第 {chapter} 章{section ? " · " + section : ""}</small><button className="primary" disabled={loading || !prompt.trim() || !review.ready} onClick={() => ask("plan")}><Send size={17}/>{loading ? "生成中…" : "生成学习计划"}</button>{loading && <button className="secondary" onClick={cancelRequest}>取消生成</button>}</div>{reply && <><div className="ai-caveat">AI 生成内容仅作学习建议，不是标准答案或官方考试安排。</div><div className="ai-result"><b><Sparkles size={18}/> 今日计划</b><p>{reply}</p></div></>}</section><section className="panel context"><span className="eyebrow">CONTEXT</span><h2>计划会参考</h2><p><BookOpen size={18}/>当前科目与章节 <b>{activeBook?.name || "未选择"} · {chapterName || "未选择"}</b></p><p><Layers3 size={18}/>当前待复习 <b>{review.ready ? due + " 张" : "读取中…"}</b></p><p><Layers3 size={18}/>今日已学新卡 <b>{review.ready ? studiedToday + " 张" : "读取中…"}</b></p><p><Layers3 size={18}/>今日剩余新卡 <b>{review.ready ? newToday + " 张" : "读取中…"}</b></p><p><Target size={18}/>目标初试 <b>{examDateLabel(examTarget.date)}</b></p><div className="tip">告诉 AI “今天只有 2 小时”“想重点整理浪漫主义”，计划会更贴合你。</div></section></div></>}
         </>}
       </div>
     </main>

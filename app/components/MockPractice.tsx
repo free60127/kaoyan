@@ -166,9 +166,9 @@ function TemplateSource({ template }: { template: ReturnType<typeof getApplicabl
 }
 function MockQuestion({ subject, question, number, response, onResponse, preview = false }: { subject: string; question: MockQuizQuestion; number: number; response: MockResponse; onResponse: (response: MockResponse) => void; preview?: boolean }) {
   const answerRef = useRef<HTMLTextAreaElement | null>(null);
-  const ownAnswer = question.type === "single-choice" ? selectedAnswer(question.options, response.choice) : response.text || "";
+  const ownAnswer = question.type === "single-choice" || question.type === "true-false" ? selectedAnswer(question.options, response.choice) : response.text || "";
   return <article className="mock-question"><div className="question-meta"><span>{question.groupLabel || MOCK_QUIZ_TYPE_LABELS[question.type]}</span>{question.points !== undefined && <span>本题 {question.points} 分</span>}<span>{question.bookName} · 第 {question.chapterNo} 章{question.section ? " · " + question.section : ""}</span></div><h2>{number}. {question.stem}</h2>
-    {question.type === "single-choice" ? <>
+    {question.type === "single-choice" || question.type === "true-false" ? <>
       <div className="options">{question.options.map((option, index) => preview ? <p className="mock-preview-option" key={index}>{"ABCD"[index]}. {option}</p> : <button key={index} disabled={response.choice !== undefined} className={response.choice === undefined ? "" : index === question.answer ? "correct" : response.choice === index ? "wrong" : ""} onClick={() => onResponse({ choice: index })}><span>{"ABCD"[index]}</span>{option}</button>)}</div>
       <div className="mock-own-answer"><b>我的选择</b><p>{ownAnswer || "尚未选择"}</p><CopyAnswerButton text={ownAnswer}/></div>
       {preview ? <button className="secondary reveal-button" onClick={() => onResponse({ revealed: !response.revealed })}>{response.revealed ? "收起 AI 参考答案" : "显示 AI 参考答案"}</button> : null}

@@ -447,9 +447,12 @@ export function collectStudyBackup(storage: Pick<Storage, "getItem">, catalogs: 
       if (legacyRaw !== null) {
         const legacy = object(parsePayload(legacyRaw, "旧版位置"), "旧版位置");
         if (!allSubjects.includes(legacy.subject as StudySubject)) fail("旧版位置", "科目无效");
+        // 已下线视图(费曼/学习计划)在恢复时归一化为 overview: 对比时按归一化后的值校验
+        const comparable = { ...legacy };
+        if (comparable.view === "feynman" || comparable.view === "planner") comparable.view = "overview";
         const restored = restoreLearningSession(null, bookIds(catalogs), legacyRaw);
         const current = restored.locations[restored.subject];
-        for (const field of ["book", "chapter", "section", "view", "pastMode", "pastYear", "pastIndex"] as const) if (has(legacy, field) && legacy[field] !== current[field]) fail("旧版位置", "字段无效");
+        for (const field of ["book", "chapter", "section", "view", "pastMode", "pastYear", "pastIndex"] as const) if (has(comparable, field) && comparable[field] !== current[field]) fail("旧版位置", "字段无效");
         records[key] = session(restored, catalogs);
       }
     } else if (key.startsWith("yantu-srs")) {
@@ -631,6 +634,8 @@ export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs
       if (question.type === "single-choice") {
         question.options.forEach((option, i) => add(`${"ABCD"[i]}. ${option}`));
         add(`我的作答：${response?.choice === undefined ? "未作答" : "ABCD"[response.choice]}\n参考答案：${"ABCD"[question.answer]}\n解析：${question.explanation}`);
+      } else if (question.type === "true-false") {
+        add(`我的作答：${response?.choice === undefined ? "未作答" : question.options[response.choice]}\n参考答案：${question.options[question.answer]}\n解析：${question.explanation}`);
       } else add(`我的作答：${response?.text || "未作答"}\n参考答案：${question.referenceAnswer}\n解析：${question.rationale}`);
       add(`已查看参考答案：${response?.revealed ? "是" : "否"}\n来源：${question.source}\n知识点：${question.knowledgePointIds.join("、")}`);
     });

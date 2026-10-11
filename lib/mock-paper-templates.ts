@@ -38,7 +38,7 @@ export function getApplicableMockPaperTemplate(templateId: MockPaperTemplateId, 
   if (!template) throw new Error("模拟卷构成参考与当前科目不符。");
   const groups = template.groups.filter((group) => !group.bookId || bookIds.includes(group.bookId)).map((group) => ({ ...group }));
   if (!groups.length) throw new Error("所选书目没有适用的模拟卷构成参考。");
-  const config: MockQuizConfig = { "single-choice": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0 };
+  const config: MockQuizConfig = { "single-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0 };
   groups.forEach((group) => { config[group.type] += group.count; });
   return {
     template, groups, config,

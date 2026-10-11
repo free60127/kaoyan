@@ -36,7 +36,7 @@ function learning() {
 }
 function mock(subject) {
   const book = catalogs[subject].books[0], unit = { bookId: book.id, chapterNo: 1, bookName: book.name, chapterName: book.chapters[0].title };
-  const config = { "single-choice": 1, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
+  const config = { "single-choice": 1, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
   const knowledgePointIds = [catalogs[subject].cards.find(card => card.book === book.id && card.chapter === 1).id];
   return { version: 1, subject, settings: { counts: Object.fromEntries(Object.entries(config).map(([key, count]) => [key, String(count)])), selection: { [book.id]: [1] } }, session: {
     snapshot: { subject, config, ranges: [{ bookId: book.id, chapters: [1] }], scopeLabel: `${book.name}第1章`, createdAt: "2026/9/30 20:00:00" },

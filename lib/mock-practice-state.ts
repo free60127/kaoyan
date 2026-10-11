@@ -36,10 +36,11 @@ export function mockPracticeReducer(state: MockPracticeState, action: MockPracti
   if (!question) return state;
   const previous = session.responses[action.id] || {};
   if (action.response.revealed !== undefined && typeof action.response.revealed !== "boolean") return state;
-  if (action.response.text !== undefined && (question.type === "single-choice" || typeof action.response.text !== "string" || action.response.text.length > 20000)) return state;
-  if (action.response.choice !== undefined && question.type !== "single-choice") return state;
+  if (action.response.text !== undefined && (question.type === "single-choice" || question.type === "true-false" || typeof action.response.text !== "string" || action.response.text.length > 20000)) return state;
+  if (action.response.choice !== undefined && question.type !== "single-choice" && question.type !== "true-false") return state;
   // A choice is submitted once; revisiting it never increases the score.
-  if (question.type === "single-choice" && action.response.choice !== undefined && (previous.choice !== undefined || !Number.isInteger(action.response.choice) || action.response.choice < 0 || action.response.choice > 3)) return state;
+  const choiceBound = question.type === "single-choice" ? 3 : 1;
+  if ((question.type === "single-choice" || question.type === "true-false") && action.response.choice !== undefined && (previous.choice !== undefined || !Number.isInteger(action.response.choice) || action.response.choice < 0 || action.response.choice > choiceBound)) return state;
   const response = { ...previous, ...(action.response.choice !== undefined ? { choice: action.response.choice } : {}), ...(action.response.text !== undefined ? { text: action.response.text } : {}), ...(action.response.revealed !== undefined ? { revealed: action.response.revealed } : {}) };
   return { ...state, session: { ...session, responses: { ...session.responses, [action.id]: response } } };
 }
@@ -47,7 +48,7 @@ export function mockPracticeScore(session: MockSession) {
   let right = 0, answered = 0, written = 0, choiceTotal = 0, openTotal = 0;
   for (const question of session.result.questions) {
     const response = session.responses[question.id];
-    if (question.type === "single-choice") {
+    if (question.type === "single-choice" || question.type === "true-false") {
       choiceTotal++;
       if (response?.choice !== undefined) { answered++; right += Number(response.choice === question.answer); }
     } else { openTotal++; written += Number(!!response?.text?.trim()); }
@@ -58,11 +59,12 @@ export function countsToStrings(config: MockQuizConfig): MockCounts {
   return Object.fromEntries(MOCK_QUIZ_TYPES.map((type) => [type, String(config[type])])) as MockCounts;
 }
 export function parseMockCounts(counts: MockCounts): MockQuizConfig {
-  const config = Object.fromEntries(MOCK_QUIZ_TYPES.map((type) => [type, /^\d+$/.test(counts[type]) ? Number(counts[type]) : NaN]));
+  // 旧保存设置没有新增题型键: 缺失键按 0; UI 中已存在但非法的输入(空白/小数/负数)仍报错不静默
+  const config = Object.fromEntries(MOCK_QUIZ_TYPES.map((type) => [type, counts[type] === undefined ? 0 : /^\d+$/.test(counts[type]) ? Number(counts[type]) : NaN]));
   return validateMockQuizConfig(config);
 }
 export function initialMockCounts(subject: "333" | "825"): MockCounts {
-  return countsToStrings({ "single-choice": subject === "333" ? 3 : 0, definition: subject === "825" ? 2 : 0, "short-answer": 2, essay: subject === "825" ? 1 : 0, "material-analysis": 0 });
+  return countsToStrings({ "single-choice": subject === "333" ? 3 : 0, "true-false": 0, "fill-blank": 0, definition: subject === "825" ? 2 : 0, "short-answer": 2, essay: subject === "825" ? 1 : 0, "material-analysis": 0 });
 }
 export function mockRangesFromSelection(books: MockPracticeBook[], selection: Record<string, number[]>, section?: { bookId: string; chapter: number; name: string }): MockQuizRange[] {
   return books.flatMap((book) => {

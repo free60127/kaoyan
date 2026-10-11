@@ -98,7 +98,11 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
       if (options.length !== 4) return invalid();
       return { ...base, type, options: options as [string, string, string, string], answer: integer(question.answer, 0, 3), explanation: text(question.explanation) };
     }
-    return { ...base, type: type as "definition" | "short-answer" | "essay" | "material-analysis", referenceAnswer: text(question.referenceAnswer), rationale: text(question.rationale) };
+    if (type === "true-false") {
+      // 判断题选项固定二项
+      return { ...base, type: "true-false", options: ["True", "False"], answer: integer(question.answer, 0, 1), explanation: text(question.explanation) };
+    }
+    return { ...base, type: type as "fill-blank" | "definition" | "short-answer" | "essay" | "material-analysis", referenceAnswer: text(question.referenceAnswer), rationale: text(question.rationale) };
   });
   if (!questions.length || new Set(questions.map((question) => question.id)).size !== questions.length || MOCK_QUIZ_TYPES.some((type) => questions.filter((question) => question.type === type).length !== snapshot.config[type])) return invalid();
   const rawCoverage = object(rawResult.coverage), maxUnits = books.reduce((sum, book) => sum + book.chapters.length, 0);

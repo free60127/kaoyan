@@ -1,6 +1,6 @@
 import { viewAvailable } from "./subject-capabilities";
 export type StudySubject = "333" | "825" | "politics" | "english";
-export type StudyView = "overview" | "chapters" | "cards" | "quiz" | "choice" | "essay" | "mock" | "feynman" | "planner" | "mistakes" | "stats" | "search";
+export type StudyView = "overview" | "chapters" | "cards" | "quiz" | "choice" | "bank" | "essay" | "mock" | "feynman" | "planner" | "mistakes" | "stats" | "search";
 export type LearningLocation = {
   book: string; chapter: number; section: string; view: StudyView;
   pastMode: "practice" | "index"; pastYear: number; pastIndex: number;
@@ -13,7 +13,7 @@ export type BookIds = Partial<Record<StudySubject, string[]>>;
 export const learningSessionKey = "yantu-learning-session-v1";
 export const defaultPlannerPrompt = "请结合当前科目的书目和进度，为我安排今天可执行的学习计划，包含主动回忆、练习和复盘。";
 const subjects: StudySubject[] = ["333", "825", "politics", "english"];
-const views: StudyView[] = ["overview", "chapters", "cards", "quiz", "choice", "essay", "mock", "feynman", "planner", "mistakes", "stats", "search"];
+const views: StudyView[] = ["overview", "chapters", "cards", "quiz", "choice", "bank", "essay", "mock", "feynman", "planner", "mistakes", "stats", "search"];
 /** 页面可用性: 委托给科目能力表(静态导入; capabilities 只引类型与图标, 无循环)。 */
 export const isRestorableView = (subject: StudySubject, view: unknown): view is StudyView => {
   if (!views.includes(view as StudyView)) return false;
@@ -28,6 +28,10 @@ export function defaultLocation(subject: StudySubject, ids: BookIds): LearningLo
 }
 function readLocation(value: unknown, subject: StudySubject, ids: BookIds): LearningLocation {
   const base = defaultLocation(subject, ids);
+  // 费曼复述与 AI 学习计划已下线: 旧持久化位置仅重置视图到今日概览, 书/章/节保留(数据层仍兼容读取)
+  if (record(value) && (value.view === "feynman" || value.view === "planner")) {
+    value = { ...value, view: "overview" };
+  }
   if (!record(value)) return base;
   const validBook = typeof value.book === "string" && (ids[subject]?.includes(value.book) || (subject === "english" && value.book === ""));
   return {

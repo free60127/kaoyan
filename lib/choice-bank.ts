@@ -123,3 +123,21 @@ export function fromSavedQuestion(saved: SavedQuestion): ChoiceQuestion {
 export function stripOptionLabel(text: string): string {
   return text.replace(/^\s*([A-D])[.、．)]\s*/, "");
 }
+
+/** 打乱一道题的选项顺序(C): 防止"背 A 素材"式记忆; answer 下标同步重映射。真题选项顺序有意义时默认关闭。 */
+export function shuffleQuestionOptions(question: ChoiceQuestion, rng: () => number): ChoiceQuestion {
+  const indices = question.options.map((_, index) => index);
+  for (let i = indices.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(rng() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  const options = indices.map(index => question.options[index]);
+  const answer = indices.indexOf(question.answer);
+  return { ...question, options, answer };
+}
+
+/** 全卷乱序: 同一 seed 下确定性重排。 */
+export function shuffleOptions(questions: readonly ChoiceQuestion[], seed: number): ChoiceQuestion[] {
+  const rng = mulberry32(seed);
+  return questions.map(question => shuffleQuestionOptions(question, rng));
+}

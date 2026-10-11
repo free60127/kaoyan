@@ -141,9 +141,11 @@ test("subject-capabilities: 单一事实源与侧栏过滤", async () => {
   for (const subject of ["333", "825", "politics", "english"]) {
     const navIds = sidebarViews(subject).map(view => view.id);
     for (const id of navIds) assert.equal(isRestorableView(subject, id), true, subject + ":" + id);
-    for (const view of ["overview", "chapters", "cards", "quiz", "choice", "essay", "mock", "feynman", "mistakes", "stats", "search", "planner"]) {
+    for (const view of ["overview", "chapters", "cards", "quiz", "choice", "essay", "mock", "mistakes", "stats", "search"]) {
       if (!navIds.includes(view)) assert.equal(viewAvailable(subject, view), false);
     }
+    // 费曼复述与 AI 学习计划已下线: 不再出现在任何侧栏
+    for (const view of ["feynman", "planner"]) assert.equal(sidebarViews(subject).some(item => item.id === view), false);
   }
   // 科目书目表与备份的静态校验一致
   assert.deepEqual(subjectBooks["825"], ["linguistics", "literature"]);

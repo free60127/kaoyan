@@ -159,3 +159,16 @@
 .sync-sql pre { background: #f4f8f5; border-radius: 8px; padding: 10px; font-size: 11px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
 
 .timing-toggle{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:14px;margin:12px 0;color:var(--green);cursor:pointer}.timing-toggle input{accent-color:var(--green);width:18px;height:18px}.timing-toggle small{font-size:11px;color:var(--muted)}
+
+/* 题库浏览与薄弱章节 */
+.bank-option { display: flex; gap: 8px; padding: 7px 10px; border: 1px solid #e3ece5; border-radius: 8px; margin: 4px 0; font-size: 14px; line-height: 1.6; }
+.bank-option.correct { border-color: #69ad80; background: #effaf1; }
+.bank-option span { font-weight: 800; color: #59826a; flex: 0 0 auto; }
+.essay-row { position: relative; }
+.bank-star { position: absolute; right: 10px; top: 10px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #dfe8e2; background: white; color: #8ba094; border-radius: 7px; padding: 4px 8px; font-size: 11px; cursor: pointer; }
+.bank-star.active { color: #b8860b; border-color: #e2c96b; background: #fffaf0; }
+.weak-list { display: grid; gap: 6px; }
+.weak-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid #eef2ef; border-radius: 9px; }
+.weak-row .weak-name { flex: 1; font-weight: 600; color: #42655a; }
+.weak-row .weak-count { color: #c15f50; font-size: 13px; font-weight: 700; }
+.weak-row .secondary { min-height: 32px; padding: 4px 12px; }

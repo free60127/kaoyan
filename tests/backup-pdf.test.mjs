@@ -51,7 +51,7 @@ backup.records["yantu-learning-session-v1"] = { version: 1, subject: "825", loca
 const longAnswer = "学习过程应结合实际案例，先阐明概念，再解释原因，最后提出可检验的结论。This is a complete English sentence with readable word wrapping.\n".repeat(35) + "作答末尾完整保留 FINAL_ANSWER_END";
 for (const subject of ["333", "825"]) {
   const book = catalogs[subject].books[0], unit = { bookId: book.id, chapterNo: 1, bookName: book.name, chapterName: book.chapters[0].title };
-  const config = { "single-choice": 1, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
+  const config = { "single-choice": 1, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
   const knowledgePointIds = [catalogs[subject].cards.find(card => card.book === book.id && card.chapter === 1).id];
   backup.records[`kaoyan.mock-practice.v1.${subject}`] = { version: 1, subject,
     settings: { counts: Object.fromEntries(Object.entries(config).map(([key, count]) => [key, String(count)])), selection: { [book.id]: [1] } },

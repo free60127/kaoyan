@@ -13,7 +13,7 @@ const templates = await import(pathToFileURL(join(temp, "mock-paper-templates.js
 const originalFetch = globalThis.fetch;
 after(async () => { globalThis.fetch = originalFetch; await rm(temp, { recursive: true, force: true }); });
 
-const cfg = (counts = {}) => ({ "single-choice": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0, ...counts });
+const cfg = (counts = {}) => ({ "single-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0, ...counts });
 const context333 = { subject: "333", ranges: [{ bookId: "principles", chapters: [1], section: "第一节 教育的概念" }] };
 const context825 = { subject: "825", ranges: [{ bookId: "linguistics", chapters: [1], section: "语言的定义" }] };
 const key = "sk-fake-TEST-DO-NOT-USE";
@@ -42,7 +42,7 @@ function mockResponder(transform = (rows) => rows) {
 test("config validates exact integer bounds and snapshots input", () => {
   assert.equal(api.MAX_MOCK_QUIZ_QUESTIONS, 60);
   assert.deepEqual(Object.keys(api.MOCK_QUIZ_TYPE_LABELS), api.MOCK_QUIZ_TYPES);
-  for (const invalid of [null, [], cfg(), cfg({ essay: 61 }), cfg({ essay: -1 }), cfg({ essay: 0.5 }), cfg({ essay: "1" }), cfg({ essay: NaN }), cfg({ essay: Infinity }), cfg({ essay: 60, definition: 1 }), { essay: 1 }, cfg({ essay: 1, alien: 1 })]) {
+  for (const invalid of [null, [], cfg(), cfg({ essay: 61 }), cfg({ essay: -1 }), cfg({ essay: 0.5 }), cfg({ essay: "1" }), cfg({ essay: NaN }), cfg({ essay: Infinity }), cfg({ essay: 60, definition: 1 }), cfg({ essay: 1, alien: 1 })]) {
     assert.throws(() => api.validateMockQuizConfig(invalid));
   }
   const original = cfg({ essay: 60 });

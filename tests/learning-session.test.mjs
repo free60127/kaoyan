@@ -26,7 +26,7 @@ test("local dirty drafts and remotely changed other drafts both survive navigati
 test("reload retains each subject's full location, scoped drafts and separate planner prompts", () => {
   const session = createLearningSession(ids);
   session.subject = "politics";
-  session.locations.politics = { ...session.locations.politics, chapter: 2, section: "考点二", view: "feynman" };
+  session.locations.politics = { ...session.locations.politics, chapter: 2, section: "考点二", view: "chapters" };
   session.locations["825"] = { ...session.locations["825"], book: "literature", view: "quiz", pastMode: "practice", pastYear: 2025, pastIndex: 3 };
   const current = feynmanDraftKey("politics", session.locations.politics);
   const otherSection = feynmanDraftKey("politics", { ...session.locations.politics, section: "考点三" });
@@ -56,7 +56,7 @@ test("825 answers belong to stable question IDs independent of year, mode and li
 
 test("lazy catalogs keep restored locations until loaded, then validate against actual sections", () => {
   const session = createLearningSession(ids);
-  const location = { ...session.locations.politics, chapter: 2, section: "考点二", view: "feynman" };
+  const location = { ...session.locations.politics, chapter: 2, section: "考点二", view: "chapters" };
   assert.equal(validateLocation(location, []), location);
   assert.equal(validateLocation(location, catalog), location);
   assert.deepEqual(validateLocation({ ...location, section: "deleted" }, catalog), { ...location, section: "" });
