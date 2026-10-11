@@ -190,7 +190,6 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
     const analysis = question.optionAnalysis.filter(Boolean);
     const answered = round.choice !== null;
     const pickedSet = new Set<number>(Array.isArray(round.chosen[round.index]) ? round.chosen[round.index] as number[] : typeof round.choice === "number" && round.choice >= 0 ? [round.choice] : multiPicks);
-    const showJudge = answered || (question.multi && multiPicks.length >= 2);
     return <section className="panel quiz-card">
       <div className="quiz-top"><span>选择题 · {question.bookName}{question.examTag ? ` · ${question.examTag}` : ` · ${question.origin}`}</span><small>第 {round.index + 1} / {round.questions.length} 题</small></div>
       {question.chapter && <small className="practice-hint">{question.chapter}</small>}
@@ -205,8 +204,9 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
         <button className="primary" disabled={multiPicks.length < 2} onClick={confirmMulti}>确认答案（2–4 项，全对才得分）</button>
         <small>考研多选：漏选、错选均不得分。</small>
       </div>}
-      {analysis.length ? <div className="explanation"><b>{showJudge ? `正确答案：${question.multi && question.answers ? question.answers.map(item => "ABCD"[item]).join("") : "ABCD"[question.answer]}${answered ? (round.right > 0 && choiceIsCorrect(question, Array.isArray(round.chosen[round.index]) ? round.chosen[round.index] as number[] : typeof round.choice === "number" ? round.choice : -1) ? " · 答对了" : " · 答错了") : ""}` : "逐项辨析（作答后显示）"}</b><p>{analysis.map((line, i) => <span key={i}>{line}<br/></span>)}</p></div>
-        : answered ? <div className="explanation"><b>正确答案：{question.multi && question.answers ? question.answers.map(item => "ABCD"[item]).join("") : "ABCD"[question.answer]}</b></div> : null}
+      {answered && analysis.length ? <div className="explanation"><b>正确答案：{question.multi && question.answers ? question.answers.map(item => "ABCD"[item]).join("") : "ABCD"[question.answer]}{choiceIsCorrect(question, Array.isArray(round.chosen[round.index]) ? round.chosen[round.index] as number[] : typeof round.choice === "number" ? round.choice : -1) ? " · 答对了" : " · 答错了"}</b><p>{analysis.map((line, i) => <span key={i}>{line}<br/></span>)}</p></div>
+        : answered ? <div className="explanation"><b>正确答案：{question.multi && question.answers ? question.answers.map(item => "ABCD"[item]).join("") : "ABCD"[question.answer]}</b></div>
+        : analysis.length ? <p className="mock-help">逐选项辨析将在作答后显示。</p> : null}
       <div className="quiz-footer"><span>本组 {round.right} / {round.index + (answered ? 1 : 0)} 题正确</span><button className="primary" disabled={!answered} onClick={next}>{round.index + 1 >= round.questions.length ? (requiz ? "完成重练" : "查看结果") : "下一题"}</button></div>
     </section>;
   }
