@@ -195,3 +195,8 @@
 .study-scheduler-controls .study-limit { flex: none; }
 .study-scheduler-controls .study-limit input[type="range"] { width: 100%; accent-color: var(--green); }
 @media(max-width:720px){.study-scheduler-controls{flex-basis:100%}}
+
+/* 政治多选题: 勾选暂存态 + 确认行 */
+.options button.picked { border-color: #4976b6; background: #eef4fc; }
+.mock-multi-actions { display: flex; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+.mock-multi-actions small { color: var(--muted); font-size: 11px; }

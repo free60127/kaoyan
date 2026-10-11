@@ -12,7 +12,7 @@ import { validateTimingRecords, validateTimingSettings, timingSettingsKey, forma
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 // 个人编辑层放最前: 导入时先恢复个人卡, 再恢复依赖它的复习记录
-export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-card-timing-v1-333", "yantu-card-timing-v1-825", "yantu-card-timing-v1-politics", timingSettingsKey, "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", examTargetKey] as const;
+export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-card-timing-v1-333", "yantu-card-timing-v1-825", "yantu-card-timing-v1-politics", timingSettingsKey, "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "yantu-mcq-excluded-v1-politics", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", "kaoyan.mock-practice.v1.politics", examTargetKey] as const;
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
@@ -38,11 +38,13 @@ export type BackupRecordMap = {
   "yantu-activity-v1-825": BackupActivity[];
   "yantu-activity-v1-politics": BackupActivity[];
   "yantu-mcq-excluded-v1": string[];
+  "yantu-mcq-excluded-v1-politics": string[];
   "yantu-stats-v1-333": Record<string, BackupDayStat>;
   "yantu-stats-v1-825": Record<string, BackupDayStat>;
   "yantu-stats-v1-politics": Record<string, BackupDayStat>;
   "kaoyan.mock-practice.v1.333": MockSavedRecord;
   "kaoyan.mock-practice.v1.825": MockSavedRecord;
+  "kaoyan.mock-practice.v1.politics": MockSavedRecord;
 };
 /** Omitted keys are absent snapshots, and are left untouched on import. */
 export type StudyBackup = { format: "yantu-study-backup"; version: 1; createdAt: string; records: Partial<BackupRecordMap> };
@@ -59,7 +61,7 @@ const subjects: BackupSubject[] = ["333", "825", "politics"];
 const allSubjects: StudySubject[] = [...subjects, "english"];
 const srsKey = (subject: BackupSubject) => `yantu-srs-v1-${subject}` as "yantu-srs-v1-333" | "yantu-srs-v1-825" | "yantu-srs-v1-politics";
 const doneKey = (subject: BackupSubject) => (subject === "333" ? "yantu-done" : `yantu-done-${subject}`) as "yantu-done" | "yantu-done-825" | "yantu-done-politics";
-const mockKey = (subject: "333" | "825") => `kaoyan.mock-practice.v1.${subject}` as "kaoyan.mock-practice.v1.333" | "kaoyan.mock-practice.v1.825";
+const mockKey = (subject: "333" | "825" | "politics") => `kaoyan.mock-practice.v1.${subject}` as "kaoyan.mock-practice.v1.333" | "kaoyan.mock-practice.v1.825" | "kaoyan.mock-practice.v1.politics";
 const has = (value: object, key: string) => Object.prototype.hasOwnProperty.call(value, key);
 const fail = (path: string, reason = "格式无效"): never => { throw new Error(`学习备份 ${path}：${reason}。`); };
 function object(value: unknown, path: string): Record<string, unknown> {
@@ -373,7 +375,7 @@ function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCata
   if (key === personalStorageKey) return personalLayer(value, catalogs);
   if (key === learningSessionKey) return session(value, catalogs);
   if (key === "yantu-mistakes-v1") return mistakes(value);
-  if (key === "yantu-mcq-excluded-v1") return boundedList(value, 20_000, "排除标记").map(id => text(id, "排除标记", 200));
+  if (key === "yantu-mcq-excluded-v1" || key === "yantu-mcq-excluded-v1-politics") return boundedList(value, 20_000, "排除标记").map(id => text(id, "排除标记", 200));
   if (key.startsWith("yantu-activity-v1-")) return activities(value);
   if (key.startsWith("yantu-stats-v1-")) return dayStats(value);
   if (key.startsWith("yantu-card-timing-v1-")) return validateTimingRecords(Object.fromEntries(Object.entries(object(value, "闪卡背诵用时")).filter(([id]) => id !== "apiKey")));
@@ -488,7 +490,7 @@ export function summarizeStudyBackup(input: StudyBackup, catalogs: BackupCatalog
     } else {
       result[subject].completedChapters = Object.values(doneRecord || {}).filter(Boolean).length;
     }
-    if (subject !== "politics") result[subject].mockQuestions = backup.records[mockKey(subject)]?.session?.result.questions.length || 0;
+    result[subject].mockQuestions = backup.records[mockKey(subject)]?.session?.result.questions.length || 0;
   }
   const mistakeList = backup.records["yantu-mistakes-v1"];
   if (mistakeList) for (const entry of mistakeList) {
@@ -634,6 +636,12 @@ export function buildBackupDocument(input: StudyBackup, catalogs: BackupCatalogs
       if (question.type === "single-choice") {
         question.options.forEach((option, i) => add(`${"ABCD"[i]}. ${option}`));
         add(`我的作答：${response?.choice === undefined ? "未作答" : "ABCD"[response.choice]}\n参考答案：${"ABCD"[question.answer]}\n解析：${question.explanation}`);
+      } else if (question.type === "multiple-choice") {
+        question.options.forEach((option, i) => add(`${"ABCD"[i]}. ${option}`));
+        const mine = response?.answers?.map((item) => "ABCD"[item]).join("") || "未作答";
+        add(`我的作答：${mine}
+参考答案：${question.answers.map((item) => "ABCD"[item]).join("")}（多选）
+解析：${question.explanation}`);
       } else if (question.type === "true-false") {
         add(`我的作答：${response?.choice === undefined ? "未作答" : question.options[response.choice]}\n参考答案：${question.options[question.answer]}\n解析：${question.explanation}`);
       } else add(`我的作答：${response?.text || "未作答"}\n参考答案：${question.referenceAnswer}\n解析：${question.rationale}`);

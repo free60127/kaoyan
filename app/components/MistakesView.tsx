@@ -68,6 +68,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
   }
   if (choiceRequiz && choiceRequizList.length) {
     return <ChoiceDrill
+      subject="333"
       storage={storage}
       requizIds={choiceRequizList.map(entry => entry.refId)}
       onRequizDone={handleRequizDone}

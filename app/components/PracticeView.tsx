@@ -29,7 +29,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
 }) {
   const requiz = !!requizEntries?.length;
   const [scope, setScope] = useState<"section" | "chapter" | "book">("chapter");
-  const [count, setCount] = useState(10);
+  const [countDraft, setCountDraft] = useState("10");
+  const count = Math.max(1, Math.min(50, Math.floor(Number(countDraft) || 0) || 10));
   const [round, setRound] = useState<{ questions: PracticeQuestion[]; index: number; choice: number | null; right: number; done: boolean; wrongIds: string[]; chosenByIndex: Record<number, number>; meta: { bookId: string; bookName: string; chapter: number; scope: "section" | "chapter" | "book"; section?: string } } | null>(null);
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
   const [excluded, setExcluded] = useState(() => readMcqExcluded());
@@ -166,7 +167,7 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     {!requiz && <div className="practice-config">
       <label>书目<select value={activeBook?.id || ""} disabled><option>{activeBook?.name || "未选择"}</option></select></label>
       <label>范围<div className="mode-group">{section && <button className={scope === "section" ? "mode-button active" : "mode-button"} onClick={() => setScope("section")}>当前小节</button>}<button className={scope === "chapter" ? "mode-button active" : "mode-button"} onClick={() => setScope("chapter")}>当前章</button><button className={scope === "book" ? "mode-button active" : "mode-button"} onClick={() => setScope("book")}>整本书</button></div></label>
-      <label>题数<select value={count} onChange={(event) => setCount(Number(event.target.value))}>{[10, 20, 30].map(n => <option key={n} value={n}>{n} 题</option>)}</select></label>
+      <label>题数<input type="number" min="1" max="50" step="1" inputMode="numeric" list="self-quiz-count-presets" value={countDraft} onChange={(event) => setCountDraft(event.target.value)} onBlur={() => setCountDraft(String(count))} aria-label="每次自测题数（1-50 自定义）"/><datalist id="self-quiz-count-presets">{[10, 20, 30].map(n => <option key={n} value={n}/>)}{}</datalist></label>
     </div>}
     <p className="mock-selection">当前范围可用卡片：{available.length} 张{!requiz && available.length < 4 ? " · 至少需要 4 张才能组卷" : ""}</p>
     {resumable && <div className="practice-resume" role="status">

@@ -10,7 +10,7 @@ const storageApi = modules.find((module) => module.readMockPractice), stateApi =
 const { readMockPractice: read, writeMockPractice: write, mockStorageKey: key, MAX_MOCK_RECORD_CHARS: max } = storageApi;
 const { mockPracticeReducer: reduce, mockPracticeScore: score, initialMockPracticeState: initial } = stateApi;
 const books = [{ id: "linguistics", name: "语言学", chapters: [{ title: "one", sections: ["section"] }, { title: "two", sections: [] }] }, { id: "literature", name: "文学", chapters: [{ title: "lit", sections: [] }] }];
-const config = { "single-choice": 1, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
+const config = { "single-choice": 1, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
 const unit = { bookId: "linguistics", chapterNo: 1, bookName: "语言学", chapterName: "one" };
 function fixture(subject = "825") {
   return { version: 1, subject, settings: { counts: Object.fromEntries(Object.entries(config).map(([type, count]) => [type, String(count)])), selection: { linguistics: [1] } }, session: {

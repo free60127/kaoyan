@@ -3,7 +3,8 @@ import type { SavedQuestion } from "./practice-draft";
 
 export type ChoiceQuestion = {
   id: string;
-  book: "principles" | "china" | "foreign" | "psychology";
+  /** 333 四书或政治五科的书目 id。 */
+  book: string;
   bookName: string;
   origin: string;
   examTag: string;
@@ -12,10 +13,24 @@ export type ChoiceQuestion = {
   stem: string;
   options: string[];
   answer: number;
+  /** 多选题正确项(升序); 存在即多选题(考研政治多选)。 */
+  answers?: number[];
+  multi?: boolean;
   optionAnalysis: string[];
   referenceAnswer: string;
   source: string;
 };
+
+/** 统一判分: 单选按 answer, 多选全对才对(漏选/错选不得分)。 */
+export function choiceIsCorrect(question: ChoiceQuestion, picked: number | number[]): boolean {
+  if (question.multi && question.answers) {
+    const chosen = Array.isArray(picked) ? picked : [picked];
+    if (chosen.length !== question.answers.length) return false;
+    const sorted = [...chosen].sort((a, b) => a - b);
+    return question.answers.every((item, index) => item === sorted[index]);
+  }
+  return !Array.isArray(picked) && picked === question.answer;
+}
 
 export const choiceBookName: Record<ChoiceQuestion["book"], string> = {
   principles: "教育学原理",
@@ -31,6 +46,22 @@ export async function loadChoiceBank(): Promise<ChoiceQuestion[]> {
   if (!data.length) throw new Error("choice bank empty");
   return data;
 }
+
+/** 肖1000题政治题库(试题分册+解析分册对齐), 结构与 333 题库一致 + 多选字段。 */
+export async function loadPoliticsChoiceBank(): Promise<ChoiceQuestion[]> {
+  const module = await import("./politics/choice-bank-politics.json");
+  const data = module.default as ChoiceQuestion[];
+  if (!data.length) throw new Error("politics choice bank empty");
+  return data;
+}
+
+export const politicsChoiceBookName: Record<string, string> = {
+  mayuan: "马克思主义基本原理",
+  maozhongte: "毛泽东思想和中国特色社会主义理论体系概论",
+  xinsixiang: "习近平新时代中国特色社会主义思想概论",
+  shigang: "中国近现代史纲要",
+  sixiu: "思想道德与法治",
+};
 
 export function mulberry32(seed: number) {
   let state = seed >>> 0;
@@ -88,6 +119,7 @@ export function toSavedQuestion(question: ChoiceQuestion, cardId: string): Saved
     source: question.source,
     extra: {
       id: question.id,
+      book: question.book,
       optionAnalysis: question.optionAnalysis,
       referenceAnswer: question.referenceAnswer,
       bookName: question.bookName,
@@ -95,6 +127,7 @@ export function toSavedQuestion(question: ChoiceQuestion, cardId: string): Saved
       examTag: question.examTag,
       chapter: question.chapter,
       number: question.number,
+      ...(question.multi && question.answers ? { multi: true, answers: question.answers } : {}),
     },
   };
 }
@@ -102,9 +135,11 @@ export function toSavedQuestion(question: ChoiceQuestion, cardId: string): Saved
 /** 草稿题 -> 题库题(恢复 extra; 非题库题如闪卡自测题退化为基础形态)。 */
 export function fromSavedQuestion(saved: SavedQuestion): ChoiceQuestion {
   const extra = (saved.extra || {}) as Record<string, unknown>;
+  const answers = Array.isArray(extra.answers) && extra.answers.every((item) => typeof item === "number") ? (extra.answers as number[]) : undefined;
+  const multi = extra.multi === true && !!answers && answers.length > 1;
   return {
     id: typeof extra.id === "string" ? extra.id : saved.cardId,
-    book: (typeof extra.book === "string" ? extra.book : "principles") as ChoiceQuestion["book"],
+    book: typeof extra.book === "string" ? extra.book : "principles",
     bookName: typeof extra.bookName === "string" ? extra.bookName : "",
     origin: typeof extra.origin === "string" ? extra.origin : "",
     examTag: typeof extra.examTag === "string" ? extra.examTag : saved.hint,
@@ -113,6 +148,7 @@ export function fromSavedQuestion(saved: SavedQuestion): ChoiceQuestion {
     stem: saved.stem,
     options: saved.options,
     answer: saved.answer,
+    ...(multi && answers ? { multi: true, answers } : {}),
     optionAnalysis: Array.isArray(extra.optionAnalysis) ? extra.optionAnalysis.map(String) : [],
     referenceAnswer: typeof extra.referenceAnswer === "string" ? extra.referenceAnswer : "",
     source: saved.source,
@@ -133,7 +169,9 @@ export function shuffleQuestionOptions(question: ChoiceQuestion, rng: () => numb
   }
   const options = indices.map(index => question.options[index]);
   const answer = indices.indexOf(question.answer);
-  return { ...question, options, answer };
+  // 多选题: 正确项集合同步重映射(乱序后答案位置跟随选项)
+  const answers = question.multi && question.answers ? question.answers.map(item => indices.indexOf(item)).sort((a, b) => a - b) : undefined;
+  return { ...question, options, answer, ...(answers ? { answers } : {}) };
 }
 
 /** 全卷乱序: 同一 seed 下确定性重排。 */

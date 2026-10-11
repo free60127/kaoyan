@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Star, Trash2 } from "lucide-react";
-import { loadChoiceBank, stripOptionLabel, type ChoiceQuestion } from "@/lib/choice-bank";
+import { loadChoiceBank, loadPoliticsChoiceBank, stripOptionLabel, type ChoiceQuestion } from "@/lib/choice-bank";
 import { readFavorites, toggleFavorite } from "@/lib/favorites";
 import { stripHighlightMarkers } from "@/lib/highlight-markers";
 
@@ -23,9 +23,9 @@ export function FavoritesView({ subject, books, cards, onReviewCard }: {
     setChoiceFavs(readFavorites(subject, "choice"));
   }, [subject]);
   useEffect(() => {
-    if (subject !== "333") return;
+    if (subject !== "333" && subject !== "politics") return;
     let cancelled = false;
-    loadChoiceBank().then(data => { if (!cancelled) setBank(data); }).catch(() => { if (!cancelled) setBank([]); });
+    (subject === "333" ? loadChoiceBank() : loadPoliticsChoiceBank()).then(data => { if (!cancelled) setBank(data); }).catch(() => { if (!cancelled) setBank([]); });
     return () => { cancelled = true; };
   }, [subject]);
 
@@ -42,7 +42,7 @@ export function FavoritesView({ subject, books, cards, onReviewCard }: {
   }
 
   return <section className="panel favorites-panel">
-    <div className="panel-heading"><div><span className="eyebrow">FAVORITES</span><h2>我的收藏 · {favCards.length + (subject === "333" ? favChoices.length : 0)} 项</h2></div></div>
+    <div className="panel-heading"><div><span className="eyebrow">FAVORITES</span><h2>我的收藏 · {favCards.length + ((subject === "333" || subject === "politics") ? favChoices.length : 0)} 项</h2></div></div>
 
     {favCards.length > 0 && <>
       <h3 className="favorites-heading">收藏的闪卡 · {favCards.length}</h3>
@@ -60,7 +60,7 @@ export function FavoritesView({ subject, books, cards, onReviewCard }: {
       </div>
     </>}
 
-    {subject === "333" && favChoices.length > 0 && <>
+    {(subject === "333" || subject === "politics") && favChoices.length > 0 && <>
       <h3 className="favorites-heading">收藏的选择题 · {favChoices.length}</h3>
       <div className="essay-list">
         {favChoices.map(question => <div key={question.id} className="essay-row">
@@ -69,8 +69,11 @@ export function FavoritesView({ subject, books, cards, onReviewCard }: {
             <span className="essay-stem">{stripHighlightMarkers(question.stem)}</span>
           </button>
           {open[question.id] && <div className="essay-answer">
-            <div className="options">{question.options.map((option, index) => <p key={index} className={index === question.answer ? "bank-option correct" : "bank-option"}><span>{"ABCD"[index]}</span>{stripOptionLabel(option)}</p>)}</div>
-            <b>正确答案：{"ABCD"[question.answer]}</b>
+            <div className="options">{question.options.map((option, index) => {
+              const correctIndex = question.multi && question.answers ? question.answers.includes(index) : index === question.answer;
+              return <p key={index} className={correctIndex ? "bank-option correct" : "bank-option"}><span>{question.multi && question.answers && question.answers.includes(index) ? "✓ " : ""}{"ABCD"[index]}</span>{stripOptionLabel(option)}</p>;
+            })}</div>
+            <b>正确答案：{question.multi && question.answers ? question.answers.map(item => "ABCD"[item]).join("") : "ABCD"[question.answer]}{question.multi ? "（多选）" : ""}</b>
             {question.optionAnalysis.filter(Boolean).length
               ? <p>{question.optionAnalysis.map((line, i) => <span key={i}>{stripHighlightMarkers(line)}<br /></span>)}</p>
               : question.referenceAnswer ? <p>{stripHighlightMarkers(question.referenceAnswer)}</p>

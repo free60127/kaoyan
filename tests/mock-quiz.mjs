@@ -13,7 +13,7 @@ const templates = await import(pathToFileURL(join(temp, "mock-paper-templates.js
 const originalFetch = globalThis.fetch;
 after(async () => { globalThis.fetch = originalFetch; await rm(temp, { recursive: true, force: true }); });
 
-const cfg = (counts = {}) => ({ "single-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0, ...counts });
+const cfg = (counts = {}) => ({ "single-choice": 0, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0, ...counts });
 const context333 = { subject: "333", ranges: [{ bookId: "principles", chapters: [1], section: "第一节 教育的概念" }] };
 const context825 = { subject: "825", ranges: [{ bookId: "linguistics", chapters: [1], section: "语言的定义" }] };
 const key = "sk-fake-TEST-DO-NOT-USE";

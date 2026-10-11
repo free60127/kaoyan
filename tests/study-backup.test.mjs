@@ -36,7 +36,7 @@ function learning() {
 }
 function mock(subject) {
   const book = catalogs[subject].books[0], unit = { bookId: book.id, chapterNo: 1, bookName: book.name, chapterName: book.chapters[0].title };
-  const config = { "single-choice": 1, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
+  const config = { "single-choice": 1, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 1, "material-analysis": 0 };
   const knowledgePointIds = [catalogs[subject].cards.find(card => card.book === book.id && card.chapter === 1).id];
   return { version: 1, subject, settings: { counts: Object.fromEntries(Object.entries(config).map(([key, count]) => [key, String(count)])), selection: { [book.id]: [1] } }, session: {
     snapshot: { subject, config, ranges: [{ bookId: book.id, chapters: [1] }], scopeLabel: `${book.name}第1章`, createdAt: "2026/9/30 20:00:00" },
@@ -50,6 +50,8 @@ function fullStorage() {
   values["yantu-card-timing-settings-v1"] = JSON.stringify({ enabled: false });
   values["yantu-mistakes-v1"] = JSON.stringify([{ id: "333:card:x1", subject: "333", kind: "card", refId: "x1", label: "题面", wrongCount: 2, lastAt: now.toISOString() }]);
   values["yantu-mcq-excluded-v1"] = JSON.stringify(["principles-k1-001"]);
+  values["yantu-mcq-excluded-v1-politics"] = JSON.stringify(["xiao-mayuan-s1"]);
+  values[mockKey("politics")] = JSON.stringify({ version: 1, subject: "politics", settings: { counts: { "single-choice": "0", "multiple-choice": "0", "true-false": "0", "fill-blank": "0", definition: "0", "short-answer": "0", essay: "0", "material-analysis": "0" }, selection: {} }, session: null });
   values["yantu-personal-v1"] = JSON.stringify({ version: 1, seq: 3, overlays: { "333:principles-k1-001": { rev: 1, updatedAt: now.toISOString(), baseHash: "abc", note: { text: "老师补充的易错点", runs: [] } } }, cards: [{ id: "mine-test-1", subject: "333", book: catalogs["333"].books[0].id, chapter: 1, section: "", front: { text: "自建问题", runs: [] }, back: { text: "自建答案", runs: [] }, createdAt: now.toISOString(), rev: 1 }] });
   for (const subject of ["333", "825", "politics"]) values[`yantu-activity-v1-${subject}`] = JSON.stringify([{ t: now.toISOString(), kind: "rating", subject, label: "题面", detail: "记住了" }]);
   for (const subject of ["333", "825", "politics"]) {

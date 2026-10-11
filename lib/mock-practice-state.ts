@@ -3,8 +3,9 @@ import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "./mock
 
 export type MockPracticeBook = { id: string; name: string; chapters: { title: string; sections: string[] }[] };
 export type MockCounts = Record<keyof MockQuizConfig, string>;
-export type MockSnapshot = { subject: "333" | "825"; config: MockQuizConfig; ranges: MockQuizRange[]; scopeLabel: string; templateId?: MockPaperTemplateId; createdAt: string; /** F1 限时模式: 全真计时分钟数(不设=不限时) */ examMinutes?: number; examStartedAt?: string };
-export type MockResponse = { choice?: number; text?: string; revealed?: boolean };
+export type MockSubject = "333" | "825" | "politics";
+export type MockSnapshot = { subject: MockSubject; config: MockQuizConfig; ranges: MockQuizRange[]; scopeLabel: string; templateId?: MockPaperTemplateId; createdAt: string; /** F1 限时模式: 全真计时分钟数(不设=不限时) */ examMinutes?: number; examStartedAt?: string };
+export type MockResponse = { choice?: number; /** 多选确认后的答案(升序不重复); 锁定后不可改 */ answers?: number[]; text?: string; revealed?: boolean };
 export type MockSession = { result: MockQuizResult; snapshot: MockSnapshot; cursor: number; mode: "practice" | "paper"; responses: Record<string, MockResponse> };
 export type MockPracticeState = { session: MockSession | null; pending: boolean; progress: { done: number; total: number }; error: string };
 export type MockPracticeAction =
@@ -36,13 +37,28 @@ export function mockPracticeReducer(state: MockPracticeState, action: MockPracti
   if (!question) return state;
   const previous = session.responses[action.id] || {};
   if (action.response.revealed !== undefined && typeof action.response.revealed !== "boolean") return state;
-  if (action.response.text !== undefined && (question.type === "single-choice" || question.type === "true-false" || typeof action.response.text !== "string" || action.response.text.length > 20000)) return state;
-  if (action.response.choice !== undefined && question.type !== "single-choice" && question.type !== "true-false") return state;
+  if (action.response.text !== undefined && (question.type === "single-choice" || question.type === "true-false" || question.type === "multiple-choice" || typeof action.response.text !== "string" || action.response.text.length > 20000)) return state;
+  if (action.response.choice !== undefined && (question.type !== "single-choice" && question.type !== "true-false")) return state;
   // A choice is submitted once; revisiting it never increases the score.
   const choiceBound = question.type === "single-choice" ? 3 : 1;
   if ((question.type === "single-choice" || question.type === "true-false") && action.response.choice !== undefined && (previous.choice !== undefined || !Number.isInteger(action.response.choice) || action.response.choice < 0 || action.response.choice > choiceBound)) return state;
+  // 多选: answers 一次性确认提交, 确认后锁定
+  if (action.response.answers !== undefined) {
+    if (question.type !== "multiple-choice" || previous.answers !== undefined) return state;
+    const raw = action.response.answers;
+    if (!Array.isArray(raw) || raw.length < 2 || raw.length > 4 || new Set(raw).size !== raw.length || raw.some((item) => !Number.isInteger(item) || item < 0 || item > 3)) return state;
+    return { ...state, session: { ...session, responses: { ...session.responses, [action.id]: { ...previous, answers: [...raw].sort((a, b) => a - b) } } } };
+  }
+  if (action.response.answers === undefined && question.type === "multiple-choice" && action.response.choice !== undefined) return state;
   const response = { ...previous, ...(action.response.choice !== undefined ? { choice: action.response.choice } : {}), ...(action.response.text !== undefined ? { text: action.response.text } : {}), ...(action.response.revealed !== undefined ? { revealed: action.response.revealed } : {}) };
   return { ...state, session: { ...session, responses: { ...session.responses, [action.id]: response } } };
+}
+/** 考研多选: 全对才得分(漏选/多选均不得分)。 */
+export function mockMultipleChoiceCorrect(question: { answers: number[] }, response: { answers?: number[] }): boolean {
+  if (!response.answers || response.answers.length !== question.answers.length) return false;
+  const expected = [...question.answers].sort((a, b) => a - b);
+  const sorted = [...response.answers].sort((a, b) => a - b);
+  return expected.every((item, index) => item === sorted[index]);
 }
 export function mockPracticeScore(session: MockSession) {
   let right = 0, answered = 0, written = 0, choiceTotal = 0, openTotal = 0;
@@ -51,6 +67,9 @@ export function mockPracticeScore(session: MockSession) {
     if (question.type === "single-choice" || question.type === "true-false") {
       choiceTotal++;
       if (response?.choice !== undefined) { answered++; right += Number(response.choice === question.answer); }
+    } else if (question.type === "multiple-choice") {
+      choiceTotal++;
+      if (response?.answers !== undefined) { answered++; right += Number(mockMultipleChoiceCorrect(question, response)); }
     } else { openTotal++; written += Number(!!response?.text?.trim()); }
   }
   return { right, answered, written, choiceTotal, openTotal };
@@ -63,8 +82,9 @@ export function parseMockCounts(counts: MockCounts): MockQuizConfig {
   const config = Object.fromEntries(MOCK_QUIZ_TYPES.map((type) => [type, counts[type] === undefined ? 0 : /^\d+$/.test(counts[type]) ? Number(counts[type]) : NaN]));
   return validateMockQuizConfig(config);
 }
-export function initialMockCounts(subject: "333" | "825"): MockCounts {
-  return countsToStrings({ "single-choice": subject === "333" ? 3 : 0, "true-false": 0, "fill-blank": 0, definition: subject === "825" ? 2 : 0, "short-answer": 2, essay: subject === "825" ? 1 : 0, "material-analysis": 0 });
+export function initialMockCounts(subject: MockSubject): MockCounts {
+  if (subject === "politics") return countsToStrings({ "single-choice": 16, "multiple-choice": 17, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 5 });
+  return countsToStrings({ "single-choice": subject === "333" ? 3 : 0, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: subject === "825" ? 2 : 0, "short-answer": 2, essay: subject === "825" ? 1 : 0, "material-analysis": 0 });
 }
 export function mockRangesFromSelection(books: MockPracticeBook[], selection: Record<string, number[]>, section?: { bookId: string; chapter: number; name: string }): MockQuizRange[] {
   return books.flatMap((book) => {
@@ -73,10 +93,10 @@ export function mockRangesFromSelection(books: MockPracticeBook[], selection: Re
     return [{ bookId: book.id, chapters, ...(section && section.bookId === book.id && chapters.length === 1 && chapters[0] === section.chapter ? { section: section.name } : {}) }];
   });
 }
-export function snapshotMockSettings(subject: "333" | "825", counts: MockCounts, ranges: MockQuizRange[], scopeLabel: string, templateId?: MockPaperTemplateId, examMinutes?: number): MockSnapshot {
+export function snapshotMockSettings(subject: MockSubject, counts: MockCounts, ranges: MockQuizRange[], scopeLabel: string, templateId?: MockPaperTemplateId, examMinutes?: number): MockSnapshot {
   if (examMinutes !== undefined && (!Number.isInteger(examMinutes) || examMinutes < 5 || examMinutes > 600)) throw new Error("限时分钟须为 5–600 的整数。");
   if (!ranges.length) throw new Error("请选择至少一个书目或章节范围。");
-  if (subject !== "333" && subject !== "825") throw new Error("请选择科目。");
+  if (subject !== "333" && subject !== "825" && subject !== "politics") throw new Error("请选择科目。");
   if (ranges.some((range) => !range || typeof range.bookId !== "string" || !range.bookId.trim() || !Array.isArray(range.chapters) || !range.chapters.length || range.chapters.some((chapter) => !Number.isInteger(chapter) || chapter < 1) || (range.section !== undefined && (typeof range.section !== "string" || !range.section.trim())))) throw new Error("命题范围格式有误，请重新选择书目、章节与小节。");
   const config = parseMockCounts(counts);
   if (templateId) {

@@ -17,9 +17,9 @@ export const subjectBooks: Record<StudySubject, string[]> = {
 export const subjectHasData: Record<StudySubject, boolean> = { english: false, politics: true, "333": true, "825": true };
 
 /** 页面在各科目是否可用: 与 learning-session 的位置恢复、study-backup 的校验一致。
- *  政治没有真题与模拟卷数据。 */
+ *  政治没有历年真题卷(quiz), 但有肖1000题库(choice)与 AI 模拟卷(mock)。 */
 export function viewAvailable(subject: StudySubject, view: StudyView): boolean {
-  if (subject === "politics" && (view === "quiz" || view === "mock")) return false;
+  if (subject === "politics" && view === "quiz") return false;
   if (view === "essay" || view === "bank") return subject === "333"; // 主观题库与题库浏览目前仅 333 资料
   return true;
 }

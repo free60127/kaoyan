@@ -4,10 +4,12 @@ import type { MockPaperTemplateId } from "./mock-paper-templates";
 
 export const MAX_MOCK_RECORD_CHARS = 1_000_000; // At most 2 MB in UTF-16 local storage.
 export type MockSettings = { counts: MockCounts; selection: Record<string, number[]>; sectionScope?: { bookId: string; chapter: number; name: string }; templateId?: MockPaperTemplateId; examMinutes?: number };
-export type MockSavedRecord = { version: 1; subject: "333" | "825"; settings: MockSettings; session: MockSession | null };
+import type { MockSubject } from "./mock-practice-state";
+
+export type MockSavedRecord = { version: 1; subject: MockSubject; settings: MockSettings; session: MockSession | null };
 type StorageAccess = Pick<Storage, "getItem" | "setItem">;
 export type MockStorageRead = { status: "empty" } | { status: "loaded"; record: MockSavedRecord } | { status: "error"; message: string };
-export const mockStorageKey = (subject: "333" | "825") => `kaoyan.mock-practice.v1.${subject}`;
+export const mockStorageKey = (subject: MockSubject) => `kaoyan.mock-practice.v1.${subject}`;
 const invalid = () => { throw new Error("保存的模拟卷格式无效。"); };
 function object(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value)) return invalid();
@@ -25,16 +27,16 @@ function list<T>(value: unknown, max: number, parse: (value: unknown) => T): T[]
   if (!Array.isArray(value) || value.length > max) return invalid();
   return value.map(parse);
 }
-function template(value: unknown, subject: "333" | "825"): MockPaperTemplateId | undefined {
+function template(value: unknown, subject: MockSubject): MockPaperTemplateId | undefined {
   if (value === undefined) return undefined;
   if (value !== `${subject}-2026`) return invalid();
   return value as MockPaperTemplateId;
 }
 
 /** Rebuild only known fields; credentials and arbitrary extra properties never enter storage. */
-export function validateMockSavedRecord(value: unknown, subject: "333" | "825", books: MockPracticeBook[]): MockSavedRecord {
+export function validateMockSavedRecord(value: unknown, subject: MockSubject, books: MockPracticeBook[]): MockSavedRecord {
   const row = object(value);
-  if ((subject !== "333" && subject !== "825") || row.version !== 1 || row.subject !== subject) return invalid();
+  if ((subject !== "333" && subject !== "825" && subject !== "politics") || row.version !== 1 || row.subject !== subject) return invalid();
   const findBook = (id: unknown) => books.find((book) => book.id === id) || invalid();
   const parseChapter = (bookId: string, value: unknown) => integer(value, 1, findBook(bookId).chapters.length);
   const parseSection = (bookId: string, chapter: number, value: unknown) => {
@@ -105,6 +107,13 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
       if (options.length !== 4) return invalid();
       return { ...base, type, options: options as [string, string, string, string], answer: integer(question.answer, 0, 3), explanation: text(question.explanation) };
     }
+    if (type === "multiple-choice") {
+      const options = list(question.options, 4, (value) => text(value, 10000));
+      const answers = list(question.answers, 4, (value) => integer(value, 0, 3));
+      // 考研多选: 2-4 个正确项, 不重复
+      if (options.length !== 4 || answers.length < 2 || answers.length > 4 || new Set(answers).size !== answers.length) return invalid();
+      return { ...base, type, options: options as [string, string, string, string], answers: [...answers].sort((a, b) => a - b), explanation: text(question.explanation) };
+    }
     if (type === "true-false") {
       // 判断题选项固定二项
       return { ...base, type: "true-false", options: ["True", "False"], answer: integer(question.answer, 0, 1), explanation: text(question.explanation) };
@@ -121,14 +130,28 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
   if (rawSession.mode !== "practice" && rawSession.mode !== "paper") return invalid();
   const responses = Object.fromEntries(Object.entries(object(rawSession.responses)).map(([id, value]) => {
     const question = questions.find((question) => question.id === id), response = object(value);
-    if (!question || (response.choice !== undefined && question.type !== "single-choice") || (response.text !== undefined && question.type === "single-choice") || (response.revealed !== undefined && typeof response.revealed !== "boolean")) return invalid();
-    const clean: MockResponse = { ...(response.choice !== undefined ? { choice: integer(response.choice, 0, 3) } : {}), ...(response.text !== undefined ? { text: text(response.text, 20000, true) } : {}), ...(response.revealed !== undefined ? { revealed: response.revealed as boolean } : {}) };
+    if (!question) return invalid();
+    const isChoiceQuestion = question.type === "single-choice" || question.type === "true-false";
+    if ((response.choice !== undefined && !isChoiceQuestion) || (response.text !== undefined && isChoiceQuestion) || (response.revealed !== undefined && typeof response.revealed !== "boolean")) return invalid();
+    let cleanAnswers: number[] | undefined;
+    if (response.answers !== undefined) {
+      if (question.type !== "multiple-choice") return invalid();
+      const answers = list(response.answers, 4, (value) => integer(value, 0, 3));
+      if (answers.length < 2 || answers.length > 4 || new Set(answers).size !== answers.length) return invalid();
+      cleanAnswers = [...answers].sort((a, b) => a - b);
+    }
+    const clean: MockResponse = {
+      ...(response.choice !== undefined && isChoiceQuestion ? { choice: integer(response.choice, 0, 3) } : {}),
+      ...(cleanAnswers ? { answers: cleanAnswers } : {}),
+      ...(response.text !== undefined && !isChoiceQuestion ? { text: text(response.text, 20000, true) } : {}),
+      ...(response.revealed !== undefined ? { revealed: response.revealed as boolean } : {}),
+    };
     return [id, clean];
   }));
   return { version: 1, subject, settings, session: { snapshot, result: { questions, coverage: { requestedUnits, coveredUnits, uncoveredUnits, complete: rawCoverage.complete as boolean, note: text(rawCoverage.note, 10000) } }, cursor: integer(rawSession.cursor, 0, questions.length - 1), mode: rawSession.mode, responses } };
 }
 
-export function readMockPractice(storage: StorageAccess, subject: "333" | "825", books: MockPracticeBook[]): MockStorageRead {
+export function readMockPractice(storage: StorageAccess, subject: MockSubject, books: MockPracticeBook[]): MockStorageRead {
   let raw;
   try { raw = storage.getItem(mockStorageKey(subject)); } catch { return { status: "error", message: "无法读取本地模拟卷；当前页面可继续使用，刷新后可能无法恢复。" }; }
   if (raw === null) return { status: "empty" };

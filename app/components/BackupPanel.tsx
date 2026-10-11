@@ -15,6 +15,7 @@ const recordLabels: Record<BackupStorageKey, string> = {
   "yantu-done": "333 章节完成标记", "yantu-done-825": "825 章节完成标记", "yantu-done-politics": "政治章节完成标记",
   "kaoyan.mock-practice.v1.333": "333 命题设置、完整模拟卷与作答",
   "kaoyan.mock-practice.v1.825": "825 命题设置、完整模拟卷与作答",
+  "kaoyan.mock-practice.v1.politics": "政治命题设置、完整模拟卷与作答",
   "yantu-mistakes-v1": "三科错题本（评分重来、答错的真题与自测题）",
   "yantu-stats-v1-333": "333 每日学习统计（评分、练习、连续天数）",
   "yantu-stats-v1-825": "825 每日学习统计",
@@ -23,6 +24,7 @@ const recordLabels: Record<BackupStorageKey, string> = {
   "yantu-activity-v1-825": "825 今日活动明细",
   "yantu-activity-v1-politics": "政治今日活动明细",
   "yantu-mcq-excluded-v1": "人工不适合选择题排除标记",
+  "yantu-mcq-excluded-v1-politics": "政治人工排除标记",
   "yantu-personal-v1": "个人编辑层（修改、我的补充、个人卡与样式）",
 };
 const subjects = { "333": "333 教育综合", "825": "825 英语专业基础", politics: "政治", english: "英语二" };

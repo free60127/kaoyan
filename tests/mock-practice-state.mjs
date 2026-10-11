@@ -13,12 +13,17 @@ const result = { questions: [{ ...base, id: "mc", type: "single-choice", stem: "
 const snapshot = snapshotMockSettings("825", initialMockCounts("825"), [{ bookId: "linguistics", chapters: [1] }], "语言学第1章");
 const loaded = () => reduce(initialMockPracticeState(), { type: "success", result, snapshot });
 
-test("small custom defaults have all seven editable types and five questions for both subjects", () => {
+test("small custom defaults have all eight editable types; 333/825 five questions, politics 38", () => {
   for (const subject of ["333", "825"]) {
     const counts = parseMockCounts(initialMockCounts(subject));
-    assert.equal(Object.keys(counts).length, 7);
+    assert.equal(Object.keys(counts).length, 8);
     assert.equal(Object.values(counts).reduce((sum, count) => sum + count, 0), 5);
   }
+  const politics = parseMockCounts(initialMockCounts("politics"));
+  assert.equal(Object.keys(politics).length, 8);
+  assert.equal(Object.values(politics).reduce((sum, count) => sum + count, 0), 38);
+  assert.equal(politics["single-choice"], 16);
+  assert.equal(politics["multiple-choice"], 17);
 });
 test("旧版五键配置(无填空/判断键)按 0 兼容读取", () => {
   const counts = parseMockCounts({ "single-choice": "3", definition: "2", "short-answer": "2", essay: "1", "material-analysis": "0" });
@@ -27,7 +32,7 @@ test("旧版五键配置(无填空/判断键)按 0 兼容读取", () => {
 });
 test("UI numeric input rejects blank, decimal, negative and excess totals rather than coercing them", () => {
   for (const value of ["", " ", "1.5", "-1", "1e1", "61"]) assert.throws(() => parseMockCounts({ ...initialMockCounts("333"), essay: value }));
-  assert.throws(() => parseMockCounts(countsToStrings({ "single-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0 })));
+  assert.throws(() => parseMockCounts(countsToStrings({ "single-choice": 0, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0 })));
   assert.throws(() => parseMockCounts({ ...initialMockCounts("333"), essay: "60" }));
 });
 test("scope selection orders chapters, preserves multiple books and snapshots exact independent ranges", () => {
@@ -40,9 +45,9 @@ test("scope selection orders chapters, preserves multiple books and snapshots ex
   assert.deepEqual(mockRangesFromSelection(books, { linguistics: [1] }, { bookId: "linguistics", chapter: 1, name: "section" }), [{ bookId: "linguistics", chapters: [1], section: "section" }]);
 });
 test("real composition snapshots accept full and book-filtered 825, reject edited preset counts", () => {
-  const paper333 = snapshotMockSettings("333", countsToStrings({ "single-choice": 30, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 2, "material-analysis": 4 }), [{ bookId: "principles", chapters: [1, 2] }], "333", "333-2026");
+  const paper333 = snapshotMockSettings("333", countsToStrings({ "single-choice": 30, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 2, "material-analysis": 4 }), [{ bookId: "principles", chapters: [1, 2] }], "333", "333-2026");
   assert.equal(Object.values(paper333.config).reduce((sum, count) => sum + count, 0), 36);
-  const full = { "single-choice": 0, "true-false": 0, "fill-blank": 0, definition: 5, "short-answer": 9, essay: 0, "material-analysis": 0 };
+  const full = { "single-choice": 0, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 5, "short-answer": 9, essay: 0, "material-analysis": 0 };
   const ling = { ...full, "short-answer": 4 };
   const lit = { ...full, definition: 0, "short-answer": 5 };
   for (const [ids, counts] of [[["linguistics", "literature"], full], [["linguistics"], ling], [["literature"], lit]]) {

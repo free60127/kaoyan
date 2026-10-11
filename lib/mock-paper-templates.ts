@@ -1,9 +1,9 @@
 import type { MockQuizConfig, MockQuizType } from "./mock-quiz";
 
-export type MockPaperTemplateId = "333-2026" | "825-2026";
+export type MockPaperTemplateId = "333-2026" | "825-2026" | "politics-2026";
 export type MockPaperGroup = { label: string; type: MockQuizType; count: number; points: number; bookId?: string };
 export type MockPaperTemplate = {
-  id: MockPaperTemplateId; subject: "333" | "825"; title: string;
+  id: MockPaperTemplateId; subject: "333" | "825" | "politics"; title: string;
   sourceFile: string; sourcePages: number[]; recall: boolean; groups: MockPaperGroup[];
 };
 
@@ -30,15 +30,26 @@ export const MOCK_PAPER_TEMPLATES: readonly MockPaperTemplate[] = [
       { label: "Literature — Short answers", bookId: "literature", type: "short-answer", count: 5, points: 15 },
     ],
   },
+  {
+    // 考研政治统一卷构成: 单选16×1 + 多选17×2 + 分析5×10 = 100 分（38 题, 上限 60 内）
+    id: "politics-2026", subject: "politics", title: "考研政治真题构成参考（38题，100分）",
+    sourceFile: "27肖1000题-试题分册.pdf",
+    sourcePages: [1], recall: false,
+    groups: [
+      { label: "一、单项选择题", type: "single-choice", count: 16, points: 1 },
+      { label: "二、多项选择题", type: "multiple-choice", count: 17, points: 2 },
+      { label: "三、材料分析题", type: "material-analysis", count: 5, points: 10 },
+    ],
+  },
 ];
 
 /** Filter the 825 paper to selected books; chapters alter scope, never source structure. */
-export function getApplicableMockPaperTemplate(templateId: MockPaperTemplateId, subject: "333" | "825", bookIds: readonly string[]) {
+export function getApplicableMockPaperTemplate(templateId: MockPaperTemplateId, subject: "333" | "825" | "politics", bookIds: readonly string[]) {
   const template = MOCK_PAPER_TEMPLATES.find((row) => row.id === templateId && row.subject === subject);
   if (!template) throw new Error("模拟卷构成参考与当前科目不符。");
   const groups = template.groups.filter((group) => !group.bookId || bookIds.includes(group.bookId)).map((group) => ({ ...group }));
   if (!groups.length) throw new Error("所选书目没有适用的模拟卷构成参考。");
-  const config: MockQuizConfig = { "single-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0 };
+  const config = { "single-choice": 0, "multiple-choice": 0, "true-false": 0, "fill-blank": 0, definition: 0, "short-answer": 0, essay: 0, "material-analysis": 0 } as MockQuizConfig;
   groups.forEach((group) => { config[group.type] += group.count; });
   return {
     template, groups, config,

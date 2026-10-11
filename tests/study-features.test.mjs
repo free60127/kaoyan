@@ -130,9 +130,9 @@ test("stats: 按日累计、连续天数与补零序列", async () => {
 test("subject-capabilities: 单一事实源与侧栏过滤", async () => {
   const { sidebarViews, viewAvailable, subjects, subjectBooks } = await realModule("../lib/subject-capabilities.ts");
   const { isRestorableView } = await realModule("../lib/learning-session.ts");
-  // 政治无 quiz/mock
+  // 政治无历年真题卷(quiz), 但有肖1000题库(choice)与 AI 模拟卷(mock)
   assert.equal(viewAvailable("politics", "quiz"), false);
-  assert.equal(viewAvailable("politics", "mock"), false);
+  assert.equal(viewAvailable("politics", "mock"), true);
   assert.equal(viewAvailable("politics", "choice"), true);
   // 825 有真题; 333 全开
   assert.equal(viewAvailable("825", "quiz"), true);
