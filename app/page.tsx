@@ -1,13 +1,11 @@
 import { Fragment, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type SetStateAction } from "react";
-import { BookOpen, CalendarDays, Check, ChevronRight, Cloud, KeyRound, Layers3, Menu, Settings2, Sparkles, Target, X } from "lucide-react";
+import { BookOpen, CalendarDays, Check, ChevronRight, Cloud, KeyRound, Layers3, Menu, Settings2, X } from "lucide-react";
 import { books as books333, cards as cards333Base, loadKnowledgeCards, questions } from "@/lib/study-data";
 import { outlines } from "@/lib/outlines";
-import { askDeepSeek } from "@/lib/deepseek-browser";
 import { load825StudyData, type Question825, type StudyData825 } from "@/lib/825/study-data";
 import { loadPoliticsStudyData, type StudyDataPolitics } from "@/lib/politics/study-data";
 import { useStudyReview } from "@/lib/use-study-review";
 import { captureMistakeUndo, markPendingReview, readMistakes, readVisibleMistakes, recordMistake, removeMistakes, undoMistake, type MistakeUndo } from "@/lib/mistakes";
-import { listStats, studyDate } from "@/lib/stats";
 import { recordStat } from "@/lib/stats";
 import { dropLastActivity, recordActivity, todayActivities } from "@/lib/activity";
 import { reduceStat } from "@/lib/stats";
@@ -17,7 +15,7 @@ import { StudyReviewCards } from "./components/StudyReview";
 import { MockPractice } from "./components/MockPractice";
 import { ApiKeySettings } from "./components/ApiKeySettings";
 import { ExamTarget, useExamTarget } from "./components/ExamTarget";
-import { examCountdownLabel, examDateLabel, examPlannerContext } from "@/lib/exam-target";
+import { examCountdownLabel, examDateLabel } from "@/lib/exam-target";
 import { CopyAnswerButton } from "./components/CopyAnswerButton";
 import { MistakesView } from "./components/MistakesView";
 import { PracticeView } from "./components/PracticeView";
@@ -26,6 +24,7 @@ import { SearchView, type SearchEntry } from "./components/SearchView";
 import { EssayBank } from "./components/EssayBank";
 import { ChoiceDrill } from "./components/ChoiceDrill";
 import { ChoiceBank } from "./components/ChoiceBank";
+import { FavoritesView } from "./components/FavoritesView";
 import { loadEssayQuestions, type EssayQuestion } from "@/lib/essay-questions";
 import { Overview333, Overview825, OverviewPolitics } from "./components/OverviewPanels";
 import { selectedAnswer } from "@/lib/copy-answer";
@@ -49,7 +48,6 @@ type Card = { id: string; book: string; chapter: number; section?: string; front
 const subjectBookIds = subjectBooks;
 const books333Model: Book[] = books333.map((book) => ({ id: book.id, name: book.name, short: book.short, tone: book.tone, chapters: book.chapters.map((title, index) => ({ title, sections: outlines[book.id]?.[index] || [] })) }));
 const sectionLabel = (front: string) => { const match = /^〔(.+?)〕/.exec(front); return match ? match[1] : ""; };
-const plainFront = (front: string) => front.replace(/^〔.+?〕\s*/, "");
 // 基础卡(目录/知识框架)静态可用; 1682 张知识点卡由 loadKnowledgeCards 懒加载, 加载后补全小节目录。
 const cards333BaseModel: Card[] = (cards333Base as unknown as Card[]).map((card) => ({ ...card, section: sectionLabel(card.front) || undefined }));
 function withSectionLabels(cards: Card[], base: Book[]): { cards: Card[]; books: Book[] } {
@@ -93,13 +91,6 @@ const statusLabel: Record<Question825["status"], string> = { verified: "verified
 const questionType: Record<string, string> = { "short-answer": "简答题", definition: "名词解释", essay: "论述题", other: "其他题型" };
 const localDate = (date: Date) => new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 const today = () => localDate(new Date());
-function readStorage(key: string): Record<string, boolean> {
-  try {
-    const value: unknown = JSON.parse(localStorage.getItem(key) || "{}");
-    return value && typeof value === "object" && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).filter(([, value]) => typeof value === "boolean")) : {};
-  } catch { return {}; }
-}
-
 export default function Home() {
   const { controller: examController, snapshot: examTarget } = useExamTarget();
   const [session, setSession] = useState(() => createLearningSession(subjectBookIds));
@@ -170,6 +161,24 @@ export default function Home() {
   const originalById = useCallback((cardId: string) => baseById.get(cardId), [baseById]);
   const [quizIndex, setQuizIndex] = useState(0);
   const [wrongOnly, setWrongOnly] = useState(false);
+  // F1: 真题限时——偏好持久化, 开考时刻在本页会话内(刷新即结束, 避免跨天误导)
+  const [quizTimer, setQuizTimer] = useState<{ on: boolean; minutes: number }>(() => {
+    try { const raw = JSON.parse(localStorage.getItem("yantu-quiz-timer-v1") || "null"); if (raw && typeof raw.on === "boolean") return { on: raw.on, minutes: Number.isInteger(raw.minutes) && raw.minutes >= 5 && raw.minutes <= 300 ? raw.minutes : 30 }; } catch { /* ignore */ }
+    return { on: false, minutes: 30 };
+  });
+  const [quizExamStart, setQuizExamStart] = useState<number | null>(null);
+  const [quizNow, setQuizNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (quizExamStart === null) return;
+    const timer = setInterval(() => setQuizNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [quizExamStart]);
+  function setQuizTimerPersisted(next: { on: boolean; minutes: number }) {
+    setQuizTimer(next);
+    try { localStorage.setItem("yantu-quiz-timer-v1", JSON.stringify(next)); } catch { /* ignore */ }
+  }
+  const quizExamRemaining = quizExamStart === null ? null : Math.max(0, quizExamStart + quizTimer.minutes * 60000 - quizNow);
+  const quizExamExpired = quizExamRemaining !== null && quizExamRemaining <= 0;
   // 持久化错题本中的真题错题 + 本次会话新增, 合并为"只练错题"范围
   const [wrongQuizIds, setWrongQuizIds] = useState<Set<string>>(() => new Set(readVisibleMistakes().filter(item => item.subject === "333" && item.kind === "quiz").map(item => item.refId)));
   const [markedOnly825, setMarkedOnly825] = useState(false);
@@ -206,7 +215,6 @@ export default function Home() {
     sidebarRef.current?.querySelector<HTMLButtonElement>(".mobile-close")?.focus();
     return () => { if (window.matchMedia("(max-width: 720px)").matches) mobileMenuRef.current?.focus(); };
   }, [menuOpen, mobileLayout]);
-  const answerRef = useRef<HTMLTextAreaElement | null>(null);
   const pastAnswerRef = useRef<HTMLTextAreaElement | null>(null);
   function openBackup() {
     backupTriggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -426,7 +434,6 @@ export default function Home() {
   }, [subject, book, chapter, section, data825, dataPolitics, knowledge333, progressReady]);
   const allCards: Card[] = subject === "825" ? cards825Merged : subject === "politics" ? cardsPoliticsMerged : subject === "333" ? cards333Merged : [];
   const chapterCards = allCards.filter((item) => item.book === book && item.chapter === chapter);
-  const cardsInScope = section ? chapterCards.filter((item) => item.section === section) : chapterCards;
   const review333 = useStudyReview("333", cards333Merged, knowledge333 !== null);
   const review825 = useStudyReview("825", cards825Merged, data825 !== null);
   const reviewPolitics = useStudyReview("politics", cardsPoliticsMerged, dataPolitics !== null);
@@ -472,7 +479,6 @@ export default function Home() {
     if (position >= 0) setQuizIndex(position);
     pendingQuizJump.current = null;
   }, [pool]);
-  const sectionHints = (section ? cardsInScope : chapterCards).slice(0, 8).map((item) => plainFront(item.front));
 
   function chooseChapter(nextBook: string, nextChapter: number, nextView: View = "chapters") {
     updateLocation({ book: nextBook, chapter: nextChapter, section: "", view: nextView, pastIndex: 0 });
@@ -651,17 +657,18 @@ export default function Home() {
             setSession(previous => ({ ...previous, subject: searchReturn.subject, locations: { ...previous.locations, [searchReturn.subject]: searchReturn.location } }));
             setSearchReturn(null);
           }}>返回搜索结果</button>}
-          {view === "overview" && subject === "333" && <Overview333 {...overviewProps}/>}
+          {view === "overview" && subject === "333" && <Overview333 {...overviewProps} onStartDaily={() => { try { sessionStorage.setItem("yantu-daily-autostart", "1"); } catch { /* ignore */ } setView("choice"); }}/>}
           {view === "overview" && subject === "825" && <Overview825 {...overviewProps}/>}
           {view === "overview" && subject === "politics" && <OverviewPolitics {...overviewProps}/>}
           {view === "chapters" && <>{heading("BOOK BY BOOK", "从章节开始，形成自己的知识地图", subject === "825" ? "查看原书章节与小节；历年真题已按章节归档为真题卡，选择小节即含对应真题。真题练习按书目和年份筛选。" : subject === "politics" ? "查看五科教材章节与考点小节；选择考点后背诵对应闪卡，或用费曼复述讲出来。" : "选书、选章；完成学习后标记进度，并进入闪卡或真题。")}<div className="book-tabs">{books.map((item) => <button key={item.id} className={book === item.id ? "active" : ""} onClick={() => chooseChapter(item.id, 1)}><i style={{ background: item.tone }}/>{item.name}</button>)}</div><div className="chapter-layout"><section className="panel chapter-list"><span className="eyebrow">{activeBook?.chapters.length || 0} CHAPTERS</span><h2>{activeBook?.name}</h2>{activeBook?.chapters.map((item, index) => <button key={item.title} className={chapter === index + 1 ? "chapter-row active" : "chapter-row"} onClick={() => chooseChapter(book, index + 1)}><span>{String(index + 1).padStart(2, "0")}</span><b>{item.title}</b>{done[book + "-" + (index + 1)] ? <Check size={17}/> : <ChevronRight size={17}/>}</button>)}</section><section className="panel chapter-detail"><span className="eyebrow">{activeBook?.name} / 第 {chapter} 章</span><h2>{chapterName}</h2>{subject === "825" ? <p>选择小节查看笔记闪卡与历年真题卡；真题已按章节归档，也可在真题练习按书目与年份筛选。</p> : subject === "politics" ? <p>本章考点小节来自闪卡标签；先背考点，再用费曼复述串讲本章。</p> : <p>先浏览教材，再用闪卡主动回忆，最后用真题检验；复述反馈会结合当前章节。</p>}<div className="detail-count"><div><b>{chapterCards.length}</b><small>{subject === "333" ? "已校对闪卡" : "考点闪卡"}</small></div><div><b>{subject === "politics" ? (chapterInfo?.sections.length || 0) : subject === "825" ? "书目 / 年份" : chapterQuestions.length}</b><small>{subject === "politics" ? "考点小节" : subject === "825" ? "真题筛选" : "匹配真题"}</small></div></div>{(chapterInfo?.sections || []).length > 0 && <div className="section-outline"><strong>{subject === "825" ? "本章小节" : subject === "politics" ? "本章考点" : "本章目录"}</strong>{chapterInfo?.sections.map((item, index) => <button key={item} onClick={() => { chooseSection(item); setView("cards"); }}><span>{String(index + 1).padStart(2, "0")}</span>{item}<ChevronRight size={15}/></button>)}</div>}{subject === "333" && !chapterCards.length && <p className="notice">该章尚无人工核对闪卡。可先阅读原书，再进行费曼复述。</p>}<div className="detail-buttons"><button className="primary" onClick={() => setView("cards")}>背诵闪卡</button><button className="secondary" onClick={() => setView("feynman")}>口述本章</button></div><button className="mark-done" onClick={() => setDoneBySubject((previous) => ({ ...previous, [progressSubject]: { ...previous[progressSubject], [book + "-" + chapter]: !done[book + "-" + chapter] } }))}><Check size={16}/>{done[book + "-" + chapter] ? "已完成 · 点击撤销" : "标记本章已学习"}</button></section></div></>}
           {view === "cards" && <>{heading("ACTIVE RECALL", "闪卡学习与复习", "空格翻面、1-4 评分（浏览模式 ←/→ 翻卡）。选择新学范围；先主动回忆，再按掌握程度安排下次复习。")}<StudyReviewCards key={subject + accountVersion} timingPaused={backupOpen || syncOpen || keyOpen || examOpen || (mobileLayout && menuOpen)} subject={subject} review={review} cards={allCards} books={books} bookId={book} chapter={chapter} section={section} picker={picker} jumpCardId={jumpCard} onBrowseCardChange={cardId => { setBrowseCardId(cardId); if (cardId === jumpCard) setJumpCard(undefined); }} originalById={originalById} onRated={handleRated} onUndoRating={undoLastRating}/></>}
-          {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{wrongOnly ? `只练错题：${wrongPool.length} 道` : useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button></div>{wrongOnly && !wrongPool.length && <div className="empty">当前章节没有已记录的错题。<button className="secondary" onClick={() => setWrongOnly(false)}>练全部真题</button></div>}
-          {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2><div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
+          {view === "quiz" && subject === "333" && <>{heading("PAST PAPERS", "333 真题练习", "答完立即查看正确答案、解析与出处。")}{picker}<div className="study-meta">{wrongOnly ? `只练错题：${wrongPool.length} 道` : useBookPool ? `本章映射题 ${chapterQuestions.length} 道较少 · 展示同书全部 ${bookQuestions.length} 道` : `当前章节匹配题 ${chapterQuestions.length} 道`}</div><div className="quiz-mode-row"><button className={wrongOnly ? "mode-button active" : "mode-button"} disabled={wrongQuizIds.size === 0} onClick={() => { setWrongOnly(value => !value); setQuizIndex(0); setChoice(null); }}>{wrongOnly ? "返回全部题目" : `只练错题 (${wrongQuizIds.size})`}</button><button className={quizTimer.on ? "mode-button active" : "mode-button"} onClick={() => { const next = { ...quizTimer, on: !quizTimer.on }; setQuizTimerPersisted(next); if (!next.on) setQuizExamStart(null); }}>限时模式</button>{quizTimer.on && <label className="quiz-timer-minutes">分钟<select value={quizTimer.minutes} onChange={(event) => setQuizTimerPersisted({ ...quizTimer, minutes: Number(event.target.value) })}>{[15, 30, 45, 60].map(n => <option key={n} value={n}>{n}</option>)}</select></label>}{quizTimer.on && quizExamStart === null && <button className="secondary" onClick={() => { setQuizIndex(0); setChoice(null); setScore({ right: 0, total: 0 }); setQuizExamStart(Date.now()); }}>开始限时</button>}{quizExamStart !== null && <button className="secondary" onClick={() => setQuizExamStart(null)}>结束计时</button>}{quizExamRemaining !== null && !quizExamExpired && <span className="quiz-remaining">剩余 {Math.floor(quizExamRemaining / 60000)}:{String(Math.floor(quizExamRemaining % 60000 / 1000)).padStart(2, "0")}</span>}{quizExamExpired && <span className="quiz-remaining expired">时间已到 · 作答已锁定</span>}</div>{wrongOnly && !wrongPool.length && <div className="empty">当前章节没有已记录的错题。<button className="secondary" onClick={() => setWrongOnly(false)}>练全部真题</button></div>}
+          {quiz && <section className="panel quiz-card"><div className="quiz-top"><span>{quiz.year + " 真题"}</span><small>{"第 " + (quizIndex % pool.length + 1) + " / " + pool.length + " 题"}</small></div><h2>{quiz.stem}</h2>{quizExamExpired && <div className="error" role="alert">限时时间已到：本题及后续作答已锁定，可点「结束计时」退出限时模式继续学习。</div>}<div className="options">{quiz.options.map((item, index) => <button key={index} disabled={choice !== null || quizExamExpired} className={choice === null ? "" : index === quiz.answer ? "correct" : choice === index ? "wrong" : ""} onClick={() => handleQuizAnswer(index)}><span>{"ABCD"[index]}</span>{item}</button>)}</div><CopyAnswerButton text={selectedAnswer(quiz.options, choice)}/>{choice !== null && <div className="explanation"><b>{choice === quiz.answer ? "答对了" : "正确答案：" + "ABCD"[quiz.answer]}</b><p>{quiz.explanation}</p><small>来源：{quiz.source}</small></div>}<div className="quiz-footer"><span>{score.total ? "本次 " + score.right + " / " + score.total + " 题正确" : "先选一个答案"}</span><button className="primary" onClick={() => { setQuizIndex((index) => index + 1); setChoice(null); }}>下一题</button></div></section>}</>}
           {view === "choice" && subject === "politics" && <>{heading("SELF QUIZ", "政治 · 选择题自测", "由政治闪卡自动生成的四选一练习：题干是考点提问，干扰项来自同章其他考点。")}{picker}<PracticeView key={accountVersion} subject="politics" subjectName="政治" books={books} cards={cardsPoliticsMerged} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "essay" && subject === "333" && <>{heading("ESSAY BANK", "333 主观题库", "手册、丹丹1000题、阶段测试与丹丹卷的主观题：材料、设问与分点参考答案按来源完整保留；先自己作答再展开对照。")}{essayError && <div className="empty" role="alert">{essayError}，题目列表暂时无法显示；闪卡与练习不受影响。<button className="secondary" onClick={() => { setEssayError(""); setEssayLoadAttempt((attempt) => attempt + 1); setEssayQuestions(null); }}>重新加载</button></div>}<EssayBank key={accountVersion} entries={(essayQuestions || []).map(q => ({ id: q.id, book: q.book || "principles", tags: q.tags, category: q.category, topic: q.topic, stem: q.stem, referenceAnswer: q.referenceAnswer, ocrWarning: q.ocrWarning, source: q.source }))}/></>}
           {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书/章节筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill key={accountVersion} storage={localStorageStore}/></>}
           {view === "bank" && subject === "333" && <>{heading("QUESTION BANK", "333 · 题库浏览", "全部选择题可搜索、筛选与收藏；展开查看选项、正确答案与逐项辨析。")}<ChoiceBank subject={subject}/></>}
+          {view === "favorites" && <>{heading("FAVORITES", "收藏", "跨章集中查看收藏的闪卡与选择题；去复习或取消收藏。")}<FavoritesView subject={subject} books={books} cards={allCards} onReviewCard={jumpToCard}/></>}
           {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView key={accountVersion} subject="825" subjectName="825 英语专业基础" books={books} cards={cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView key={accountVersion} subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
           {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "背诵用时与同一卡的速度变化、每日评分及练习；登录后自动同步，也可通过 PDF 备份迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)} cards={allCards} onChooseChapter={(targetBook, targetChapter) => chooseChapter(targetBook, targetChapter, "cards")}/></>)}

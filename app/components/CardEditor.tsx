@@ -74,7 +74,7 @@ function TextField({ label, value, onChange, nodeRef, onFocus, onSelect, placeho
 /** 闪卡个人编辑器。F02: 打开时冻结覆盖层版本基线(草稿也保存它), 保存以其比对,
  *  另一标签的并发修改会被检出而不是静默覆盖。F05: 编辑区是纯文本, 教材标记在保存时重注入。
  *  F06: 取消只关闭面板(草稿保留), 仅成功提交与明确放弃才清稿。F13: 归属随草稿持久化。 */
-export function CardEditor({ subject, subjectName, books, target, overlay, onDone, onAddScope, onResetCard }: {
+export function CardEditor({ subject, books, target, overlay, onDone, onAddScope, onResetCard }: {
   subject: PersonalSubject;
   subjectName: string;
   books: Book[];

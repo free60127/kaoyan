@@ -3,7 +3,7 @@ import { getApplicableMockPaperTemplate, type MockPaperTemplateId } from "./mock
 
 export type MockPracticeBook = { id: string; name: string; chapters: { title: string; sections: string[] }[] };
 export type MockCounts = Record<keyof MockQuizConfig, string>;
-export type MockSnapshot = { subject: "333" | "825"; config: MockQuizConfig; ranges: MockQuizRange[]; scopeLabel: string; templateId?: MockPaperTemplateId; createdAt: string };
+export type MockSnapshot = { subject: "333" | "825"; config: MockQuizConfig; ranges: MockQuizRange[]; scopeLabel: string; templateId?: MockPaperTemplateId; createdAt: string; /** F1 限时模式: 全真计时分钟数(不设=不限时) */ examMinutes?: number; examStartedAt?: string };
 export type MockResponse = { choice?: number; text?: string; revealed?: boolean };
 export type MockSession = { result: MockQuizResult; snapshot: MockSnapshot; cursor: number; mode: "practice" | "paper"; responses: Record<string, MockResponse> };
 export type MockPracticeState = { session: MockSession | null; pending: boolean; progress: { done: number; total: number }; error: string };
@@ -73,7 +73,8 @@ export function mockRangesFromSelection(books: MockPracticeBook[], selection: Re
     return [{ bookId: book.id, chapters, ...(section && section.bookId === book.id && chapters.length === 1 && chapters[0] === section.chapter ? { section: section.name } : {}) }];
   });
 }
-export function snapshotMockSettings(subject: "333" | "825", counts: MockCounts, ranges: MockQuizRange[], scopeLabel: string, templateId?: MockPaperTemplateId): MockSnapshot {
+export function snapshotMockSettings(subject: "333" | "825", counts: MockCounts, ranges: MockQuizRange[], scopeLabel: string, templateId?: MockPaperTemplateId, examMinutes?: number): MockSnapshot {
+  if (examMinutes !== undefined && (!Number.isInteger(examMinutes) || examMinutes < 5 || examMinutes > 600)) throw new Error("限时分钟须为 5–600 的整数。");
   if (!ranges.length) throw new Error("请选择至少一个书目或章节范围。");
   if (subject !== "333" && subject !== "825") throw new Error("请选择科目。");
   if (ranges.some((range) => !range || typeof range.bookId !== "string" || !range.bookId.trim() || !Array.isArray(range.chapters) || !range.chapters.length || range.chapters.some((chapter) => !Number.isInteger(chapter) || chapter < 1) || (range.section !== undefined && (typeof range.section !== "string" || !range.section.trim())))) throw new Error("命题范围格式有误，请重新选择书目、章节与小节。");
@@ -82,5 +83,5 @@ export function snapshotMockSettings(subject: "333" | "825", counts: MockCounts,
     const template = getApplicableMockPaperTemplate(templateId, subject, ranges.map((range) => range.bookId));
     if (MOCK_QUIZ_TYPES.some((type) => config[type] !== template.config[type])) throw new Error("题型数量已改变，请切换自定义构成。");
   }
-  return { subject, config, ranges: ranges.map((range) => ({ ...range, chapters: range.chapters ? [...range.chapters] : undefined })), scopeLabel, ...(templateId ? { templateId } : {}), createdAt: new Date().toLocaleString("zh-CN") };
+  return { subject, config, ranges: ranges.map((range) => ({ ...range, chapters: range.chapters ? [...range.chapters] : undefined })), scopeLabel, ...(templateId ? { templateId } : {}), ...(examMinutes ? { examMinutes, examStartedAt: new Date().toISOString() } : {}), createdAt: new Date().toLocaleString("zh-CN") };
 }

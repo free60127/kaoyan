@@ -18,7 +18,7 @@ let generation = 0, running: Promise<SyncResult> | null = null;
 let runningPull = false;
 const remoteInbox = new Map<string, { key: string; value: unknown }>();
 let outbox: Record<string, string> = {}, docs: Record<string, SyncDocument> = {}, baselines: Record<string, unknown> = {};
-let pendingApply = new Map<string, { value: unknown }>();
+const pendingApply = new Map<string, { value: unknown }>();
 let status: SyncStatus = { state: "off", pendingUploads: 0, pendingApply: 0 };
 const listeners = new Set<(s: SyncStatus) => void>();
 export const getSyncConflicts = (): Record<string, ReturnType<typeof documentConflicts>> => Object.fromEntries(Object.entries(docs).map(([key, doc]) => [key, documentConflicts(doc)] as const).filter(([, conflicts]) => Object.keys(conflicts).length));

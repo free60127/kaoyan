@@ -4,8 +4,6 @@ import { choiceBookName, loadChoiceBank, type ChoiceQuestion } from "@/lib/choic
 import { readFavorites, toggleFavorite } from "@/lib/favorites";
 import { stripHighlightMarkers } from "@/lib/highlight-markers";
 
-type Entry = { question: ChoiceQuestion; favorite: boolean };
-
 /** 题库浏览页(F): 全量 1471+ 题的可筛选列表——搜索题干/选项、按书/来源/章筛选、
  *  收藏星标、展开看选项与解析。数据与"选择题练习"同源(loadChoiceBank)。 */
 export function ChoiceBank({ subject }: { subject: string }) {

@@ -63,7 +63,6 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
     if (!available.length) return;
     let questions: PracticeQuestion[];
     if (requiz) {
-      const byId = new Map(cards.map(card => [card.id, card]));
       // 与"可用N张"一致: 从过滤后的合格池出题(不适合选择题形态的卡已排除)
       questions = available
         .slice(0, Math.max(count, 5))
@@ -92,6 +91,8 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
         });
     } else {
       // 与 available 计数同一资格规则(含人工排除标记), 保证"可用N题"与实际组卷一致
+      // start() 仅由点击处理器调用（不发生在渲染期），每次组卷需要新随机种子
+      // eslint-disable-next-line react-hooks/purity
       questions = buildPracticeQuestions(available, { bookId, chapters: [], count, seed: Math.floor(Math.random() * 2 ** 31) });
     }
     const initial = {

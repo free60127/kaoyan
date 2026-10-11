@@ -3,7 +3,7 @@ import { snapshotMockSettings, type MockCounts, type MockPracticeBook, type Mock
 import type { MockPaperTemplateId } from "./mock-paper-templates";
 
 export const MAX_MOCK_RECORD_CHARS = 1_000_000; // At most 2 MB in UTF-16 local storage.
-export type MockSettings = { counts: MockCounts; selection: Record<string, number[]>; sectionScope?: { bookId: string; chapter: number; name: string }; templateId?: MockPaperTemplateId };
+export type MockSettings = { counts: MockCounts; selection: Record<string, number[]>; sectionScope?: { bookId: string; chapter: number; name: string }; templateId?: MockPaperTemplateId; examMinutes?: number };
 export type MockSavedRecord = { version: 1; subject: "333" | "825"; settings: MockSettings; session: MockSession | null };
 type StorageAccess = Pick<Storage, "getItem" | "setItem">;
 export type MockStorageRead = { status: "empty" } | { status: "loaded"; record: MockSavedRecord } | { status: "error"; message: string };
@@ -68,7 +68,7 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
     if (selection[bookId]?.length !== 1 || selection[bookId][0] !== chapter) return invalid();
     sectionScope = { bookId, chapter, name: parseSection(bookId, chapter, section.name) };
   }
-  const settings: MockSettings = { counts, selection, ...(sectionScope ? { sectionScope } : {}), ...(rawSettings.templateId !== undefined ? { templateId: template(rawSettings.templateId, subject) } : {}) };
+  const settings: MockSettings = { counts, selection, ...(sectionScope ? { sectionScope } : {}), ...(rawSettings.templateId !== undefined ? { templateId: template(rawSettings.templateId, subject) } : {}), ...(rawSettings.examMinutes !== undefined ? { examMinutes: integer(rawSettings.examMinutes, 5, 600) } : {}) };
   if (row.session === null) return { version: 1, subject, settings, session: null };
   const rawSession = object(row.session), rawSnapshot = object(rawSession.snapshot);
   if (rawSnapshot.subject !== subject) return invalid();
@@ -77,6 +77,13 @@ export function validateMockSavedRecord(value: unknown, subject: "333" | "825", 
   if (Object.keys(config).some((key) => !MOCK_QUIZ_TYPES.includes(key as typeof MOCK_QUIZ_TYPES[number]))) return invalid();
   const snapshot = snapshotMockSettings(subject, Object.fromEntries(MOCK_QUIZ_TYPES.map((type) => [type, String(integer(config[type], 0, MAX_MOCK_QUIZ_QUESTIONS))])) as MockCounts, ranges, text(rawSnapshot.scopeLabel, 10000), template(rawSnapshot.templateId, subject));
   snapshot.createdAt = text(rawSnapshot.createdAt, 200);
+  // F1 限时模式: 分钟数与开考时间(ISO)透传, 刷新后倒计时继续
+  if (rawSnapshot.examMinutes !== undefined) snapshot.examMinutes = integer(rawSnapshot.examMinutes, 5, 600);
+  if (rawSnapshot.examStartedAt !== undefined) {
+    const startedAt = text(rawSnapshot.examStartedAt, 40);
+    if (!Number.isFinite(Date.parse(startedAt))) return invalid();
+    snapshot.examStartedAt = new Date(startedAt).toISOString();
+  }
   const parseUnit = (value: unknown): MockQuizUnit => {
     const unit = object(value), book = findBook(unit.bookId), chapterNo = parseChapter(book.id, unit.chapterNo);
     if (unit.bookName !== book.name || unit.chapterName !== book.chapters[chapterNo - 1].title) return invalid();

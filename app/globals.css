@@ -172,3 +172,26 @@
 .weak-row .weak-name { flex: 1; font-weight: 600; color: #42655a; }
 .weak-row .weak-count { color: #c15f50; font-size: 13px; font-weight: 700; }
 .weak-row .secondary { min-height: 32px; padding: 4px 12px; }
+
+.favorites-heading { font-size: 15px; color: #365f50; margin: 18px 0 8px; }
+
+/* 限时模式 */
+.mock-countdown { background: #eef7f1; border: 1px solid #d9ecdf; border-radius: 10px; padding: 10px 14px; margin: 10px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.mock-countdown b { font-size: 16px; color: #2f7b54; font-variant-numeric: tabular-nums; }
+.mock-countdown.error { background: #fdf1ef; border-color: #f0d2cd; }
+.mock-countdown.error b { color: #c15f50; }
+.mock-countdown small { color: #7d9285; }
+.quiz-timer-minutes { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #688274; }
+.quiz-timer-minutes select { height: 32px; border-radius: 7px; border: 1px solid #dce8df; padding: 0 8px; }
+.quiz-remaining { font-weight: 800; color: #2f7b54; font-variant-numeric: tabular-nums; }
+.quiz-remaining.expired { color: #c15f50; }
+
+/* F3: FSRS 调度设置行 */
+.study-scheduler-row { margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 14px; }
+.study-scheduler-controls { display: flex; flex-direction: column; gap: 10px; flex: 0 0 260px; }
+.study-scheduler-picker { display: flex; gap: 8px; }
+.study-scheduler-picker label.mode-button { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.study-scheduler-picker input[type="radio"] { accent-color: var(--green); margin: 0; }
+.study-scheduler-controls .study-limit { flex: none; }
+.study-scheduler-controls .study-limit input[type="range"] { width: 100%; accent-color: var(--green); }
+@media(max-width:720px){.study-scheduler-controls{flex-basis:100%}}

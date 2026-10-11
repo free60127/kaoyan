@@ -2,7 +2,7 @@ import { isRestorableView, learningSessionKey, restoreLearningSession, type Book
 import { normalizeStoredProgress, normalizeStudyScopes, type CardIdentity, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { MAX_MOCK_RECORD_CHARS, validateMockSavedRecord, type MockSavedRecord } from "./mock-practice-storage";
 import type { MockPracticeBook } from "./mock-practice-state";
-import { parseHighlightMarkers, stripHighlightMarkers } from "./highlight-markers";
+import { stripHighlightMarkers } from "./highlight-markers";
 import { renderRichSegments } from "./rich-text";
 import { parsePersonalStore, personalStorageKey, type PersonalStore } from "./personal-cards";
 import type { RichContent } from "./rich-text";

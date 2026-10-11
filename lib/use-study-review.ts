@@ -143,6 +143,13 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
       if (!Number.isInteger(value) || value < 0 || value > 200) return null;
       return mutate(latest => ({ ...latest, progress: { ...latest.progress, dailyNewLimit: value } }));
     },
+    setScheduler(patch: { algorithm?: "sm2" | "fsrs"; retention?: number }) {
+      return mutate(latest => {
+        const current = latest.progress.scheduler ?? { algorithm: "sm2" as const, retention: 0.9, setAt: "" };
+        const setAt = new Date(clock()).toISOString();
+        return { ...latest, progress: { ...latest.progress, scheduler: { algorithm: patch.algorithm ?? current.algorithm, retention: patch.retention ?? current.retention, setAt } } };
+      });
+    },
     rateCard(cardId: string, grade: Rating, scope?: StudyScope) {
       const instant = clock();
       return mutate(latest => {
@@ -214,6 +221,7 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     selectScopes(scopes: StudyScope[]) { activeSync()?.selectScopes(scopes); },
     pauseScope(scope: StudyScope) { activeSync()?.pauseScope(scope); },
     setDailyNewLimit(value: number) { activeSync()?.setDailyNewLimit(value); },
+    setScheduler(patch: { algorithm?: "sm2" | "fsrs"; retention?: number }) { activeSync()?.setScheduler(patch); },
     rateCard(cardId: string, grade: Rating, scope?: StudyScope) {
       const next = activeSync()?.rateCard(cardId, grade, scope);
       if (!next) return false;
@@ -231,7 +239,7 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     },
     resetCard(cardId: string) { activeSync()?.resetCard(cardId); },
     canUndo: !!bound && !!undoRef.current,
-    preview(cardId: string, grade: Rating) { return previewSchedule(current.progress.cards[cardId], grade, now); },
+    preview(cardId: string, grade: Rating) { return previewSchedule(current.progress.cards[cardId], grade, now, current.progress.scheduler); },
   };
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Flame } from "lucide-react";
 import { lastNDays, streakDays, listStats, type DayStat, type StatStore } from "@/lib/stats";
-import { todayActivities, type ActivityEntry } from "@/lib/activity";
+import { type ActivityEntry } from "@/lib/activity";
 import { readVisibleMistakes } from "@/lib/mistakes";
 import { CardTimingStats } from "./CardTimingStats";
 

@@ -1,4 +1,6 @@
 /** Transparent interval scheduling. All time and storage are supplied by the caller. */
+import { fsrsMemoryFromLegacy, fsrsReview, isFsrsMemory, type FsrsGrade, type FsrsMemory } from "./fsrs";
+
 export type CardIdentity = { id: string; book: string; chapter: number; section?: string };
 export type StudyScope = { bookId: string; chapters: number[]; section?: string };
 export type Rating = "again" | "hard" | "good" | "easy";
@@ -12,13 +14,17 @@ export type ReviewState = {
   stage: "learning" | "review" | "relearning";
   firstStudiedAt: string;
   lastReviewedAt: string;
+  fsrs?: FsrsMemory;
 };
+/** 复习算法设置随进度持久化并同步；setAt 供云合并取较新的一方。 */
+export type SchedulerConfig = { algorithm: "sm2" | "fsrs"; retention: number; setAt: string };
 export type StudyProgress = {
   version: 1;
   cards: Record<string, ReviewState>;
   scopes: StudyScope[];
   dailyNewLimit: number;
   daily: { date: string; admitted: string[] };
+  scheduler?: SchedulerConfig;
 };
 export type SchedulePreview = ReviewState & { delayMinutes: number; delayDays: number };
 export type StudyQueue = {
@@ -112,7 +118,19 @@ function normalizedReview(value: unknown): ReviewState | null {
   const lastReviewedAt = timestamp(value.lastReviewedAt);
   if (!dueAt || !firstStudiedAt || !lastReviewedAt || !finite(value.intervalDays) || value.intervalDays < 0 || value.intervalDays > MAX_INTERVAL || !finite(value.ease) || value.ease < 1.3 || value.ease > 10 || !nonnegativeInt(value.reps) || !nonnegativeInt(value.lapses) || !["learning", "review", "relearning"].includes(String(value.stage))) return null;
   const alignedDue = value.stage === "review" && value.intervalDays >= 1 ? reviewMorning(dueAt) : dueAt;
-  return { dueAt: alignedDue, firstStudiedAt, lastReviewedAt, intervalDays: value.intervalDays, ease: value.ease, reps: value.reps, lapses: value.lapses, stage: value.stage as ReviewState["stage"] };
+  return {
+    dueAt: alignedDue, firstStudiedAt, lastReviewedAt, intervalDays: value.intervalDays, ease: value.ease, reps: value.reps, lapses: value.lapses, stage: value.stage as ReviewState["stage"],
+    ...(isFsrsMemory(value.fsrs) ? { fsrs: value.fsrs } : {}),
+  };
+}
+
+function normalizedScheduler(value: unknown): SchedulerConfig | undefined {
+  if (!isRecord(value) || (value.algorithm !== "sm2" && value.algorithm !== "fsrs")) return undefined;
+  const setAt = timestamp(value.setAt);
+  if (!setAt) return undefined;
+  const retention = value.retention;
+  if (!finite(retention) || retention < 0.7 || retention > 0.98) return undefined;
+  return { algorithm: value.algorithm, retention, setAt };
 }
 
 /** Day reviews open together at 06:30 on their existing local due date. */
@@ -197,6 +215,8 @@ export function normalizeStoredProgress(stored: unknown, catalog: readonly CardI
       const known = new Set(identities(catalog).map(card => card.id));
       fresh.daily.admitted = [...new Set(raw.daily.admitted.filter((id): id is string => typeof id === "string" && known.has(id) && own(fresh.cards, id)))];
     }
+    const scheduler = normalizedScheduler(raw.scheduler);
+    if (scheduler) fresh.scheduler = scheduler;
   } else {
     fresh.cards = migrateLegacyReviews(parse(legacy === undefined ? raw : legacy), catalog, now);
     fresh.scopes = normalizeStudyScopes(identities(catalog).filter(card => own(fresh.cards, card.id)).map(card => ({ bookId: card.book, chapters: [card.chapter] })), catalog);
@@ -272,10 +292,41 @@ export function buildStudyQueue(catalog: readonly CardIdentity[], progress: Stud
   };
 }
 
-export function previewSchedule(previous: ReviewState | undefined, grade: Rating, now: StudyTime): SchedulePreview {
+const FSRS_GRADE: Record<Rating, FsrsGrade> = { again: 1, hard: 2, good: 3, easy: 4 };
+
+/** FSRS 路径：算出记忆状态与到期。短步长按时刻排，毕业与复习按 6:30 早排（与 SM-2 路径同一日历约定）。 */
+function fsrsOutcome(previous: ReviewState | undefined, grade: Rating, instant: Date, retention: number) {
+  const memory = previous?.fsrs ?? (previous ? fsrsMemoryFromLegacy({ intervalDays: Math.max(previous.intervalDays, 0.1), ease: previous.ease, stage: previous.stage, lastReviewedAt: previous.lastReviewedAt }) : undefined);
+  const outcome = fsrsReview(memory, FSRS_GRADE[grade], instant.getTime(), retention);
+  const intervalDays = outcome.intervalDays > 0 ? outcome.intervalDays : outcome.intervalMinutes / 1440;
+  let dueAt = new Date(instant.getTime() + outcome.intervalMinutes * MINUTE).toISOString();
+  if (outcome.stage === "review" && outcome.intervalDays >= 1) {
+    const date = new Date(instant);
+    date.setDate(date.getDate() + Math.round(outcome.intervalDays));
+    dueAt = reviewMorning(date);
+  }
+  return { outcome, intervalDays, dueAt };
+}
+
+export function previewSchedule(previous: ReviewState | undefined, grade: Rating, now: StudyTime, scheduler?: SchedulerConfig): SchedulePreview {
   if (!["again", "hard", "good", "easy"].includes(grade)) throw new RangeError("Unknown study rating");
   const instant = time(now);
   const old = normalizedReview(previous);
+  if (scheduler?.algorithm === "fsrs") {
+    const { outcome, intervalDays, dueAt } = fsrsOutcome(old ?? undefined, grade, instant, scheduler.retention);
+    return {
+      dueAt,
+      intervalDays,
+      ease: old?.ease ?? 2.5,
+      reps: (old?.reps ?? 0) + 1,
+      lapses: (old?.lapses ?? 0) + (grade === "again" && old?.stage === "review" ? 1 : 0),
+      stage: outcome.stage,
+      firstStudiedAt: old?.firstStudiedAt ?? instant.toISOString(),
+      lastReviewedAt: instant.toISOString(),
+      delayMinutes: outcome.intervalDays >= 1 ? outcome.intervalDays * 1440 : outcome.intervalMinutes,
+      delayDays: intervalDays,
+    };
+  }
   const shortLearning = !old || old.stage !== "review";
   let delayMinutes: number;
   let ease = old?.ease ?? 2.5;
@@ -324,7 +375,26 @@ export function previewSchedule(previous: ReviewState | undefined, grade: Rating
 export function applyRating(progress: StudyProgress, cardId: string, grade: Rating, now: StudyTime): StudyProgress {
   if (typeof cardId !== "string" || !cardId) throw new RangeError("A card ID is required");
   const old = own(progress.cards, cardId) ? progress.cards[cardId] : undefined;
-  const { delayMinutes: _minutes, delayDays: _days, ...review } = previewSchedule(old, grade, now);
+  const instant = time(now);
+  let review: ReviewState;
+  if (progress.scheduler?.algorithm === "fsrs") {
+    const normalizedOld = normalizedReview(old);
+    const { outcome, intervalDays, dueAt } = fsrsOutcome(normalizedOld ?? undefined, grade, instant, progress.scheduler.retention);
+    review = {
+      dueAt,
+      intervalDays,
+      ease: normalizedOld?.ease ?? 2.5,
+      reps: (normalizedOld?.reps ?? 0) + 1,
+      lapses: (normalizedOld?.lapses ?? 0) + (grade === "again" && normalizedOld?.stage === "review" ? 1 : 0),
+      stage: outcome.stage,
+      firstStudiedAt: normalizedOld?.firstStudiedAt ?? instant.toISOString(),
+      lastReviewedAt: instant.toISOString(),
+      fsrs: outcome.memory,
+    };
+  } else {
+    const { delayMinutes: _minutes, delayDays: _days, ...legacy } = previewSchedule(old, grade, now);
+    review = legacy;
+  }
   const next: StudyProgress = {
     ...progress,
     cards: { ...progress.cards, [cardId]: review },

@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { choiceBookName, drillPool, drillRequizQuestions, fromSavedQuestion, loadChoiceBank, pickChoices, shuffleOptions, stripOptionLabel, toSavedQuestion, type ChoiceQuestion } from "@/lib/choice-bank";
 import { clearPracticeRound, loadPracticeRound, savePracticeRound } from "@/lib/practice-draft";
-import { recordMistake, removeMistakesByRef } from "@/lib/mistakes";
+import { recordMistake } from "@/lib/mistakes";
 import { addMcqExcluded, readMcqExcluded, resetMcqExcluded } from "@/lib/mcq-excluded";
 import { recordActivity } from "@/lib/activity";
 import { recordStat, type StatStore } from "@/lib/stats";
+import { readFavorites, toggleFavorite } from "@/lib/favorites";
 
 type Round = { questions: ChoiceQuestion[]; index: number; choice: number | null; right: number; wrongIds: string[]; done: boolean; chosen: Record<number, number> };
 
@@ -28,6 +29,10 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
     try { localStorage.setItem("yantu-shuffle-options-v1", value ? "1" : "0"); } catch { /* ignore */ }
   }
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
+  // F4: 题目收藏(与题库浏览页同一集合)
+  const [favorites, setFavorites] = useState<Set<string>>(() => readFavorites("333", "choice"));
+  // F2: 概览"每日一练"一键入口: 会话标记 → 载入后自动开一组当日固定卷
+  const [pendingDaily, setPendingDaily] = useState(() => { try { return sessionStorage.getItem("yantu-daily-autostart") === "1"; } catch { return false; } });
 
   useEffect(() => {
     let cancelled = false;
@@ -88,6 +93,29 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
     });
     setResumable(null);
   }
+  // F2: 每日一练——固定 20 题混合卷, 同一天用同一份题(种子=日期), 排除项不出现
+  function startDaily() {
+    const today = new Date();
+    const dayKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    let seed = 0;
+    for (let i = 0; i < dayKey.length; i += 1) seed = (seed * 31 + dayKey.charCodeAt(i)) | 0;
+    const poolAll = questions ? drillPool(questions, { book: "all", origin: "all" }, excluded) : [];
+    const pickedRaw = pickChoices(poolAll, 20, Math.abs(seed));
+    const picked = shuffleOptions(pickedRaw, Math.abs(seed) ^ 0x9e3779b9);
+    if (!picked.length) return;
+    const fresh: Round = { questions: picked, index: 0, choice: null, right: 0, wrongIds: [], done: false, chosen: {} };
+    persist(fresh);
+    setResumable(null);
+    setRound(fresh);
+  }
+  useEffect(() => {
+    if (!questions || !pendingDaily || round || requiz) return;
+    try { sessionStorage.removeItem("yantu-daily-autostart"); } catch { /* ignore */ }
+    setPendingDaily(false);
+    startDaily();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questions, pendingDaily]);
+
   function answer(index: number) {
     if (!round || round.choice !== null) return;
     const question = round.questions[round.index];
@@ -154,7 +182,7 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
             ? <p>{question.referenceAnswer}</p>
             : <p>此题暂无逐项解析。</p>}
         <small>来源：{question.source}</small>
-        <div className="practice-meta-actions"><button type="button" className={excluded.has(question.id) ? "mode-button active" : "mode-button"} onClick={() => setExcluded(addMcqExcluded(question.id))}>{excluded.has(question.id) ? "已排除出自动组卷" : "不适合选择题，排除出自动组卷"}</button></div>
+        <div className="practice-meta-actions"><button type="button" className={excluded.has(question.id) ? "mode-button active" : "mode-button"} onClick={() => setExcluded(addMcqExcluded(question.id))}>{excluded.has(question.id) ? "已排除出自动组卷" : "不适合选择题，排除出自动组卷"}</button><button type="button" className={favorites.has(question.id) ? "mode-button active" : "mode-button"} onClick={() => setFavorites(toggleFavorite("333", question.id, "choice"))}>{favorites.has(question.id) ? "★ 已收藏" : "☆ 收藏此题"}</button></div>
       </div>}
       <div className="quiz-footer"><span>本组 {round.right} / {round.index + (round.choice !== null ? 1 : 0)} 题正确</span><button className="primary" disabled={round.choice === null} onClick={next}>{round.index + 1 >= round.questions.length ? (requiz ? "完成重练" : "查看结果") : "下一题"}</button></div>
     </section>;
@@ -194,6 +222,6 @@ export function ChoiceDrill({ storage, requizIds, onRequizDone, onQuitRequiz }: 
         <button className="secondary" onClick={() => { clearPracticeRound("333", "practice"); setResumable(null); }}>放弃</button>
       </div>
     </div>}
-    <button className="primary" disabled={!pool.length} onClick={() => start()}>开始练习</button>
+    <div className="next-actions"><button className="primary" disabled={!pool.length} onClick={() => start()}>开始练习</button><button className="secondary" disabled={!questions} onClick={startDaily}>每日一练 · 20 题混合卷</button></div>
   </section>;
 }

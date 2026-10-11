@@ -21,6 +21,8 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
   const [expanded, setExpanded] = useState(() => !review.progress.scopes.length);
   const [limitDraft, setLimitDraft] = useState(String(review.progress.dailyNewLimit));
   useEffect(() => setLimitDraft(String(review.progress.dailyNewLimit)), [review.progress.dailyNewLimit]);
+  const algorithm = review.progress.scheduler?.algorithm ?? "sm2";
+  const retention = review.progress.scheduler?.retention ?? 0.9;
   const chapterAvailable = (bookId: string, chapter: number) => cards.some(card => card.book === bookId && card.chapter === chapter);
   const selected = (bookId: string, chapter: number) => review.newScopes.some(scope => scope.bookId === bookId && scope.section === undefined && scope.chapters.includes(chapter));
   function toggle(bookId: string, chapter: number) {
@@ -35,6 +37,18 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
   if (!review.ready) return <div className="panel study-scopes" role="status">正在读取学习范围与记录…</div>;
   return <details className="panel study-scopes" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}><summary>设置学习范围与每日新卡上限 <small>{review.newScopes.length ? "已选新学范围 · 上限 " + review.progress.dailyNewLimit + " 张" : "尚未选择新学范围"}</small></summary>
     <div className="study-scope-heading"><div><h2>今日新学范围</h2><p>勾选想学的章，可跨书选择。新学范围加入持续复习；以后换章，之前已学的到期卡仍会出现。</p></div><label className="study-limit">每日新卡上限<input type="number" min="0" max="200" step="1" value={limitDraft} disabled={!review.ready} onChange={event => { const value = event.target.value; setLimitDraft(value); if (value !== "" && Number.isInteger(Number(value)) && Number(value) >= 0 && Number(value) <= 200) review.setDailyNewLimit(Number(value)); }} onBlur={() => setLimitDraft(String(review.progress.dailyNewLimit))}/><small>0–200 张 · 今日已学新卡 {review.studiedToday} 张</small></label></div>
+    <div className="study-scope-heading study-scheduler-row">
+      <div><h2>复习算法</h2><p>{algorithm === "fsrs"
+        ? "FSRS 按每张卡的记忆状态（稳定性/难度）和你的目标保留率计算间隔，记得越牢隔得越久。切换后已排期的卡不变，之后的评分用新算法。"
+        : "当前为标准间隔重复（SM-2）：间隔按倍率增长。切换到 FSRS 可按记忆模型排期，并可用目标保留率控制复习密度。"}</p></div>
+      <div className="study-scheduler-controls">
+        <div role="radiogroup" aria-label="复习算法" className="study-scheduler-picker">
+          <label className={algorithm === "sm2" ? "mode-button active" : "mode-button"}><input type="radio" name="study-scheduler" checked={algorithm === "sm2"} disabled={!review.ready} onChange={() => review.setScheduler({ algorithm: "sm2" })}/>标准 SM-2</label>
+          <label className={algorithm === "fsrs" ? "mode-button active" : "mode-button"}><input type="radio" name="study-scheduler" checked={algorithm === "fsrs"} disabled={!review.ready} onChange={() => review.setScheduler({ algorithm: "fsrs" })}/>FSRS</label>
+        </div>
+        <label className="study-limit">目标保留率<input type="range" min="70" max="98" step="1" value={Math.round(retention * 100)} disabled={!review.ready || algorithm !== "fsrs"} aria-label="FSRS 目标保留率" onChange={event => review.setScheduler({ retention: Number(event.target.value) / 100 })}/><small>{algorithm === "fsrs" ? `${Math.round(retention * 100)}% · 越高复习越频繁、记得越牢` : "仅 FSRS 模式可用"}</small></label>
+      </div>
+    </div>
     {showCurrent && <button className="secondary" disabled={!review.ready || !currentAvailable} onClick={() => review.selectScopes([...review.newScopes, current])}>把当前{current.section ? "小节" : "章"}加入学习</button>}
     <div className="study-selection" aria-label="已选新学范围">{review.newScopes.length ? review.newScopes.map(scope => <span key={scopeKey(scope)}>{scopeLabel(scope, books)}<button aria-label={"取消今日新学：" + scopeLabel(scope, books)} onClick={() => review.selectScopes(review.newScopes.filter(item => scopeKey(item) !== scopeKey(scope)))}>×</button></span>) : <p>还没有选择新学范围。先勾选一章，或把当前章 / 小节加入学习。</p>}</div>
     <details className="study-range-picker"><summary>按书目和章节选择新学范围</summary><div className="study-range-books">{books.map(book => {
@@ -58,7 +72,10 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
   const [pinned, setPinned] = useState<{ key: string; cardId: string } | null>(null);
   const [favorites, setFavorites] = useState<Set<string>>(() => readFavorites(subject));
   const [favOnly, setFavOnly] = useState(false);
-  const browseCards = cards.filter(card => cardMatchesStudyScope(card, currentScope) && (!favOnly || favorites.has(card.id)));
+  // D: "只看收藏"升级为跨章清单——显示本科目全部收藏卡, 不再受当前章限制
+  const browseCards = favOnly
+    ? cards.filter(card => favorites.has(card.id))
+    : cards.filter(card => cardMatchesStudyScope(card, currentScope));
   const browseIndex = studyBrowseIndex(browsePosition, locationKey, browseCards.length);
   const scopedQueue = scopedStudyReviewView(review.queueForScope(currentScope), cards, review.progress, currentScope, review.now);
   const queue = mode === "all" ? review.queue : scopedQueue;
@@ -172,7 +189,7 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     {mode !== "all" && <div className="study-location"><strong>{mode === "scope" ? "当前复习范围" : "当前浏览位置"}</strong>{picker}</div>}
     <StudyReviewScopes books={books} cards={cards} review={review} current={currentScope} showCurrent={mode !== "all"}/>
     {review.storageError && <p className="error study-storage-error" role="alert">{review.storageError}</p>}
-    <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>{mode === "all" ? "本科目今日已学" : "本章今日已学"}新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>当前章{section ? " / 小节" : ""}共 <b>{browseCards.length}</b> 张</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small>{mode === "browse" && <button className={favOnly ? "mode-button active" : "mode-button"} onClick={() => setFavOnly(value => !value)}>只看收藏（{favorites.size}）</button>}</>}</div>
+    <div className="study-queue-summary">{!review.ready ? <span role="status">正在读取学习记录…</span> : mode !== "browse" ? <><span>当前待复习 <b>{queue.counts.reviewDue}</b> 张 <small>（含短间隔回顾 {queue.counts.learningDue} 张）</small></span><span>{mode === "all" ? "本科目今日已学" : "本章今日已学"}新卡 <b>{mode === "all" ? review.studiedToday : scopedQueue.studiedToday}</b> 张</span><span>今日剩余新卡 <b>{queue.counts.newToday}</b> 张</span><small>{mode === "all" ? "覆盖全部持续复习范围" : "仅当前章 / 小节的今日队列"} · 全部范围共享每日新卡余额 {queue.remainingNewLimit} 张</small></> : <><span>{favOnly ? "本科目全部收藏" : `当前章${section ? " / 小节" : ""}共`}<b>{favOnly ? browseCards.length : `${browseCards.length} 张`}</b>{favOnly ? "张" : ""}</span><small>浏览不评分、不改变复习记录。加入学习范围后在复习模式评分。</small>{mode === "browse" && <button className={favOnly ? "mode-button active" : "mode-button"} onClick={() => { setFavOnly(value => !value); setBrowsePosition({ scopeKey: locationKey, index: 0 }); }}>{favOnly ? "退出收藏清单" : `只看收藏（${favorites.size}）`}</button>}</>}</div>
     {showLastRating && review.lastRating && <p className="study-rating-confirmation" role="status">已记录「{lastCard.front}」· 下次复习：{formatStudyDue(review.lastRating.dueAt)}<button className="text-button undo-rating" onClick={() => { const cardId = review.lastRating?.cardId; const undone = onUndoRating ? onUndoRating() : review.undoLastRating(); if (!undone) return; if (cardId) timing.undo(cardId); if (cardId) setPinned({ key: queueKey, cardId }); setRevealedCard(null); }}>撤销本次评分</button></p>}
     {editor && editorTarget ? <CardEditor
       subject={subject as PersonalSubject}

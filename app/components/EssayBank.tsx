@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, TriangleAlert } from "lucide-react";
+import { TriangleAlert } from "lucide-react";
 
 export type EssayEntry = { id: string; book: string; tags?: string[]; category: string; topic: string; stem: string; referenceAnswer: string; ocrWarning: string; source: string };
 

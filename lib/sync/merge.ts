@@ -91,7 +91,11 @@ function mergeSrs(local: unknown, remote: unknown) {
     cards[id] = String(theirs.lastReviewedAt || "") > String(mine.lastReviewedAt || "") ? theirs : mine;
   }
   const daily = mergeDaily(local, remote);
-  return { ...((remote as Record<string, unknown>) || {}), cards, scopes: sortedUnion(local, remote, "scopes"), newScopes: sortedUnion(local, remote, "newScopes"), daily };
+  // 算法设置: 两端都改过时取 setAt 较新的一方; 只有一端有则直接采用
+  const ls = isObj(local) && isObj(local.scheduler) ? local.scheduler : null;
+  const rs = isObj(remote) && isObj(remote.scheduler) ? remote.scheduler : null;
+  const scheduler = ls && rs ? (String(rs.setAt || "") > String(ls.setAt || "") ? rs : ls) : ls || rs;
+  return { ...((remote as Record<string, unknown>) || {}), cards, scopes: sortedUnion(local, remote, "scopes"), newScopes: sortedUnion(local, remote, "newScopes"), daily, ...(scheduler ? { scheduler } : {}) };
 }
 function mergeDaily(local: unknown, remote: unknown) {
   const ld = isObj(local) && isObj(local.daily) ? local.daily as Record<string, unknown> : null;

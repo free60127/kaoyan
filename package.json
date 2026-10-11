@@ -9,7 +9,8 @@
     "preview": "vite preview --host 127.0.0.1",
     "test:mock-quiz": "node --test tests/mock-quiz*.mjs",
     "test:backup-pdf": "node --test tests/backup-pdf.test.mjs",
-    "test": "node --test tests/*.mjs"
+    "test": "node --test tests/*.mjs",
+    "lint": "eslint app lib tests --max-warnings=0"
   },
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
@@ -24,8 +25,14 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "eslint": "^10.12.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "happy-dom": "^20.14.6",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.0.0",
+    "typescript-eslint": "^8.71.1",
     "vite": "^7.0.0"
   }
 }
