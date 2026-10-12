@@ -20,12 +20,15 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
     const banner = document.createElement("div");
     banner.className = "sw-update-banner";
     banner.setAttribute("role", "status");
-    banner.append("网站已更新到新版本，当前页面继续可用；刷新后应用新版。");
+    banner.append("网站已更新，当前页面继续可用，不会再自动刷新。");
     const action = document.createElement("button");
-    action.textContent = "刷新";
+    action.textContent = "刷新应用新版";
     action.addEventListener("click", () => window.location.reload());
     banner.appendChild(action);
+    const dismiss = document.createElement("button");
+    dismiss.textContent = "稍后";
+    dismiss.addEventListener("click", () => banner.remove());
+    banner.appendChild(dismiss);
     document.body.appendChild(banner);
-    setTimeout(() => banner.remove(), 60000);
   });
 }
