@@ -16,6 +16,9 @@ export type ReviewState = {
   lastReviewedAt: string;
   fsrs?: FsrsMemory;
 };
+/** 未显式设置时的默认算法: FSRS（2026-10-12 起默认; 固定 setAt 保证合成稳定）。
+ *  只作运行时 fallback, 不写存储——用户一旦在设置里切换才会持久化, 同步无抖动。 */
+export const DEFAULT_SCHEDULER: SchedulerConfig = { algorithm: "fsrs", retention: 0.9, setAt: "2026-10-12T00:00:00.000Z" };
 /** 复习算法设置随进度持久化并同步；setAt 供云合并取较新的一方。 */
 export type SchedulerConfig = { algorithm: "sm2" | "fsrs"; retention: number; setAt: string };
 export type StudyProgress = {
@@ -312,8 +315,8 @@ export function previewSchedule(previous: ReviewState | undefined, grade: Rating
   if (!["again", "hard", "good", "easy"].includes(grade)) throw new RangeError("Unknown study rating");
   const instant = time(now);
   const old = normalizedReview(previous);
-  if (scheduler?.algorithm === "fsrs") {
-    const { outcome, intervalDays, dueAt } = fsrsOutcome(old ?? undefined, grade, instant, scheduler.retention);
+  if ((scheduler ?? DEFAULT_SCHEDULER).algorithm === "fsrs") {
+    const { outcome, intervalDays, dueAt } = fsrsOutcome(old ?? undefined, grade, instant, (scheduler ?? DEFAULT_SCHEDULER).retention);
     return {
       dueAt,
       intervalDays,
@@ -377,9 +380,9 @@ export function applyRating(progress: StudyProgress, cardId: string, grade: Rati
   const old = own(progress.cards, cardId) ? progress.cards[cardId] : undefined;
   const instant = time(now);
   let review: ReviewState;
-  if (progress.scheduler?.algorithm === "fsrs") {
+  if ((progress.scheduler ?? DEFAULT_SCHEDULER).algorithm === "fsrs") {
     const normalizedOld = normalizedReview(old);
-    const { outcome, intervalDays, dueAt } = fsrsOutcome(normalizedOld ?? undefined, grade, instant, progress.scheduler.retention);
+    const { outcome, intervalDays, dueAt } = fsrsOutcome(normalizedOld ?? undefined, grade, instant, (progress.scheduler ?? DEFAULT_SCHEDULER).retention);
     review = {
       dueAt,
       intervalDays,
@@ -392,7 +395,7 @@ export function applyRating(progress: StudyProgress, cardId: string, grade: Rati
       fsrs: outcome.memory,
     };
   } else {
-    const { delayMinutes: _minutes, delayDays: _days, ...legacy } = previewSchedule(old, grade, now);
+    const { delayMinutes: _minutes, delayDays: _days, ...legacy } = previewSchedule(old, grade, now, progress.scheduler ?? DEFAULT_SCHEDULER);
     review = legacy;
   }
   const next: StudyProgress = {

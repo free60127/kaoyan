@@ -12,6 +12,7 @@ async function realModule(path) {
 const { scopedStudyReviewView, studyBrowseIndex } = await realModule("../lib/study-review-view.ts");
 const { restoreStudyReview, selectNewStudyScopes, buildReviewSession, rateStudyReviewCard } = await realModule("../lib/use-study-review.ts");
 const { createEmptyProgress } = await realModule("../lib/study-scheduler.ts");
+const withSm2 = (session) => { session.progress.scheduler = { algorithm: "sm2", retention: 0.9, setAt: now.toISOString() }; return session; }; // 本文件断言 SM-2 排期时刻, 默认算法已切 FSRS
 const { cards: raw333, loadKnowledgeCards } = await realModule("../lib/study-data.ts");
 const { load825StudyData } = await realModule("../lib/825/study-data.ts");
 const knowledge333 = await loadKnowledgeCards();
@@ -49,7 +50,7 @@ test("location view filters book, chapter and optional section, preserving due/n
 
 test("empty scoped waiting time comes only from active local cards, never another book, section or paused chapter", () => {
   const catalog = [{ id: "a1", book: "a", chapter: 1, section: "one" }, { id: "a2", book: "a", chapter: 1, section: "two" }, { id: "b1", book: "b", chapter: 1 }];
-  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1), scope("b", 1)], catalog);
+  let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1), scope("b", 1)], catalog));
   session = rateStudyReviewCard(session, catalog, "a1", "hard", now);
   session = rateStudyReviewCard(session, catalog, "a2", "again", now);
   session = rateStudyReviewCard(session, catalog, "b1", "again", now);
@@ -75,7 +76,7 @@ for (const [subject, catalog] of Object.entries(catalogs)) {
     const other = catalog.find(card => card.book !== first.book);
     assert.ok(other);
     const location = scope(first.book, first.chapter);
-    let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [location], catalog);
+    let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [location], catalog));
     const initialHistory = JSON.stringify(session);
     const chapterQueue = buildReviewSession(catalog, session, now, location);
     const view = scopedStudyReviewView(chapterQueue, catalog, session.progress, location, now);

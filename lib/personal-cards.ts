@@ -246,6 +246,21 @@ export function updatePersonalCard(id: string, patch: Partial<Omit<PersonalCard,
   return written.ok ? { ok: true, store: current } : { ok: false, reason: "storage", store: current };
 }
 
+/** 快捷评分条专用: 读取存储中实时的 note 与对应保存函数。
+ *  UI props 可能落后于其他标签/云同步刚写入的状态, 保存意图必须基于实时值重算。 */
+export type OverlayNoteLive = { content: RichContent | undefined; save: (note: RichContent, originalFront: string, originalBack: string) => SaveResult };
+export function readPersonalOverlayNote(subject: PersonalSubject, cardId: string, isPersonalCard: boolean): OverlayNoteLive | null {
+  const store = readPersonal();
+  const key = overlayKey(subject, cardId);
+  if (isPersonalCard) {
+    const mine = store.cards.find(item => item.id === cardId);
+    if (!mine) return null;
+    return { content: mine.note, save: note => updatePersonalCard(cardId, { note }, mine.rev) };
+  }
+  const overlay = store.overlays[key];
+  return { content: overlay?.note, save: (note, front, back) => saveOverlay(subject, cardId, { note }, front, back, overlay?.rev ?? null) };
+}
+
 export function setPersonalCardHidden(id: string, hidden: boolean): SaveResult {
   const current = readPersonal();
   const card = current.cards.find(item => item.id === id);

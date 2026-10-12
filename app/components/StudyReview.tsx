@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
-import { type Rating, type StudyScope } from "../../lib/study-scheduler";
+import { DEFAULT_SCHEDULER, type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
 import { overlayKey, personalStorageKey, readPersonal, setPersonalCardHidden, saveOverlay, type PersonalStore, type PersonalSubject } from "../../lib/personal-cards";
 import { readFavorites, toggleFavorite } from "../../lib/favorites";
@@ -22,7 +22,7 @@ export function StudyReviewScopes({ books, cards, review, current, showCurrent =
   const [expanded, setExpanded] = useState(() => !review.progress.scopes.length);
   const [limitDraft, setLimitDraft] = useState(String(review.progress.dailyNewLimit));
   useEffect(() => setLimitDraft(String(review.progress.dailyNewLimit)), [review.progress.dailyNewLimit]);
-  const algorithm = review.progress.scheduler?.algorithm ?? "sm2";
+  const algorithm = review.progress.scheduler?.algorithm ?? DEFAULT_SCHEDULER.algorithm;
   const retention = review.progress.scheduler?.retention ?? 0.9;
   const chapterAvailable = (bookId: string, chapter: number) => cards.some(card => card.book === bookId && card.chapter === chapter);
   const selected = (bookId: string, chapter: number) => review.newScopes.some(scope => scope.bookId === bookId && scope.section === undefined && scope.chapters.includes(chapter));

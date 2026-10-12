@@ -12,25 +12,20 @@ if (import.meta.env.PROD && "serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => { /* 注册失败不影响网页使用 */ });
   });
-  // 新版本 Service Worker 接管: 若用户有进行中的活动(答题/语音/AI 请求/未保存)只提示, 否则刷新一次立即生效
-  let refreshedForUpdate = false;
+  // 新版本 Service Worker 接管: 一律显示横幅, 由用户手动刷新(自动 reload 会打断复习/丢失翻面状态)
+  let announced = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (refreshedForUpdate) return;
-    refreshedForUpdate = true;
-    if (document.visibilityState !== "visible") return;
-    const busy = document.querySelector(".mock-progress") !== null
-      || document.documentElement.hasAttribute("data-speech-busy")
-      || document.documentElement.hasAttribute("data-ai-busy");
-    const typing = document.activeElement instanceof HTMLTextAreaElement || document.activeElement instanceof HTMLInputElement;
-    if (busy || typing) {
-      const banner = document.createElement("div");
-      banner.className = "sw-update-banner";
-      banner.setAttribute("role", "status");
-      banner.textContent = "网站已更新到新版本。完成当前操作后刷新页面即可应用；不会丢失当前作答。";
-      document.body.appendChild(banner);
-      setTimeout(() => banner.remove(), 15000);
-      return;
-    }
-    window.location.reload();
+    if (announced || document.visibilityState !== "visible") return;
+    announced = true;
+    const banner = document.createElement("div");
+    banner.className = "sw-update-banner";
+    banner.setAttribute("role", "status");
+    banner.append("网站已更新到新版本，当前页面继续可用；刷新后应用新版。");
+    const action = document.createElement("button");
+    action.textContent = "刷新";
+    action.addEventListener("click", () => window.location.reload());
+    banner.appendChild(action);
+    document.body.appendChild(banner);
+    setTimeout(() => banner.remove(), 60000);
   });
 }

@@ -134,12 +134,28 @@ test("switching from SM-2 history: first FSRS rating derives memory from legacy 
   assert.equal(review.reps, 4);
 });
 
-test("SM-2 default is untouched: no scheduler config keeps the legacy path and no fsrs field", () => {
+test("FSRS is the default: progress without scheduler config follows the FSRS path", () => {
   const next = applyRating(createEmptyProgress(now, 20), "c1", "good", now);
+  const review = next.cards.c1;
+  assert.ok(review.fsrs, "default path is FSRS since 2026-10-12");
+  assert.equal(review.stage, "learning");
+  assert.equal(review.intervalDays, 1);
+  approx(review.fsrs.s, 2.3065, 0.001);
+});
+
+test("explicit SM-2 config keeps the legacy path and no fsrs field", () => {
+  const sm2 = { ...createEmptyProgress(now, 20), scheduler: { algorithm: "sm2", retention: 0.9, setAt: now.toISOString() } };
+  const next = applyRating(sm2, "c1", "good", now);
   const review = next.cards.c1;
   assert.equal(review.fsrs, undefined);
   assert.equal(review.intervalDays, 1);
   assert.equal(review.ease, 2.5); // SM-2 新卡 good 不加 ease（只有 easy/hard 调整）
+});
+
+test("previewSchedule also defaults to FSRS without config", () => {
+  const preview = previewSchedule(undefined, "good", now);
+  assert.equal(preview.stage, "learning");
+  assert.equal(preview.intervalDays, 1);
 });
 
 test("previewSchedule honors the scheduler config in fsrs mode", () => {

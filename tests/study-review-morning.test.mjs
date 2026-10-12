@@ -6,31 +6,32 @@ async function module(path){const b=await build({entryPoints:[fileURLToPath(new 
 const s=await module('../lib/study-scheduler.ts'),u=await module('../lib/use-study-review.ts');
 const morning=(day)=>new Date(2026,9,day,6,30).toISOString();
 const at=(day,hour,minute=0)=>new Date(2026,9,day,hour,minute);
+const SM2={algorithm:'sm2',retention:0.9,setAt:at(9,12).toISOString()}; // 本文件全测 SM-2 的 6:30 对齐语义(默认算法已切 FSRS)
 const catalog=['a','b','c'].map(id=>({id,book:'book',chapter:1}));
-const base=s.previewSchedule(undefined,'good',at(9,12));
+const base=s.previewSchedule(undefined,'good',at(9,12),SM2);
 const row=(dueAt,extra={})=>({...base,dueAt,...extra});
-const progress=cards=>({...s.createEmptyProgress(at(9,12)),cards,scopes:[{bookId:'book',chapters:[1]}],newScopes:[]});
+const progress=cards=>({...s.createEmptyProgress(at(9,12)),cards,scopes:[{bookId:'book',chapters:[1]}],newScopes:[],scheduler:{algorithm:'sm2',retention:0.9,setAt:at(9,12).toISOString()}}); // 本文件测 SM-2 的 6:30 日对齐语义, 显式固定算法
 function storage(value){const disk=new Map([['yantu-srs-v1-333',JSON.stringify(value)]]);return {disk,writes:0,fail:false,getItem:k=>disk.get(k)??null,setItem(k,v){this.writes++;if(this.fail)throw Error('quota');disk.set(k,v);}};}
 
 test('new cards rated at different hours have shared next-day and fourth-day morning starts',()=>{
  for(const hour of [0,6,12,23])for(const [grade,day]of [['good',10],['easy',13]]){
-  const preview=s.previewSchedule(undefined,grade,at(9,hour,47));assert.equal(preview.dueAt,morning(day));
+  const preview=s.previewSchedule(undefined,grade,at(9,hour,47),{algorithm:'sm2',retention:0.9,setAt:at(9,12).toISOString()});assert.equal(preview.dueAt,morning(day));
   assert.equal(s.applyRating(progress({}),'a',grade,at(9,hour,47)).cards.a.dueAt,preview.dueAt);
  }
 });
 test('mature hard/good/easy day intervals open at 06:30 and retain interval and study history',()=>{
  const old=row(morning(9),{intervalDays:10,reps:5,ease:2.5});
  for(const [grade,days]of [['hard',12],['good',25],['easy',32.5]]){
-  const next=s.previewSchedule(old,grade,at(9,12,47)),due=new Date(next.dueAt);
+  const next=s.previewSchedule(old,grade,at(9,12,47),SM2),due=new Date(next.dueAt);
   assert.equal(next.intervalDays,days);assert.equal(due.getHours(),6);assert.equal(due.getMinutes(),30);assert.equal(due.getSeconds(),0);
   assert.equal(next.firstStudiedAt,old.firstStudiedAt);assert.equal(next.lastReviewedAt,at(9,12,47).toISOString());
  }
- assert.equal(s.previewSchedule(base,'hard',at(9,12,47)).dueAt,morning(10));
+ assert.equal(s.previewSchedule(base,'hard',at(9,12,47,SM2)).dueAt,morning(10));
 });
 test('minute learning and mature again remain exactly 1/5 minutes even when crossing midnight',()=>{
  const late=at(9,23,59);
  for(const [old,grade,minutes]of [[undefined,'again',1],[undefined,'hard',5],[base,'again',1]]){
-  const next=s.previewSchedule(old,grade,late);assert.equal(Date.parse(next.dueAt)-late.getTime(),minutes*60000);
+  const next=s.previewSchedule(old,grade,late,SM2);assert.equal(Date.parse(next.dueAt)-late.getTime(),minutes*60000);
   assert.equal(next.intervalDays,minutes/1440);
  }
 });
@@ -57,6 +58,6 @@ test('failed migration retains visible history and warning until persistence rec
 test('day schedules use calendar dates through month/year/leap-day and daylight-saving transitions',()=>{
  for(const now of [new Date(2026,0,31,23,55),new Date(2028,1,28,12),new Date(2026,11,31,12),new Date(2026,10,1,0,30),new Date(2026,2,8,0,30)]){
   const expected=new Date(now);expected.setDate(expected.getDate()+1);expected.setHours(6,30,0,0);
-  assert.equal(s.previewSchedule(undefined,'good',now).dueAt,expected.toISOString());
+  assert.equal(s.previewSchedule(undefined,'good',now,SM2).dueAt,expected.toISOString());
  }
 });

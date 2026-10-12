@@ -20,10 +20,11 @@ const catalog = [
   { id: "b1", book: "b", chapter: 1, section: "one" },
 ];
 const scope = (bookId, chapter, section) => ({ bookId, chapters: [chapter], ...(section ? { section } : {}) });
+const withSm2 = (session) => { session.progress.scheduler = { algorithm: "sm2", retention: 0.9, setAt: now.toISOString() }; return session; }; // 本文件断言 SM-2 排期, 默认算法已切 FSRS
 const rate = (session, id, grade, instant = now) => ({ ...session, progress: applyRating(session.progress, id, grade, instant) });
 
 test("fresh session requires explicit scope; first chapter includes only its eligible new cards", () => {
-  let session = restoreStudyReview(null, catalog, now);
+  let session = withSm2(restoreStudyReview(null, catalog, now));
   assert.deepEqual(buildReviewSession(catalog, session, now).items, []);
   assert.equal(session.progress.dailyNewLimit, 20);
   session = selectNewStudyScopes(session, [scope("a", 1)], catalog);
@@ -36,7 +37,7 @@ test("fresh session requires explicit scope; first chapter includes only its eli
 });
 
 test("changing new selection to chapter two retains chapter one due cards and admits chapter two for future review", () => {
-  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1)], catalog);
+  let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1)], catalog));
   session = rate(session, "a1", "again");
   const history = structuredClone(session.progress.cards);
   session = selectNewStudyScopes(session, [scope("a", 2)], catalog);
@@ -49,7 +50,7 @@ test("changing new selection to chapter two retains chapter one due cards and ad
 });
 
 test("pausing preserves history, removes pending cards, and rejoining resumes their original schedule", () => {
-  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1), scope("b", 1)], catalog);
+  let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1), scope("b", 1)], catalog));
   session = rate(session, "a1", "hard");
   const history = structuredClone(session.progress.cards);
   session = pauseStudyScope(session, scope("a", 1));
@@ -60,7 +61,7 @@ test("pausing preserves history, removes pending cards, and rejoining resumes th
 });
 
 test("reload preserves future dates, selected sections, active ranges, daily quota, and separate subject keys", () => {
-  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one"), scope("b", 1)], catalog);
+  let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one"), scope("b", 1)], catalog));
   session.progress.dailyNewLimit = 1;
   session = rate(session, "a1", "easy");
   const serialized = serializeStudyReview(session);
@@ -89,7 +90,7 @@ test("legacy migration preserves future review history without enrolling unrated
 });
 
 test("whole chapter selection supersedes overlapping section ranges without duplicated queue cards", () => {
-  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one")], catalog);
+  let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one")], catalog));
   session = selectNewStudyScopes(session, [...session.newScopes, scope("a", 1)], catalog);
   assert.deepEqual(session.newScopes, [scope("a", 1)]);
   assert.deepEqual(session.progress.scopes, [scope("a", 1)]);
@@ -125,7 +126,7 @@ test("each selected book can start scoped new cards while all modes share one 20
 });
 
 test("scoped rating validates current eligibility without enrolling unselected cards or advancing future cards", () => {
-  let session = selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one")], catalog);
+  let session = withSm2(selectNewStudyScopes(restoreStudyReview(null, catalog, now), [scope("a", 1, "one")], catalog));
   const original = JSON.stringify(session);
   assert.equal(rateStudyReviewCard(session, catalog, "b1", "good", now, scope("b", 1)), null);
   assert.equal(rateStudyReviewCard(session, catalog, "a2", "good", now, scope("a", 1)), null);

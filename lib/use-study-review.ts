@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { alignStoredDayReviews, applyRating, buildStudyQueue, createEmptyProgress, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, resetCardProgress, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
+import { alignStoredDayReviews, applyRating, buildStudyQueue, createEmptyProgress, DEFAULT_SCHEDULER, newCardsStudiedToday, normalizeStoredProgress, normalizeStudyScopes, previewSchedule, resetCardProgress, undoRating, type CardIdentity, type Rating, type RatingUndo, type ReviewState, type StudyProgress, type StudyScope, type StudyTime } from "./study-scheduler";
 import { cardMatchesStudyScope } from "./study-review-view";
 
 export type StudyReviewSession = { progress: StudyProgress; newScopes: StudyScope[] };
@@ -145,7 +145,7 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
     },
     setScheduler(patch: { algorithm?: "sm2" | "fsrs"; retention?: number }) {
       return mutate(latest => {
-        const current = latest.progress.scheduler ?? { algorithm: "sm2" as const, retention: 0.9, setAt: "" };
+        const current = latest.progress.scheduler ?? DEFAULT_SCHEDULER;
         const setAt = new Date(clock()).toISOString();
         return { ...latest, progress: { ...latest.progress, scheduler: { algorithm: patch.algorithm ?? current.algorithm, retention: patch.retention ?? current.retention, setAt } } };
       });
@@ -161,7 +161,9 @@ export function createStudyReviewSync(subject: StudySubject, catalog: readonly C
     undoLastRating(undo: RatingUndo) {
       return mutate(latest => {
         // A later rating in another tab supersedes this undo; keep its saved schedule.
-        if (undo.expected && Object.entries(undo.expected).some(([field, value]) => latest.progress.cards[undo.cardId]?.[field as keyof ReviewState] !== value)) return null;
+        // 值比较(非引用): fsrs 记忆状态是嵌套对象, normalize 重建后引用必不等。
+        const same = (x: unknown, y: unknown) => JSON.stringify(x) === JSON.stringify(y);
+        if (undo.expected && Object.entries(undo.expected).some(([field, value]) => !same(latest.progress.cards[undo.cardId]?.[field as keyof ReviewState], value))) return null;
         return { ...latest, progress: undoRating(latest.progress, undo) };
       });
     },

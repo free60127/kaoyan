@@ -20,7 +20,8 @@ const catalog = [
   { id: "a3", book: "a", chapter: 2, section: "one" },
   { id: "b1", book: "b", chapter: 1, section: "one" },
 ];
-const active = (dailyNewLimit = 20) => ({ ...createEmptyProgress(now, dailyNewLimit), scopes: [{ bookId: "a", chapters: [1] }] });
+const SM2 = { algorithm: "sm2", retention: 0.9, setAt: now.toISOString() }; // 本文件测 SM-2 调度语义, 默认算法已切 FSRS
+const active = (dailyNewLimit = 20) => ({ ...createEmptyProgress(now, dailyNewLimit), scopes: [{ bookId: "a", chapters: [1] }], scheduler: SM2 });
 
 test("a fresh subject has no scopes, due cards, or automatic library admission", () => {
   const empty = createEmptyProgress(now);
@@ -82,9 +83,9 @@ test("ratings remove a card until its exact due boundary; again is never immedia
 
 test("all four first-rating previews give different concrete times and match applied schedules", () => {
   const grades = ["again", "hard", "good", "easy"];
-  assert.deepEqual(grades.map(grade => previewSchedule(undefined, grade, now).delayMinutes), [1, 5, 1440, 5760]);
+  assert.deepEqual(grades.map(grade => previewSchedule(undefined, grade, now, SM2).delayMinutes), [1, 5, 1440, 5760]);
   for (const grade of grades) {
-    const preview = previewSchedule(undefined, grade, now);
+    const preview = previewSchedule(undefined, grade, now, SM2);
     const progress = applyRating(active(), "a1", grade, now);
     assert.equal(progress.cards.a1.dueAt, preview.dueAt);
     assert.equal(progress.cards.a1.intervalDays, preview.delayDays);
@@ -107,21 +108,21 @@ test("due cards precede new cards and sort by due time; future cards stay exclud
 });
 
 test("mature review intervals grow differently and relearning preserves first study and lapse history", () => {
-  const mature = { ...previewSchedule(undefined, "good", now), intervalDays: 10, reps: 5, ease: 2.5 };
-  assert.deepEqual(["again", "hard", "good", "easy"].map(grade => previewSchedule(mature, grade, now).delayDays), [1 / 1440, 12, 25, 32.5]);
-  const failed = previewSchedule(mature, "again", now);
+  const mature = { ...previewSchedule(undefined, "good", now, SM2), intervalDays: 10, reps: 5, ease: 2.5 };
+  assert.deepEqual(["again", "hard", "good", "easy"].map(grade => previewSchedule(mature, grade, now, SM2).delayDays), [1 / 1440, 12, 25, 32.5]);
+  const failed = previewSchedule(mature, "again", now, SM2);
   assert.equal(failed.stage, "relearning");
   assert.equal(failed.lapses, 1);
   assert.equal(failed.ease, 2.3);
   assert.equal(failed.reps, 5);
-  const recovered = previewSchedule(failed, "good", advance(1));
+  const recovered = previewSchedule(failed, "good", advance(1), SM2);
   assert.equal(recovered.stage, "review");
   assert.ok(recovered.intervalDays >= 1);
   assert.equal(recovered.firstStudiedAt, mature.firstStudiedAt);
   assert.equal(recovered.lapses, 1);
-  const first = previewSchedule(undefined, "good", now);
-  assert.equal(previewSchedule(first, "good", advance(1440)).intervalDays, 3);
-  assert.equal(previewSchedule({ ...mature, intervalDays: 36500 }, "easy", now).intervalDays, 36500);
+  const first = previewSchedule(undefined, "good", now, SM2);
+  assert.equal(previewSchedule(first, "good", advance(1440), SM2).intervalDays, 3);
+  assert.equal(previewSchedule({ ...mature, intervalDays: 36500 }, "easy", now, SM2).intervalDays, 36500);
 });
 
 test("legacy future dates open at local 06:30, zero reps are learned, scopes infer only rated chapters", () => {
@@ -173,7 +174,7 @@ test("333 and 825 state stays independent even when card IDs coincide", () => {
 });
 
 test("valid old catalog IDs remain in history but never enter the current queue", () => {
-  const first = previewSchedule(undefined, "good", new Date(2026, 8, 28, 12));
+  const first = previewSchedule(undefined, "good", new Date(2026, 8, 28, 12), SM2);
   const progress = normalizeStoredProgress({
     ...active(),
     cards: { retired: first, a1: first },
@@ -190,7 +191,7 @@ test("valid old catalog IDs remain in history but never enter the current queue"
 });
 
 test("JSON arrays, invalid timestamps and non-finite values cannot admit invalid card states", () => {
-  const review = previewSchedule(undefined, "good", now);
+  const review = previewSchedule(undefined, "good", now, SM2);
   for (const invalid of [
     { ...review, dueAt: "2026-09-30" },
     { ...review, dueAt: "2026-09-30T24:00:00Z" },

@@ -46,6 +46,7 @@ for (const subject of ["333", "825", "politics"]) {
     const store = storage();
     const open = (instant = now) => createStudyReviewSync(subject, catalog, store, () => instant);
     const first = open();
+    first.setScheduler({ algorithm: "sm2" }); // 本文件断言 SM-2 排期(6:30 早复习), 默认算法切换不影响语义
     first.selectScopes([scope]); first.setDailyNewLimit(100);
     first.rateCard("a1", "good"); first.rateCard("a2", "easy");
     const savedPartial = structuredClone(first.session);
