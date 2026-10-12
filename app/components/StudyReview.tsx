@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { StudyReviewController } from "../../lib/use-study-review";
 import { DEFAULT_SCHEDULER, type Rating, type StudyScope } from "../../lib/study-scheduler";
 import { cardMatchesStudyScope, loadBrowsePosition, pickPinnedHead, saveBrowsePosition, scopedStudyReviewView, studyBrowseIndex } from "../../lib/study-review-view";
@@ -142,7 +142,13 @@ export function StudyReviewCards({ subject, review, cards, books, bookId, chapte
     if (current) { saveBrowsePosition(localStorage, subject, locationKey, current.id, browseIndex); onBrowseCardChange?.(current.id); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, browseIndex, locationKey, cardsReady]);
-  useEffect(() => setRevealedCard(null), [visibleCardKey]);
+  // 卡片 id 真正变化才清翻面; 数据刷新帧 card 短暂为 undefined(队列重建)时不丢翻面状态
+  const revealedCardIdRef = useRef(card?.id);
+  useEffect(() => {
+    if (card?.id === undefined) return;
+    if (revealedCardIdRef.current !== card.id) setRevealedCard(null);
+    revealedCardIdRef.current = card.id;
+  }, [card?.id]);
   // 搜索/错题本跳转: 定位到目标卡的浏览位置
   useEffect(() => {
     if (!jumpCardId) return;

@@ -211,7 +211,10 @@ export function useStudyReview(subject: StudySubject, catalog: readonly CardIden
     return () => { window.clearInterval(timer); };
   }, [enabled]);
   const fallback = useMemo(() => ({ progress: createEmptyProgress(now), newScopes: [] }), [now]);
-  const bound = enabled && snapshot?.subject === subject && snapshot.catalog === catalog;
+  // bound 只看 subject: catalog 引用在每次个人层/卡库合并后都会变, 若纳入比较,
+  // 数据更新的一帧会把整个复习状态踢到空进度兜底(闪"正在读取…"、清翻面/队列)——
+  // 数据帧用现有 session + 最新 catalog 构建队列, 语义正确, effect 随后对齐 sync。
+  const bound = enabled && snapshot?.subject === subject;
   const current = bound ? snapshot.session : fallback;
   const ready = !!bound && !!syncRef.current?.sync.ready;
   const activeSync = () => ready ? syncRef.current?.sync : undefined;
