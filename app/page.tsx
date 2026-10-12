@@ -25,12 +25,13 @@ import { EssayBank } from "./components/EssayBank";
 import { ChoiceDrill } from "./components/ChoiceDrill";
 import { ChoiceBank } from "./components/ChoiceBank";
 import { FavoritesView } from "./components/FavoritesView";
+import { ReviewAdminView } from "./components/ReviewAdminView";
 import { loadEssayQuestions, type EssayQuestion } from "@/lib/essay-questions";
 import { Overview333, Overview825, OverviewPolitics } from "./components/OverviewPanels";
 import { selectedAnswer } from "@/lib/copy-answer";
 import { changedSessionPaths, mergeLearningSession as mergeSession, createLearningSession, isStudySubject, learningSessionKey, pastAnswerKey, restoreLearningSession, validateLocation, type LearningLocation, type LearningSession, type StudySubject, type StudyView } from "@/lib/learning-session";
 import { sidebarViews, subjects, subjectBooks, views } from "@/lib/subject-capabilities";
-import { overlayKey, personalStorageKey, readPersonal, type PersonalStore, type PersonalSubject } from "@/lib/personal-cards";
+import { overlayKey, personalStorageKey, readPersonal, saveOverlay, setPersonalCardHidden, type PersonalStore, type PersonalSubject } from "@/lib/personal-cards";
 import { setEffectiveCards, toEffectiveCards } from "@/lib/effective-catalog";
 import { ModalFrame } from "./components/ModalFrame";
 import { useNavigationHistory } from "@/lib/use-navigation-history";
@@ -159,6 +160,8 @@ export default function Home() {
     return map;
   }, [cards333Model, politicsModels, data825]);
   const originalById = useCallback((cardId: string) => baseById.get(cardId), [baseById]);
+  // 移出队列管理: 当前科目的基库卡(含被隐藏的——合并目录里没有它们)
+  const baseCardsForSubject = useMemo(() => (subject === "333" ? cards333Model : subject === "politics" ? politicsModels.cards : (data825?.cards as unknown as Card[] || emptyCards)), [subject, politicsModels, data825]);
   const [quizIndex, setQuizIndex] = useState(0);
   const [wrongOnly, setWrongOnly] = useState(false);
   // F1: 真题限时——偏好持久化, 开考时刻在本页会话内(刷新即结束, 避免跨天误导)
@@ -670,6 +673,7 @@ export default function Home() {
           {view === "choice" && subject === "333" && <>{heading("CHOICE DRILL", "333 · 选择题练习", "真实题库：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹卷，按四书/章节筛选，逐选项辨析；答错自动进错题本。")}<ChoiceDrill key={accountVersion} subject="333" storage={localStorageStore}/></>}
           {view === "bank" && subject === "333" && <>{heading("QUESTION BANK", "333 · 题库浏览", "全部选择题可搜索、筛选与收藏；展开查看选项、正确答案与逐项辨析。")}<ChoiceBank subject={subject}/></>}
           {view === "favorites" && <>{heading("FAVORITES", "收藏", "跨章集中查看收藏的闪卡与选择题；去复习或取消收藏。")}<FavoritesView subject={subject} books={books} cards={allCards} onReviewCard={jumpToCard}/></>}
+          {view === "reviewAdmin" && <>{heading("REVIEW QUEUE", "移出队列管理", "被移出复习队列的卡集中在这里：不进入复习、不出现在浏览与自测；学习记录始终保留，随时可加回并恢复原排期。")}<ReviewAdminView subject={subject as PersonalSubject} personal={personal} baseCards={baseCardsForSubject} books={books} review={subject === "333" ? review333 : subject === "politics" ? reviewPolitics : review825} onRestoreOverlay={cardId => { const overlay = personal.overlays[overlayKey(subject, cardId)]; if (!overlay) return; saveOverlay(subject as PersonalSubject, cardId, { hidden: false }, "", "", overlay.rev); }} onRestoreCard={cardId => setPersonalCardHidden(cardId, false)}/></>}
           {view === "choice" && subject === "825" && <>{heading("SELF QUIZ", "825 · 选择题自测", "由语言学与英美文学闪卡自动生成的四选一练习；术语定义与作家作品适合此模式。答错自动进入错题本。")}{picker}<PracticeView key={accountVersion} subject="825" subjectName="825 英语专业基础" books={books} cards={cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[]} bookId={book} chapter={chapter} section={section} storage={localStorageStore}/></>}
           {view === "mistakes" && <>{heading("MISTAKE BOOK", "错题本", "自动收集评分“重来”的闪卡与答错的题目；整组重练（答对移出）、逐条移除或跳回闪卡复习。")}<MistakesView key={accountVersion} subject={subject} onReviewCard={jumpToCard} onRedoQuiz={redoQuiz} cards={{ "333": cards333Merged, politics: cardsPoliticsMerged, "825": cards825Merged as unknown as { id: string; book: string; chapter: number; front: string; back: string }[] }} storage={localStorageStore}/></>}
           {view === "stats" && (!review.ready ? <div className="panel empty" role="status">正在读取学习记录…</div> : <>{heading("STUDY STATS", "学习统计", "背诵用时与同一卡的速度变化、每日评分及练习；登录后自动同步，也可通过 PDF 备份迁移。")}<StatsView subject={subject} subjectLabel={subjects.find((item) => item.id === subject)?.name || subject} books={books} done={done} due={due} activities={todayActivities(localStorageStore, subject)} learnedCards={Object.keys(review.progress.cards || {}).length} totalCards={allCards.length} storage={localStorageStore} forecast={forecastLoad(allCards, review.progress, review.now, 14)} cards={allCards} onChooseChapter={(targetBook, targetChapter) => chooseChapter(targetBook, targetChapter, "cards")}/></>)}

@@ -1,5 +1,5 @@
 /** 科目能力的唯一事实源: 导航过滤、资料懒加载触发、备份/位置校验都从这里派生。 */
-import {Target, BookOpen, Layers3, CircleHelp, ClipboardList, Sparkles, LineChart, Search, FileText, type LucideIcon, Star} from "lucide-react";
+import {Target, BookOpen, Layers3, CircleHelp, ClipboardList, Sparkles, LineChart, Search, FileText, Archive, type LucideIcon, Star} from "lucide-react";
 import type { StudySubject, StudyView } from "./learning-session";
 
 export type SubjectInfo = { id: StudySubject; name: string; mark: string; short: string; tone: string; hasData: boolean; books: string[] };
@@ -43,6 +43,7 @@ export const views: ViewInfo[] = [
   { id: "bank", label: "题库浏览", Icon: BookOpen, group: "练习" },
   { id: "mock", label: "AI 模拟卷", Icon: Sparkles, group: "练习" },
   { id: "mistakes", label: "错题本", Icon: ClipboardList, group: "工具" },
+  { id: "reviewAdmin", label: "移出队列管理", Icon: Archive, group: "工具" },
   { id: "stats", label: "学习统计", Icon: LineChart, group: "工具" },
   { id: "search", label: "搜索", Icon: Search, group: "工具" },
 ];

@@ -215,3 +215,6 @@
 .nqr-tag.on { background: #e9f4ef; border-color: #83b8a5; color: var(--green); font-weight: 700; }
 .nqr-status { font-size: 11px; color: #4d7964; }
 .nqr-status.conflict { color: #c15f50; }
+
+/* 移出队列管理 */
+.review-admin .mistake-info small { display: block; color: var(--muted); font-size: 11px; }
