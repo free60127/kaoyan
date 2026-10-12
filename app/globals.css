@@ -200,3 +200,17 @@
 .options button.picked { border-color: #4976b6; background: #eef4fc; }
 .mock-multi-actions { display: flex; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
 .mock-multi-actions small { color: var(--muted); font-size: 11px; }
+
+/* 快捷评分条: 网购式星级 + 题型标签(写入"我的补充"评级行) */
+.note-quick-rate { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px auto 0; padding: 8px 12px; background: #f4f9f5; border: 1px solid #dbe9de; border-radius: 10px; max-width: 760px; }
+.nqr-label { font-size: 12px; color: #527766; font-weight: 700; }
+.nqr-stars { display: inline-flex; align-items: center; gap: 2px; }
+.nqr-star { border: 0; background: transparent; font-size: 22px; line-height: 1; padding: 2px 3px; cursor: pointer; color: #c9d6cd; }
+.nqr-star.on { color: #e8a33d; }
+.nqr-hint { font-size: 11px; color: var(--muted); margin-left: 6px; min-width: 52px; }
+.nqr-sep { width: 1px; height: 20px; background: #d3e2d7; }
+.nqr-tags { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.nqr-tag { border: 1px solid #cfdfd4; background: white; color: #527766; font-size: 12px; padding: 3px 10px; border-radius: 999px; cursor: pointer; line-height: 1.6; }
+.nqr-tag.on { background: #e9f4ef; border-color: #83b8a5; color: var(--green); font-weight: 700; }
+.nqr-status { font-size: 11px; color: #4d7964; }
+.nqr-status.conflict { color: #c15f50; }
