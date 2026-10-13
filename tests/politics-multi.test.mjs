@@ -135,3 +135,19 @@ test("practice-draft: 多选作答经保存/恢复后题型与已选答案完整
   assert.deepEqual(question.answers, [1, 2]);
   assert.deepEqual(restored.answers["0"], [1, 2], "已选答案保留");
 });
+
+test("shuffleOptions: 乱序后逐项解析的字母链同步映射, 答案与解析一致(B03)", async () => {
+  const { build } = require("esbuild");
+  const { fileURLToPath } = await import("node:url");
+  const compiled = await build({ entryPoints: [fileURLToPath(new URL("../lib/choice-bank.ts", import.meta.url))], bundle: true, write: false, format: "esm", platform: "node", target: "node20" });
+  const bank = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputFiles[0].text).toString("base64")}`);
+  const q = { id: "t", book: "mayuan", bookName: "b", origin: "o", examTag: "", number: 1, chapter: "", stem: "题干", options: ["甲", "乙", "丙", "丁"], answer: 1, answers: [1, 2, 3], multi: true, optionAnalysis: ["简析 A、B、C正确。D错误。", "B说法不准确。"], referenceAnswer: "", source: "s" };
+  const out = bank.shuffleQuestionOptions(q, () => 0.42);
+  // 新选项 [丙,甲,丁,乙]: 原乙丙丁 → 新 A/C/D
+  assert.deepEqual(out.answers, [0, 2, 3]);
+  assert.equal(out.optionAnalysis[0], "简析 B、D、A正确。C错误。");
+  assert.equal(out.optionAnalysis[1], "D说法不准确。");
+  // 解析重映射是纯函数级(每档乱序种子一致), 英文正文不含中文判定词不被误伤
+  const en = bank.shuffleQuestionOptions({ ...q, optionAnalysis: ["Phonetics studies speech sounds. B is correct."] }, () => 0.42);
+  assert.ok(en.optionAnalysis[0].includes("Phonetics studies speech sounds."));
+});

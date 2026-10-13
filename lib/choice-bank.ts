@@ -161,15 +161,16 @@ export function stripOptionLabel(text: string): string {
 }
 
 /** 打乱一道题的选项顺序(C): 防止"背 A 素材"式记忆; answer 下标同步重映射。真题选项顺序有意义时默认关闭。 */
-/** 乱序后同步逐项解析的段首字母: 解析段以 "A正确/B错误/D说法…" 开头, 按旧字母→新字母
- *  只替换段首标记, 不碰正文(避免误改英文内容); 无段首字母的段原样保留。 */
+/** 乱序后同步解析里的选项字母: 只替换「紧跟判定词(正确/错误/说法/项)的字母链」——
+ *  形如 "C正确"、"A、B、C正确"、"D说法不准确"。英文内容后不会紧跟中文判定词, 零误伤;
+ *  链外的孤立字母引用(如"选A。")保持原样。 */
+function remapAnalysisLetters(text: string, mapping: Record<string, string>): string {
+  return text.replace(/([A-D](?:\s*[、,，]\s*[A-D])*)\s*(?=(?:正确|错误|说法|项))/g, chain =>
+    chain.split(/\s*[、,，]\s*/).map(letter => mapping[letter] ?? letter).join("、"));
+}
+
 function remapOptionAnalysis(analysis: readonly string[], mapping: Record<string, string>): string[] {
-  return analysis.map(segment => {
-    const match = /^([A-D])(\s*[、.，,：:]\s*|\s*(?=正确|错误|说法|项))/.exec(segment);
-    if (!match) return segment;
-    const mapped = mapping[match[1]];
-    return mapped ? mapped + segment.slice(1) : segment;
-  });
+  return analysis.map(segment => remapAnalysisLetters(segment, mapping));
 }
 
 export function shuffleQuestionOptions(question: ChoiceQuestion, rng: () => number): ChoiceQuestion {
