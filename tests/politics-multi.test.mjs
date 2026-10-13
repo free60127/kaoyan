@@ -111,3 +111,27 @@ test("肖1000政治题库: 结构完整(数量/五科/多选比例/答案合法)
   assert.ok(bank333.length > 1400);
   assert.ok(!bank333.some(row => row.multi), "333 题库不应有多选题");
 });
+
+test("practice-draft: 多选作答经保存/恢复后题型与已选答案完整保留(B02/B06)", async () => {
+  const { build } = require("esbuild");
+  const { fileURLToPath } = await import("node:url");
+  const compiledDraft = await build({ entryPoints: [fileURLToPath(new URL("../lib/practice-draft.ts", import.meta.url))], bundle: true, write: false, format: "esm", platform: "node", target: "node20" });
+  const compiledBank = await build({ entryPoints: [fileURLToPath(new URL("../lib/choice-bank.ts", import.meta.url))], bundle: true, write: false, format: "esm", platform: "node", target: "node20" });
+  const draft = { ...await import(`data:text/javascript;base64,${Buffer.from(compiledDraft.outputFiles[0].text).toString("base64")}`), ...await import(`data:text/javascript;base64,${Buffer.from(compiledBank.outputFiles[0].text).toString("base64")}`) };
+  const store = new Map();
+  globalThis.localStorage = { getItem: k => store.get(k) ?? null, setItem: (k, v) => store.set(k, v), removeItem: k => store.delete(k) };
+  const saved = draft.savePracticeRound({
+    subject: "politics", mode: "practice",
+    meta: { bookId: "mayuan", bookName: "", chapter: 1, scope: "chapter", drill: { book: "all", origin: "all", count: 20 } },
+    questions: [draft.toSavedQuestion({ id: "xiao-mayuan-m1", book: "mayuan", bookName: "马克思主义基本原理", origin: "肖秀荣1000题", examTag: "", number: 1, chapter: "第一章", stem: "多选题干", options: ["A", "B", "C", "D"], answer: 0, multi: true, answers: [1, 2], optionAnalysis: ["A正确。"], referenceAnswer: "", source: "s" }, "xiao-mayuan-m1")],
+    index: 0, choice: -1, right: 1, wrongIds: [],
+    answers: { 0: [1, 2] },
+  });
+  assert.equal(saved, true, "100 题内可保存(B06)");
+  const restored = draft.loadPracticeRound("politics", "practice");
+  assert.ok(restored, "刷新后可恢复");
+  const question = draft.fromSavedQuestion(restored.questions[0]);
+  assert.equal(question.multi, true, "题型保留(B02)");
+  assert.deepEqual(question.answers, [1, 2]);
+  assert.deepEqual(restored.answers["0"], [1, 2], "已选答案保留");
+});

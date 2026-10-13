@@ -22,8 +22,8 @@ export type SavedRound = {
   index: number;
   choice: number | null;
   right: number;
-  /** 已确认作答: {题号: 所选选项index}。 */
-  answers: Record<string, number>;
+  /** 已确认作答: {题号: 所选选项index}; 多选题为升序选项数组。 */
+  answers: Record<string, number | number[]>;
   /** 试卷内答错的卡(重练的"移出错题本"判定与自测的错题入库都以恢复后的集合为准)。 */
   wrongIds: string[];
   savedAt: string;
@@ -31,7 +31,7 @@ export type SavedRound = {
 
 /** 每个科目×模式独立草稿键: 开始另一套题不会覆盖别科的未完成卷。 */
 export const practiceDraftKey = (subject: string, mode: string) => `yantu-practice-round-v1-${subject}-${mode}`;
-const MAX_QUESTIONS = 60;
+const MAX_QUESTIONS = 100;
 const MAX_AGE_MS = 3 * 86400000;
 
 const isPlainObject = (value: unknown): value is Record<string, unknown> =>
@@ -44,6 +44,8 @@ function sanitizeExtra(value: unknown): Record<string, unknown> | undefined {
   for (const [key, item] of Object.entries(value)) {
     if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") { out[key] = item; continue; }
     if (Array.isArray(item) && item.length <= 8 && item.every(entry => typeof entry === "string" && entry.length <= 600)) { out[key] = item; continue; }
+    // 多选题答案: 2-4 个 0-3 的选项序号
+    if (Array.isArray(item) && item.length >= 2 && item.length <= 4 && item.every(entry => typeof entry === "number" && Number.isInteger(entry) && entry >= 0 && entry <= 3)) { out[key] = [...item].sort((a, b) => a - b); continue; }
   }
   return Object.keys(out).length ? out : undefined;
 }
@@ -82,7 +84,10 @@ export function loadPracticeRound(subject: string, mode: "practice" | "requiz"):
     if (typeof row.savedAt !== "string" || !Number.isFinite(Date.parse(row.savedAt)) || Date.now() - Date.parse(row.savedAt) > MAX_AGE_MS) return null;
     const index = typeof row.index === "number" && Number.isInteger(row.index) && row.index >= 0 && row.index < row.questions.length ? row.index : 0;
     const answers = row.answers && typeof row.answers === "object" && !Array.isArray(row.answers)
-      ? Object.fromEntries(Object.entries(row.answers).filter(([, v]) => typeof v === "number" && v >= 0 && v < 4))
+      ? Object.fromEntries(Object.entries(row.answers).filter(([, v]) => {
+        if (typeof v === "number") return v >= 0 && v < 4;
+        return Array.isArray(v) && v.length >= 2 && v.length <= 4 && v.every(item => typeof item === "number" && Number.isInteger(item) && item >= 0 && item <= 3);
+      }))
       : {};
     const wrongIds = Array.isArray(row.wrongIds) ? row.wrongIds.filter((id): id is string => typeof id === "string" && id.length <= 200) : [];
     const meta = row.meta && typeof row.meta === "object" ? { ...row.meta } as SavedRound["meta"] : { bookId: "", bookName: "", chapter: 1, scope: "chapter" as const };

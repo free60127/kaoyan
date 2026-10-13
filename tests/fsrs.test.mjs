@@ -46,15 +46,27 @@ test("retrievability follows the power-law forgetting curve; interval = stabilit
   assert.equal(fsrsIntervalDays(10, 0.8), 33);
 });
 
-test("FSRS mode: a new card rated good enters the second learning step (next day)", () => {
+test("FSRS mode: a new card rated good graduates to a day interval aligned at 06:30", () => {
   const next = applyRating(fsrsProgress(), "c1", "good", now);
   const review = next.cards.c1;
-  assert.equal(review.stage, "learning");
-  assert.equal(review.intervalDays, 1);
-  assert.equal(new Date(review.dueAt).getTime(), new Date(now.getTime() + 1440 * 60_000).getTime());
+  assert.equal(review.stage, "review");
+  assert.equal(review.intervalDays, 2); // round(S0(good)=2.3065)
+  const due = new Date(review.dueAt);
+  assert.equal(due.getDate(), 2); // 9/30 + 2 天
+  assert.equal(due.getHours(), 6);
+  assert.equal(due.getMinutes(), 30);
   approx(review.fsrs.s, 2.3065, 0.001);
   approx(review.fsrs.d, 2.11828, 0.001);
-  assert.equal(review.fsrs.step, 1);
+  assert.equal(review.fsrs.step, null);
+});
+
+test("FSRS mode: again/hard keep minute semantics matching the page copy", () => {
+  const again = applyRating(fsrsProgress(), "c1", "again", now).cards.c1;
+  const hard = applyRating(fsrsProgress(), "c2", "hard", now).cards.c2;
+  assert.equal(Math.round((Date.parse(again.dueAt) - now.getTime()) / 60_000), 1);
+  assert.equal(Math.round((Date.parse(hard.dueAt) - now.getTime()) / 60_000), 5);
+  assert.equal(hard.stage, "learning");
+  assert.equal(hard.fsrs.step, 1);
 });
 
 test("FSRS mode: cross-day good graduates with the official recall-stability interval", () => {
@@ -88,8 +100,7 @@ test("FSRS mode: again from review starts relearning and counts a lapse", () => 
   const review = progress.cards.c1;
   assert.equal(review.stage, "relearning");
   assert.equal(review.lapses, 1);
-  assert.equal(Math.round((Date.parse(review.dueAt) - day9.getTime()) / 60_000), 10); // 10 分钟后
-  assert.ok(review.fsrs.s < progress.cards.c1.fsrs.s || true); // 稳定性经遗忘公式更新
+  assert.equal(Math.round((Date.parse(review.dueAt) - day9.getTime()) / 60_000), 1); // 重学习 1 分钟(与"重来"说明一致)
   assert.ok(review.fsrs.s > 0);
 });
 
@@ -102,15 +113,15 @@ test("FSRS mode: easy on a new card graduates immediately with interval from w3"
   assert.equal(due.getHours(), 6);
 });
 
-test("FSRS mode: same-day good keeps short-term stability (official clamp) and graduates to 2 days", () => {
-  let progress = applyRating(fsrsProgress(), "c1", "good", now);
-  const plus11 = new Date(now.getTime() + 11 * 60_000);
-  // 第一步(1 分钟)到期后再评 good: 同日 → 短项稳定度官方对 increase<1 钳到 1（S 不变 2.3065），已是最后一步 → 毕业
-  progress = applyRating(progress, "c1", "good", plus11);
+test("FSRS mode: same-day good uses short-term stability then graduates with day interval", () => {
+  let progress = applyRating(fsrsProgress(), "c1", "again", now);
+  const plus2 = new Date(now.getTime() + 2 * 60_000);
+  // 第一步(1 分钟)到期后再评 good: 同日 → 短项稳定度(官方对 increase<1 钳到 1), 直接毕业进天间隔
+  progress = applyRating(progress, "c1", "good", plus2);
   const review = progress.cards.c1;
   assert.equal(review.stage, "review");
-  assert.equal(review.intervalDays, 2); // round(2.3065)
-  approx(review.fsrs.s, 2.3065, 0.001);
+  assert.equal(review.intervalDays, 1); // again 先评: S0(again)=0.212, 毕业间隔 round→1 天
+  approx(review.fsrs.s, 0.24669, 0.001); // 同日短项稳定度: S<1 时 increase>1, 微增
 });
 
 test("target retention moves intervals: 0.8 schedules far later than 0.9", () => {
@@ -138,8 +149,8 @@ test("FSRS is the default: progress without scheduler config follows the FSRS pa
   const next = applyRating(createEmptyProgress(now, 20), "c1", "good", now);
   const review = next.cards.c1;
   assert.ok(review.fsrs, "default path is FSRS since 2026-10-12");
-  assert.equal(review.stage, "learning");
-  assert.equal(review.intervalDays, 1);
+  assert.equal(review.stage, "review");
+  assert.equal(review.intervalDays, 2);
   approx(review.fsrs.s, 2.3065, 0.001);
 });
 
@@ -154,8 +165,8 @@ test("explicit SM-2 config keeps the legacy path and no fsrs field", () => {
 
 test("previewSchedule also defaults to FSRS without config", () => {
   const preview = previewSchedule(undefined, "good", now);
-  assert.equal(preview.stage, "learning");
-  assert.equal(preview.intervalDays, 1);
+  assert.equal(preview.stage, "review");
+  assert.equal(preview.intervalDays, 2);
 });
 
 test("previewSchedule honors the scheduler config in fsrs mode", () => {
@@ -166,7 +177,7 @@ test("previewSchedule honors the scheduler config in fsrs mode", () => {
   assert.equal(preview.delayMinutes, 7 * 1440);
   const sm2 = previewSchedule(seed, "good", now);
   assert.equal(sm2.fsrs, undefined);
-  assert.ok(sm2.intervalDays !== 7 || true);
+  assert.ok(sm2.intervalDays >= 1, "SM-2 preview still schedules day intervals");
 });
 
 test("normalizeStoredProgress round-trips scheduler config and fsrs memory, dropping invalid ones", () => {

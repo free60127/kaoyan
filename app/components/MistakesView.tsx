@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { RefreshCw, Trash2 } from "lucide-react";
 import { clearMistakes, readVisibleMistakes, removeMistakes, removeMistakesByRef, selectRequizList, type Mistake } from "@/lib/mistakes";
-import { loadChoiceBank } from "@/lib/choice-bank";
+import { loadChoiceBank, loadPoliticsChoiceBank } from "@/lib/choice-bank";
 import { PracticeView } from "./PracticeView";
 import { ChoiceDrill } from "./ChoiceDrill";
 import type { StatStore } from "@/lib/stats";
@@ -14,7 +14,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
   const [only, setOnly] = useState<string>(subject);
   const [requiz, setRequiz] = useState(false);
   const [choiceRequiz, setChoiceRequiz] = useState(false);
-  const [choiceBankIds, setChoiceBankIds] = useState<ReadonlySet<string> | null>(null);
+  const [choiceBankIds, setChoiceBankIds] = useState<Record<string, Set<string>> | null>(null);
   useEffect(() => {
     const sync = () => setItems(readVisibleMistakes());
     window.addEventListener("storage", sync);
@@ -25,7 +25,12 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
   // R4: 选择题库错题重练——需要知道哪些错题 refId 命中题库
   useEffect(() => {
     let cancelled = false;
-    loadChoiceBank().then(bank => { if (!cancelled) setChoiceBankIds(new Set(bank.map(question => question.id))); }).catch(() => { if (!cancelled) setChoiceBankIds(new Set()); });
+    // B08: 333 与政治各有多选题库, 逐科加载并按科目判定可重练
+    Promise.all([loadChoiceBank().catch(() => []), loadPoliticsChoiceBank().catch(() => [])]).then(([bank333, bankPolitics]) => {
+      if (cancelled) return;
+      const bySubject: Record<string, Set<string>> = { "333": new Set(bank333.map(q => q.id)), politics: new Set(bankPolitics.map(q => q.id)) };
+      setChoiceBankIds(bySubject);
+    });
     return () => { cancelled = true; };
   }, []);
   const groups = useMemo(() => {
@@ -44,7 +49,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
   // 闪卡错题: refId 命中闪卡库才能重练; 题库错题: refId 命中选择题库
   const requizList = useMemo(() => requizCandidates.filter(entry => (cards[requizSubject] || []).some(card => card.id === entry.refId)), [requizCandidates, cards, requizSubject]);
   const choiceRequizList = useMemo(() => (
-    requizSubject === "333" && choiceBankIds ? requizCandidates.filter(entry => choiceBankIds.has(entry.refId)) : []
+    choiceBankIds?.[requizSubject] ? requizCandidates.filter(entry => choiceBankIds[requizSubject].has(entry.refId)) : []
   ), [requizCandidates, requizSubject, choiceBankIds]);
   const requizCards = cards[requizSubject] || [];
 
@@ -68,7 +73,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
   }
   if (choiceRequiz && choiceRequizList.length) {
     return <ChoiceDrill
-      subject="333"
+      subject={requizSubject as "333" | "politics"}
       storage={storage}
       requizIds={choiceRequizList.map(entry => entry.refId)}
       onRequizDone={handleRequizDone}
@@ -87,7 +92,7 @@ export function MistakesView({ subject, onReviewCard, onRedoQuiz, cards, storage
     {items.length > 0 && groups.length === 0 && <div className="empty">该科目暂无错题。</div>}
     {items.length > 0 && <div className="mistake-quiz-actions">
       <button className="primary mistake-quiz-button" disabled={!requizList.length} onClick={() => { setChoiceRequiz(false); setRequiz(true); }}><RefreshCw size={16}/>错题重练（{requizList.length} 张可重练）</button>
-      {requizSubject === "333" && <button className="secondary mistake-quiz-button" disabled={!choiceRequizList.length} onClick={() => { setRequiz(false); setChoiceRequiz(true); }}><RefreshCw size={16}/>选择题错题重练（{choiceRequizList.length} 题可重练）</button>}
+      {(requizSubject === "333" || requizSubject === "politics") && <button className="secondary mistake-quiz-button" disabled={!choiceRequizList.length} onClick={() => { setRequiz(false); setChoiceRequiz(true); }}><RefreshCw size={16}/>选择题错题重练（{choiceRequizList.length} 题可重练）</button>}
     </div>}
     {groups.map(([groupSubject, list]) => <div key={groupSubject} className="mistake-group">
       <div className="mistake-group-head">

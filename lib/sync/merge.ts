@@ -12,7 +12,7 @@
  * 全部防御式: 形状不符保守返回, 绝不抛错。 */
 
 
-export type MergeKind = "srs" | "done" | "mistakes" | "stats" | "activity" | "excluded" | "personal" | "session" | "timing" | "timingSettings";
+export type MergeKind = "srs" | "done" | "mistakes" | "stats" | "activity" | "excluded" | "favorites" | "personal" | "session" | "timing" | "timingSettings";
 
 export const SYNCABLE_KEYS: Record<string, MergeKind> = {
   "yantu-card-timing-settings-v1": "timingSettings",
@@ -33,12 +33,15 @@ export const SYNCABLE_KEYS: Record<string, MergeKind> = {
   "yantu-activity-v1-825": "activity",
   "yantu-activity-v1-politics": "activity",
   "yantu-mcq-excluded-v1": "excluded",
+  "yantu-mcq-excluded-v1-politics": "excluded",
+  "yantu-favorites-v1": "favorites",
+  "yantu-favorites-removed-v1": "excluded",
   "yantu-personal-v1": "personal",
   "yantu-learning-session-v1": "session",
 };
 
 /** 整键 last-write-wins(引擎按同步结果判定先后): 考试日期、AI 模拟卷记录。 */
-export const LWW_KEYS = new Set(["yantu-exam-target-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825"]);
+export const LWW_KEYS = new Set(["yantu-exam-target-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", "kaoyan.mock-practice.v1.politics"]);
 
 const isObj = (v: unknown): v is Record<string, unknown> => !!v && typeof v === "object" && !Array.isArray(v);
 const isArr = Array.isArray;
@@ -68,6 +71,7 @@ export function mergeKeyValue(kind: MergeKind | "lww", local: unknown, remote: u
       case "stats": value = mergeStats(local, remote); break;
       case "activity": value = mergeActivity(local, remote); break;
       case "excluded": value = mergeArrayUnion(local, remote); break;
+      case "favorites": value = mergeFavorites(local, remote); break;
       case "personal": value = mergePersonal(local, remote); break;
       case "session": value = mergeSession(local, remote); break;
       case "timing": value = { ...(isObj(local) ? local : {}), ...(isObj(remote) ? remote : {}) }; break;
@@ -230,6 +234,26 @@ function mergeActivity(local: unknown, remote: unknown) {
   }
   merged.sort((a, b) => compare(String(a.t || ""), String(b.t || "")));
   return merged.slice(-300);
+}
+function mergeFavorites(local: unknown, remote: unknown) {
+  // 槽位并集; 跨端"取消"由 yantu-favorites-removed-v1(tombstone 并集)在读取层屏蔽,
+  // 幽灵条目留在存储中无害, 重新收藏时从 removed 移除即恢复。
+  const slots = new Map<string, Set<string>>();
+  for (const side of [local, remote]) {
+    if (!isObj(side)) continue;
+    for (const [slot, ids] of Object.entries(side)) {
+      if (!Array.isArray(ids)) continue;
+      const set = slots.get(slot) || new Set<string>();
+      for (const id of ids) if (typeof id === "string") set.add(id);
+      slots.set(slot, set);
+    }
+  }
+  const out: Record<string, string[]> = {};
+  for (const [slot, set] of [...slots.entries()].sort(([a], [b]) => compare(a, b))) {
+    const kept = [...set].sort(compare);
+    if (kept.length) out[slot] = kept;
+  }
+  return out;
 }
 function mergeArrayUnion(local: unknown, remote: unknown) {
   if (!isArr(local) || !isArr(remote)) return remote;

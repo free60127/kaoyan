@@ -161,6 +161,17 @@ export function stripOptionLabel(text: string): string {
 }
 
 /** 打乱一道题的选项顺序(C): 防止"背 A 素材"式记忆; answer 下标同步重映射。真题选项顺序有意义时默认关闭。 */
+/** 乱序后同步逐项解析的段首字母: 解析段以 "A正确/B错误/D说法…" 开头, 按旧字母→新字母
+ *  只替换段首标记, 不碰正文(避免误改英文内容); 无段首字母的段原样保留。 */
+function remapOptionAnalysis(analysis: readonly string[], mapping: Record<string, string>): string[] {
+  return analysis.map(segment => {
+    const match = /^([A-D])(\s*[、.，,：:]\s*|\s*(?=正确|错误|说法|项))/.exec(segment);
+    if (!match) return segment;
+    const mapped = mapping[match[1]];
+    return mapped ? mapped + segment.slice(1) : segment;
+  });
+}
+
 export function shuffleQuestionOptions(question: ChoiceQuestion, rng: () => number): ChoiceQuestion {
   const indices = question.options.map((_, index) => index);
   for (let i = indices.length - 1; i > 0; i -= 1) {
@@ -171,7 +182,11 @@ export function shuffleQuestionOptions(question: ChoiceQuestion, rng: () => numb
   const answer = indices.indexOf(question.answer);
   // 多选题: 正确项集合同步重映射(乱序后答案位置跟随选项)
   const answers = question.multi && question.answers ? question.answers.map(item => indices.indexOf(item)).sort((a, b) => a - b) : undefined;
-  return { ...question, options, answer, ...(answers ? { answers } : {}) };
+  // 逐项解析的字母跟随选项: 新位置 i 显示的是旧选项 indices[i]
+  const mapping: Record<string, string> = {};
+  indices.forEach((oldIndex, newPosition) => { mapping["ABCD"[oldIndex]] = "ABCD"[newPosition]; });
+  const optionAnalysis = question.optionAnalysis.length ? remapOptionAnalysis(question.optionAnalysis, mapping) : question.optionAnalysis;
+  return { ...question, options, answer, ...(answers ? { answers } : {}), optionAnalysis };
 }
 
 /** 全卷乱序: 同一 seed 下确定性重排。 */

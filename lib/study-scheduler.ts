@@ -120,7 +120,8 @@ function normalizedReview(value: unknown): ReviewState | null {
   const firstStudiedAt = timestamp(value.firstStudiedAt);
   const lastReviewedAt = timestamp(value.lastReviewedAt);
   if (!dueAt || !firstStudiedAt || !lastReviewedAt || !finite(value.intervalDays) || value.intervalDays < 0 || value.intervalDays > MAX_INTERVAL || !finite(value.ease) || value.ease < 1.3 || value.ease > 10 || !nonnegativeInt(value.reps) || !nonnegativeInt(value.lapses) || !["learning", "review", "relearning"].includes(String(value.stage))) return null;
-  const alignedDue = value.stage === "review" && value.intervalDays >= 1 ? reviewMorning(dueAt) : dueAt;
+  // 按间隔语义对齐(不看 stage): 旧版 FSRS 曾把"记住了"排成 learning+1 天(次日评分时刻), 读取时统一修正到 6:30
+  const alignedDue = value.intervalDays >= 1 ? reviewMorning(dueAt) : dueAt;
   return {
     dueAt: alignedDue, firstStudiedAt, lastReviewedAt, intervalDays: value.intervalDays, ease: value.ease, reps: value.reps, lapses: value.lapses, stage: value.stage as ReviewState["stage"],
     ...(isFsrsMemory(value.fsrs) ? { fsrs: value.fsrs } : {}),
@@ -303,7 +304,8 @@ function fsrsOutcome(previous: ReviewState | undefined, grade: Rating, instant: 
   const outcome = fsrsReview(memory, FSRS_GRADE[grade], instant.getTime(), retention);
   const intervalDays = outcome.intervalDays > 0 ? outcome.intervalDays : outcome.intervalMinutes / 1440;
   let dueAt = new Date(instant.getTime() + outcome.intervalMinutes * MINUTE).toISOString();
-  if (outcome.stage === "review" && outcome.intervalDays >= 1) {
+  // 按间隔语义对齐: 天间隔(>=1天)统一次日 6:30, 分钟间隔保持分钟语义(与 stage 无关)
+  if (outcome.intervalDays >= 1) {
     const date = new Date(instant);
     date.setDate(date.getDate() + Math.round(outcome.intervalDays));
     dueAt = reviewMorning(date);

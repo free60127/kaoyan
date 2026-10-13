@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createCardTimer, createTimingId, saveCardTiming, flushCardTiming, hasPendingTimingWrites, readTimingRecords, timingContentKey, timingEnabled, timingSettingsKey, type CardTiming, type TimingKind } from "./card-timing";
 import type { Rating } from "./study-scheduler";
+import { stripRatingLine } from "./note-rating";
 
 const accountKey = "yantu-sync-active-partition";
 const store = { getItem: (key: string) => localStorage.getItem(key), setItem: (key: string, value: string) => localStorage.setItem(key, value) };
@@ -28,7 +29,9 @@ export function useCardTiming(subject: string, card: { id: string; front: string
     window.addEventListener("yantu-account-change-failed", failed);
     return () => window.removeEventListener("yantu-account-change-failed", failed);
   }, []);
-  const contentKey = useMemo(() => card ? timingContentKey(card.front, card.back, note) : "", [card?.front, card?.back, note]);
+  // B11: 星级/题型标注写在评级行, 不算实质内容——剥离后再指纹, 计时与速度比较不因标星中断
+  const substantiveNote = useMemo(() => note ? stripRatingLine(note) : note, [note]);
+  const contentKey = useMemo(() => card ? timingContentKey(card.front, card.back, substantiveNote) : "", [card?.front, card?.back, substantiveNote]);
   const key = switchedOn && enabled && card && kind ? JSON.stringify([subject, card.id, contentKey, attemptEpoch]) : "";
   const account = currentAccount;
   const persist = (row: CardTiming | null, owner: string) => { if (row && account() === owner) saveCardTiming(store, subject, row, owner); };

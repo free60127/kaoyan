@@ -29,10 +29,11 @@ export const STABILITY_MIN = 0.001;
 export const DIFFICULTY_MIN = 1;
 export const DIFFICULTY_MAX = 10;
 
-/** 与官方一致的默认短步长（分钟）：learning [1m, 1d]、relearning [10m]。
- *  第二步取 1 天而非官方示例的 10 分钟——本应用新卡「良好」次日复习的既有体验保持不变。 */
-export const FSRS_LEARNING_STEPS_MINUTES = [1, 1440] as const;
-export const FSRS_RELEARNING_STEPS_MINUTES = [10] as const;
+/** 短步长（分钟）：重来 1 分钟、困难 5 分钟，与页面通用说明一致（Anki 也建议 FSRS
+ *  学习步尽量同日完成）。「记住了」在 learning 阶段直接毕业进入天间隔（按日历约定对齐
+ *  次日 6:30），不落进第二个步长；重学习同为 1 分钟。 */
+export const FSRS_LEARNING_STEPS_MINUTES = [1, 5] as const;
+export const FSRS_RELEARNING_STEPS_MINUTES = [1] as const;
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 const clampStability = (value: number) => Math.max(value, STABILITY_MIN);
@@ -177,15 +178,19 @@ export function fsrsReview(memory: FsrsMemory | undefined, grade: FsrsGrade, now
     return { memory: { s, d, st: state, step: 0, lr: nowIso }, intervalMinutes: steps[0], intervalDays: 0, stage: state };
   }
   if (grade === 2) {
-    const intervalMinutes = currentStep === 0
-      ? (steps.length === 1 ? Math.round(steps[0] * 1.5) : steps.length >= 2 ? Math.round((steps[0] + steps[1]) / 2) : steps[currentStep])
-      : steps[currentStep];
-    return { memory: { s, d, st: state, step: currentStep, lr: nowIso }, intervalMinutes, intervalDays: 0, stage: state };
+    // 「困难」固定 5 分钟: learning 有第二步时进入第二步; relearning(单步)直接毕业进天间隔
+    if (steps.length >= 2) {
+      return { memory: { s, d, st: state, step: 1, lr: nowIso }, intervalMinutes: steps[1] ?? 5, intervalDays: 0, stage: state };
+    }
+    const intervalDays = fsrsIntervalDays(s, retention);
+    return { memory: { s, d, st: "review", step: null, lr: nowIso }, intervalMinutes: 0, intervalDays, stage: "review" };
   }
-  if (grade === 3 && currentStep + 1 < steps.length) {
-    return { memory: { s, d, st: state, step: currentStep + 1, lr: nowIso }, intervalMinutes: steps[currentStep + 1], intervalDays: 0, stage: state };
+  // 「记住了」在 learning 阶段直接毕业（进入天间隔, 次日 6:30）；困难进下一步(5 分钟)
+  if (grade === 3) {
+    const intervalDays = fsrsIntervalDays(s, retention);
+    return { memory: { s, d, st: "review", step: null, lr: nowIso }, intervalMinutes: 0, intervalDays, stage: "review" };
   }
-  // 良好到最后一步 / 轻松 → 毕业
+  // 轻松 → 毕业
   const intervalDays = fsrsIntervalDays(s, retention);
   return { memory: { s, d, st: "review", step: null, lr: nowIso }, intervalMinutes: 0, intervalDays, stage: "review" };
 }

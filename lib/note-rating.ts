@@ -24,6 +24,15 @@ export function parseNoteRating(text: string): ParsedRating | null {
   return null;
 }
 
+/** 从 note.text 中删除评级行: 计时内容指纹用——星级/题型标注不算实质内容变化,
+ *  不应打断当前计时或重置速度比较。 */
+export function stripRatingLine(text: string): string {
+  const parsed = parseNoteRating(text);
+  if (!parsed) return text;
+  const lines = text.split(String.fromCharCode(10));
+  return lines.filter((_, index) => index !== parsed.lineIndex).join(String.fromCharCode(10));
+}
+
 const formatLine = (stars: number, tags: string[]) => {
   const body = [STAR.repeat(stars), tags.join(" ")].filter(Boolean).join(" ");
   return body.trim();

@@ -12,7 +12,7 @@ import { validateTimingRecords, validateTimingSettings, timingSettingsKey, forma
 
 export const MAX_BACKUP_BYTES = 8 * 1024 * 1024;
 // 个人编辑层放最前: 导入时先恢复个人卡, 再恢复依赖它的复习记录
-export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-card-timing-v1-333", "yantu-card-timing-v1-825", "yantu-card-timing-v1-politics", timingSettingsKey, "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "yantu-mcq-excluded-v1-politics", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", "kaoyan.mock-practice.v1.politics", examTargetKey] as const;
+export const BACKUP_STORAGE_KEYS = [personalStorageKey, learningSessionKey, "yantu-srs-v1-333", "yantu-srs-v1-825", "yantu-srs-v1-politics", "yantu-done", "yantu-done-825", "yantu-done-politics", "yantu-mistakes-v1", "yantu-stats-v1-333", "yantu-stats-v1-825", "yantu-stats-v1-politics", "yantu-card-timing-v1-333", "yantu-card-timing-v1-825", "yantu-card-timing-v1-politics", timingSettingsKey, "yantu-activity-v1-333", "yantu-activity-v1-825", "yantu-activity-v1-politics", "yantu-mcq-excluded-v1", "yantu-mcq-excluded-v1-politics", "yantu-favorites-v1", "yantu-favorites-removed-v1", "kaoyan.mock-practice.v1.333", "kaoyan.mock-practice.v1.825", "kaoyan.mock-practice.v1.politics", examTargetKey] as const;
 export type BackupStorageKey = typeof BACKUP_STORAGE_KEYS[number];
 export type BackupSubject = "333" | "825" | "politics";
 export type BackupProgress = StudyProgress & { newScopes: StudyScope[] };
@@ -39,6 +39,8 @@ export type BackupRecordMap = {
   "yantu-activity-v1-politics": BackupActivity[];
   "yantu-mcq-excluded-v1": string[];
   "yantu-mcq-excluded-v1-politics": string[];
+  "yantu-favorites-v1": Record<string, string[]>;
+  "yantu-favorites-removed-v1": string[];
   "yantu-stats-v1-333": Record<string, BackupDayStat>;
   "yantu-stats-v1-825": Record<string, BackupDayStat>;
   "yantu-stats-v1-politics": Record<string, BackupDayStat>;
@@ -376,6 +378,12 @@ function cleanRecord(key: BackupStorageKey, value: unknown, catalogs: BackupCata
   if (key === learningSessionKey) return session(value, catalogs);
   if (key === "yantu-mistakes-v1") return mistakes(value);
   if (key === "yantu-mcq-excluded-v1" || key === "yantu-mcq-excluded-v1-politics") return boundedList(value, 20_000, "排除标记").map(id => text(id, "排除标记", 200));
+  if (key === "yantu-favorites-removed-v1") return boundedList(value, 20_000, "收藏取消记录").map(id => text(id, "收藏取消记录", 260));
+  if (key === "yantu-favorites-v1") {
+    const row = object(value, "收藏");
+    // 未知槽位(含注入字段)直接丢弃, 不让恶意键炸掉整份备份
+    return Object.fromEntries(Object.entries(row).filter(([slotName]) => /^[a-z0-9]+:(card|choice)$/.test(slotName)).map(([slotName, ids]) => [slotName, boundedList(ids, 5_000, "收藏").map(id => text(id, "收藏", 200))]));
+  }
   if (key.startsWith("yantu-activity-v1-")) return activities(value);
   if (key.startsWith("yantu-stats-v1-")) return dayStats(value);
   if (key.startsWith("yantu-card-timing-v1-")) return validateTimingRecords(Object.fromEntries(Object.entries(object(value, "闪卡背诵用时")).filter(([id]) => id !== "apiKey")));

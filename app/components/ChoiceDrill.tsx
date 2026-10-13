@@ -33,6 +33,8 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
   const [resumable, setResumable] = useState<ReturnType<typeof loadPracticeRound> | null>(null);
   // F2: 概览"每日一练"按钮 → sessionStorage 标记, 题库就绪后自动开考
   const [pendingDaily, setPendingDaily] = useState(() => { try { return sessionStorage.getItem("yantu-daily-autostart") === "1"; } catch { return false; } });
+  // B06: 续做保存失败(存储空间不足)时明示, 不再静默丢进度
+  const [saveWarn, setSaveWarn] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -52,7 +54,7 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
 
   function persist(target: Round) {
     if (target.done || requiz) return;
-    savePracticeRound({
+    const saved = savePracticeRound({
       subject,
       mode: "practice",
       meta: { bookId: book, bookName: "", chapter: 1, scope: "chapter", drill: { book, origin, count } },
@@ -61,8 +63,9 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
       choice: typeof target.choice === "number" ? target.choice : null,
       right: target.right,
       wrongIds: [...target.wrongIds],
-      answers: Object.fromEntries(Object.entries(target.chosen).map(([key, value]) => [key, typeof value === "number" ? value : -1])),
+      answers: Object.fromEntries(Object.entries(target.chosen).map(([key, value]) => [key, value])),
     });
+    if (!saved) setSaveWarn(true);
   }
   function start(source?: readonly ChoiceQuestion[]) {
     const pickedRaw = requiz ? drillRequizQuestions(questions || [], requizIds || []) : pickChoices(source || pool, count, seed);
@@ -88,11 +91,11 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
     setRound({
       questions: restored,
       index,
-      choice: rawChoice !== undefined ? (rawChoice === -1 ? -1 : rawChoice) : null,
+      choice: rawChoice === undefined ? null : Array.isArray(rawChoice) ? -1 : rawChoice,
       right: resumable.right,
       wrongIds: [...resumable.wrongIds],
       done: false,
-      chosen: Object.fromEntries(Object.entries(resumable.answers).map(([key, value]) => [Number(key), value === -1 ? [] : [value]])),
+      chosen: Object.fromEntries(Object.entries(resumable.answers).map(([key, value]) => [Number(key), value])),
     });
     setResumable(null);
   }
@@ -217,7 +220,13 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
       ? `真实题库：肖秀荣1000题（试题分册与解析分册逐题对齐），含考研单选与多选题型，共 ${questions.length} 题。逐选项辨析随答案展示；答错自动进入错题本，可续做未完成的题组。`
       : `真实题库精选：丹丹1000题（含历年311真题典例）、阶段测试卷与丹丹中秋国庆卷，共 ${questions.length} 题。逐选项辨析随答案展示；答错自动进入错题本，可续做未完成的题组。`}</p>
     <div className="practice-config">
-      <label>书目<select value={book} onChange={(event) => setBook(event.target.value as typeof book)}>
+      <label>书目<select value={book} onChange={(event) => {
+        const next = event.target.value as typeof book;
+        // B09: 切书后校验章节筛选——旧章不在新书章节列表时重置为全部, 避免"全部章节"却 0 题
+        const nextChapters = new Set((questions || []).filter(q => next === "all" || q.book === next).map(q => q.chapter));
+        setChapter(prev => (prev !== "all" && nextChapters.has(prev) ? prev : "all"));
+        setBook(next);
+      }}>
         <option value="all">{subject === "politics" ? "五科全部" : "四书全部"}</option>
         {Object.entries(bookNames).map(([id, name]) => <option key={id} value={id}>{name}</option>)}
       </select></label>
@@ -234,6 +243,7 @@ export function ChoiceDrill({ subject, storage, requizIds, onRequizDone, onQuitR
       </label>
       <label className="practice-shuffle"><input type="checkbox" checked={shuffle} onChange={(event) => setShufflePersisted(event.target.checked)}/>打乱选项顺序</label>
     </div>
+    {saveWarn && <p className="error" role="alert">浏览器存储暂时不可用或空间不足：本组作答进度无法保存，刷新后会丢失。请保留当前页面完成本组题目。</p>}
     <p className="mock-selection">当前范围可用：{pool.length} 题{excludedCount > 0 ? `（已排除 ${excludedCount} 题，不参与组卷）` : ""}</p>
     {excludedCount > 0 && <p className="mock-selection"><button type="button" className="text-button" onClick={() => setExcluded(resetMcqExcluded(subject))}>恢复全部已排除（{excludedCount}）</button></p>}
     {resumable && <div className="practice-resume" role="status">

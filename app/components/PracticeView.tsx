@@ -178,12 +178,13 @@ export function PracticeView({ subject, subjectName, books, cards, bookId, chapt
           // 卡库中已找不到的卡(数据更新后)剔除; 全部失效则放弃续做
           const questions = resumable.questions.filter(q => byId.has(q.cardId));
           if (!questions.length) { clearPracticeRound(subject, requiz ? "requiz" : "practice"); setResumable(null); return; }
-          const chosenByIndex = Object.fromEntries(Object.entries(resumable.answers).map(([k, v]) => [Number(k), v]));
+          // 闪卡自测只有单选; 过滤数组值(政治题库多选走 ChoiceDrill)
+          const chosenByIndex = Object.fromEntries(Object.entries(resumable.answers).filter(([, v]) => typeof v === "number").map(([k, v]) => [Number(k), v as number]));
           const resumeIndex = Math.min(resumable.index, questions.length - 1);
           setRound({
             questions, index: resumeIndex,
             // 恢复当前题的已选状态: 该题若已作答过, 选项显示原选择与判定, 且不可重选(计分已在首次作答时完成)
-            choice: chosenByIndex[resumeIndex] !== undefined ? chosenByIndex[resumeIndex] : null,
+            choice: typeof chosenByIndex[resumeIndex] === "number" ? chosenByIndex[resumeIndex] as number : null,
             right: resumable.right, done: false,
             wrongIds: [...resumable.wrongIds], chosenByIndex,
             meta: resumable.meta,
